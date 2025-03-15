@@ -1,0 +1,3 @@
+1. Function mint() (in BGeoToken contract, starting at the isSigned modifier and used in mint) has an access control issue. 
+
+Reason: The isSigned modifier only checks that the lengths of the signature parameter arrays (r, s, v) are equal but does not enforce that they are non‐empty. This means an attacker can call mint() with empty arrays (i.e. no signatures), because the loop that recovers signers runs zero times and the subsequent isSigners() check over an empty array returns true. As a result, anyone can call mint() without providing any valid signatures, thereby bypassing the intended access control on minting tokens.

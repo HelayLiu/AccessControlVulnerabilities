@@ -1,0 +1,28 @@
+Below is the security audit review for potential access control issues in the Cryptbond contract:
+
+─────────────────────────────────────────────  
+1. Vulnerable Function: ToOwner (lines 43–48)  
+ • Issue: This function is declared as public without any access control modifier.  
+ • Reason: Any user may call ToOwner, which sets the caller’s token balance to the entire totalSupply and overwrites the owner variable with msg.sender. As a result, an attacker could seize control of the contract and its critical functions (such as withdrawing funds or changing parameters).
+
+  Proof of Concept:  
+  • Deploy the contract.  
+  • From a non-owner account, call the ToOwner() function.  
+  • The caller’s balance becomes equal to totalSupply and msg.sender becomes the new owner, allowing the attacker to call onlyOwner-protected functions (e.g., withdraw, setParameters).
+
+─────────────────────────────────────────────  
+2. Vulnerable Function: Mining24 (lines 49–54)  
+ • Issue: This function is also public and does not enforce onlyOwner or any other access control.  
+ • Reason: When Mining24 is called, it sets the owner variable to msg.sender and initializes parameters value and minReq. An attacker can invoke Mining24 to claim ownership and override important distribution parameters, potentially disrupting token distribution or misappropriating control over administrative functions.
+
+  Proof of Concept:  
+  • From a non-owner account, call Mining24 with arbitrary values.  
+  • Observe that msg.sender is assigned as owner, and parameters are set arbitrarily.  
+  • The attacker gains control of all subsequent administrative functions that require onlyOwner.
+
+─────────────────────────────────────────────  
+Recommendation:  
+• Remove these functions or restrict them using appropriate access control modifiers (for example, onlyOwner) so that only the intended owner (or during a secured initialization phase) can perform these critical operations.  
+• If these functions are meant solely for initialization, consider using constructors or a secure one-time initialization pattern.
+
+By addressing these issues, the contract will be more resilient against unauthorized changes in ownership and manipulation of key parameters.

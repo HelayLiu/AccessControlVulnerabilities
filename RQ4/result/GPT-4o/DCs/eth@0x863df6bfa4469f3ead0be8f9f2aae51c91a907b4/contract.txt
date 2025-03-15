@@ -1,0 +1,19 @@
+1. **Function `initMultiowned` (lines 78-89)** has an access control issue. 
+   - **Reason**: The function is protected by the `only_uninitialized` modifier, which only checks if `m_numOwners` is greater than 0. However, this does not ensure that the function is called by a legitimate owner or during the correct initialization phase. This could potentially allow unauthorized initialization if the contract is not properly deployed or if the state is manipulated.
+
+2. **Function `initDaylimit` (lines 157-160)** has an access control issue.
+   - **Reason**: Similar to `initMultiowned`, this function is also protected by the `only_uninitialized` modifier. It does not ensure that the function is called by a legitimate owner or during the correct initialization phase, which could lead to unauthorized setting of the daily limit.
+
+3. **Function `initWallet` (lines 166-170)** has an access control issue.
+   - **Reason**: This function is protected by the `only_uninitialized` modifier, which only checks if `m_numOwners` is greater than 0. This does not ensure that the function is called by a legitimate owner or during the correct initialization phase, potentially allowing unauthorized initialization.
+
+4. **Function `execute` (lines 210-234)** has an access control issue.
+   - **Reason**: The function is protected by the `onlyowner` modifier, which checks if the caller is an owner. However, the function allows execution of transactions below the daily limit or if only one owner is required, without requiring multiple confirmations. This could lead to unauthorized transactions if a single owner is compromised.
+
+5. **Function `underLimit` (lines 303-314)** has an access control issue.
+   - **Reason**: The function is protected by the `onlyowner` modifier, which checks if the caller is an owner. However, it does not ensure that the daily limit is properly enforced, as it only checks if the transaction value is under the limit without considering other potential manipulations or bypasses.
+
+6. **Function `Wallet` (lines 398-414)** has an access control issue.
+   - **Reason**: The constructor uses inline assembly to delegate call to the `_walletLibrary` without verifying the legitimacy of the `_owners`, `_required`, and `_daylimit` parameters. This could lead to unauthorized initialization or manipulation of the wallet's state if the parameters are not properly validated.
+
+These issues highlight the importance of ensuring proper access control and validation mechanisms are in place, especially during initialization and execution of critical functions.

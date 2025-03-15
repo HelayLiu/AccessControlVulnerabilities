@@ -1,0 +1,13 @@
+1. Function `transferOwnership(address payable adr)` (line 234-243) has an access control issue. Reason: The function allows the current owner to transfer ownership to a new address without any additional checks or confirmations. This could potentially lead to accidental or malicious transfer of ownership if the owner's private key is compromised.
+
+2. Function `authorizeFor(address adr, string memory permissionName)` (line 186-191) has an access control issue. Reason: This function allows an authorized user to grant permissions to any address. If an authorized user is compromised, they could grant permissions to malicious addresses.
+
+3. Function `unauthorizeFor(address adr, string memory permissionName)` (line 198-204) has an access control issue. Reason: Similar to the `authorizeFor` function, this function allows an authorized user to revoke permissions from any address. If an authorized user is compromised, they could revoke permissions from legitimate addresses, disrupting the contract's operation.
+
+4. Function `unlockPermission(string memory permissionName)` (line 328-333) has an access control issue. Reason: This function allows any user to unlock a permission if the lock has expired. There is no restriction on who can call this function, which could lead to unauthorized unlocking of permissions.
+
+5. Function `burn(address account, uint256 _amount)` (line 1010-1013) has an access control issue. Reason: This function allows any user to burn tokens from any account, which could lead to unauthorized burning of tokens if not properly restricted.
+
+6. Function `airdrop(address _user, uint256 _amount)` (line 1016-1020) has an access control issue. Reason: This function allows the owner to transfer tokens to any address as an airdrop. If the owner's private key is compromised, this function could be used to drain tokens from the contract.
+
+7. Function `setBlackListed(address user, bool flag)` (line 1026-1028) has an access control issue. Reason: This function allows the owner to blacklist any address, preventing them from interacting with the contract. If the owner's private key is compromised, this function could be used to disrupt the contract's operation by blacklisting legitimate addresses.

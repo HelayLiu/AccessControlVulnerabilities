@@ -1,0 +1,14 @@
+Below is our detailed analysis regarding access control in the contract:
+
+1. The state‐changing “setter” functions (setTaxCut, setMinimumDaysHeld, setDefaultNukeFactorIncrease, setMaxAllowedClaimDivisor, setNukeFactorMaxParam, setTraitForgeNftContract, setAirdropContract, setDevAddress, setDaoAddress, and setAgeMultplier) are all marked with the onlyOwner modifier. This correctly restricts these functions to the contract owner.
+
+2. The nuke() function is public and callable by anyone—but before doing any state changes it checks that the caller is either the owner or approved operator for the target NFT using nftContract.isApprovedOrOwner(msg.sender, tokenId) plus an additional approval check. This is an intentional design so that the rightful NFT holder (or its approved operator) may “nuke” the NFT to claim funds. Thus, there is no missing access control check here as the permission comes via the NFT contract’s approval mechanism.
+
+3. The receive() payable fallback function is intentionally public so that anyone may send ETH to the contract. Although it updates the fund balance and sends a share of the ETH to one of the preset addresses (devAddress/owner/daoAddress) based on the airdrop contract’s state, these addresses are settable only by the owner. In addition, the control flow is determined by on‐chain state (from the airdrop contract) and does not grant privilege to the sender.
+
+4. The other functions (calculateAge, calculateNukeFactor, getFundBalance, getAgeMultiplier, and canTokenBeNuked) are view functions or helper functions that expose calculated data and do not modify state. Their public visibility is appropriate for read operations.
+
+Conclusion:
+After thorough review, all functions that change state are properly restricted (by onlyOwner or by checking NFT ownership/approval) and there are no inadvertent public functions that let an attacker modify sensitive state without authorization.
+
+Therefore, no significant access control issues or vulnerable functions were found in the provided contract.

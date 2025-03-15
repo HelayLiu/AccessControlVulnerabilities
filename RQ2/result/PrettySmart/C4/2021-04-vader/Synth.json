@@ -1,0 +1,12 @@
+{
+ "contract": "Synth",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "mint",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

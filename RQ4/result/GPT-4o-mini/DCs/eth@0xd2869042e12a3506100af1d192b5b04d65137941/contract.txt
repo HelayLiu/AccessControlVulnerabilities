@@ -1,0 +1,9 @@
+1. Function migrateStake(address oldStaking, uint256 amount) (line 139-143) has access control issues. Reason: The function calls `migrateWithdraw` on the old staking contract without any access control checks, allowing any user to migrate stakes from any old staking contract, potentially leading to unauthorized access to funds.
+
+2. Function migrateWithdraw(address staker, uint256 amount) (line 164-168) has access control issues. Reason: The function can be called by any contract, as it only checks if the caller is the migrator. If the migrator address is set to an unauthorized address, it could allow unauthorized withdrawals from the contract.
+
+3. Function notifyRewardAmount(address _rewardsToken, uint256 _amount) (line 118-126) has access control issues. Reason: The function checks if the caller is the reward distributor, but if the reward distributor is set to an unauthorized address, it could allow unauthorized users to notify rewards, leading to potential exploitation.
+
+4. Function setRewardDistributor(address _distributor) (line 78-82) has access control issues. Reason: The function allows the owner to set the reward distributor, but if the owner is compromised, they could set an unauthorized address as the distributor, allowing that address to manipulate rewards.
+
+5. Function addReward(address _rewardToken) (line 87-93) has access control issues. Reason: The function can be called by the owner to add a reward token, but if the owner is compromised, they could add malicious tokens, leading to potential exploitation of the staking mechanism.

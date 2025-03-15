@@ -1,0 +1,37 @@
+{
+ "contract": "UlyssesToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "completeOwnershipHandover",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "addAsset",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "removeAsset",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "setWeights",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ]
+ ],
+ "PC_bypassed": []
+}

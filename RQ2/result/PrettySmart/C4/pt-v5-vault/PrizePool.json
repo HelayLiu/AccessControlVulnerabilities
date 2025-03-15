@@ -1,0 +1,22 @@
+{
+ "contract": "PrizePool",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x9c9ad21a",
+   "0x5"
+  ],
+  [
+   "datadriven",
+   "0x3546d430",
+   "SHA3(msg.sender,0x4)"
+  ],
+  [
+   "owner",
+   "0x0beefccb",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

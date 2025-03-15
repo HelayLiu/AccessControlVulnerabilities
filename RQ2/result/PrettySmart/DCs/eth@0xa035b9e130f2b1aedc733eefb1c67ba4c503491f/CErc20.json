@@ -1,0 +1,47 @@
+{
+ "contract": "CErc20",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "_setInterestRateModel",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_reduceReserves",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_delegateCompLikeTo",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_acceptAdmin",
+   "0x4"
+  ],
+  [
+   "owner",
+   "_setPendingAdmin",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_setReserveFactor",
+   "0x3"
+  ],
+  [
+   "owner",
+   "initialize",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_setComptroller",
+   "0x3"
+  ]
+ ],
+ "PC_bypassed": []
+}

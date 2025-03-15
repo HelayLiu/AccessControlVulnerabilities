@@ -1,0 +1,21 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `transferFrom` (line 155-215)**
+   - **Reason**: The `transferFrom` function is a public function that allows transferring delegate tokens from one address to another. However, it does not have any access control modifiers to restrict who can call this function. Although it checks if the caller is approved or an operator, it is still accessible to anyone, which could lead to unauthorized transfers if the checks are bypassed or if there are any vulnerabilities in the approval logic.
+
+2. **Function `create` (line 451-495)**
+   - **Reason**: The `create` function is a public function that allows the creation of a new delegate token. It does not have any access control modifiers to restrict who can call this function. This could potentially allow any user to create delegate tokens without any restrictions, leading to unauthorized or malicious token creation.
+
+3. **Function `extend` (line 497-510)**
+   - **Reason**: The `extend` function is a public function that allows extending the expiry of a delegate token. It checks if the caller is approved or the owner of the principal token, but it is still publicly accessible. If there are any vulnerabilities in the approval logic, it could lead to unauthorized extensions of token expiry.
+
+4. **Function `rescind` (line 512-522)**
+   - **Reason**: The `rescind` function is a public function that allows rescinding a delegate token. It does not have any access control modifiers to restrict who can call this function. Although it checks the expiry and sets approval, it is still accessible to anyone, which could lead to unauthorized rescinding if the checks are bypassed.
+
+5. **Function `withdraw` (line 524-585)**
+   - **Reason**: The `withdraw` function is a public function that allows withdrawing a delegate token. It does not have any access control modifiers to restrict who can call this function. Although it checks for valid withdrawal conditions, it is still accessible to anyone, which could lead to unauthorized withdrawals if the checks are bypassed.
+
+6. **Function `flashloan` (line 587-617)**
+   - **Reason**: The `flashloan` function is a public function that allows executing a flash loan. It does not have any access control modifiers to restrict who can call this function. Although it checks for operator status, it is still accessible to anyone, which could lead to unauthorized flash loans if the checks are bypassed.
+
+These functions should be reviewed to ensure that appropriate access control mechanisms are in place to prevent unauthorized access and actions.

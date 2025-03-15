@@ -1,0 +1,7 @@
+Below is one potential access control issue found after careful analysis:
+
+1. Vulnerable Function: withdraw (approximately lines 37–48)
+
+ • Reason: In the withdraw function the external call to transfer VISR tokens (via visr.safeTransfer) is made before the critical access control check that verifies that the caller is authorized (i.e. that msg.sender is either equal to the “from” address or is the owner of the “from” contract via IVisor(from).owner()). Because the authorization check happens after an external token transfer, this ordering – especially in the absence of a reentrancy guard – opens the door to potential reentrancy attacks or other unexpected interactions if the token’s transfer method is implemented maliciously or in a nonstandard way. In short, funds are “released” (transferred) before verifying that the caller is truly entitled to perform the redemption. 
+
+(Secondary note: Although not strictly access control, the owner-managing functions (transferOwnership and transferTokenOwnership) lack additional sanity checks (for example ensuring newOwner isn’t the zero address), but the primary concern here is the ordering of security checks in withdraw.)

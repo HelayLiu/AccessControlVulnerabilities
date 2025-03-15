@@ -1,0 +1,7 @@
+1. Function setCurves() (line 20-22) has access control issues. Reason: The setCurves function is public and can be called by anyone, allowing any user to set the curves variable to an arbitrary address, which could lead to malicious behavior or manipulation of the contract's logic.
+
+2. Function addFees() (line 56-62) has access control issues. Reason: The addFees function is public and can be called by anyone, but it should only be callable by a manager. If a non-manager calls this function, they can add fees to the contract, which could lead to unauthorized fee distribution.
+
+3. Function onBalanceChange() (line 64-70) has access control issues. Reason: The onBalanceChange function is public and can be called by anyone, but it should only be callable by a manager. This could allow unauthorized users to manipulate user fee offsets and token tracking.
+
+4. Function batchClaiming() (line 72-86) has access control issues. Reason: The batchClaiming function is public and can be called by anyone, allowing any user to claim fees for multiple tokens without proper access control, which could lead to unauthorized fee claims.

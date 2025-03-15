@@ -1,0 +1,16 @@
+Below is one potential issue we identified:
+
+1. Vulnerable Function: depositFor (approximately lines 285–293)
+
+ • Issue Description: This function lets anyone call depositFor(…) and supply three parameters: a token address, an amount, and an arbitrary “user” address in whose favor vault “shares” are minted. Unlike the main deposit(…) function, depositFor does not enforce that the token being deposited is the “want” token the vault is meant to manage. (The vault’s internal accounting—via balance() and available()—only “sees” funds held in the vault for which the token address matches strategy.want().)  
+
+ • Why It’s an Access Control Concern: Although public deposit functions are common in vault contracts, depositFor is different in that it lets any caller supply an arbitrary token address and specify a beneficiary. In a proper access‐controlled design the system should ensure that only deposits of the correct “want” token will change the vault’s underlying balance and mint new shares. In the absence of a check (or a modifier restricting who may call depositFor, if it is intended only for trusted integrations), an attacker may call depositFor with an incorrect token address. Funds would then not be “counted” as part of the underlying balance (since balance() only includes want().balanceOf and the pool balance) yet the call might cause shares to be minted (or in many cases, mint zero shares—but still put the token funds into the vault where later the owner’s rescue function inCaseTokensGetStuck can withdraw them). Even if direct profit‐taking is not immediately possible by an external party, allowing arbitrary callers to trigger share minting for arbitrary beneficiaries without enforcing that the underlying asset is used (or without any proper access control) makes the function’s interface “open” in an unintended way. This is an access control/input‐validation gap which can lead to misaligned accounting or even manipulation in share distribution if assumptions on deposits are later extended.
+
+ • Proof of Concept:
+  – An attacker (or even an unwary third party) could call depositFor with:
+   • token: an ERC20 address that is NOT the underlying “want” token (for example, any other low–value token),
+   • _amount: a positive amount,
+   • user: any address (for example, the attacker’s own address).
+  – The vault will transfer funds of that other token from msg.sender to itself without rejecting the call. Since balance() (which is used to compute new shares) only “sees” the want token, the mis–spend may result in shares not being minted as expected while locking funds in the vault. Alternatively, if the design later evolves, such a function may be abused to force incorrect accounting under an attack scenario.
+
+It is recommended that depositFor either (a) be restricted (for example, with an onlyOwner modifier or by making it internal and accessible only by approved routers) or (b) check that the provided token address matches the underlying “want” token to ensure the vault’s accounting remains correct.

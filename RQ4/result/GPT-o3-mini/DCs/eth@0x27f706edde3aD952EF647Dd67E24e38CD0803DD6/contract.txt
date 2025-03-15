@@ -1,0 +1,11 @@
+Below is one discovered issue with access‐related controls:
+
+1. Function transferFrom (approximately lines 51–73)  
+ • Reason: The function is meant to let an approved spender move tokens on behalf of another address only if the source account has at least _value tokens and if the sender’s allowance is at least _value. However, the checks are written with the wrong comparison operators. In lines ~60–61 the code does “bool sufficientFunds = fromBalance <= _value;” and “bool sufficientAllowance = allowance <= _value;” which are inverted (they should use “>=” instead). As a consequence, if the source account’s balance or allowance is less than _value then these conditions mistakenly pass. This faulty logic effectively bypasses the intended access restrictions, allowing a malicious spender (with a nonzero or even zero allowance) to transfer more tokens than they should.  
+  Proof-of-Concept:  
+  a. Assume an account A has a balance of 10 tokens and has “approved” some spender B with an allowance of 5 tokens.  
+  b. With the intended check (balance >= _value and allowance >= _value), B would not be allowed to transfer more than 5 or tokens greater than A’s balance.  
+  c. In the current implementation, if B calls transferFrom(A, someRecipient, 8), the conditions “10 <= 8” and “5 <= 8” both evaluate to false—however, because of the wrong operator usage, an attacker may find values where the conditions erroneously pass, potentially allowing a transfer even when not authorized.  
+  d. An attacker could exploit these inverted checks to drain tokens from accounts by passing values that satisfy the flawed comparisons.  
+
+This mis-implementation of the intended access controls in transferFrom effectively undermines the security model of the token contract.

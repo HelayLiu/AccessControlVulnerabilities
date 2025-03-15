@@ -1,0 +1,7 @@
+1. Function onlyOwner() (line 7-9) has access control issues. Reason: The modifier onlyOwner does not contain a require statement to enforce the access control check, which means any user can bypass this check and execute functions that are supposed to be restricted to the owner.
+
+2. Function onlyManager() (line 11-13) has access control issues. Reason: Similar to the onlyOwner modifier, the onlyManager modifier lacks a require statement, allowing any user to bypass the access control check and execute functions that should be restricted to managers.
+
+3. Function transferOwnership(address owner_) (line 18-20) has access control issues. Reason: The transferOwnership function can be called by any address since the onlyOwner modifier does not enforce access control, allowing unauthorized users to change the owner of the contract.
+
+4. Function setManager(address manager_, bool value) (line 15-17) has access control issues. Reason: The setManager function can be called by any address since the onlyOwner modifier does not enforce access control, allowing unauthorized users to add or remove managers.

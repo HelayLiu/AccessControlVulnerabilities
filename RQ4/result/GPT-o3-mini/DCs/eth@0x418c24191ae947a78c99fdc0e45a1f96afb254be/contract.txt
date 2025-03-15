@@ -1,0 +1,10 @@
+1. Vulnerable function: mint() (around lines 151-155) has an access control issue.  
+   Reason: The mint() function is public and does not include any access control modifiers (such as onlyOwner or minter role checks). This omission allows any user to call mint() and arbitrarily mint new tokens to their own account, which could compromise the token’s integrity and economy.
+
+Proof-of-Concept:
+1. An attacker deploys or interacts with the Token contract.
+2. The attacker calls the mint() function from their own address.
+3. As there is no restriction, the attacker's call successfully mints tokens to their wallet.
+4. Repeated calls to mint() enable the attacker to accumulate an unlimited number of tokens.
+
+This vulnerability can lead to token inflation and undermine user trust in the token economics.

@@ -1,0 +1,16 @@
+Below is the access control vulnerability we identified:
+
+1. Vulnerable Function: setRouter(address _router)  
+   Approximate Line: 11–13  
+   Reason: There is no access control on the setRouter function. This means that any external account can call setRouter and change the router address. Since the router variable is used to restrict access to critical functions mint() and burn() (which use the onlyRouter modifier), an attacker can set the router to an arbitrary value (for example, their own address) and then call mint() or burn() to arbitrarily mint or burn tokens.
+
+Proof-of-Concept:
+• An attacker calls setRouter with their own address:
+  dcntEthInstance.setRouter(attackerAddress);
+• Now, since the onlyRouter modifier checks (msg.sender == router) and router is attackerAddress, the attacker can then call:
+  dcntEthInstance.mint(attackerAddress, arbitraryAmount);
+or
+  dcntEthInstance.burn(attackerAddress, arbitraryAmount);
+Thus, the attacker has gained unauthorized control over minting and burning operations.
+
+To fix the issue, the setRouter function should be restricted (for example, by adding onlyOwner or a similar access control modifier) so that only authorized addresses can update the router address.

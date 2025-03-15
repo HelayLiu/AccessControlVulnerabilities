@@ -1,0 +1,42 @@
+Based on the provided smart contract, here are the potential access control issues identified:
+
+1. **Function `setDrawManager()` (line 510-520)**
+   - **Reason**: This function allows setting the `drawManager` address, which is a critical role in the contract. Although it checks if the caller is the `creator`, it does not ensure that the `creator` cannot change the `drawManager` after it has been set once. This could potentially allow the `creator` to change the `drawManager` to a malicious address after the initial setup, which could lead to unauthorized control over draw management.
+
+2. **Function `contributePrizeTokens()` (line 523-533)**
+   - **Reason**: This function is public and allows anyone to contribute prize tokens on behalf of a given vault. While it checks the balance to ensure the contribution is valid, it does not restrict who can call this function. This could lead to unauthorized users affecting the prize distribution by contributing tokens on behalf of any vault.
+
+3. **Function `donatePrizeTokens()` (line 536-539)**
+   - **Reason**: This function allows any user to donate prize tokens to the prize pool. While this might be intended, it could be exploited if not properly monitored, as it allows any address to increase the prize pool balance, potentially affecting the odds and distribution of prizes.
+
+4. **Function `allocateRewardFromReserve()` (line 542-556)**
+   - **Reason**: This function is restricted to the `drawManager`, but if the `drawManager` is compromised or set incorrectly (as noted in the `setDrawManager` function), it could lead to unauthorized allocation of rewards from the reserve.
+
+5. **Function `awardDraw()` (line 559-586)**
+   - **Reason**: Similar to `allocateRewardFromReserve`, this function is restricted to the `drawManager`. If the `drawManager` is compromised, it could lead to unauthorized awarding of draws, potentially manipulating the outcome of the prize distribution.
+
+6. **Function `withdrawRewards()` (line 789-808)**
+   - **Reason**: This function allows any user to withdraw their earned rewards. While it checks the available balance, it does not restrict the recipient address, which could lead to rewards being sent to unintended addresses if the caller makes a mistake.
+
+7. **Function `contributeReserve()` (line 811-818)**
+   - **Reason**: This function allows anyone to contribute directly to the reserve. While this might be intended, it could be exploited if not properly monitored, as it allows any address to increase the reserve balance, potentially affecting the prize pool's financial management.
+
+**Proof of Concept for `setDrawManager()`:**
+
+To verify the issue with `setDrawManager()`, consider the following scenario:
+
+1. Deploy the contract with a specific `creator` address.
+2. Call `setDrawManager()` from the `creator` address to set an initial `drawManager`.
+3. Attempt to call `setDrawManager()` again from the `creator` address to change the `drawManager` to a different address.
+
+Expected Result: The second call should fail, ensuring that the `drawManager` can only be set once and cannot be changed thereafter.
+
+**Output:**
+
+1. Function `setDrawManager()` (line 510-520) has the access control issue. Reason: The function allows the `creator` to set the `drawManager` address, but it does not prevent the `creator` from changing it after the initial setup, which could lead to unauthorized control over draw management.
+2. Function `contributePrizeTokens()` (line 523-533) has the access control issue. Reason: The function is public and allows anyone to contribute prize tokens on behalf of any vault, potentially affecting prize distribution without restriction.
+3. Function `donatePrizeTokens()` (line 536-539) has the access control issue. Reason: The function allows any user to donate prize tokens, which could be exploited if not properly monitored, affecting the prize pool balance.
+4. Function `allocateRewardFromReserve()` (line 542-556) has the access control issue. Reason: The function is restricted to the `drawManager`, but if the `drawManager` is compromised, it could lead to unauthorized allocation of rewards.
+5. Function `awardDraw()` (line 559-586) has the access control issue. Reason: The function is restricted to the `drawManager`, but if the `drawManager` is compromised, it could lead to unauthorized awarding of draws.
+6. Function `withdrawRewards()` (line 789-808) has the access control issue. Reason: The function allows any user to withdraw rewards without restricting the recipient address, which could lead to rewards being sent to unintended addresses.
+7. Function `contributeReserve()` (line 811-818) has the access control issue. Reason: The function allows anyone to contribute to the reserve, which could be exploited if not properly monitored, affecting the prize pool's financial management.

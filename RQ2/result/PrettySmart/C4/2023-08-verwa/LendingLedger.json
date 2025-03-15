@@ -1,0 +1,12 @@
+{
+ "contract": "LendingLedger",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "0x122d9140",
+   "SHA3(msg.sender,0x2)"
+  ]
+ ],
+ "PC_bypassed": []
+}

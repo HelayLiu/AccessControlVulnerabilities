@@ -1,0 +1,11 @@
+1. Function initializeStakingContract(address _stakingContract) (line 45-52) has access control issues. Reason: The function allows the admin to set the staking contract and assign roles to it. If the admin role is compromised, the attacker could set a malicious staking contract and gain control over the minting and rebase functionalities.
+
+2. Function rebase(uint256 _profit, uint256 _epoch) (line 64-85) has access control issues. Reason: The function can be called by any address that has the REBASE_ROLE. If the REBASE_ROLE is not properly managed, an unauthorized user could call this function and manipulate the total supply and rebasing credits, leading to potential economic exploits.
+
+3. Function mint(address _address, uint256 _amount) (line 139-145) has access control issues. Reason: The function allows any address with the MINTER_BURNER_ROLE to mint tokens. If this role is assigned to an unauthorized address, it could lead to token inflation and loss of value for existing token holders.
+
+4. Function burn(address _address, uint256 _amount) (line 148-154) has access control issues. Reason: Similar to the mint function, this function allows any address with the MINTER_BURNER_ROLE to burn tokens. If this role is mismanaged, it could lead to unauthorized token burns, affecting the total supply and potentially harming token holders.
+
+5. Function _mint(address _address, uint256 _amount) (line 157-171) has access control issues. Reason: This internal function is called by the public mint function. If the mint function is called by an unauthorized address, it could lead to unauthorized minting of tokens, which can inflate the total supply.
+
+6. Function _burn(address _address, uint256 _amount) (line 174-188) has access control issues. Reason: This internal function is called by the public burn function. If the burn function is called by an unauthorized address, it could lead to unauthorized burning of tokens, which can deflate the total supply and harm token holders.

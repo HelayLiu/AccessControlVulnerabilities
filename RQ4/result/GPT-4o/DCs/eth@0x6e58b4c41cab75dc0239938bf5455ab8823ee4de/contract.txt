@@ -1,0 +1,4 @@
+OutPut:
+1. Function `owned()` (line 22-24) has the access control issues. Reason: The `owned()` function can change the `owner` variable, which is significant because with the role, we can do anything on the contract. However, this function is a constructor and should be named `Owned` to follow Solidity conventions for constructors in version 0.4.17. This could lead to confusion and potential misuse if someone mistakenly calls it as a regular function.
+
+2. Function `distributeToken(address[] addresses, uint256 _value)` (line 56-62) has the access control issues. Reason: The `distributeToken` function allows any user to distribute tokens from their own balance to multiple addresses without any access control. This could be exploited if a user accidentally or maliciously distributes more tokens than intended, leading to a loss of tokens. It should include checks to ensure that the sender has enough balance and possibly restrict who can call this function.

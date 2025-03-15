@@ -1,0 +1,77 @@
+{
+ "contract": "SpaceGodzilla",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xdb96ab9b",
+   "0x0"
+  ],
+  [
+   "owner",
+   "excludeMultipleAccountsFromFees",
+   "0x0"
+  ],
+  [
+   "owner",
+   "updateUniswapV2Router",
+   "0x0"
+  ],
+  [
+   "owner",
+   "rescueToken",
+   "0x8"
+  ],
+  [
+   "whitelist",
+   "transfer",
+   "SHA3(msg.sender,0xf)"
+  ],
+  [
+   "owner",
+   "0x5a3bcafa",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x415e9296",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0xfdf99d26",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x78d03944",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setSwapTokensAtAmount",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setSwapAndLiquifyEnabled",
+   "0x0"
+  ],
+  [
+   "owner",
+   "excludeFromFees",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

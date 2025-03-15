@@ -1,0 +1,13 @@
+1. Function `mintYieldFee(uint256 _shares, address _recipient)` (line 157-165) has access control issues. Reason: The function can be called by any address, allowing anyone to mint yield fee shares to any recipient without any checks on the caller's permissions, potentially leading to unauthorized minting of shares.
+
+2. Function `setClaimer(address claimer_)` (line 370-375) has access control issues. Reason: Although it has the `onlyOwner` modifier, if the owner is compromised or malicious, they can set the claimer to an arbitrary address, allowing that address to claim prizes without proper authorization.
+
+3. Function `setLiquidationPair(LiquidationPair liquidationPair_)` (line 392-404) has access control issues. Reason: Similar to the `setClaimer` function, this function is also protected by the `onlyOwner` modifier, but if the owner is compromised, they can set the liquidation pair to an arbitrary address, which could lead to unauthorized liquidation actions.
+
+4. Function `setYieldFeePercentage(uint256 yieldFeePercentage_)` (line 417-426) has access control issues. Reason: This function allows the owner to set the yield fee percentage, but if the owner is compromised, they can set it to a malicious value, potentially draining funds from the vault.
+
+5. Function `setYieldFeeRecipient(address yieldFeeRecipient_)` (line 429-438) has access control issues. Reason: This function allows the owner to set the yield fee recipient, which could be exploited if the owner is compromised, allowing funds to be redirected to an unauthorized address.
+
+6. Function `setHooks(VaultHooks memory hooks)` (line 377-380) has access control issues. Reason: This function allows any user to set hooks for themselves without any restrictions, which could lead to malicious hooks being set that could manipulate the contract's behavior.
+
+In summary, the identified functions have potential access control issues that could be exploited if the owner is compromised or if there are insufficient checks on who can call certain functions.

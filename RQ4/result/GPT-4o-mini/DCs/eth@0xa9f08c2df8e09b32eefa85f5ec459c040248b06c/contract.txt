@@ -1,0 +1,23 @@
+1. Function `setEigenLayerStrategyManagerAddress` (line 83-90) has access control issues. Reason: The function allows the address of the EigenLayer strategy manager to be changed, which could lead to unauthorized access if the caller is not properly restricted. Although it is protected by the `onlyRole(DEFAULT_ADMIN_ROLE)` modifier, if the role is compromised, it could lead to significant issues.
+
+2. Function `setStakedTokenMapping` (line 92-104) has access control issues. Reason: This function allows the modification of the staked token mapping, which includes whitelisting and setting addresses for restaked tokens and strategies. If an unauthorized user gains access to the `DEFAULT_ADMIN_ROLE`, they could manipulate the mappings, leading to potential exploitation.
+
+3. Function `setProcessWithdrawalsOnWithdraw` (line 106-113) has access control issues. Reason: This function allows changing the boolean flag that determines whether withdrawals are processed automatically. If an unauthorized user can call this function, they could disrupt the withdrawal process.
+
+4. Function `addDelegators` (line 115-123) has access control issues. Reason: This function allows adding new delegators to the contract. If an unauthorized user can call this function, they could add malicious delegators, which could lead to loss of funds or other vulnerabilities.
+
+5. Function `restakeDelegator` (line 125-144) has access control issues. Reason: This function allows the admin to restake tokens on behalf of delegators. If the `DEFAULT_ADMIN_ROLE` is compromised, an attacker could misuse this function to manipulate staking behavior.
+
+6. Function `queueWithdrawalDelegator` (line 146-157) has access control issues. Reason: Similar to `restakeDelegator`, this function allows the admin to queue withdrawals for delegators. If compromised, it could lead to unauthorized withdrawals.
+
+7. Function `completeQueuedWithdrawalDelegator` (line 159-171) has access control issues. Reason: This function allows the admin to complete queued withdrawals for delegators. If the admin role is compromised, it could lead to unauthorized access to funds.
+
+8. Function `pullDelegator` (line 173-182) has access control issues. Reason: This function allows the admin to pull tokens from delegators. If the admin role is compromised, it could lead to unauthorized token transfers.
+
+9. Function `rebase` (line 184-210) has access control issues. Reason: This function allows rebasing of tokens, which can significantly affect the token supply. If an unauthorized user can call this function, it could lead to inflation or deflation of the token supply.
+
+10. Function `processWithdrawals` (line 212-215) has access control issues. Reason: This function processes withdrawals and should be restricted to certain roles. If an unauthorized user can call this function, it could lead to manipulation of withdrawal requests.
+
+11. Function `claim` (line 290-303) has access control issues. Reason: This function allows users to claim their withdrawals. If the withdrawal request is not properly validated, it could lead to unauthorized claims.
+
+In summary, the contract has several functions that could potentially be exploited if access control roles are compromised or not properly managed. The most critical functions are those that modify state variables or manage funds, such as `setEigenLayerStrategyManagerAddress`, `setStakedTokenMapping`, and `rebase`.

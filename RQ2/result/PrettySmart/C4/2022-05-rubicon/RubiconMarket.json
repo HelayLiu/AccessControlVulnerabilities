@@ -1,0 +1,52 @@
+{
+ "contract": "RubiconMarket",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setMinSell",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setFeeBPS",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setMatchingEnabled",
+   "0x0"
+  ],
+  [
+   "owner",
+   "stop",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setAqueductAddress",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setOwner",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setBuyEnabled",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setAqueductDistributionLive",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setFeeTo",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

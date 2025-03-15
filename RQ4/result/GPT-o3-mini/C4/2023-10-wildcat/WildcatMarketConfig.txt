@@ -1,0 +1,23 @@
+Below is one example of an output identifying two functions that lack proper role‐based restrictions. Note that the line numbers below are approximate based on the file snippet provided.
+
+────────────────────────────────────────────────────────────
+1. Vulnerable Function: nukeFromOrbit (approximately lines 41–49)
+   • Issue: This function has no role‐based access restriction (e.g. onlyOwner or onlyController). Although it checks with the external sanctions sentinel that a given account is actually sanctioned, the check is based solely on the external IWildcatSanctionsSentinel contract (using the “borrower” parameter) and not on the identity of the caller.
+   • Reason: Any external user (or attacker) can call nukeFromOrbit to trigger the blocking logic when the sentinel returns a “sanctioned” result. This can be abused if, for example, the sentinel is manipulated or if its status is not tightly controlled by an authorized party.
+   • Proof of Concept:
+     1. Deploy a malicious contract (or use a regular externally owned account) that calls nukeFromOrbit with an address that is correctly (or even erroneously) flagged as sanctioned by the sentinel.
+     2. Once called, the market state is updated to block that account by executing _blockAccount.
+     3. The victim account is then prevented from transacting as expected, even though the caller was not an authorized controller.
+────────────────────────────────────────────────────────────
+2. Vulnerable Function: stunningReversal (approximately lines 50–60)
+   • Issue: This function likewise lacks an access control modifier. It permits any user to “reverse” a previous blocking of an account—provided that the account is no longer sanctioned per the external sanctions sentinel.
+   • Reason: Since there is no restriction on who can call stunningReversal, an attacker (or an interested third party) might un-block an account that was deliberately blocked via nukeFromOrbit even if that actor is not an authorized controller. (Even though the function does require that the account’s current approval equals Blocked and that the sanctions sentinel not flag the account at call time, these checks may be insufficient if, for instance, the sanctions status is updated externally.)
+   • Proof of Concept:
+     1. An attacker first observes a blocked account (with AuthRole.Blocked) in the _accounts mapping.
+     2. If the sanctions list on the sentinel changes (or is manipulated) so that the same account is no longer flagged, the attacker (or even the account owner) can call stunningReversal.
+     3. The account’s approval is reset (from Blocked to Null) thereby unblocking the account without requiring any controller or owner authorization.
+────────────────────────────────────────────────────────────
+
+In summary, the lack of an explicit access control modifier (such as onlyController or onlyOwner) on both nukeFromOrbit and stunningReversal presents potential risks. Malicious actors might force a blocking (or reversal) of a user’s market permissions by abusing the external APIs of this contract combined with potential issues in the external sanctions sentinel.
+
+Developers should consider restricting these sensitive functions to authorized roles to ensure that only the proper administrative entity can enforce or reverse sanctions.

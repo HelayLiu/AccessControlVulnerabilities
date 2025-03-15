@@ -1,0 +1,12 @@
+{
+ "contract": "EntropyGenerator",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x8f1ad441",
+   "0x30c"
+  ]
+ ],
+ "PC_bypassed": []
+}

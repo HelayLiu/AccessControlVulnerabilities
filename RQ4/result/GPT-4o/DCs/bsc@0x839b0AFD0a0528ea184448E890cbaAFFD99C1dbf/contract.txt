@@ -1,0 +1,18 @@
+OutPut:
+1. Function `setDiscount(DiscountStr[] calldata discounts)` (line 88) has an access control issue. Reason: The function is intended to be called only by a "DiscountSetter", but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+2. Function `setFarmsRatio(address _pool, uint256 ratio)` (line 94) has an access control issue. Reason: The function is intended to be called only by a specific "farm address", but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+3. Function `enableFeeAmount(uint16 fee, uint24 pointDelta)` (line 106) has an access control issue. Reason: This function can enable new fee amounts, which is a critical operation that should be restricted to authorized users only. However, there is no access control mechanism in place to enforce this.
+
+4. Function `modifyChargeReceiver(address _chargeReceiver)` (line 142) has an access control issue. Reason: This function is intended to be called only by the owner of the factory to change the charge receiver, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+5. Function `modifyDefaultFeeChargePercent(uint24 _defaultFeeChargePercent)` (line 148) has an access control issue. Reason: This function is intended to be called only by authorized users to change the default fee charge percent, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+6. Function `setFeeDelta(uint16 fee, uint16 delta)` (line 160) has an access control issue. Reason: This function is intended to be called only by authorized users to set fee delta to pools, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+7. Function `setDiscountSetter(address newDiscountSetter)` (line 166) has an access control issue. Reason: This function is intended to be called only by the owner to change the discount setter address, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+8. Function `setFarmsContract(address newFarmsContract)` (line 172) has an access control issue. Reason: This function is intended to be called only by the owner to set a new farms contract, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.
+
+9. Function `setBonusPoolManager(address _bonusPoolManager)` (line 1010) has an access control issue. Reason: This function is intended to be called only by the owner to set a new bonus pool manager contract, but there is no access control modifier or check to enforce this restriction, allowing any external account to call it.

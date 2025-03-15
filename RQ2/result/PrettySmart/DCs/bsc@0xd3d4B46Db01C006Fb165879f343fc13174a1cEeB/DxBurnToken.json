@@ -1,0 +1,17 @@
+{
+ "contract": "DxBurnToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "deliver",
+   "SHA3(msg.sender,0xd)"
+  ],
+  [
+   "whitelist",
+   "transfer",
+   "SHA3(msg.sender,0xc)"
+  ]
+ ],
+ "PC_bypassed": []
+}

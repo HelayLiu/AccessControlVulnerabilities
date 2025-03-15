@@ -1,0 +1,23 @@
+1. Function constructor (line 56-70) has access control issues. Reason: The constructor initializes the contract and grants roles to the deployer without any checks, allowing the deployer to have full control over the contract, which could be exploited if the deployer is malicious or if the contract is deployed by an untrusted party.
+
+2. Function updateDiscountPolicy (line 164-168) has access control issues. Reason: This function allows the OPERATOR role to update the discount policy without any checks on the validity of the new discount policy contract, which could lead to the contract being pointed to a malicious contract.
+
+3. Function updateFeeDetails (line 174-189) has access control issues. Reason: The OPERATOR role can update fee details without any checks on the new fee recipient or fee asset, which could lead to funds being sent to an unintended or malicious address.
+
+4. Function updateMaxAssets (line 191-196) has access control issues. Reason: The OPERATOR role can change the maximum assets without any checks on the implications of this change, which could lead to unexpected behavior in the contract.
+
+5. Function updateSlippageTolerance (line 198-203) has access control issues. Reason: The OPERATOR role can update slippage tolerances without any checks on the values being set, which could lead to excessive slippage being allowed, potentially resulting in significant losses.
+
+6. Function addDepositableAsset (line 205-215) has access control issues. Reason: The OPERATOR role can add any asset as depositable without checks on whether the asset is actually supported by the oracle, which could lead to funds being locked in unsupported assets.
+
+7. Function removeDepositableAsset (line 217-227) has access control issues. Reason: The OPERATOR role can remove any asset from being depositable without checks on whether the asset is currently held in the contract, which could lead to unexpected behavior.
+
+8. Function updateOracle (line 233-238) has access control issues. Reason: The ORACLE_MGR role can update the oracle without checks on the validity of the new oracle contract, which could lead to reliance on a malicious oracle.
+
+9. Function redeem (line 290-335) has access control issues. Reason: This function allows any user to redeem shares without checks on whether the user is authorized to redeem those shares, which could lead to unauthorized access to funds.
+
+10. Function deposit (line 337-377) has access control issues. Reason: This function allows any user to deposit tokens without checks on whether the user is authorized to deposit those tokens, which could lead to unauthorized access to funds.
+
+11. Function depositNative (line 379-419) has access control issues. Reason: This function allows any user to deposit native tokens without checks on whether the user is authorized to deposit those tokens, which could lead to unauthorized access to funds.
+
+In summary, the contract has multiple access control issues primarily related to the OPERATOR and ORACLE_MGR roles being able to make significant changes without sufficient checks on the validity of those changes or the addresses involved.

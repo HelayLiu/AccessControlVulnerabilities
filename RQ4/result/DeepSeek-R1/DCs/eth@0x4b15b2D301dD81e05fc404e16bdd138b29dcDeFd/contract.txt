@@ -1,0 +1,15 @@
+1. Function enablePurchasing() (line 83-86) has access control issues. Reason: The function can be called by any address, but it should only be callable by the owner. This allows unauthorized users to enable purchasing, which could lead to unintended consequences.
+
+2. Function disablePurchasing() (line 88-91) has access control issues. Reason: Similar to enablePurchasing, this function can be called by any address, allowing unauthorized users to disable purchasing, which could disrupt the intended functionality of the contract.
+
+3. Function withdrawForeignTokens(address _tokenContract) (line 93-100) has access control issues. Reason: This function allows any address to withdraw foreign tokens from the contract, but it should only be callable by the owner. Unauthorized users could drain tokens from the contract.
+
+4. Function setAIRDROPBounce(uint _newPrice) (line 102-106) has access control issues. Reason: This function can be called by any address, allowing unauthorized users to change the AIRDROPBounce variable, which could affect the token distribution mechanism.
+
+5. Function setICORatio(uint _newPrice) (line 108-112) has access control issues. Reason: Similar to setAIRDROPBounce, this function can be called by any address, allowing unauthorized users to change the ICORatio variable, which could impact the token issuance rate.
+
+6. Function setMINfinney(uint _newPrice) (line 114-118) has access control issues. Reason: This function can be called by any address, allowing unauthorized users to change the MINfinney variable, which could affect the minimum contribution amount for purchasing tokens.
+
+7. Function withdraw() (line 120-123) has access control issues. Reason: This function allows any address to withdraw the contract's ether balance, but it should only be callable by the owner. Unauthorized users could drain the contract's funds.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to perform critical actions that should be restricted to the owner.

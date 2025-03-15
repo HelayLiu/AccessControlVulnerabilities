@@ -1,0 +1,3 @@
+1. Function acceptAdmin() (line 38-45) has access control issues. Reason: The acceptAdmin function allows any address that is set as pendingAdmin to become the admin without any additional checks. If an attacker can set themselves as pendingAdmin, they can take control of the admin role, which can lead to unauthorized access to critical functions in the contract.
+
+2. Function setImplementation(address implementation_) (line 83-87) has access control issues. Reason: The setImplementation function is public and can be called by anyone, allowing any user to change the implementation address of the contract. This can lead to a situation where an attacker can redirect calls to a malicious implementation, compromising the contract's functionality and security.

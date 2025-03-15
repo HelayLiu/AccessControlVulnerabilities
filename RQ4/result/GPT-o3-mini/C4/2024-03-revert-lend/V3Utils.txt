@@ -1,0 +1,32 @@
+Below is one potential issue found during the audit:
+
+1. Vulnerable Function: execute  
+  Approximate Lines: 84–152  
+  Reason: The function execute (which is called both directly and via onERC721Received) lacks any access control checks. Unlike executeWithPermit—which verifies that msg.sender is the owner of the NFT—the execute() function (declared as public) does not confirm that the caller is authorized (e.g. by being the NFT’s owner or an approved operator). In other words, if for some reason the NFT position has been approved (or transferred) to this contract, anyone may call execute() with crafted Instructions. This could cause unintended actions (for example, forcibly decreasing liquidity, collecting fees, performing swaps, or even minting a new NFT) and have the funds/tokens directed to an attacker‐chosen beneficiary.
+
+Proof-of-Concept Outline:
+--------------------------------
+Assume that an NFT position has been approved (via permit, safeTransferFrom, or other means) to V3Utils. An attacker (who may not be the original owner) can call execute() directly with parameters they control. For example:
+
+  contract Attack {
+    V3Utils public utils;
+    IERC721PositionManager public positions; // Uniswap V3 positions
+
+    // attacker supplies a malicious Instruction struct that causes fees/leftovers 
+    // to be sent to an attacker-controlled address.
+    function attack(uint256 tokenId) external {
+     V3Utils.Instructions memory instr;
+     // setup `instr` so that when processed,
+     // e.g., swaps send tokens to attacker’s address.
+     // (fill out fields appropriately)
+     utils.execute(tokenId, instr);
+    }
+  }
+
+In this scenario, because execute() does not require any check on msg.sender, the attacker–if they can provoke a situation where the NFT is under the control of the V3Utils (for example, via an earlier permitted transfer)–could trigger these operations and reassign liquidity, fees, or mint new positions in their favor.
+
+Recommendation:
+-----------------
+Add an appropriate access control check (for example, that msg.sender must be the current owner of the NFT or that the NFT was transferred by the rightful owner) at the beginning of the execute() function, similar to what is done in executeWithPermit(). This will help prevent an attacker from supplying malicious instructions to alter the state or redirect funds/fees.
+
+Thus, the core issue is the missing authorization in the public execute() function.

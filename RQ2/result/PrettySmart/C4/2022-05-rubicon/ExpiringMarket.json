@@ -1,0 +1,17 @@
+{
+ "contract": "ExpiringMarket",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setOwner",
+   "0x0"
+  ],
+  [
+   "owner",
+   "stop",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

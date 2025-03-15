@@ -1,0 +1,12 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `syncBranchBridgeAgent` (line 1080-1082)**
+   - **Reason**: This function allows updating the address of a branch bridge agent for a specific chain ID. Although it uses the `requiresPort` modifier to restrict access, it is crucial to ensure that the `localPortAddress` is correctly set and that the contract at this address is secure and trusted. If the `localPortAddress` is compromised or incorrectly set, an unauthorized entity could potentially update the branch bridge agent address, leading to potential security risks.
+
+2. **Function `approveBranchBridgeAgent` (line 1074-1077)**
+   - **Reason**: This function allows marking a branch bridge agent as allowed for a specific chain ID. It uses the `requiresManager` modifier to restrict access, which checks if the caller is the bridge agent's manager. However, it is essential to ensure that the manager address is correctly set and that the entity controlling this address is trusted. If the manager address is compromised, an unauthorized entity could approve malicious branch bridge agents.
+
+3. **Function `sweep` (line 1084-1089)**
+   - **Reason**: This function allows transferring accumulated fees to the DAO address. It checks if the caller is the DAO address, but it is crucial to ensure that the `daoAddress` is correctly set and that the entity controlling this address is trusted. If the `daoAddress` is compromised, an unauthorized entity could call this function to transfer funds to themselves.
+
+To verify these issues, you should ensure that the addresses (`localPortAddress`, `daoAddress`, and the manager address) are set correctly and that the entities controlling these addresses are secure and trusted. Additionally, consider implementing further checks or mechanisms to ensure these addresses cannot be easily compromised or changed without proper authorization.

@@ -1,0 +1,44 @@
+Below is our audit analysis and the corresponding proof‐of‐concept for the access control issues that we found in this contract:
+
+──────────────────────────────
+1. Function refreshMintReward (approx. lines 230–232)
+──────────────────────────────
+Issue: This function is defined as an external function that calls eUSDMiningIncentives.refreshReward(user) for an arbitrary address passed by the caller. There is no modifier (such as onlyRole or checkRole) protecting this function. Consequently, any external account can trigger a reward “refresh” for any user—even one who has not consented to or intended such a call. Depending on the implementation of the underlying refreshReward() in the eUSDMiningIncentives contract (for example, if the reward calculation or state update uses the refresh timing) this might allow an attacker to manipulate mining incentive calculations or cause unexpected side effects.
+
+Proof of Concept:
+--------------------------------
+1. An attacker could call refreshMintReward(victimAddress) repeatedly.
+2. If the eUSDMiningIncentives.refreshReward logic adjusts the reward basis using a timestamp or a last-updated value, the attacker may force unfavorable reward updates on behalf of other users.
+--------------------------------
+Reason: Lack of access control on a state‐modifying function that updates reward data for any user may be abused to interfere with the proper incentive system.
+
+──────────────────────────────
+2. Function distributeRewards (approx. lines 234–257)
+──────────────────────────────
+Issue: This function is intended to “distribute” rewards from the contract to the protocol rewards pool. However, it has no access control modifier. As a result, any external actor can call it at any time. Although the function logic uses the current token balances and threshold conditions, an attacker could intentionally trigger distribution at inconvenient times or repeatedly to interfere with the protocol’s intended reward cycles. For example, by calling distributeRewards repeatedly the caller may force extra calls to notifyRewardAmount or create unexpected market interactions (via the Curve pool exchange) if premium trading is enabled.
+
+Proof of Concept:
+--------------------------------
+1. An attacker (or even any regular user) could simply invoke distributeRewards():
+   • If the contract holds a balance above threshold (≥1e21), the function will execute and transfer eUSD (or peUSD) from the contract to the protocol rewards pool.
+   • This could be used to “front‐run” a scheduled distribution or simply spam the function call to force repeated state changes and external calls.
+--------------------------------
+Reason: Not restricting who may trigger reward distribution may allow an external caller to force state updates or unintended interactions (for instance, via the Curve pool exchange) that can disturb the designed reward distribution mechanism.
+
+──────────────────────────────
+Summary of Vulnerable Functions:
+──────────────────────────────
+1. Function refreshMintReward (approx. lines 230–232)
+   Reason: It is missing an access control check, so any account can trigger a reward refresh on behalf of any user, potentially interfering with the mining incentive accounting.
+   
+2. Function distributeRewards (approx. lines 234–257)
+   Reason: It is missing an access control check, allowing any caller to trigger the distribution process, which could interfere with the intended timing/cycle of rewards and lead to unexpected state transitions.
+
+──────────────────────────────
+Recommendation:
+──────────────────────────────
+Review the intended design for these functions. If they are meant to be triggerable only by a trusted role or via a controlled process, add the appropriate access control modifiers (such as onlyRole or checkRole with the proper role parameter). If they are intended to be public (for example, as “keepers” in decentralised systems) then ensure that the downstream calls (such as refreshReward on the mining incentives and the logic in distributeRewards) safely tolerate repeated or maliciously timed calls.
+
+By addressing the missing access controls on these two functions, the contract’s reward handling process will be protected from potential abuse.
+
+This completes our audit analysis and POC for the access control issues found in the contract.

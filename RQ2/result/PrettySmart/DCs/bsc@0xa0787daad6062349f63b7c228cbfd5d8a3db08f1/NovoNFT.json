@@ -1,0 +1,12 @@
+{
+ "contract": "NovoNFT",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "getReward",
+   "0x137"
+  ]
+ ],
+ "PC_bypassed": []
+}

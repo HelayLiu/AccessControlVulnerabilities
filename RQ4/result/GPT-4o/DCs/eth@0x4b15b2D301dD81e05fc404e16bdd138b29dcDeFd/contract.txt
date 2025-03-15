@@ -1,0 +1,17 @@
+OutPut:
+1. Function `enablePurchasing()` (line 108-111) has an access control issue. Reason: The function uses a throw statement for access control, which is deprecated and not recommended. It should use `require(msg.sender == owner)` instead for better clarity and gas efficiency.
+
+2. Function `disablePurchasing()` (line 113-116) has an access control issue. Reason: Similar to `enablePurchasing()`, it uses a throw statement for access control. It should use `require(msg.sender == owner)` for better practice.
+
+3. Function `withdrawForeignTokens(address _tokenContract)` (line 118-124) has an access control issue. Reason: It uses a throw statement for access control. It should use `require(msg.sender == owner)` to ensure only the owner can withdraw tokens.
+
+4. Function `setAIRDROPBounce(uint _newPrice)` (line 130-133) has an access control issue. Reason: It uses a throw statement for access control. It should use `require(msg.sender == owner)` to ensure only the owner can set the AIRDROP bounce.
+
+5. Function `setICORatio(uint _newPrice)` (line 135-138) has an access control issue. Reason: It uses a throw statement for access control. It should use `require(msg.sender == owner)` to ensure only the owner can set the ICO ratio.
+
+6. Function `setMINfinney(uint _newPrice)` (line 140-143) has an access control issue. Reason: It uses a throw statement for access control. It should use `require(msg.sender == owner)` to ensure only the owner can set the minimum finney.
+
+7. Function `withdraw()` (line 172-175) has an access control issue. Reason: The function allows anyone to withdraw the entire balance of the contract to the owner's address without any access control checks. It should be restricted to the owner using `require(msg.sender == owner)`.
+
+Proof of Concept:
+To verify these issues, you can attempt to call these functions from an address that is not the owner. If the function executes without reverting, it confirms the access control issue. For the `withdraw()` function, you can check if the contract balance is transferred to the owner when called by a non-owner address.

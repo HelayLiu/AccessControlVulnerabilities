@@ -1,0 +1,31 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `addToBlacklist` (line 95-102)**
+   - **Reason**: The function allows addresses to be blacklisted, which can prevent them from staking or transferring tokens. Although it is protected by the `onlyRole(BLACKLIST_MANAGER_ROLE)` modifier, the contract does not provide a mechanism to ensure that the `BLACKLIST_MANAGER_ROLE` is assigned to a trusted entity. If this role is assigned to a malicious actor, they could arbitrarily blacklist addresses, disrupting the normal operation of the contract for legitimate users.
+
+2. **Function `removeFromBlacklist` (line 108-115)**
+   - **Reason**: Similar to `addToBlacklist`, this function allows addresses to be removed from the blacklist. It is also protected by the `onlyRole(BLACKLIST_MANAGER_ROLE)` modifier. Without proper checks and balances on who can be assigned the `BLACKLIST_MANAGER_ROLE`, there is a risk that a malicious actor could un-blacklist addresses that should remain restricted, potentially allowing them to exploit the contract.
+
+3. **Function `redistributeLockedAmount` (line 137-148)**
+   - **Reason**: This function allows the redistribution of tokens from a fully restricted staker to another address. It is protected by the `onlyRole(DEFAULT_ADMIN_ROLE)` modifier. However, if the `DEFAULT_ADMIN_ROLE` is compromised or assigned to an untrusted entity, they could misuse this function to redistribute tokens inappropriately, potentially leading to loss of funds for legitimate users.
+
+4. **Function `rescueTokens` (line 121-128)**
+   - **Reason**: This function allows the `DEFAULT_ADMIN_ROLE` to rescue tokens accidentally sent to the contract. While it cannot rescue USDe tokens, it can rescue other tokens, which could be misused if the `DEFAULT_ADMIN_ROLE` is not properly managed. A malicious admin could use this function to transfer tokens out of the contract to an arbitrary address.
+
+**Proof of Concept for Access Control Issue:**
+
+To verify the potential access control issue, consider the following scenario for the `addToBlacklist` function:
+
+- Assume a malicious actor gains the `BLACKLIST_MANAGER_ROLE`.
+- The malicious actor calls `addToBlacklist` with the address of a legitimate user.
+- The legitimate user is now blacklisted and cannot stake or transfer tokens, disrupting their ability to interact with the contract.
+
+**Output:**
+
+1. Function `addToBlacklist` (line 95-102) has potential access control issues. Reason: The function allows blacklisting of addresses, which can disrupt user operations if the `BLACKLIST_MANAGER_ROLE` is assigned to a malicious actor.
+
+2. Function `removeFromBlacklist` (line 108-115) has potential access control issues. Reason: The function allows un-blacklisting of addresses, which can be misused if the `BLACKLIST_MANAGER_ROLE` is assigned to a malicious actor.
+
+3. Function `redistributeLockedAmount` (line 137-148) has potential access control issues. Reason: The function allows redistribution of tokens from restricted stakers, which can be misused if the `DEFAULT_ADMIN_ROLE` is compromised.
+
+4. Function `rescueTokens` (line 121-128) has potential access control issues. Reason: The function allows the rescue of tokens, which can be misused if the `DEFAULT_ADMIN_ROLE` is not properly managed.

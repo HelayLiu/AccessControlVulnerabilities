@@ -1,0 +1,25 @@
+1. Function mint() (line 197-218) has access control issues. Reason: The mint function allows any user to mint tokens without proper checks on the amount of tokens they can mint, which could lead to excessive minting and potential abuse of the contract.
+
+2. Function mintForStakingV1ByOwner() (line 220-239) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+3. Function unstaking() (line 290-314) has access control issues. Reason: The unstaking function allows any user to unstake their tokens, but it does not check if the user is the actual owner of the token being unstaked. This could lead to unauthorized access to other users' tokens.
+
+4. Function getReward() (line 364-373) has access control issues. Reason: This function can be called by any address, but it should only be callable by the NOVO contract. There is no access control check to ensure that only the NOVO contract can call this function.
+
+5. Function setCost() (line 487-490) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+6. Function setMinStakingAmount() (line 492-495) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+7. Function setClaimLimitTime() (line 497-500) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+8. Function setmaxMintAmount() (line 502-505) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+9. Function setBaseURI() (line 507-510) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+10. Function setLockDays() (line 512-515) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+11. Function setBaseExtension() (line 517-520) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+12. Function setPaused() (line 522-530) has access control issues. Reason: This function can be called by any address, but it should only be callable by the owner of the contract. There is no access control check to ensure that only the owner can call this function.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to perform actions that should be restricted to the contract owner or specific addresses.

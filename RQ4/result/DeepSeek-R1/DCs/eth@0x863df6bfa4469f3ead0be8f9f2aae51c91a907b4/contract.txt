@@ -1,0 +1,21 @@
+1. Function `initMultiowned(address[] _owners, uint _required)` (line 66-78) has access control issues. Reason: The function can be called by anyone to initialize the multi-owned structure, which could allow unauthorized users to set owners and the required number of confirmations.
+
+2. Function `changeOwner(address _from, address _to)` (line 100-112) has access control issues. Reason: The function can be called by any user, and if the `_from` address is an owner, it allows changing ownership without proper checks on the caller's permissions.
+
+3. Function `addOwner(address _owner)` (line 114-126) has access control issues. Reason: The function can be called by any user, allowing them to add themselves or any address as an owner without proper authorization.
+
+4. Function `removeOwner(address _owner)` (line 128-141) has access control issues. Reason: The function can be called by any user, allowing them to remove any owner without proper authorization.
+
+5. Function `changeRequirement(uint _newRequired)` (line 143-155) has access control issues. Reason: The function can be called by any user, allowing them to change the number of required confirmations without proper authorization.
+
+6. Function `setDailyLimit(uint _newLimit)` (line 174-177) has access control issues. Reason: The function can be called by any user, allowing them to set the daily limit without proper authorization.
+
+7. Function `resetSpentToday()` (line 179-182) has access control issues. Reason: The function can be called by any user, allowing them to reset the spent amount without proper authorization.
+
+8. Function `kill(address _to)` (line 184-187) has access control issues. Reason: The function can be called by any user, allowing them to destroy the contract and send funds to any address without proper authorization.
+
+9. Function `execute(address _to, uint _value, bytes _data)` (line 189-217) has access control issues. Reason: The function can be called by any user, allowing them to execute transactions without proper authorization checks.
+
+10. Function `confirm(bytes32 _h)` (line 219-239) has access control issues. Reason: The function can be called by any user, allowing them to confirm transactions without proper authorization checks.
+
+These functions lack proper access control mechanisms, allowing unauthorized users to perform sensitive operations that could compromise the integrity and security of the contract.

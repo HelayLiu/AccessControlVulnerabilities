@@ -1,0 +1,25 @@
+1. Function step1() (line 45-48) has access control issues. Reason: The function can be called by any address due to the public visibility, which allows anyone to trigger the liquidizer's performUpkeep function, potentially leading to unauthorized token swaps.
+
+2. Function step2() (line 52-58) has access control issues. Reason: Similar to step1, this function is public and can be called by any address, allowing anyone to withdraw WETH arbitrage profits and receive rewards, which should be restricted to authorized users.
+
+3. Function step3() (line 63-66) has access control issues. Reason: This function is also public and can be called by any address, allowing unauthorized users to convert WETH to USDS/DAI Protocol Owned Liquidity.
+
+4. Function step4() (line 71-74) has access control issues. Reason: The public visibility allows any address to convert WETH to SALT/USDS Protocol Owned Liquidity, which should be restricted.
+
+5. Function step5() (line 79-82) has access control issues. Reason: This function can be called by any address, allowing unauthorized conversion of WETH to SALT and sending it to SaltRewards.
+
+6. Function step6() (line 87-90) has access control issues. Reason: The public visibility allows any address to send SALT emissions to the SaltRewards contract, which should be restricted.
+
+7. Function step7() (line 95-98) has access control issues. Reason: This function can be called by any address, allowing unauthorized distribution of SALT from SaltRewards to the staking and liquidity rewards emitters.
+
+8. Function step8() (line 103-106) has access control issues. Reason: The public visibility allows any address to distribute SALT rewards from the staking and liquidity rewards emitters, which should be restricted.
+
+9. Function step9() (line 111-114) has access control issues. Reason: This function can be called by any address, allowing unauthorized collection of SALT rewards from the DAO's Protocol Owned Liquidity.
+
+10. Function step10() (line 119-122) has access control issues. Reason: The public visibility allows any address to send SALT from the DAO vesting wallet to the DAO, which should be restricted.
+
+11. Function step11() (line 127-132) has access control issues. Reason: This function can be called by any address, allowing unauthorized sending of SALT from the team vesting wallet to the team.
+
+12. Function performUpkeep() (line 137-157) has access control issues. Reason: The function is public and can be called by any address, allowing unauthorized execution of multiple steps that involve significant financial operations.
+
+In summary, the contract has multiple functions that are publicly accessible without proper access control checks, allowing unauthorized users to perform critical operations that should be restricted to specific roles or addresses.

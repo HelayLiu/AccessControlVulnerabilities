@@ -1,0 +1,17 @@
+1. Function `assertGovernanceApproved` (line 54-72) has access control issues. Reason: The function is public and does not have any access control checks to restrict who can call it. This means any user can invoke this function, potentially leading to unauthorized governance decisions.
+
+2. Function `configureFlashGovernance` (line 90-97) has access control issues. Reason: The function is public and relies on the `onlySuccessfulProposal` modifier, but if this modifier is not properly implemented in the `Governable` contract, it could allow unauthorized users to configure critical parameters of flash governance.
+
+3. Function `configureSecurityParameters` (line 104-113) has access control issues. Reason: Similar to `configureFlashGovernance`, this function is public and relies on the `onlySuccessfulProposal` modifier. If the modifier does not adequately restrict access, unauthorized users could change security parameters that affect the governance system.
+
+4. Function `burnFlashGovernanceAsset` (line 120-130) has access control issues. Reason: This function is public and also relies on the `onlySuccessfulProposal` modifier. If the modifier is not correctly implemented, it could allow unauthorized users to burn assets, which could lead to loss of collateral without proper governance.
+
+5. Function `withdrawGovernanceAsset` (line 138-150) has access control issues. Reason: This function is public and does not have any access control checks. Any user can call this function to withdraw assets, which could lead to unauthorized withdrawals if the user has pending decisions.
+
+6. Function `setEnforcement` (line 157-162) has access control issues. Reason: This function is public and allows any user to set enforcement limits for themselves without any checks. This could lead to users manipulating the enforcement of limits inappropriately.
+
+7. Function `enforceToleranceInt` (line 165-172) has access control issues. Reason: This function is public and does not have any access control checks. Any user can call this function, which could lead to unintended consequences if used improperly.
+
+8. Function `enforceTolerance` (line 175-185) has access control issues. Reason: This function is public and does not have any access control checks. Any user can call this function, which could lead to unintended consequences if used improperly.
+
+In summary, the contract has multiple functions that lack proper access control checks, which could lead to unauthorized actions and potential vulnerabilities in the governance system.

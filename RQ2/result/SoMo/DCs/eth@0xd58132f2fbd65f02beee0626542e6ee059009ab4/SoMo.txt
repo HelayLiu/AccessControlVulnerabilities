@@ -1,0 +1,21 @@
+Switched global version to 0.4.25
+Modifiers Status:
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+Modifier: onlyWhitelist, Status: ModifierStatus.SECURE
+Modifier: onlyPayloadSize, Status: ModifierStatus.SECURE
+Modifier: canDistr, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: owner, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: XBORNID.XBornID()
+owner_1(address) := msg.sender(address)
+Entry Point: XBORNID.onlyOwner()
+owner_9(address) := ϕ(['owner_8', 'owner_4', 'owner_2', 'owner_1', 'owner_0'])
+TMP_86(bool) = msg.sender == owner_9
+TMP_87(None) = SOLIDITY_CALL require(bool)(TMP_86)
+
+

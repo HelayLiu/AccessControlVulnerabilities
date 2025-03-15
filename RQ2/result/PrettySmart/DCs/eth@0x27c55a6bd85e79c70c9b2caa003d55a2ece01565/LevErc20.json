@@ -1,0 +1,67 @@
+{
+ "contract": "LevErc20",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "_setPendingAdmin",
+   "0x3"
+  ],
+  [
+   "owner",
+   "initialize",
+   "0x3"
+  ],
+  [
+   "owner",
+   "0xc255f92c",
+   "0x3"
+  ],
+  [
+   "owner",
+   "0x249b1365",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_reduceReserves",
+   "0x3"
+  ],
+  [
+   "owner",
+   "0x59c86a11",
+   "0x6"
+  ],
+  [
+   "owner",
+   "0x13fc6b69",
+   "0x3"
+  ],
+  [
+   "owner",
+   "_acceptAdmin",
+   "0x4"
+  ],
+  [
+   "owner",
+   "0x1f82290a",
+   "0x6"
+  ],
+  [
+   "owner",
+   "0xfff14675",
+   "0x3"
+  ],
+  [
+   "owner",
+   "sweepToken",
+   "0x3"
+  ],
+  [
+   "owner",
+   "0x043160e2",
+   "0x3"
+  ]
+ ],
+ "PC_bypassed": []
+}

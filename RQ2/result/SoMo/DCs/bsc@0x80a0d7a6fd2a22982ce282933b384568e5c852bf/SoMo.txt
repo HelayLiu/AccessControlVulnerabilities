@@ -1,0 +1,9 @@
+Switched global version to 0.8.17
+Modifiers Status:
+Modifier: whenNotPaused, Status: ModifierStatus.SECURE
+Modifier: nonReentrant, Status: ModifierStatus.SECURE
+Modifier: onlyController, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

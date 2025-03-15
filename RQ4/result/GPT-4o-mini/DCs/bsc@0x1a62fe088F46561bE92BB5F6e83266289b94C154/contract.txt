@@ -1,0 +1,15 @@
+1. Function setMiner(address _addr,bool _bool) (line 118-120) has access control issues. Reason: The function allows the owner to set any address as a miner without any restrictions, which could lead to unauthorized access if the owner is compromised.
+
+2. Function setBaseURI(string memory baseURI_) (line 123-125) has access control issues. Reason: This function allows the owner to change the base URI for the token metadata, which could be exploited if the owner's account is compromised.
+
+3. Function setsoilAddress(address _addr) (line 128-130) has access control issues. Reason: This function allows the owner to set the soil address without any checks, which could lead to unauthorized access if the owner is compromised.
+
+4. Function setGSDAddress(address _addr) (line 133-135) has access control issues. Reason: This function allows the owner to set the GSD address without any checks, which could lead to unauthorized access if the owner is compromised.
+
+5. Function setLFTAddress(address _addr) (line 138-140) has access control issues. Reason: This function allows the owner to set the LFT address without any checks, which could lead to unauthorized access if the owner is compromised.
+
+6. Function upgrade(uint256 _tokenId) (line 206-270) has access control issues. Reason: The function allows any user to upgrade their token without verifying if they are the actual owner of the token, which could lead to unauthorized upgrades if the token ID is known.
+
+7. Function mint(address player,uint256 amount) (line 274-278) has access control issues. Reason: The function allows any miner to mint tokens without any restrictions, which could lead to unauthorized minting if the miner's address is compromised.
+
+8. Function setPaused(bool _paused) (line 144-146) has access control issues. Reason: This function allows the owner to pause or unpause the contract, which could lead to unauthorized access if the owner's account is compromised.

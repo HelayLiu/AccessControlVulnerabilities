@@ -1,0 +1,12 @@
+{
+ "contract": "RngAuction",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "claimOwnership",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

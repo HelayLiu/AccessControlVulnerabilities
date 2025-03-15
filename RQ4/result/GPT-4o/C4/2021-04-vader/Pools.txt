@@ -1,0 +1,19 @@
+OutPut:
+
+1. Function `init()` (line 28-35) has an access control issue. Reason: The `init()` function can be called by anyone to set the addresses of VADER, USDV, ROUTER, and FACTORY. This function should be restricted to only be callable by an authorized account, such as the contract owner or a designated initializer, to prevent unauthorized initialization or re-initialization of the contract.
+
+2. Function `addLiquidity()` (line 38-58) has an access control issue. Reason: The function allows any external account to add liquidity without any access control checks. This could lead to unauthorized accounts manipulating the liquidity pools. It is advisable to implement access control to ensure only authorized accounts can add liquidity.
+
+3. Function `removeLiquidity()` (line 60-62) and `removeLiquidityDirectly()` (line 63-65) have access control issues. Reason: Both functions allow any external account to remove liquidity without any access control checks. This could lead to unauthorized accounts draining liquidity from the pools. Implementing access control to restrict these actions to authorized accounts is recommended.
+
+4. Function `swap()` (line 80-98) has an access control issue. Reason: The function allows any external account to perform swaps without any access control checks. This could lead to unauthorized accounts performing swaps that could manipulate the pool balances. Implementing access control to restrict swap operations to authorized accounts or contracts is advisable.
+
+5. Function `sync()` (line 100-110) has an access control issue. Reason: The function allows any external account to sync balances without any access control checks. This could lead to unauthorized accounts manipulating the pool balances. Implementing access control to restrict sync operations to authorized accounts or contracts is advisable.
+
+6. Function `deploySynth()` (line 115-118) has an access control issue. Reason: The function allows any external account to deploy a synth without any access control checks. This could lead to unauthorized synth deployments. Implementing access control to restrict synth deployment to authorized accounts is advisable.
+
+7. Function `mintSynth()` (line 121-131) and `burnSynth()` (line 133-145) have access control issues. Reason: Both functions allow any external account to mint or burn synths without any access control checks. This could lead to unauthorized minting or burning of synths, affecting the pool balances. Implementing access control to restrict these operations to authorized accounts is recommended.
+
+8. Function `syncSynth()` (line 147-153) has an access control issue. Reason: The function allows any external account to sync synths without any access control checks. This could lead to unauthorized accounts manipulating the synth balances. Implementing access control to restrict sync operations to authorized accounts is advisable.
+
+9. Functions `lockUnits()` (line 158-162) and `unlockUnits()` (line 164-168) have access control issues. Reason: Both functions allow any external account to lock or unlock units without any access control checks. This could lead to unauthorized manipulation of unit allocations. Implementing access control to restrict these operations to authorized accounts or contracts is recommended.

@@ -1,0 +1,28 @@
+Below is our audit analysis of the Pools contract. We have identified several functions that make critical state changes but do not check that the caller is authorized to do so. In our report we list the vulnerable functions with approximate line numbers (relative to the start of the contract code) and our reasoning:
+
+1. Function init (approximately line 19–24)  
+   Reason: The init() function can be called by anyone (it is declared public) and, once (if inited is false), will set the key addresses (VADER, USDV, ROUTER, FACTORY). In many design patterns an initialization function should be restricted (for example, only the deployer or a designated admin should be allowed to call it) to avoid an attacker “hijacking” the contract by initializing it with arbitrary addresses.
+
+2. Function deploySynth (approximately line 112–116)  
+   Reason: Although it includes a check with require(token != VADER || token != USDV), the condition is flawed (using OR means that a token equal to VADER passes as long as VADER != USDV) and overall the function is unguarded. As a public external function, anyone can call deploySynth to trigger synth deployment via the factory. This allows an attacker to force the creation of synth tokens for arbitrary tokens, which may later be used to steal liquidity or manipulate accounting.
+
+3. Functions lockUnits and unlockUnits (approximately lines 127–134)  
+   Reason: Both functions transfer liquidity “units” by subtracting from one address’s balance and crediting another’s. There is no access control – no check that the caller is a trusted or authorized protocol. In lockUnits an arbitrary caller can use msg.sender to “steal” units from any member by reducing mapTokenMember_Units[token][member] (where member is provided by the caller) and transferring them to themselves. Similarly, unlockUnits lets any caller reassign units without restrictions. Such operations can break the integrity of the pool accounting.
+
+Additional observations:  
+• Several swaps, liquidity removals, and synth operations are designed to be used by a router or factory but are marked as external with no proper ownership or whitelist modifiers. While that may be acceptable if the protocol design intends for them to be callable by anyone, it does open the door to unexpected interactions if no further checks are done off‐chain.  
+
+Proof of Concept (PoC) for the init() vulnerability:  
+1. An attacker deploys a Pools contract.  
+2. Before the legitimate initializer calls init(), the attacker calls init() with addresses under his control (for VADER, USDV, ROUTER, FACTORY).  
+3. Once inited is set to true, the attacker controls the key addresses and any functions that rely on these parameters (e.g. UTILS() in swap calculations, synth deployment via deploySynth, etc.) can then be manipulated.
+
+Similarly, an attacker may call deploySynth or invoke lockUnits/unlockUnits to alter pool unit balances to their advantage.
+
+Summary of Vulnerable Functions:  
+• init (approx. line 19–24) – No access control; any caller can initialize the contract and assign critical parameters.  
+• deploySynth (approx. line 112–116) – Missing proper access restriction; allows arbitrary synth deployment due to a flawed require check.  
+• lockUnits (approx. line 127–130) – Missing access control allows reassigning member liquidity units to msg.sender without permission.  
+• unlockUnits (approx. line 131–134) – Missing access control permits unauthorized reassignment of liquidity units.
+
+These issues represent potential attack vectors that could allow unauthorized changes to pool state and liquidity, which in turn could lead to theft or economic manipulation.

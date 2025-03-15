@@ -1,0 +1,19 @@
+1. Function mintHandle(address to, string calldata localName) (line 83-88) has access control issues. Reason: The function allows any address that is either the owner or a whitelisted profile creator to mint a handle. If the whitelisted profile creator list is not properly managed, it could allow unauthorized users to mint handles.
+
+2. Function migrateHandle(address to, string calldata localName) (line 90-95) has access control issues. Reason: This function can be called by any address that is the LENS_HUB. If the LENS_HUB address is compromised or not properly controlled, it could allow unauthorized migration of handles.
+
+3. Function DANGER__disableTokenGuardian() (line 112-120) has access control issues. Reason: This function can be called by any externally owned account (EOA). If an EOA is compromised, it could disable the token guardian for that address, leading to potential misuse.
+
+4. Function enableTokenGuardian() (line 123-130) has access control issues. Reason: Similar to the previous function, this can also be called by any EOA. If an EOA is compromised, it could enable the token guardian for that address, which may not be intended.
+
+5. Function approve(address to, uint256 tokenId) (line 133-140) has access control issues. Reason: The function allows approvals to be set even if the token guardian is enabled. If the token guardian is enabled, it should not allow any approvals to be set, as this could lead to unauthorized access to the token.
+
+6. Function setApprovalForAll(address operator, bool approved) (line 143-150) has access control issues. Reason: Similar to the approve function, it allows setting approvals even if the token guardian is enabled. This could lead to unauthorized access to the token.
+
+7. Function burn(uint256 tokenId) (line 97-104) has access control issues. Reason: The function allows the token owner to burn the token, but if the ownership is not properly verified, it could lead to unauthorized burning of tokens.
+
+8. Function getLocalName(uint256 tokenId) (line 174-179) has access control issues. Reason: This function does not check if the tokenId exists before returning the local name. If a non-existent tokenId is queried, it could lead to unexpected behavior.
+
+9. Function getHandle(uint256 tokenId) (line 182-187) has access control issues. Reason: Similar to getLocalName, this function does not check if the tokenId exists before returning the handle. This could lead to unexpected behavior.
+
+In summary, the contract has several access control issues that could lead to unauthorized actions being performed by malicious actors. Proper checks and balances should be implemented to ensure that only authorized users can perform sensitive actions.

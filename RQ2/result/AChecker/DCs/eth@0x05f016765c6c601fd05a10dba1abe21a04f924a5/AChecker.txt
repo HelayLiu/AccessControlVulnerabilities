@@ -1,0 +1,22 @@
+error in AChecker Traceback (most recent call last):
+  File "../AChecker/bin/achecker.py", line 425, in <module>
+    main()
+  File "../AChecker/bin/achecker.py", line 421, in main
+    analysis(p, initial_storage, sym_validation =symbolic_validation, mode=mode)
+  File "../AChecker/bin/achecker.py", line 89, in analysis
+    ssa = rattle.Recover(bytes.hex(p.code).encode(), edges=p.cfg.edges(), split_functions=False)      
+  File "../AChecker/src/project.py", line 49, in cfg
+    self._cfg = CFG(generate_BBs(self.code))
+  File "../AChecker/src/cfg/cfg.py", line 22, in __init__
+    self._xrefs(fix_only_easy_xrefs)
+  File "../AChecker/src/cfg/cfg.py", line 46, in _xrefs
+    self._hard_xrefs()            
+  File "../AChecker/src/cfg/cfg.py", line 64, in _hard_xrefs
+    succ_addrs, new_succ_addrs = pred.get_succ_addrs_full(self.valid_jump_targets)
+  File "../AChecker/src/cfg/bb.py", line 143, in get_succ_addrs_full
+    succ_addr = run(p, check_initialized=True).stack.pop()
+  File "../AChecker/src/evm/evm.py", line 205, in run
+    mem.extend(s0, 32)
+  File "../AChecker/src/evm/state.py", line 50, in extend
+    self.memory += bytearray(start + size - len(self.memory))
+OverflowError: cannot fit 'int' into an index-sized integer

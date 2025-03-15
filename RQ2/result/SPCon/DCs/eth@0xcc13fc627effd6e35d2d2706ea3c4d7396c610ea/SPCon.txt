@@ -1,0 +1,1041 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['lockBalances']
+INFO:symExec:SymExecEVM().symExec: lockBalances()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setOwner', 'lockBalances']
+INFO:symExec:SymExecEVM().symExec: setOwner(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: lockBalances()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['setOwner', 'lockBalances']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setHoldingPeriod']
+INFO:symExec:SymExecEVM().symExec: setHoldingPeriod(uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setOwner', 'setHoldingPeriod']
+INFO:symExec:SymExecEVM().symExec: setOwner(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: setHoldingPeriod(uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['setOwner', 'setHoldingPeriod']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setOwner']
+INFO:symExec:SymExecEVM().symExec: setOwner(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['setOwner']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setExportFee']
+INFO:symExec:SymExecEVM().symExec: setExportFee(address,uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setOwner', 'setExportFee']
+INFO:symExec:SymExecEVM().symExec: setOwner(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: setExportFee(address,uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['setOwner', 'setExportFee']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['unlockToken']
+INFO:symExec:SymExecEVM().symExec: unlockToken()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: No visibility specified. Defaulting to "public".
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: No visibility specified. Defaulting to "public".
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: No visibility specified. Defaulting to "public".
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:30:3: Warning: No visibility specified. Defaulting to "public".
+  function Owned() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:33:3: Warning: No visibility specified. Defaulting to "public".
+  function setOwner(address _owner) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:62:5: Warning: "throw" is deprecated in favour of "revert()", "require()" and "assert()".
+    throw;
+    ^---^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:80:3: Warning: No visibility specified. Defaulting to "public".
+  function IDXM() {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:89:3: Warning: No visibility specified. Defaulting to "public".
+  function uploadBalances(address[] addresses, uint256[] balances) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:100:3: Warning: No visibility specified. Defaulting to "public".
+  function lockBalances() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:110:3: Warning: No visibility specified. Defaulting to "public".
+  function transfer(address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:135:3: Warning: No visibility specified. Defaulting to "public".
+  function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:162:3: Warning: No visibility specified. Defaulting to "public".
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:177:3: Warning: No visibility specified. Defaulting to "public".
+  function approve(address _spender, uint256 _amount) returns (bool success) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:184:3: Warning: No visibility specified. Defaulting to "public".
+  function setExportFee(address addr, uint256 fee) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:189:3: Warning: No visibility specified. Defaulting to "public".
+  function setHoldingPeriod(uint256 ts) onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:228:3: Warning: No visibility specified. Defaulting to "public".
+  function unlockToken() onlyOwner {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:232:45: Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+  function precalculate() internal returns (bool success) {
+                                            ^----------^
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:12:3: Warning: Function state mutability can be restricted to pure
+  function safeMul(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:17:3: Warning: Function state mutability can be restricted to pure
+  function safeSub(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:21:3: Warning: Function state mutability can be restricted to pure
+  function safeAdd(uint256 a, uint256 b) returns (uint256) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:237:3: Warning: Function state mutability can be restricted to pure
+  function div10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+Warning: crytic-export/etherscan-contracts2/0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea-IDXM.sol:243:3: Warning: Function state mutability can be restricted to pure
+  function pow10(uint256 a, uint8 b) internal returns (uint256 result) {
+  ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['setOwner', 'unlockToken']
+INFO:symExec:SymExecEVM().symExec: setOwner(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: unlockToken()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['setOwner', 'unlockToken']
+INFO:symExec:Testing time: 82.69993495941162 seconds

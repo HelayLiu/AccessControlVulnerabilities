@@ -1,0 +1,17 @@
+1. Function XBornID() (line 66-68) has access control issues. Reason: The constructor can set the owner variable, which is significant because with the role, the owner can perform any privileged actions on the contract.
+
+2. Function distr(address _to, uint256 _amount) (line 54-70) has access control issues. Reason: The function is marked as private, which means it can be called from within the contract without any access control checks. If there are any public functions that can call this function, it could lead to unauthorized distribution of tokens.
+
+3. Function transferOwnership(address newOwner) (line 71-75) has access control issues. Reason: The function allows the current owner to transfer ownership to any address, including potentially malicious addresses, without any checks on the new owner's validity.
+
+4. Function finishDistribution() (line 78-81) has access control issues. Reason: The function can be called by anyone who can access the contract, allowing them to finish the distribution prematurely.
+
+5. Function getTokens() (line 90-110) has access control issues. Reason: The function allows any user to call it and potentially receive tokens, but it does not adequately check if the user is allowed to receive tokens based on the distribution logic.
+
+6. Function withdraw() (line 113-116) has access control issues. Reason: The function allows the owner to withdraw all Ether from the contract, but if the owner is compromised, this could lead to loss of funds.
+
+7. Function burn(uint256 _value) (line 119-126) has access control issues. Reason: The function allows the owner to burn tokens, which could be exploited if the owner is compromised.
+
+8. Function withdrawForeignTokens(address _tokenContract) (line 129-134) has access control issues. Reason: The function allows the owner to withdraw foreign tokens, which could lead to loss of tokens if the owner is compromised.
+
+In summary, the contract has multiple access control issues that could lead to unauthorized actions being taken by malicious actors if they gain control of the owner's address or if the access control checks are not properly enforced.

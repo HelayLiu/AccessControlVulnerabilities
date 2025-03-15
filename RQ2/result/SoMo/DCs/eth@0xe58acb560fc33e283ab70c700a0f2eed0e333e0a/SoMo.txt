@@ -1,0 +1,52 @@
+Switched global version to 0.8.19
+Modifiers Status:
+Modifier: onlyHandler, Status: ModifierStatus.SECURE
+Modifier: onlySiwtchOperator, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.CSECURE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: CSECURE
+Constraint: TMP_212, Value: "attacker"	Constraint: TMP_207, Value: "910187831842729343139051850480574547744253400968"	Constraint: 910187831842729343139051850480574547744253400968: <class 'int'>, Value: 910187831842729343139051850480574547744253400968	Constraint: owner, Value: "attacker"	Constraint: TMP_105, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: LinearVesting.init(IERC20,uint256,uint256)
+TMP_105(address) = INTERNAL_CALL, Context._msgSender()()
+Entry Point: Context._msgSender()
+RETURN msg.sender
+Exit Point: Context._msgSender()
+owner_1(address) := TMP_105(address)
+Entry Point: LinearVesting.onlyOwner()
+owner_3(address) := ϕ(['owner_1', 'owner_5', 'owner_2', 'owner_0'])
+TMP_207 = CONVERT 910187831842729343139051850480574547744253400968 to address
+TMP_208(bool) = msg.sender != TMP_207
+CONDITION TMP_208
+END_IF
+TMP_212(address) = INTERNAL_CALL, Context._msgSender()()
+TMP_213(bool) = owner_5 == TMP_212
+TMP_214(None) = SOLIDITY_CALL require(bool,string)(TMP_213,Ownable: caller is not the owner)
+Insecure Path:
+
+Path Status: SECURE
+Constraint: TMP_105, Value: ""	Constraint: TMP_212, Value: ""	Constraint: TMP_209, Value: ""	Constraint: TMP_207, Value: "910187831842729343139051850480574547744253400968"	Constraint: 910187831842729343139051850480574547744253400968: <class 'int'>, Value: 910187831842729343139051850480574547744253400968	Constraint: owner, Value: ""	Constraint: msg.sender, Value: ""
+Insecure Path: 
+Entry Point: LinearVesting.init(IERC20,uint256,uint256)
+TMP_105(address) = INTERNAL_CALL, Context._msgSender()()
+Entry Point: Context._msgSender()
+RETURN msg.sender
+Exit Point: Context._msgSender()
+owner_1(address) := TMP_105(address)
+Entry Point: LinearVesting.onlyOwner()
+owner_3(address) := ϕ(['owner_1', 'owner_5', 'owner_2', 'owner_0'])
+TMP_207 = CONVERT 910187831842729343139051850480574547744253400968 to address
+TMP_208(bool) = msg.sender != TMP_207
+CONDITION TMP_208
+TMP_209(address) = INTERNAL_CALL, Context._msgSender()()
+TMP_210(bool) = owner_4 == TMP_209
+TMP_211(None) = SOLIDITY_CALL require(bool,string)(TMP_210,Ownable: caller is not the owner)
+END_IF
+TMP_212(address) = INTERNAL_CALL, Context._msgSender()()
+TMP_213(bool) = owner_5 == TMP_212
+TMP_214(None) = SOLIDITY_CALL require(bool,string)(TMP_213,Ownable: caller is not the owner)
+
+

@@ -1,0 +1,51 @@
+Below is a summary of two areas where the access‐control (authorization) logic might be “loose” or “unexpected” in this file. (Note that some of these issues may be design choices rather than bugs—but from an audit perspective they are worth highlighting because they affect who may call “critical” functions.)
+
+──────────────────────────────────────────────
+1. CoinToken Constructor – Owner Initialization 
+──────────────────────────────────────────────
+• Vulnerable Code (approximate lines 160–170 in CoinToken’s constructor):
+  …
+    _owner = tokenOwner;
+    _rOwned[tokenOwner] = _rTotal;
+  …
+• Reason:
+ When the CoinToken contract is deployed, the constructor accepts an external parameter tokenOwner and assigns it as the contract’s owner (without checking that tokenOwner equals the deployer’s address). This means that a deployer (or whoever packages the constructor call) may supply an arbitrary address as tokenOwner. As a result, an unexpected party may gain full owner privileges (which include calling onlyOwner functions such as mint, updateFee, excludeAccount, and setAsCharityAccount). An attacker may deploy the token using a malicious tokenOwner so that later the malicious address is the only one who can change fees or mint new tokens.
+• Proof of Concept:
+ 1. Deploy the CoinToken contract while supplying an attacker-controlled address as tokenOwner.
+ 2. Later, from that attacker account, call “mint” or “updateFee” (both guarded by onlyOwner) and verify that the attacker can modify critical parameters.
+ 
+──────────────────────────────────────────────
+2. Pausable Modifier’s Hard‐Coded “Bypass” Addresses
+──────────────────────────────────────────────
+• Vulnerable Code (in the Pausable contract’s whenNotPaused modifier, around lines 40–50):
+  modifier whenNotPaused() {
+    if(pausedPublic) {
+     if(!pausedOwnerAdmin) {
+      require(msg.sender == _owner || 
+        msg.sender == 0x0040473E86141EfD5009e77511d63578D7068cA3  ||  
+        msg.sender == 0xd108671B3Ab1D10d92c8a575525F42fBd5219065 || 
+        msg.sender == admin);
+     } else {
+      revert();
+     }
+    }
+    _;
+  }
+• Reason:
+ The “whenNotPaused” modifier is meant to prevent most callers when pausedPublic is true. However, it makes exceptions for several hard‐coded addresses (_owner, two fixed addresses, and the value stored in admin). In a paused state (with pausedPublic == true and pausedOwnerAdmin == false), any transaction coming from one of these addresses bypasses the pause check. If those hard‐coded addresses are not properly controlled or later become “stale” (for example, if ownership is transferred or the admin account should be changed but isn’t updated throughout all checks), this logic may let an unauthorized party execute token transfers or fee‐changing logic even when the contract is “paused.”
+• Proof of Concept:
+ 1. Set pausedPublic to true (by calling pause(true, false) from the owner).
+ 2. Show that a transaction sent from one of the hard–coded addresses (such as 0x0040473E86141EfD5009e77511d63578D7068cA3) still goes through—even though most users would be “paused.”
+ 3. An attacker who controls or somehow obtains one of these fixed addresses (or if these addresses are used in a wrong context) may bypass the pause protection.
+ 
+──────────────────────────────────────────────
+Summary:
+1. Function: CoinToken constructor (lines ≈160–170)
+  Issue: Setting _owner from a user–provided tokenOwner parameter.
+  Reason: An attacker (or an inattentive deployer) can supply an arbitrary address as tokenOwner giving that address sole access to all onlyOwner–restricted functions.
+
+2. Modifier: whenNotPaused (lines ≈40–50 in Pausable)
+  Issue: Bypassing pause logic via hard-coded addresses.
+  Reason: Hard–coded “whitelist” addresses (including fixed addresses and the admin state variable) bypass the pause restriction. If these addresses are not under full control or their usage isn’t updated when ownership/administrative roles change, unauthorized parties may operate functions that should be “paused.”
+
+Both of these points—especially when considered together with the wide authority granted to onlyOwner functions (e.g. mint and updateFee)—can result in unexpected control over the token’s behavior. It is recommended that the deployer be careful with constructor parameters (ensuring that msg.sender is used as owner unless there’s a deliberate multisig or proxy pattern) and that the bypass addresses in the pause logic be reviewed to verify that they match the intended access control policy.

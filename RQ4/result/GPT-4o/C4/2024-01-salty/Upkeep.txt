@@ -1,0 +1,19 @@
+Upon reviewing the provided smart contract, the following access control issues have been identified:
+
+1. **Function `performUpkeep()` (line 211-246)**
+   - **Reason**: The `performUpkeep()` function is publicly accessible and can be called by any address. Although it uses a `nonReentrant` modifier to prevent reentrancy attacks, it does not have any access control checks to restrict who can call it. This function orchestrates a series of critical operations, including token swaps, reward distributions, and protocol-owned liquidity management. Without proper access control, any external user can trigger these operations, potentially leading to unintended consequences or exploitation.
+
+2. **Function `currentRewardsForCallingPerformUpkeep()` (line 249-255)**
+   - **Reason**: While this function is a view function and does not modify the state, it provides information about the rewards available for calling `performUpkeep()`. This could be used by potential attackers to time their calls to `performUpkeep()` for maximum profit. Although not a direct access control issue, it highlights the importance of ensuring that the `performUpkeep()` function is properly secured.
+
+**Proof of Concept for `performUpkeep()` Access Control Issue:**
+
+To demonstrate the access control issue with `performUpkeep()`, consider the following scenario:
+
+1. An attacker observes that the `performUpkeep()` function is publicly accessible.
+2. The attacker calls `performUpkeep()` repeatedly, potentially manipulating the timing to maximize their rewards from the arbitrage profits and other distributions.
+3. This could lead to the attacker draining rewards or causing disruptions in the intended operation of the contract.
+
+**Recommendation:**
+
+To mitigate these issues, it is recommended to implement access control mechanisms, such as an `onlyAuthorized` modifier, to restrict access to the `performUpkeep()` function. This could involve maintaining a list of authorized addresses or roles that are permitted to call this function, ensuring that only trusted entities can perform these critical operations.

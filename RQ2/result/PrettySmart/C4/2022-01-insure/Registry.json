@@ -1,0 +1,17 @@
+{
+ "contract": "Registry",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "supportMarket",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setExistence",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

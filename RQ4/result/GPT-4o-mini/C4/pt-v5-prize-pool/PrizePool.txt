@@ -1,0 +1,19 @@
+1. Function setDrawManager (line 139-147) has access control issues. Reason: The function can only be called once by the creator, but there is no modifier enforcing this restriction, which could lead to unauthorized access if the creator's address is compromised or if the function is called multiple times by the creator.
+
+2. Function allocateRewardFromReserve (line 164-178) has access control issues. Reason: The function is restricted to only be called by the draw manager, but there is no check to ensure that the draw manager is set before executing the function, which could lead to unexpected behavior if the draw manager is not initialized.
+
+3. Function awardDraw (line 181-215) has access control issues. Reason: The function is restricted to only be called by the draw manager, but there is no check to ensure that the draw manager is set before executing the function, which could lead to unexpected behavior if the draw manager is not initialized.
+
+4. Function claimPrize (line 218-284) has access control issues. Reason: The function allows any user to claim a prize, but it does not verify if the caller is the actual winner or if the prize has already been claimed, which could lead to unauthorized claims.
+
+5. Function withdrawRewards (line 287-303) has access control issues. Reason: The function allows any user to withdraw rewards, but it does not verify if the caller is the intended recipient of the rewards, which could lead to unauthorized withdrawals.
+
+6. Function contributeReserve (line 306-313) has access control issues. Reason: The function allows anyone to contribute to the reserve, but it does not verify if the caller is authorized to do so, which could lead to unauthorized contributions.
+
+7. Function shutdownBalanceOf (line 415-440) has access control issues. Reason: The function allows any user to check their shutdown balance, but it does not verify if the caller is the intended recipient of the balance, which could lead to unauthorized access to sensitive information.
+
+8. Function withdrawShutdownBalance (line 443-460) has access control issues. Reason: The function allows any user to withdraw their shutdown balance, but it does not verify if the caller is the intended recipient of the balance, which could lead to unauthorized withdrawals.
+
+9. Function isWinner (line 466-493) has access control issues. Reason: The function allows any user to check if they are a winner, but it does not verify if the caller is authorized to check the status of the prize, which could lead to unauthorized access to sensitive information.
+
+10. Function computeRangeStartDrawIdInclusive (line 496-503) has access control issues. Reason: The function allows any user to compute the start draw ID for a range, but it does not verify if the caller is authorized to perform this computation, which could lead to unauthorized access to sensitive information.

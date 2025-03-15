@@ -1,0 +1,37 @@
+{
+ "contract": "HolographERC20",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x0d5e2c1d",
+   "0x27d542086d1e831d40b749e7f5509a626c3047a36d160781c40d5acc83e5b074"
+  ],
+  [
+   "datadriven2",
+   "burnFrom",
+   "SHA3(msg.sender,0x8)"
+  ],
+  [
+   "owner",
+   "0xa8eb29c9",
+   "0x27d542086d1e831d40b749e7f5509a626c3047a36d160781c40d5acc83e5b074"
+  ],
+  [
+   "owner",
+   "0x0d3ada54",
+   "0x27d542086d1e831d40b749e7f5509a626c3047a36d160781c40d5acc83e5b074"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x8)"
+  ],
+  [
+   "owner",
+   "0x66bd3d45",
+   "0x27d542086d1e831d40b749e7f5509a626c3047a36d160781c40d5acc83e5b074"
+  ]
+ ],
+ "PC_bypassed": []
+}

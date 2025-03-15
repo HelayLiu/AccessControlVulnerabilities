@@ -1,0 +1,6 @@
+{
+ "contract": "ChainlinkAggregatorV3Mock",
+ "PRD_find": false,
+ "PC_find": [],
+ "PC_bypassed": []
+}

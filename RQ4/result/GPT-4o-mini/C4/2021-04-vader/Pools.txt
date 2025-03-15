@@ -1,0 +1,21 @@
+1. Function init(address _vader, address _usdv, address _router, address _factory) (line 30-35) has access control issues. Reason: The `init` function can be called by anyone to initialize the contract, which can lead to unauthorized changes to critical state variables such as `VADER`, `USDV`, `ROUTER`, and `FACTORY`. This function should be restricted to only the contract owner or a designated initializer.
+
+2. Function addLiquidity(address base, address token, address member) (line 54-78) has access control issues. Reason: The `addLiquidity` function does not check if the caller is a valid member or has the right to add liquidity. This could allow unauthorized users to manipulate liquidity amounts and potentially exploit the contract.
+
+3. Function removeLiquidity(address base, address token, uint basisPoints) (line 80-82) has access control issues. Reason: The `removeLiquidity` function calls `_removeLiquidity` with `tx.origin`, which can be exploited if the function is called from a malicious contract. This could allow unauthorized users to remove liquidity from the pool.
+
+4. Function removeLiquidityDirectly(address base, address token, uint basisPoints) (line 84-86) has access control issues. Reason: Similar to the previous function, this function does not validate the caller's permissions, allowing anyone to remove liquidity directly.
+
+5. Function swap(address base, address token, address member, bool toBase) (line 106-134) has access control issues. Reason: The `swap` function does not check if the caller is authorized to perform swaps, which could lead to unauthorized swaps and manipulation of token amounts.
+
+6. Function deploySynth(address token) (line 144-147) has access control issues. Reason: The `deploySynth` function does not restrict who can deploy a synth, allowing any user to create a synth, which could lead to abuse and potential loss of funds.
+
+7. Function mintSynth(address base, address token, address member) (line 150-162) has access control issues. Reason: The `mintSynth` function does not check if the caller is authorized to mint synths, which could allow unauthorized users to mint synths and manipulate the pool.
+
+8. Function burnSynth(address base, address token, address member) (line 165-179) has access control issues. Reason: The `burnSynth` function does not validate if the caller is authorized to burn synths, which could lead to unauthorized burning of synths and loss of funds.
+
+9. Function lockUnits(uint units, address token, address member) (line 182-185) has access control issues. Reason: The `lockUnits` function does not check if the caller is authorized to lock units, which could allow unauthorized users to manipulate unit allocations.
+
+10. Function unlockUnits(uint units, address token, address member) (line 188-191) has access control issues. Reason: The `unlockUnits` function does not validate the caller's permissions, allowing unauthorized users to unlock units and manipulate allocations.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to manipulate critical state variables and perform sensitive operations.

@@ -1,0 +1,9 @@
+Upon reviewing the provided smart contract, I have identified a potential access control issue. Here is the analysis:
+
+1. **Function `rngComplete` (line 108-168)**:
+   - **Reason**: The `rngComplete` function is marked as `external` and does not have any access control modifiers to restrict who can call it. This function is critical as it completes the RNG relay auction, updates auction results, and distributes rewards. Without proper access control, any external entity can invoke this function, potentially leading to unauthorized completion of auctions and manipulation of rewards.
+
+**Proof of Concept**:
+- An attacker could call the `rngComplete` function with arbitrary parameters, potentially disrupting the auction process and misappropriating rewards. This could lead to financial losses and undermine the integrity of the auction system.
+
+To mitigate this issue, it is recommended to implement an access control mechanism, such as a modifier that restricts access to only authorized entities (e.g., the RNG relayer or contract owner). This would ensure that only trusted parties can complete the auction and distribute rewards.

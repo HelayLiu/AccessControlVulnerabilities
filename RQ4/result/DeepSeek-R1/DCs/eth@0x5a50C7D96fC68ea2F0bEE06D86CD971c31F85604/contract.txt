@@ -1,0 +1,21 @@
+1. Function KYCBase(address [] kycSigners) (line 66-70) has access control issues. Reason: The constructor does not restrict who can call it, allowing any address to initialize the contract and set KYC signers, which could lead to unauthorized access to KYC functionalities.
+
+2. Function buyTokensFor(address buyerAddress, uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s) (line 45-50) has access control issues. Reason: The function allows any user to buy tokens for any address without proper checks, which could lead to unauthorized purchases on behalf of others.
+
+3. Function buyTokens(uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s) (line 52-56) has access control issues. Reason: Similar to the previous function, it allows any user to buy tokens for themselves without proper checks, which could lead to unauthorized purchases.
+
+4. Function buyImplementation(address buyerAddress, uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s) (line 58-78) has access control issues. Reason: The function does not check if the caller is authorized to perform the purchase, allowing any user to execute the function and potentially manipulate the KYC verification process.
+
+5. Function claimTokenBonus(address _buyer) (line 197-210) has access control issues. Reason: The function allows any user to claim token bonuses for themselves without proper checks, which could lead to unauthorized claims.
+
+6. Function refundEther(address to) (line 227-230) has access control issues. Reason: The function allows the token sale owner to refund ether to any address without verifying if the address is eligible for a refund, which could lead to unauthorized refunds.
+
+7. Function withdraw(address to, uint256 value) (line 234-237) has access control issues. Reason: The function allows the token sale owner to withdraw funds to any address without proper checks, which could lead to unauthorized withdrawals.
+
+8. Function addMeByRC() (line 295-302) has access control issues. Reason: The function allows any contract to register itself as an authorized RC contract by checking only if the transaction origin is the owner, which can be manipulated by a malicious contract to gain unauthorized access.
+
+9. Function buyFromRC(address _buyer, uint256 _rcTokenValue, uint256 _remainingTokens) (line 267-284) has access control issues. Reason: The function allows any authorized RC contract to buy tokens on behalf of any buyer without proper checks, which could lead to unauthorized purchases.
+
+10. Function withdrawTokens(address to, uint256 value) (line 319-322) has access control issues. Reason: The function allows the owner to withdraw tokens to any address without proper checks, which could lead to unauthorized withdrawals.
+
+These functions exhibit potential access control issues that could be exploited if not properly secured.

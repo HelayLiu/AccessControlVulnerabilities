@@ -1,0 +1,12 @@
+{
+ "contract": "SynthFactory",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "purgeDeployer",
+   "0x2"
+  ]
+ ],
+ "PC_bypassed": []
+}

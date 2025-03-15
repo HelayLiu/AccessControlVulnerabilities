@@ -1,0 +1,12 @@
+{
+ "contract": "IndexTemplate",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "withdraw",
+   "SHA3(msg.sender,0x11)"
+  ]
+ ],
+ "PC_bypassed": []
+}

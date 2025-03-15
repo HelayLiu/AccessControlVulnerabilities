@@ -1,0 +1,6 @@
+OutPut:
+1. Function `setRoyalty` (line 451-462) has an access control issue. Reason: The function allows any caller to set the royalty for a contract, provided they are the owner of the NFT contract. However, it does not restrict the caller to be the owner of the `ExchangeV4` contract or have any specific role within the `ExchangeV4` contract. This could potentially allow unauthorized users to set royalties if they own the NFT contract.
+
+2. Function `cancelBuyOrder` (line 472-493) has an access control issue. Reason: The function allows either the buyer or the owner of the `ExchangeV4` contract to cancel a buy order. However, it does not restrict the caller to be the owner of the `ExchangeV4` contract or have any specific role within the `ExchangeV4` contract. This could potentially allow unauthorized users to cancel buy orders if they have the buyer's address.
+
+3. Function `cancelPreviousSellOrders` (line 498-504) has an access control issue. Reason: The function allows either the address associated with the order or the owner of the `ExchangeV4` contract to cancel previous sell orders. However, it does not restrict the caller to be the owner of the `ExchangeV4` contract or have any specific role within the `ExchangeV4` contract. This could potentially allow unauthorized users to cancel sell orders if they have the address associated with the order.

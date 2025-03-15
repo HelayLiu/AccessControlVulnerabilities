@@ -1,0 +1,10 @@
+Upon reviewing the provided smart contract, I have identified a potential access control issue. Here is the analysis:
+
+1. **Function `setToken(address _addr)` (line 139-142)**:
+   - **Reason**: The `setToken` function allows changing the `stakingToken` and `rewardsToken` addresses. This function is public and does not have any access control modifiers, such as `onlyOwner` or `onlyRole`, to restrict its access. This means that any user can call this function and change the token addresses, which could lead to unauthorized changes and potential loss of funds or disruption of the contract's intended functionality.
+
+**Proof of Concept**:
+- Any user can call `setToken` with a malicious token address, effectively redirecting staking and reward tokens to an address they control. This could result in users staking tokens that are not intended by the contract's logic or receiving rewards in a different token than expected.
+
+**Recommendation**:
+- Implement access control on the `setToken` function by adding a modifier such as `onlyOwner` or `onlyRole(DEFAULT_ADMIN_ROLE)` to ensure that only authorized users can change the token addresses. This will prevent unauthorized users from altering critical contract parameters.

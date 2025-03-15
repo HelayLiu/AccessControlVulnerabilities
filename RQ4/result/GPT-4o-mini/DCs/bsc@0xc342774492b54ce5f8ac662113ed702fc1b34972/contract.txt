@@ -1,0 +1,7 @@
+1. Function mint() (line 139-144) has access control issues. Reason: The mint function can be called by any user, allowing them to mint tokens without proper authorization, as it does not check if the caller is the owner or a designated signer before minting tokens.
+
+2. Function revokeSigner() (line 155-157) has access control issues. Reason: The revokeSigner function can only be called by the owner, but if the owner is compromised, they can revoke signers without any checks or balances, potentially leading to a situation where valid signers are removed.
+
+3. Function addSigner() (line 162-164) has access control issues. Reason: Similar to revokeSigner, the addSigner function can only be called by the owner, which poses a risk if the owner's account is compromised, allowing an attacker to add malicious signers. 
+
+These functions lack sufficient access control checks to ensure that only authorized users can perform sensitive actions, which could lead to unauthorized minting of tokens or manipulation of signers.

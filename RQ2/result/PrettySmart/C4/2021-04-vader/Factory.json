@@ -1,0 +1,17 @@
+{
+ "contract": "Factory",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x5bf0abbc",
+   "0x2"
+  ],
+  [
+   "owner",
+   "deploySynth",
+   "0x2"
+  ]
+ ],
+ "PC_bypassed": []
+}

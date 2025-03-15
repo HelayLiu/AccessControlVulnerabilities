@@ -1,0 +1,23 @@
+1. Function babyRouterDelegateCall(bytes memory data) (line 34-39) has access control issues. Reason: The function uses delegatecall to execute arbitrary code from the `normalRouter` address without any access control checks, which could allow an attacker to execute malicious code in the context of this contract, potentially leading to unauthorized access or manipulation of state variables.
+
+2. Function _swap(uint[] memory amounts, address[] memory path, address[] memory factories, address _to) (line 56-78) has access control issues. Reason: This function is marked as internal and can be called by any function within the contract, but it does not have any checks to ensure that the caller has the right to perform swaps, which could lead to unauthorized token swaps.
+
+3. Function swapExactTokensForTokens(...) (line 80-95) has access control issues. Reason: This function is public and allows any user to swap tokens without any checks on the caller's permissions or roles, which could lead to unauthorized token swaps.
+
+4. Function swapTokensForExactTokens(...) (line 97-112) has access control issues. Reason: Similar to the previous function, this function is public and does not enforce any access control, allowing any user to perform swaps without restrictions.
+
+5. Function swapExactETHForTokens(...) (line 114-130) has access control issues. Reason: This function is public and allows any user to swap ETH for tokens without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+6. Function swapTokensForExactETH(...) (line 132-148) has access control issues. Reason: This function is public and does not enforce any access control, allowing any user to perform swaps without restrictions.
+
+7. Function swapExactTokensForETH(...) (line 150-166) has access control issues. Reason: This function is public and allows any user to swap tokens for ETH without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+8. Function swapETHForExactTokens(...) (line 168-185) has access control issues. Reason: This function is public and allows any user to swap ETH for exact tokens without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+9. Function swapExactTokensForTokensSupportingFeeOnTransferTokens(...) (line 187-205) has access control issues. Reason: This function is public and allows any user to swap tokens without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+10. Function swapExactETHForTokensSupportingFeeOnTransferTokens(...) (line 207-226) has access control issues. Reason: This function is public and allows any user to swap ETH for tokens without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+11. Function swapExactTokensForETHSupportingFeeOnTransferTokens(...) (line 228-247) has access control issues. Reason: This function is public and allows any user to swap tokens for ETH without any checks on the caller's permissions, which could lead to unauthorized swaps.
+
+In summary, the contract has multiple public functions that allow any user to perform swaps without any access control checks, which could lead to unauthorized actions. Additionally, the use of delegatecall in the `babyRouterDelegateCall` function poses a significant security risk.

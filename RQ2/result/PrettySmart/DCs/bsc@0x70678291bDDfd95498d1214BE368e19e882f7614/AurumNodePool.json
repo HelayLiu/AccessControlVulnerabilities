@@ -1,0 +1,32 @@
+{
+ "contract": "AurumNodePool",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setMaxNodes",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setTeamWallet",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x137c0b48",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

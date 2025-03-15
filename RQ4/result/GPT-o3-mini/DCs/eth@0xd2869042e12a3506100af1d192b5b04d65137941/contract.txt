@@ -1,0 +1,33 @@
+Below is one potential issue discovered during our audit:
+
+1. Vulnerable Function: migrateStake (around line 184)  
+ • Issue: This function is externally callable by anyone and accepts an arbitrary address for the “oldStaking” contract. The function immediately calls  
+  StaxLPStaking(oldStaking).migrateWithdraw(msg.sender, amount)  
+ without verifying that the supplied oldStaking contract is a trusted, valid source of staked tokens.  
+ • Reason: Since migrateStake does not restrict or validate the provided “oldStaking” address, an attacker could deploy a malicious contract that implements a dummy migrateWithdraw (or that always “succeeds” without transferring any tokens). By passing that malicious contract’s address to migrateStake, the attacker would effectively “migrate” an arbitrary amount – and the new contract then credits the attacker’s balance via _applyStake without an actual backing deposit of staking tokens. In other words, the migration call is under‐controlled and can be abused to falsely inflate a user’s deposited balance and later claim rewards.  
+
+Proof of Concept (PoC):
+
+Step 1. Deploy a malicious contract that mimics the StaxLPStaking interface but “fakes” a successful migrateWithdraw call:
+
+  contract MaliciousMigrator {
+   function migrateWithdraw(address staker, uint256 amount) external {
+    // Do nothing – simply allow the call to succeed
+   }
+  }
+
+Step 2. Call the new staking contract’s migrateStake function providing the address of this MaliciousMigrator and a nonzero “amount”. For example:
+
+  // Assume newStaking is the instance of StaxLPStaking
+  newStaking.migrateStake(address(maliciousMigrator), 100 ether);
+
+The call will result in:
+ a. The new contract calling migrateWithdraw on the malicious contract (which does nothing).
+ b. The new contract crediting msg.sender with “staked” tokens by executing _applyStake.
+Thus, the attacker gains a staked balance and (over time) rewards without having deposited any real tokens.
+
+Summary Output:
+1. Function migrateStake (around line 184) has an access control issue.  
+ Reason: It allows any caller to provide an arbitrary oldStaking address. Without verification that the supplied contract is a legitimate previous staking contract (and that a proper token withdrawal is occurring), a malicious party can use a fake migration contract to falsely claim staked tokens, thereby inflating their balance and later extracting rewards.
+
+It is recommended that the new contract enforce stronger validation on the supplied “oldStaking” address (for example, by maintaining a whitelist of approved migration contracts) to prevent abuse of the migration functionality.

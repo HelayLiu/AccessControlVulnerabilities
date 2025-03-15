@@ -1,0 +1,25 @@
+1. Function migrate() (line 12-15) has access control issues. Reason: The function can be called by any address, but it only checks if the caller is the factory. If the factory address is compromised, an attacker could migrate the contract to a malicious implementation.
+
+2. Function setImplementation() (line 18-21) has access control issues. Reason: Similar to the migrate function, this function can be called by any address, but it only checks if the caller is the factory. If the factory address is compromised, an attacker could set a malicious implementation.
+
+3. Function upgrade() (line 24-28) has access control issues. Reason: The function can only be called by the borrower, but if the borrower address is compromised, an attacker could upgrade the contract to a malicious implementation.
+
+4. Function drawdownFunds() (line 56-60) has access control issues. Reason: The function can only be called by the borrower, but if the borrower address is compromised, an attacker could draw down funds.
+
+5. Function proposeNewTerms() (line 78-82) has access control issues. Reason: The function can only be called by the borrower, but if the borrower address is compromised, an attacker could propose new terms.
+
+6. Function removeCollateral() (line 85-89) has access control issues. Reason: The function can only be called by the borrower, but if the borrower address is compromised, an attacker could remove collateral.
+
+7. Function setPendingBorrower() (line 92-96) has access control issues. Reason: The function can only be called by the borrower, but if the borrower address is compromised, an attacker could set a new pending borrower.
+
+8. Function acceptNewTerms() (line 134-139) has access control issues. Reason: The function can only be called by the lender, but if the lender address is compromised, an attacker could accept new terms.
+
+9. Function claimFunds() (line 142-146) has access control issues. Reason: The function can only be called by the lender, but if the lender address is compromised, an attacker could claim funds.
+
+10. Function repossess() (line 149-153) has access control issues. Reason: The function can only be called by the lender, but if the lender address is compromised, an attacker could repossess collateral.
+
+11. Function setPendingLender() (line 156-160) has access control issues. Reason: The function can only be called by the lender, but if the lender address is compromised, an attacker could set a new pending lender.
+
+12. Function skim() (line 163-168) has access control issues. Reason: The function can be called by either the borrower or the lender, but if either address is compromised, an attacker could skim funds from the contract.
+
+In summary, the contract has multiple access control issues primarily related to the borrower and lender roles. If either of these addresses is compromised, an attacker could perform significant actions that could lead to loss of funds or manipulation of contract state.

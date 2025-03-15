@@ -1,0 +1,12 @@
+{
+ "contract": "MultisigBase",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "0x3f1a3e68",
+   "SHA3(msg.sender,0x2)"
+  ]
+ ],
+ "PC_bypassed": []
+}

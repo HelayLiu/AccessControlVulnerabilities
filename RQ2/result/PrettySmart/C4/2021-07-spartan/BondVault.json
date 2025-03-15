@@ -1,0 +1,27 @@
+{
+ "contract": "BondVault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "release",
+   "0x1"
+  ],
+  [
+   "owner",
+   "0xbf58d0ef",
+   "0x1"
+  ],
+  [
+   "owner",
+   "purgeDeployer",
+   "0x1"
+  ],
+  [
+   "owner",
+   "0x5bc262be",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

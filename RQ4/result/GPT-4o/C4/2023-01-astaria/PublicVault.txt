@@ -1,0 +1,29 @@
+Upon reviewing the provided `PublicVault` contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `processEpoch()` (line 312-365)**
+   - **Reason**: The `processEpoch()` function is publicly accessible and can be called by any address. This function processes the current epoch, resets certain state variables, and interacts with the `WithdrawProxy`. Without proper access control, any user can trigger epoch processing, which might not be intended behavior and could lead to unexpected state changes or financial implications.
+
+2. **Function `transferWithdrawReserve()` (line 421-464)**
+   - **Reason**: This function is also publicly accessible and can be called by any address. It transfers the withdraw reserve to the `WithdrawProxy` and updates the state accordingly. Allowing any user to call this function could lead to unauthorized reserve transfers, potentially affecting the contract's financial state.
+
+3. **Function `increaseYIntercept(uint256 amount)` (line 648-655)**
+   - **Reason**: Although this function checks if the caller is the `withdrawProxy` of the previous epoch, it is publicly accessible. If the `withdrawProxy` address is compromised or incorrectly set, an unauthorized increase in the `yIntercept` could occur, affecting the vault's financial calculations.
+
+4. **Function `decreaseYIntercept(uint256 amount)` (line 661-668)**
+   - **Reason**: Similar to `increaseYIntercept`, this function is publicly accessible and relies on the caller being the `withdrawProxy` of the previous epoch. If the `withdrawProxy` address is compromised, it could lead to unauthorized decreases in the `yIntercept`, impacting the vault's financial state.
+
+**Proof of Concept for `processEpoch()`:**
+
+To demonstrate the potential issue with `processEpoch()`, consider the following scenario:
+
+- Any user can call `processEpoch()` at any time, potentially disrupting the intended epoch processing schedule. This could lead to premature or repeated processing of epochs, affecting the distribution of assets and shares.
+
+```solidity
+// Malicious user calls processEpoch() to disrupt the epoch schedule
+PublicVault vault = PublicVault(vaultAddress);
+vault.processEpoch();
+```
+
+**Recommendation:**
+
+To mitigate these issues, it is recommended to implement access control mechanisms, such as `onlyOwner` or `onlyAuthorized` modifiers, to restrict access to these functions. This ensures that only authorized entities can trigger critical state changes or financial operations within the contract.

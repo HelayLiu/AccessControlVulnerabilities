@@ -1,0 +1,7 @@
+1. Function setAnnualInterestBips(uint16 _annualInterestBips) (line 106-115) has access control issues. Reason: The function is marked as `public` instead of `external`, which allows any user to call it, potentially allowing unauthorized users to set the annual interest rate, which is a critical parameter of the contract.
+
+2. Function setReserveRatioBips(uint16 _reserveRatioBips) (line 118-138) has access control issues. Reason: Similar to the previous function, it is marked as `public`, allowing any user to call it and potentially change the reserve ratio, which can affect the market's stability and liquidity.
+
+3. Function stunningReversal(address accountAddress) (line 83-100) has access control issues. Reason: The function does not check if the caller is authorized to unblock an account. If an unauthorized user calls this function, they could unblock any account, which could lead to security issues.
+
+4. Function nukeFromOrbit(address accountAddress) (line 73-81) has access control issues. Reason: The function does not verify if the caller is authorized to sanction an account. An unauthorized user could potentially block any account, which could lead to misuse of the contract's functionality.

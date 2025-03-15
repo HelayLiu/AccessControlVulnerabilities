@@ -1,0 +1,37 @@
+{
+ "contract": "LiquidXv2Zap",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "setRewarder",
+   "0x6"
+  ],
+  [
+   "owner",
+   "0xd34f646f",
+   "0x6"
+  ],
+  [
+   "owner",
+   "setOperator",
+   "0x6"
+  ],
+  [
+   "whitelist",
+   "withdrawToken",
+   "SHA3(msg.sender,0x5)"
+  ],
+  [
+   "owner",
+   "0x02c7ed45",
+   "0x6"
+  ],
+  [
+   "owner",
+   "setRouterAndFactory",
+   "0x6"
+  ]
+ ],
+ "PC_bypassed": []
+}

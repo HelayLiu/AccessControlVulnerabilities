@@ -1,0 +1,38 @@
+Below is one example “audit‐report” output that explains two potential issues where the proxy pattern might let callers “reach” functions that are meant to be guarded – assuming that the implementation does not reapply proper access control. (Note that in many proxy designs it is assumed that the implementation contract itself correctly verifies its caller’s permissions; however, if it does not, an attacker could “reach in” via the proxy’s public forwarding functions.) 
+
+──────────────────────────────
+1. Vulnerable function: delegateToImplementation (lines 92–94)  
+Reason: This function is declared as public and simply forwards any call (with arbitrary “data”) to the current implementation contract. If the implementation’s sensitive (or admin‐only) functions do not revalidate access control (i.e. rely solely on the proxy’s permissions) then an attacker can call delegateToImplementation directly and supply data for a restricted function. In other words, if proper checks are omitted in the implementation, the proxy’s open “delegation” functions may allow bypassing access controls.
+
+Proof-of-Concept (PoC):  
+An attacker calls delegateToImplementation with the encoded payload for a function in the implementation contract (for example, one that is meant to be admin-only such as one that changes critical state). If the implementation does not check that msg.sender equals admin, then the call will go through successfully. For example, in JavaScript (using Web3):
+
+  // Assume proxyContract is an instance of RewardVaultDelegator  
+  const iface = new ethers.utils.Interface(["function adminRestrictedFunc(uint256)"]);  
+  const data = iface.encodeFunctionData("adminRestrictedFunc", [123]);  
+  await proxyContract.delegateToImplementation(data);  
+
+──────────────────────────────
+2. Vulnerable function: fallback (lines 117–119 with _fallback implementation at lines 125–141)  
+Reason: The fallback function (and by inheritance, the receive function) unconditionally delegates all nonempty calls to the implementation contract. This means that if the implementation contract exposes any functions that require special access control but do not recheck permissions, an attacker can call such functions via the fallback. (This is essentially the same risk as Item #1 but via the very “generic” fallback mechanism.) 
+
+Proof-of-Concept (PoC):  
+An attacker sends a transaction with a data payload (encoding a call to a supposedly restricted function in the implementation contract) directly to the proxy address. If the implementation’s function does not recheck msg.sender, the call may succeed. For example:
+
+  // Send a transaction with data for adminRestrictedFunc
+  await proxyContract.sendTransaction({  
+    data: data,  
+    value: 0  
+  });
+
+──────────────────────────────
+Additional Note – Developer Role:  
+The Adminable base contract defines a modifier onlyAdminOrDeveloper. However, none of the functions in RewardVaultDelegator make use of this modifier. This is not an “exposed” vulnerability by itself but is a potential misconfiguration: if the intent was to allow the developer to perform updates (or other sensitive actions) but onlyAdmin is used instead, then the developer role has no extra privilege. This might lead to administrative centralization or even mismanagement (if, for example, the “admin” role is later lost) while the developer account is bypassed completely.
+  
+──────────────────────────────
+Conclusion  
+While the proxy pattern uses delegatecall by design, it is important that the implementation contract re‐verifies access control (using, for example, its own onlyAdmin checks) because the proxy’s publicly accessible delegateToImplementation and fallback functions will forward arbitrary calls. If the implementation functions lack proper access controls, an attacker may exploit these entry points.
+
+──────────────────────────────
+
+Be sure to check the corresponding implementation contract to verify that each sensitive function re‐enforces its own access control, even when called via delegator functions.

@@ -1,0 +1,2 @@
+ERROR:ContractSolcParsing:Impossible to generate IR for Strings.base64Decode
+WARNING:symExec:No permission policy is detected. No permission bug.

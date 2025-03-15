@@ -1,0 +1,3 @@
+1. Function Ownable() (line 4-6) has the access control issues. Reason: The Ownable() function can change the owner variable which is significant because with the role, we can do anything on the contract.
+
+2. Function NewIntelTechMedia(address _owner) (line 118-126) has the access control issues. Reason: The constructor allows setting the owner to any address provided during deployment, which could lead to unauthorized access if the address is not controlled or verified.

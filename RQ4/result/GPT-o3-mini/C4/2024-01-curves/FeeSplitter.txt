@@ -1,0 +1,17 @@
+Below is one identified access control issue along with a proof‐of‐concept explanation:
+
+1. Function setCurves (lines 35–37) has an access control vulnerability.  
+ • Reason: The setCurves function is declared public without any modifier restricting who can call it (for example, onlyManager or onlyOwner). This means that any external account can change the curves contract reference. Since the curves contract is used in balance and total supply calculations (via functions balanceOf and totalSupply) and thereby indirectly affects fee distribution and claiming, an attacker could supply a malicious curves contract that returns manipulated values. For instance, an attacker could set curves to a contract that inflates balances or misappropriates the fee logic, thus enabling unauthorized fee claims or other unintended behaviors.
+
+Proof of Concept:  
+An attacker could perform the following steps:  
+ a. Deploy a malicious curves contract with functions curvesTokenBalance and curvesTokenSupply returning attacker-controlled values (for example, a very high balance for the attacker’s address).  
+ b. Call setCurves with the address of this malicious contract.  
+ c. Now, when the attacker calls claimFees or batchClaiming, the balance and fee calculations will use the attacker-controlled values from the malicious curves contract, potentially resulting in the attacker being able to claim more fees than they are entitled to.
+
+Remediation:  
+Restrict setCurves to be callable only by an authorized account (e.g., the manager or owner). For instance, if the Security contract provides an onlyManager modifier, updating the function as  
+  function setCurves(Curves curves_) public onlyManager { ... }  
+would mitigate this vulnerability.
+
+In summary, the vulnerability is in the publicly accessible setCurves function (lines 35–37) that allows anyone to update a critical variable used in fee calculations, leading to potential manipulation of the contract’s behavior and unauthorized fund claims.

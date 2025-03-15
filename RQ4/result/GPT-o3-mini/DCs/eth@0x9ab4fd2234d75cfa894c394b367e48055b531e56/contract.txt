@@ -1,0 +1,5 @@
+1. Function owned() (approximately line 8–10 in the Owned contract) has an access control issue.  
+ Reason: In Solidity 0.4.18 the constructor must have the exact same name as the contract. In this case, the intended constructor was supposed to be “Owned()”, but instead “owned()” was declared. As a result, owned() is just an ordinary public function that anyone can call at any time to set owner = msg.sender, granting the caller full administrative privileges over the contract.
+
+Proof of Concept:  
+An attacker can simply call the owned() function (e.g., via a transaction) and become the owner. Once they control the owner variable, functions guarded with onlyOwner (such as transferOwnership(), mintToken(), freezeAccount(), setPrices(), and setExchange()) become exploitable for unauthorized token minting, freezing accounts, or adjusting exchange parameters.

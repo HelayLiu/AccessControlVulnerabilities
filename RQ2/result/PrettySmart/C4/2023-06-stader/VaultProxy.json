@@ -1,0 +1,17 @@
+{
+ "contract": "VaultProxy",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "updateOwner",
+   "0x2"
+  ],
+  [
+   "owner",
+   "0x9ee804cb",
+   "0x2"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,20 @@
+Switched global version to 0.5.16
+Modifiers Status:
+Modifier: ensure, Status: ModifierStatus.SECURE
+Modifier: nonReentrant, Status: ModifierStatus.SECURE
+Modifier: onlyOrigin, Status: ModifierStatus.SECURE
+Modifier: notHalted, Status: ModifierStatus.SECURE
+Modifier: validCall, Status: ModifierStatus.SECURE
+Modifier: onlyManager, Status: ModifierStatus.SECURE
+Modifier: onlyOperator3, Status: ModifierStatus.SECURE
+Modifier: initializer, Status: ModifierStatus.SECURE
+Modifier: onlyOperator2, Status: ModifierStatus.SECURE
+Modifier: originOnce, Status: ModifierStatus.SECURE
+Modifier: getUnderlyingPrice, Status: ModifierStatus.SECURE
+Modifier: OwnerOrOrigin, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+Modifier: versionUpdate, Status: ModifierStatus.SECURE
+Modifier: onlyOperator, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

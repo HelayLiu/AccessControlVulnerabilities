@@ -1,0 +1,13 @@
+1. Function batchSetAllowlist (line 56-62) has access control issues. Reason: The function can be called by any address to modify the allowlist, which could allow unauthorized users to grant themselves or others access to mint NFTs.
+
+2. Function mint (line 139-145) has access control issues. Reason: The function can only be called by the `erc721` address, but if the `erc721` address is compromised, it could allow unauthorized minting of tokens.
+
+3. Function mintNFT (line 164-182) has access control issues. Reason: The function allows any user to mint NFTs as long as they meet the conditions, but if the allowlist is manipulated (as seen in the previous issue), unauthorized users could mint NFTs.
+
+4. Function safeTransferFrom (line 132-145) has access control issues. Reason: The function does not have an access control modifier, allowing any user to call it and potentially transfer tokens without proper authorization checks.
+
+5. Function setApproveForAll (line 116-118) has access control issues. Reason: The function does not have an access control modifier, allowing any user to set approval for all tokens, which could lead to unauthorized access to tokens.
+
+6. Function approve (line 109-115) has access control issues. Reason: The function does not have an access control modifier, allowing any user to approve spending of tokens without proper authorization checks.
+
+These functions lack proper access control mechanisms, which could lead to unauthorized actions being performed on the contract.

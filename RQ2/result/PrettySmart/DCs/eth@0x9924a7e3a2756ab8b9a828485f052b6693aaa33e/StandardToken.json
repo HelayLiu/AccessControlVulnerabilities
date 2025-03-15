@@ -1,0 +1,37 @@
+{
+ "contract": "StandardToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "approve",
+   "SHA3(msg.sender,0x3)"
+  ],
+  [
+   "owner",
+   "freezeAccount",
+   "0x1"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x1"
+  ],
+  [
+   "owner",
+   "switchLiquidity",
+   "0x1"
+  ],
+  [
+   "whitelist",
+   "transfer",
+   "SHA3(msg.sender,0x3)"
+  ],
+  [
+   "whitelist",
+   "transferFrom",
+   "SHA3(msg.sender,0x3)"
+  ]
+ ],
+ "PC_bypassed": []
+}

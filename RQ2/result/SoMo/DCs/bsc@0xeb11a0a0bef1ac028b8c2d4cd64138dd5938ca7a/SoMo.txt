@@ -1,0 +1,13 @@
+Switched global version to 0.6.12
+Modifiers Status:
+Modifier: lockUpgrade, Status: ModifierStatus.SECURE
+Modifier: preventBlacklisted, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+Modifier: onlyWhitelistMint, Status: ModifierStatus.SECURE
+Modifier: checkTierIndex, Status: ModifierStatus.SECURE
+Modifier: lockTheSwap, Status: ModifierStatus.SECURE
+Modifier: initializer, Status: ModifierStatus.SECURE
+Modifier: isRouter, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

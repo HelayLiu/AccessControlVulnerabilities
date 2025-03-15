@@ -1,0 +1,23 @@
+1. Function init() (line 30-38) has access control issues. Reason: The init function can be called by anyone, allowing any address to set the token, periods, and interval, which are critical for the contract's operation.
+
+2. Function setHandler() (line 66-70) has access control issues. Reason: The setHandler function can be called by anyone, allowing any address to change the handler, which could lead to unauthorized access to functions restricted to the handler.
+
+3. Function setSwitchOperator() (line 78-82) has access control issues. Reason: The setSwitchOperator function can be called by anyone, allowing any address to change the switch operator, which could lead to unauthorized access to functions restricted to the switch operator.
+
+4. Function setModeInfos() (line 139-143) has access control issues. Reason: The setModeInfos function can be called by anyone, allowing any address to set mode information, which could lead to unauthorized changes to the vesting modes.
+
+5. Function setDefaultStart() (line 174-178) has access control issues. Reason: The setDefaultStart function can be called by anyone, allowing any address to set the default start value, which could affect the release schedule of tokens.
+
+6. Function setBlocklistBatch() (line 183-189) has access control issues. Reason: The setBlocklistBatch function can be called by anyone, allowing any address to modify the blocklist, which could lead to unauthorized access to vesting schedules.
+
+7. Function addLinearVesting(address beneficiary, uint256 amount) (line 197-210) has access control issues. Reason: The addLinearVesting function can be called by anyone, allowing any address to add a linear vesting schedule for any beneficiary, which could lead to unauthorized vesting schedules.
+
+8. Function addRedeemLinearVesting(address beneficiary, uint256 amount, ExchangeMode mode) (line 213-226) has access control issues. Reason: The addRedeemLinearVesting function can be called by anyone, allowing any address to add a redeem linear vesting schedule for any beneficiary, which could lead to unauthorized vesting schedules.
+
+9. Function addLinearVesting(bytes32 txHash, address beneficiary, uint256 amount, ExchangeMode mode) (line 229-244) has access control issues. Reason: The addLinearVesting function can be called by anyone, allowing any address to add a linear vesting schedule for any beneficiary, which could lead to unauthorized vesting schedules.
+
+10. Function release(uint256 index) (line 247-263) has access control issues. Reason: The release function can be called by anyone, allowing any address to release tokens from any vesting schedule, which could lead to unauthorized token transfers.
+
+11. Function withdraw(IERC20 otherToken, uint256 amount, address receiver) (line 276-284) has access control issues. Reason: The withdraw function can be called by anyone, allowing any address to withdraw tokens from the contract, which could lead to unauthorized withdrawals.
+
+12. Function transferOwner(address owner_) (line 287-291) has access control issues. Reason: The transferOwner function can be called by anyone, allowing any address to change the owner of the contract, which could lead to unauthorized control over the contract.

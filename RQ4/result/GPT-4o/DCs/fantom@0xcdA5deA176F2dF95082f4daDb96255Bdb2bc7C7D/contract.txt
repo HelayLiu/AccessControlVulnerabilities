@@ -1,0 +1,29 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `addStrategy` (line 451-470)**:
+   - **Reason**: This function allows adding a new strategy to the vault with a given allocation amount in basis points. It requires the caller to have the `DEFAULT_ADMIN_ROLE`. However, if the `DEFAULT_ADMIN_ROLE` is not properly managed or if there is a vulnerability in the role assignment, unauthorized users could potentially add malicious strategies, leading to potential loss of funds.
+
+2. **Function `updateStrategyAllocBPS` (line 472-483)**:
+   - **Reason**: This function updates the allocation points for a given strategy and requires the caller to have the `STRATEGIST` role. If the `STRATEGIST` role is not properly managed, an unauthorized user could manipulate strategy allocations, potentially leading to an uneven distribution of funds or exploitation of the vault's assets.
+
+3. **Function `revokeStrategy` (line 485-500)**:
+   - **Reason**: This function allows revoking a strategy's allocation and can be called by the strategy itself or by someone with at least the `GUARDIAN` role. If the `GUARDIAN` role is not properly managed, unauthorized users could revoke legitimate strategies, disrupting the vault's operations and potentially causing financial loss.
+
+4. **Function `setWithdrawalQueue` (line 579-594)**:
+   - **Reason**: This function updates the withdrawal queue and requires the caller to have the `STRATEGIST` role. If the `STRATEGIST` role is compromised, an attacker could manipulate the withdrawal queue to prioritize malicious strategies, potentially leading to fund mismanagement.
+
+5. **Function `setEmergencyShutdown` (line 764-777)**:
+   - **Reason**: This function activates or deactivates the emergency shutdown mode and requires the caller to have at least the `GUARDIAN` role to activate and the `ADMIN` role to deactivate. If these roles are not properly managed, unauthorized users could trigger or disable emergency shutdowns, affecting the vault's operations and security.
+
+6. **Function `inCaseTokensGetStuck` (line 779-787)**:
+   - **Reason**: This function allows rescuing tokens stuck in the contract and requires the caller to have the `STRATEGIST` role. If the `STRATEGIST` role is compromised, an attacker could misuse this function to transfer valuable tokens out of the contract.
+
+**Proof of Concept**: To verify these issues, you would need to simulate scenarios where unauthorized users attempt to call these functions without the appropriate roles. This can be done by deploying the contract in a test environment and attempting to execute these functions with accounts that do not have the required roles. If the functions execute without reverting, it confirms the access control issue.
+
+**Output**:
+1. Function `addStrategy` (line 451-470) has access control issues. Reason: Potential unauthorized addition of strategies if `DEFAULT_ADMIN_ROLE` is compromised.
+2. Function `updateStrategyAllocBPS` (line 472-483) has access control issues. Reason: Potential manipulation of strategy allocations if `STRATEGIST` role is compromised.
+3. Function `revokeStrategy` (line 485-500) has access control issues. Reason: Potential unauthorized revocation of strategies if `GUARDIAN` role is compromised.
+4. Function `setWithdrawalQueue` (line 579-594) has access control issues. Reason: Potential manipulation of withdrawal queue if `STRATEGIST` role is compromised.
+5. Function `setEmergencyShutdown` (line 764-777) has access control issues. Reason: Potential unauthorized activation/deactivation of emergency shutdown if `GUARDIAN` or `ADMIN` roles are compromised.
+6. Function `inCaseTokensGetStuck` (line 779-787) has access control issues. Reason: Potential misuse of token rescue if `STRATEGIST` role is compromised.

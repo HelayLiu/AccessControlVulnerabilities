@@ -1,0 +1,12 @@
+{
+ "contract": "Admin",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "changeAdmin",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

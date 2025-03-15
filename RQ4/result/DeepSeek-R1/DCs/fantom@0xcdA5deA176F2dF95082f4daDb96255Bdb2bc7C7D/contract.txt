@@ -1,0 +1,19 @@
+1. Function addStrategy(address strategy, uint256 allocBPS) (line 202-215) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to add strategies to the vault.
+
+2. Function updateStrategyAllocBPS(address strategy, uint256 allocBPS) (line 218-229) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to update the allocation points for strategies.
+
+3. Function revokeStrategy(address strategy) (line 232-248) has access control issues. Reason: The function allows the strategy itself to revoke its allocation without any checks, which could lead to unauthorized revocation of strategies.
+
+4. Function setWithdrawalQueue(address[] calldata _withdrawalQueue) (line 276-290) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to set the withdrawal queue.
+
+5. Function updateWithdrawMaxLoss(uint256 _withdrawMaxLoss) (line 392-399) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to update the maximum allowed slippage.
+
+6. Function updateTvlCap(uint256 newTvlCap) (line 402-407) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to update the TVL cap.
+
+7. Function removeTvlCap() (line 409-414) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to remove the TVL cap.
+
+8. Function setEmergencyShutdown(bool active) (line 420-431) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to set the emergency shutdown state.
+
+9. Function inCaseTokensGetStuck(address token) (line 434-442) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to rescue tokens stuck in the contract.
+
+10. Function setLockedProfitDegradation(uint256 degradation) (line 487-494) has access control issues. Reason: The function can be called by any address since it does not have a proper access control modifier, allowing unauthorized users to change the locked profit degradation rate.

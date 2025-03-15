@@ -1,0 +1,32 @@
+{
+ "contract": "GrimBoostVault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "inCaseTokensGetStuck",
+   "0x5"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x5"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x5"
+  ],
+  [
+   "owner",
+   "upgradeStrat",
+   "0x5"
+  ],
+  [
+   "owner",
+   "proposeStrat",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

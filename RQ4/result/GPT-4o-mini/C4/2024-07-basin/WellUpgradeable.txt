@@ -1,0 +1,11 @@
+1. Function `init(string memory _name, string memory _symbol)` (line 22-38) has access control issues. Reason: The `init` function is marked as `external` and can be called by anyone, allowing unauthorized users to initialize the contract and potentially set critical state variables.
+
+2. Function `initNoWellToken()` (line 40-42) has access control issues. Reason: The `initNoWellToken` function is marked as `external` and can be called by anyone, which could lead to unintended initialization of the contract without proper checks.
+
+3. Function `upgradeTo(address newImplementation)` (line 66-70) has access control issues. Reason: The `upgradeTo` function is marked as `public`, allowing anyone to call it and potentially upgrade the contract to a malicious implementation if they can manipulate the `_authorizeUpgrade` checks.
+
+4. Function `upgradeToAndCall(address newImplementation, bytes memory data)` (line 73-77) has access control issues. Reason: Similar to `upgradeTo`, this function is also marked as `public`, allowing unauthorized users to upgrade the contract and execute arbitrary code if they can bypass the `_authorizeUpgrade` checks.
+
+5. Function `_authorizeUpgrade(address newImplmentation)` (line 54-64) has access control issues. Reason: While this function is marked as `internal`, it is crucial to ensure that the checks within it are robust enough to prevent unauthorized upgrades. If the checks are not properly validated, it could lead to unauthorized contract upgrades.
+
+In summary, the main access control issues arise from the `init`, `initNoWellToken`, `upgradeTo`, and `upgradeToAndCall` functions being publicly accessible without sufficient restrictions, allowing unauthorized users to manipulate the contract's state and upgrade its implementation.

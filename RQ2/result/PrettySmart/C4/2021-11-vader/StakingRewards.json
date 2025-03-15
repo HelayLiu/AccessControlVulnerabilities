@@ -1,0 +1,42 @@
+{
+ "contract": "StakingRewards",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "nominateNewOwner",
+   "0x0"
+  ],
+  [
+   "owner",
+   "notifyRewardAmount",
+   "0x2"
+  ],
+  [
+   "owner",
+   "setRewardsDuration",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setPaused",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setRewardsDistribution",
+   "0x0"
+  ],
+  [
+   "owner",
+   "recoverERC20",
+   "0x0"
+  ],
+  [
+   "owner",
+   "acceptOwnership",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

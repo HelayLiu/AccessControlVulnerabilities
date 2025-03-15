@@ -1,0 +1,12 @@
+{
+ "contract": "StakingRewards",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "whitelist",
+   "0x43489b21",
+   "SHA3(msg.sender,0xa)"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,19 @@
+1. Function bondToAccount(address account, uint256 amount) (line 42-50) has access control issues. Reason: The function can be called by any user, and it allows bonding to any account, which could lead to unauthorized bonding actions if the `offering` address is compromised or misused.
+
+2. Function _unbond(uint256 amountLPToken) (line 90-98) has access control issues. Reason: This function is internal and uses `msg.sender` directly without any access control checks, which means any user can unbond LP tokens from any account if they can call this function, leading to potential unauthorized access.
+
+3. Function _unbondAndBreak(uint256 amountLPToken) (line 104-113) has access control issues. Reason: Similar to the previous function, this internal function uses `msg.sender` directly without any access control checks, allowing any user to unbond and break LP tokens from any account, which can lead to unauthorized access.
+
+4. Function _addToBonded(address account, uint256 amount) (line 120-126) has access control issues. Reason: This function modifies the bonded state of any account without verifying if the caller has the right to modify that account's state, which can lead to unauthorized bonding actions.
+
+5. Function _removeFromBonded(address account, uint256 amount, string memory reason) (line 132-138) has access control issues. Reason: This function also modifies the bonded state of any account without verifying if the caller has the right to modify that account's state, which can lead to unauthorized unbonding actions.
+
+6. Function setMiningService(address _miningService) (line 174-180) has access control issues. Reason: While it has an access control modifier, if the `ADMIN_ROLE` is compromised, an attacker could change the mining service to a malicious contract.
+
+7. Function setDAO(address _dao) (line 182-188) has access control issues. Reason: Similar to the previous function, if the `ADMIN_ROLE` is compromised, an attacker could change the DAO to a malicious contract.
+
+8. Function setDexHandler(address _dexHandler) (line 190-196) has access control issues. Reason: Similar to the previous functions, if the `ADMIN_ROLE` is compromised, an attacker could change the DexHandler to a malicious contract.
+
+9. Function setCurrentEpoch(uint256 _epoch) (line 198-204) has access control issues. Reason: Similar to the previous functions, if the `ADMIN_ROLE` is compromised, an attacker could change the current epoch to an incorrect value, potentially disrupting the bonding mechanism.
+
+In summary, the contract has several access control issues primarily related to the ability of functions to modify the state of accounts without proper checks, as well as the potential for compromised admin roles to lead to unauthorized changes in critical contract parameters.

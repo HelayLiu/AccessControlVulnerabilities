@@ -1,0 +1,12 @@
+{
+ "contract": "NFTXVaultFactoryUpgradeable",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "pause",
+   "SHA3(msg.sender,0x65)"
+  ]
+ ],
+ "PC_bypassed": []
+}

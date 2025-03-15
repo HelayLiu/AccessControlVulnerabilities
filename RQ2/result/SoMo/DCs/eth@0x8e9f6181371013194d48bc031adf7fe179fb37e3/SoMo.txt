@@ -1,0 +1,32 @@
+Switched global version to 0.4.19
+Modifiers Status:
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+Modifier: onlyWhitelist, Status: ModifierStatus.SECURE
+Modifier: onlyPayloadSize, Status: ModifierStatus.SECURE
+Modifier: canDistr, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: owner, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: Cryptbond.ToOwner()
+owner_1(address) := msg.sender(address)
+Entry Point: Cryptbond.onlyOwner()
+owner_10(address) := ϕ(['owner_9', 'owner_2', 'owner_0', 'owner_1', 'owner_5', 'owner_3'])
+TMP_126(bool) = msg.sender == owner_10
+TMP_127(None) = SOLIDITY_CALL require(bool)(TMP_126)
+Insecure Path:
+
+Path Status: VULNERABLE
+Constraint: owner, Value: ""	Constraint: msg.sender, Value: ""
+Insecure Path: 
+Entry Point: Cryptbond.Mining24(uint256,uint256)
+owner_2(address) := msg.sender(address)
+Entry Point: Cryptbond.onlyOwner()
+owner_10(address) := ϕ(['owner_9', 'owner_2', 'owner_0', 'owner_1', 'owner_5', 'owner_3'])
+TMP_126(bool) = msg.sender == owner_10
+TMP_127(None) = SOLIDITY_CALL require(bool)(TMP_126)
+
+

@@ -1,0 +1,12 @@
+Below is one of the access‐control issues we found in the contract:
+
+1. Vulnerable Function: retrySettlement  
+  Location: The external function “retrySettlement” (roughly around lines 68–76, depending on formatting)  
+  Issue: This function is declared as external and is callable by anyone. However, it is meant to “retry” a settlement (i.e. update the settlement’s gas and re‐trigger the cross‐chain call) that belongs to a particular user. Unlike the redeemSettlement function (which correctly requires that msg.sender be either the settlement owner or their associated user account), retrySettlement does no check to ensure that the caller is the rightful owner of the given settlement.  
+  Impact / Reason: An attacker (or any third party) may call retrySettlement on a settlement that does not belong to them. By triggering a settlement retry, the attacker can change the settlement status (resetting it to “Success”) and update its call data. This can cause a denial‐of‐service for the legitimate depositor because when the owner later attempts to redeem a settlement, the contract will find that the settlement’s status is no longer “Failed” (its only allowed condition for redemption) and then revert. In other words, the lack of proper access control on retrySettlement may allow an attacker to “steal” the chance to recover a failed settlement or prevent the rightful owner from redeeming it.
+
+No other functions in the file were found to be missing the necessary checks before modifying state or invoking other contracts. (Many of the other externally callable functions are protected by modifiers such as requiresRouter, requiresAgentExecutor, requiresPort, etc.) 
+
+Recommendation:
+• Add an access control check (e.g. require(msg.sender == settlement.owner || …)) at the beginning of retrySettlement to ensure that only the settlement owner (or an approved account) can trigger a retry. This would prevent unauthorized callers from interfering with another user’s settlement.
+

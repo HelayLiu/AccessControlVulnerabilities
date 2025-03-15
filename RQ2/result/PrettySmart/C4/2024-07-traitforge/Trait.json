@@ -1,0 +1,12 @@
+{
+ "contract": "Trait",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "burn",
+   "SHA3(msg.sender,0x0)"
+  ]
+ ],
+ "PC_bypassed": []
+}

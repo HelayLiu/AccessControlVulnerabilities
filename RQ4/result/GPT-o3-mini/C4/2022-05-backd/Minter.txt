@@ -1,0 +1,18 @@
+Below is one example of an access control issue found in the contract:
+
+1. Vulnerable Function: executeInflationRateUpdate (roughly lines 46–48 in the provided file)
+
+ • Reason: This external function is callable by any address because it does not have an access restriction (for example, an onlyGovernance or onlyAuthorized modifier). Although the function merely “updates” the inflation‐tracking variables (totalAvailableToNow, lastEvent, possibly triggering a checkpoint via controller.inflationManager().checkpointAllGauges()), by allowing anyone to call it an attacker (or any third party) can force the inflation schedule to update at arbitrary times. In certain designs this may allow manipulation of the calculated mintable amounts or interfere with the timing of state changes that later affect minting (which is itself restricted to controller.inflationManager()). In other words, when the inflation state update is left public without any access control checks, it can potentially be abused to alter the system’s “clock” and state in unexpected ways, especially if there is any dependence on timing or if other parts of the system assume only an authorized actor would trigger an update.
+
+Proof‐of‐Concept (PoC) Outline:
+ 1. An attacker (any external caller) calls executeInflationRateUpdate repeatedly.
+ 2. Each call updates totalAvailableToNow by adding currentTotalInflation × (block.timestamp − lastEvent). By strategically timing these calls (for example, waiting a full decay period), the attacker could force the contract into a new “inflation decay” phase at undesirable moments.
+ 3. Such manipulation might indirectly affect downstream operations (say, when minting tokens by the authorized inflationManager) by altering the available supply calculations.
+
+Notes:
+– It is possible the design intended executeInflationRateUpdate to be a “public service” function (allowing anyone to keep the inflation state up‐to‐date). However, if the intention was to restrict inflation-related state changes only to trusted parties, then the absence of an access control modifier is a security issue.
+
+Therefore, the issue is:
+Function executeInflationRateUpdate (approx. line 46–48) has an access control issue because it lacks required restrictions (such as onlyGovernance or similar) even though it updates critical inflation state variables and calls external functions that are part of the reward/inflation schedule.
+
+// End of report.

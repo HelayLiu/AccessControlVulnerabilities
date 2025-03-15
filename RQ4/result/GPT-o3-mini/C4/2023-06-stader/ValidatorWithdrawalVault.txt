@@ -1,0 +1,27 @@
+Below is the summary of our findings:
+
+1. Vulnerability in the function distributeRewards() (approximately lines 22–36)
+ • Reason: The function does not restrict callers by an explicit access‐control modifier. Instead, it simply checks that if the caller does not have the operator role then the function will revert only if the vault’s balance (totalRewards) is above a defined threshold. As a result, any address that is not an operator (and that cannot be assumed to be trusted) is allowed to trigger the reward distribution provided that the amount in the vault is below the threshold. Even though the payout destinations are determined by configuration (to the stake pool manager, stader treasury, and operator rewards collector), letting arbitrary users invoke a state‑changing function (and thereby force fund “distribution” at arbitrary times) can lead to unexpected behavior or might be used in a denial‐of‐service or front‑running attack. In many designs such distribution functions are expected to be restricted to authorized roles.
+
+2. (Potentially) Vulnerability in settleFunds() (approximately lines 38–66)
+ • Reason: This function enforces that the caller must equal the “nodeRegistry” address (which is looked up via an external PoolUtils contract). While this check appears to restrict access, if the “staderConfig” or “PoolUtils” contracts are not fully trusted or if the “nodeRegistry” value can be manipulated by an external entity, it might be possible for an attacker to masquerade as the nodeRegistry contract. In that case the settleFunds() function—responsible for performing the final settlement (with calls to slash collateral, mark a validator as settled, and transfer funds)—could be called by an unauthorized party. (Note: This issue depends on the overall trust assumptions and the implementation of the external contracts used to retrieve roles.)
+
+Proof‑of‑Concept for DistributeRewards()
+
+Assume the following scenario: 
+ ○ The vault has a balance lower than staderConfig.getRewardsThreshold(). 
+ ○ The attacker does not have the operator role.
+
+Steps:
+ 1. The attacker calls distributeRewards().
+ 2. The if condition:
+  if (!staderConfig.onlyOperatorRole(msg.sender) && totalRewards > staderConfig.getRewardsThreshold())
+  evaluates to false because totalRewards is low.
+ 3. Thus, the function proceeds to calculate shares and sends ETH to the configured addresses.
+ 4. The attacker may not immediately receive funds, but they force the distribution at an inopportune time, potentially causing service interruptions or interfering with the intended operation flow.
+
+Conclusion:
+• Function distributeRewards() (lines 22–36) has an access control issue because it lets any caller (lacking operator role) trigger the reward distribution if the vault balance is below a threshold.
+• Function settleFunds() (lines 38–66) relies solely on an external nodeRegistry address for access control. If that external dependency is compromised or misconfigured, unauthorized settlement could occur.
+
+It is recommended to review and tighten the access control logic so that only clearly authorized entities (for example, by using explicit modifiers such as onlyOperator or onlyNodeRegistry, and without overloading business logic conditions) can trigger these critical functions.

@@ -1,0 +1,51 @@
+Below is one example of an access control “gotcha” found in the code. In our review, we note that functions intended to be callable only by externally owned accounts (EOAs) are “protected” by the modifier noContract. However, due to the nature of Solidity’s isContract check (which returns false when called from within a constructor), a malicious contract may bypass this “protection” by calling the function during its own construction. In short, a contract deployed specifically for attacking the vault could invoke deposit() and withdraw() in its constructor to bypass the noContract check.
+
+──────────────────────────────
+1. Function deposit(uint256 _amount) (roughly lines 74–85)
+──────────────────────────────
+Reason: Although the deposit function uses the noContract(msg.sender) modifier to “block” contract calls, this check relies on Address.isContract. That function returns false during a contract’s constructor, allowing a malicious contract to deposit in its constructor (or in any other way that bypasses a runtime call) even if it is not whitelisted. (The withdraw(uint256) function uses the same modifier and suffers from an identical issue.)
+
+──────────────────────────────
+Proof‐of‐Concept (Simplified):
+──────────────────────────────
+Imagine an attacker deploys a contract like this:
+
+----------------------------------------------------
+pragma solidity ^0.8.0;
+interface IYVault {
+    function deposit(uint256 _amount) external;
+    function token() external view returns (address);
+}
+interface IERC20 {
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+}
+
+contract Attack {
+    IYVault public vulnerableVault;
+    
+    constructor(address _vault, uint256 amount) {
+        vulnerableVault = IYVault(_vault);
+        // Assuming the Attack contract already has approved funds,
+        // the deposit call will occur within the constructor and
+        // bypass the isContract check in noContract modifier.
+        vulnerableVault.deposit(amount);
+    }
+}
+----------------------------------------------------
+
+In this PoC the Attack contract calls deposit() in its constructor. Since Address.isContract returns false during construction, the check “_account.isContract()” in noContract does not catch the call. The same idea applies to withdraw() if additional funds need to be extracted.
+
+──────────────────────────────
+2. Function withdraw(uint256 _shares) (roughly lines 93–107)
+──────────────────────────────
+Reason: This function also uses the noContract modifier. As explained for deposit(), a malicious contract can bypass this check during its own construction and therefore illicitly withdraw funds even if the intention was to restrict contract calls only.
+
+──────────────────────────────
+Summary and Recommendations:
+──────────────────────────────
+• The “noContract” check (relying on isContract) can be bypassed when a contract calls deposit() or withdraw() from its constructor.  
+• If the intent is to block smart contracts from interacting with these functions, additional design patterns (such as using tx.origin checks or other off‐chain verification) should be considered (keeping in mind their own pitfalls).  
+• Alternatively, a careful design decision may be to allow contract calls without attempting to “block” them at all.
+
+Based on our audit, these two functions may be used in ways not originally intended.

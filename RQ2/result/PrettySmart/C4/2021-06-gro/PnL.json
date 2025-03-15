@@ -1,0 +1,62 @@
+{
+ "contract": "PnL",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setController",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setPerformanceFee",
+   "0x0"
+  ],
+  [
+   "owner",
+   "emergencyPnL",
+   "0x1"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "recover",
+   "0x1"
+  ],
+  [
+   "owner",
+   "distributeStrategyGainLoss",
+   "0x1"
+  ],
+  [
+   "owner",
+   "distributePriceChange",
+   "0x1"
+  ],
+  [
+   "owner",
+   "decreaseGTokenLastAmount",
+   "0x1"
+  ],
+  [
+   "owner",
+   "increaseGTokenLastAmount",
+   "0x1"
+  ],
+  [
+   "owner",
+   "setRebase",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

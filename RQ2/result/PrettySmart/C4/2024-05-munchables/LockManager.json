@@ -1,0 +1,22 @@
+{
+ "contract": "LockManager",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x53b7775b",
+   "0x16"
+  ],
+  [
+   "owner",
+   "0x8da52e93",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "lock",
+   "SHA3(msg.sender,0xc)"
+  ]
+ ],
+ "PC_bypassed": []
+}

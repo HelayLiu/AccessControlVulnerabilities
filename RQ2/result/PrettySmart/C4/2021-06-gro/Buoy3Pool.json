@@ -1,0 +1,37 @@
+{
+ "contract": "Buoy3Pool",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "updateRatiosWithTolerance",
+   "0x1"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setController",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x135c457c",
+   "0x0"
+  ],
+  [
+   "owner",
+   "updateRatios",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

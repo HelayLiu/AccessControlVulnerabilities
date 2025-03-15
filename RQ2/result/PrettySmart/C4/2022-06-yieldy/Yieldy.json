@@ -1,0 +1,12 @@
+{
+ "contract": "Yieldy",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x3b)"
+  ]
+ ],
+ "PC_bypassed": []
+}

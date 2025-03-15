@@ -1,0 +1,21 @@
+Below is one key access‐control issue found in the contract:
+
+1. Function initialize() (approximately lines 338–348 in RubiconMarket) has an access control issue. 
+  Reason: The initialize function is meant to set up key admin parameters (including setting feeTo and, critically, assigning owner = msg.sender) for later access‐restricted operations. However, it is declared public without any authorization modifier (such as auth), which means that any user—rather than only an intended administrator—can be the first to call it. In a proxy‐deployment pattern the initialization routine is expected to be callable only once, but if an attacker happens to call initialize before the legitimate deployer (or if the deployer neglects to call it immediately), the attacker will set themselves up as the owner. Once the attacker is owner, they can call other functions protected by the DSAuth.auth modifier (e.g. stop(), setFeeTo(), setBuyEnabled()) and seize control over the market’s parameters.
+
+Proof‑of‑Concept:
+---------------------------------------------------------
+Assume the RubiconMarket contract is deployed but not yet initialized. An attacker can execute the following call:
+ 
+  RubiconMarket market = RubiconMarket(contractAddress);
+  market.initialize(true, attackerAddress);
+ 
+This call sets:
+  • AqueductDistributionLive to true,
+  • feeTo to attackerAddress, and most importantly,
+  • owner = msg.sender (i.e. attackerAddress),
+ 
+thereby giving the attacker full administrative privileges over the contract.
+---------------------------------------------------------
+
+Developers should protect this critical setup function (for example by restricting initialize to the deployer account or by using a one‑time “initializer” mechanism that prevents unauthorized initialization).

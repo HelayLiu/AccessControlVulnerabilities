@@ -1,0 +1,24 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `assignFees()` (line 47-56)**
+   - **Reason**: The `assignFees()` function does not have any access control modifiers, allowing any user to call it. This function sets the factory fees, which are critical parameters for the contract's operation. Without proper access control, unauthorized users can potentially manipulate these fees.
+
+2. **Function `setVaultFees()` (line 95-116)**
+   - **Reason**: The `setVaultFees()` function allows setting fees for a specific vault. While it checks if the caller is the owner or the vault itself, it does not restrict the vault from setting arbitrary fees. This could be exploited if a malicious vault is created, allowing it to set fees that could disrupt the system or lead to unexpected behavior.
+
+3. **Function `disableVaultFees()` (line 118-126)**
+   - **Reason**: Similar to `setVaultFees()`, the `disableVaultFees()` function allows a vault to disable its fees. While it checks if the caller is the owner or the vault itself, a malicious vault could disable its fees, potentially leading to loss of revenue or other unintended consequences.
+
+**Proof of Concept for `assignFees()`:**
+
+To demonstrate the vulnerability in the `assignFees()` function, consider the following scenario:
+
+1. A malicious user calls the `assignFees()` function.
+2. The function sets the factory fees to predefined values without any restriction.
+3. This action could disrupt the intended fee structure and affect the contract's operation.
+
+**Output:**
+
+1. Function `assignFees()` (line 47-56) has the access control issues. Reason: The function lacks access control, allowing any user to set critical factory fees, which could disrupt the contract's operation.
+2. Function `setVaultFees()` (line 95-116) has the access control issues. Reason: Although it checks for ownership or vault address, it allows arbitrary fee settings by vaults, which could be exploited by malicious vaults.
+3. Function `disableVaultFees()` (line 118-126) has the access control issues. Reason: It allows vaults to disable their fees, which could be exploited by malicious vaults to avoid fees, leading to potential revenue loss.

@@ -1,0 +1,32 @@
+{
+ "contract": "DividendDistributor",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "process",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "claimDividend",
+   "SHA3(msg.sender,0x7)"
+  ],
+  [
+   "owner",
+   "setShare",
+   "0x0"
+  ],
+  [
+   "owner",
+   "deposit",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setDistributionCriteria",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

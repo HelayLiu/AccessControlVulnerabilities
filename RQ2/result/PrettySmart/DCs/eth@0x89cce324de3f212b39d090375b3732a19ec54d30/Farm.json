@@ -1,0 +1,22 @@
+{
+ "contract": "Farm",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setParams",
+   "0x0"
+  ],
+  [
+   "owner",
+   "rescueToken",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

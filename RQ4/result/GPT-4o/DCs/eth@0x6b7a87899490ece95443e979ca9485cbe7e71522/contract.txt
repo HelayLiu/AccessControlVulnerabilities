@@ -1,0 +1,32 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `anySwapOut` (line 263-265)**
+   - **Reason**: This function allows any user to call it and execute the `_anySwapOut` function, which burns tokens from the caller's address. While this might be intended, it is crucial to ensure that the caller is aware of the implications, as there are no access control checks to restrict who can call this function.
+
+2. **Function `anySwapOutUnderlying` (line 270-274)**
+   - **Reason**: Similar to `anySwapOut`, this function allows any user to transfer tokens and execute a burn operation without any access control checks. This could lead to unintended token burns if the caller is not fully aware of the function's behavior.
+
+3. **Function `anySwapOutUnderlyingWithPermit` (line 276-287)**
+   - **Reason**: This function allows any user to perform a token transfer and burn operation using a permit, but it lacks access control checks to restrict who can call it. This could potentially lead to unauthorized token burns if the permit is misused.
+
+4. **Function `anySwapOutUnderlyingWithTransferPermit` (line 289-299)**
+   - **Reason**: Similar to the previous functions, this function allows any user to perform a token transfer and burn operation using a transfer permit, without any access control checks. This could lead to unauthorized token burns if the transfer permit is misused.
+
+5. **Function `anySwapIn` (line 318-320)**
+   - **Reason**: This function is protected by the `onlyMPC` modifier, which is appropriate for its intended use. However, it is crucial to ensure that the `_anySwapIn` function it calls is secure and that the `onlyMPC` modifier is correctly implemented to prevent unauthorized access.
+
+6. **Function `anySwapFeeTo` (line 354-357)**
+   - **Reason**: This function is also protected by the `onlyMPC` modifier, which is appropriate. However, it is essential to ensure that the `onlyMPC` modifier is correctly implemented to prevent unauthorized access to the function, which mints and withdraws tokens.
+
+**Proof of Concept for Access Control Issue:**
+
+To verify the access control issue in the `anySwapOut` function, you can deploy the contract and call the `anySwapOut` function from an address that holds tokens. Observe that the function executes without any access control checks, allowing the token burn operation to proceed.
+
+**Output:**
+
+1. Function `anySwapOut` (line 263-265) has potential access control issues. Reason: It allows any user to execute a token burn operation without access control checks.
+2. Function `anySwapOutUnderlying` (line 270-274) has potential access control issues. Reason: It allows any user to transfer and burn tokens without access control checks.
+3. Function `anySwapOutUnderlyingWithPermit` (line 276-287) has potential access control issues. Reason: It allows any user to perform a token transfer and burn operation using a permit, without access control checks.
+4. Function `anySwapOutUnderlyingWithTransferPermit` (line 289-299) has potential access control issues. Reason: It allows any user to perform a token transfer and burn operation using a transfer permit, without access control checks.
+5. Function `anySwapIn` (line 318-320) is protected by `onlyMPC`, but ensure the modifier is correctly implemented to prevent unauthorized access.
+6. Function `anySwapFeeTo` (line 354-357) is protected by `onlyMPC`, but ensure the modifier is correctly implemented to prevent unauthorized access.

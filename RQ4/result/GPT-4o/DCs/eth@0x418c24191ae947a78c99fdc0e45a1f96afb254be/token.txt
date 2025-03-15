@@ -1,0 +1,1 @@
+token prompt: 4096, token completion: 75

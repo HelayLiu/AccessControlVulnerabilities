@@ -1,0 +1,17 @@
+Below is one potential issue found during our audit:
+
+1. Vulnerable Function: deployFor(address owner)  
+   Approximate Lines: 29–42  
+   Reason: The deployFor function is declared as public and does not restrict who may supply the value for the “owner” parameter. This means that anyone can call deployFor and specify an arbitrary address as the owner. In effect, an attacker could deploy a new proxy in which the “owner” is set to a victim’s address—even if that victim did not initiate the call. (In many contexts such a factory method is expected to “deploy for oneself” or include an additional check such as require(msg.sender == owner) to ensure that the caller authorizes the proxy’s ownership assignment.)  
+
+Proof‐of‐Concept:  
+An attacker could run the following in a script or through a tool such as Remix:
+-------------------------------------------------
+   // Assume victimAddress is the address of the target
+   address victimAddress = 0xAbcd...;  
+   // Call deployFor with the victim as the parameter 
+   mimoProxyFactory.deployFor(victimAddress);  
+-------------------------------------------------
+This call would clone the MIMOProxy contract, initialize it, and then transfer its ownership to the victimAddress. If the victim was unaware this proxy would be created on their behalf, this could lead to unexpected or malicious behavior depending on what the proxy is used for.
+
+Note: In some designs a factory may intentionally allow deployment on behalf of another address. If that is the intended behavior then this would not be considered a vulnerability. However, if the expectation is that only the deployer should receive proxy ownership, then the lack of an access control check (for example, ensuring msg.sender == owner) is a potential security issue.

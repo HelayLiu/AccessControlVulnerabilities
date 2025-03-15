@@ -1,0 +1,42 @@
+Below is one potential area of concern uncovered during the audit. In this contract most “configuration‐style” functions (initialize, toggleQueue, setTokenSupport, etc.) enforce proper access control via onlyOwner (or onlyRouter in the case of burn), and the state–modifying functions that update liquidity or perform swaps are intended to be open so that users (or callers on behalf of users) may deposit/withdraw tokens. However, two functions accept a “from” address as an argument and then execute a token transfer from that account without verifying that msg.sender is equal to the “from” account. This can result in an unintended “access control” issue when users accidentally (or by malicious design) give token approval to an attacker’s address. In that case the attacker could call these functions using a “from” address set to a victim and have the tokens pulled from the victim’s account even though the victim did not physically call the deposit function.
+
+────────────────────────────
+1. Vulnerable function: mintSynth (approximately lines 74–87)
+   • Issue: The function takes a parameter “from” (and “to”) and calls
+         nativeAsset.safeTransferFrom(from, address(this), nativeDeposit);
+     without checking that msg.sender equals “from”. In many protocols the caller is expected to be the owner
+     (or the one whose tokens are being transferred), but here any caller who has been granted an allowance
+     by an unsuspecting “from” address (or a victim who approved spending by a malicious contract) can trigger
+     the mint and have token funds pulled from that “from” account while crediting the “to” address (which can be arbitrary).
+   • Impact: This may allow an attacker to “pull” tokens from a user who has previously granted allowance,
+         resulting in an unauthorized transfer of the native asset deposit.
+   • Proof-of-Concept (conceptual):
+         Assume user Alice (address A) approves a malicious actor (address M) to spend her tokens.
+         The attacker calls mintSynth with parameters: foreignAsset = X, nativeDeposit = Y, from = A, to = M.
+         The call invokes safeTransferFrom(A, address(this), Y). Because Alice approved M, the contract will pull
+         tokens from A while the minted synth tokens are sent to M.
+────────────────────────────
+2. Vulnerable function: mintFungible (approximately lines 139–160)
+   • Issue: Similarly, mintFungible receives a “from” address and calls:
+         nativeAsset.safeTransferFrom(from, address(this), nativeDeposit);
+         foreignAsset.safeTransferFrom(from, address(this), foreignDeposit);
+     without checking that msg.sender is the same as “from”. This means that a caller who has the benefit of a victim’s approval
+     could use the victim’s funds to mint liquidity, sending the resulting LP tokens to an address of the attacker’s choosing.
+   • Impact: If a user (or contract) inadvertently gives an allowance to a malicious actor, that actor could drain the user’s tokens
+         by initiating a mint and crediting themselves with the liquidity tokens.
+   • Proof-of-Concept (conceptual):
+         Imagine user Bob (address B) approves allowance for address M. Then M calls mintFungible with parameters:
+         foreignAsset = X, nativeDeposit = Y, foreignDeposit = Z, from = B, and to = M.
+         The token transfers will remove Y (native asset) and Z (foreign asset) from Bob’s account, and the minted liquidity tokens will
+         as a result be credited to M.
+────────────────────────────
+Recommendation:
+ • If the intended design is that only the owner of the tokens (i.e. msg.sender) should be “paying” the deposit,
+   then the functions should either not accept a “from” parameter or include a check such as:
+       require(msg.sender == from, "Unauthorized: can only use your own tokens");
+ • Alternatively, if the design is intentionally “meta‐transaction–friendly” (allowing one to transact on behalf of another),
+   then extensive documentation and careful review of the approval process is needed to ensure that token holders are aware of
+   the risk.
+   
+In summary, the functions mintSynth and mintFungible do not enforce that the caller is the token owner from whom funds are drawn.
+This “open from” design could be abused by a malicious actor if a user inadvertently grants allowance.

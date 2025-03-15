@@ -1,0 +1,62 @@
+{
+ "contract": "TokenSale",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setAdvisorAddress",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "withdrawTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setWalletAddress",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setAdvisorFee",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setRateContract",
+   "0x0"
+  ],
+  [
+   "owner",
+   "withdraw",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "claim",
+   "SHA3(msg.sender,0x8)"
+  ],
+  [
+   "owner",
+   "setTokenContract",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setTime",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "buyFromRC",
+   "SHA3(msg.sender,0x8)"
+  ]
+ ],
+ "PC_bypassed": []
+}

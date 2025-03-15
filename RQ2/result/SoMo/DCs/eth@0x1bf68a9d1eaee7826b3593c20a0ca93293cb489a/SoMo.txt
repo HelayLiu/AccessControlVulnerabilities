@@ -1,0 +1,14 @@
+Switched global version to 0.5.0
+Modifiers Status:
+Modifier: ownerDoesNotExist, Status: ModifierStatus.SECURE
+Modifier: notExecuted, Status: ModifierStatus.SECURE
+Modifier: onlyWallet, Status: ModifierStatus.SECURE
+Modifier: notNull, Status: ModifierStatus.SECURE
+Modifier: validRequirement, Status: ModifierStatus.SECURE
+Modifier: ownerExists, Status: ModifierStatus.SECURE
+Modifier: transactionExists, Status: ModifierStatus.SECURE
+Modifier: confirmed, Status: ModifierStatus.SECURE
+Modifier: notConfirmed, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

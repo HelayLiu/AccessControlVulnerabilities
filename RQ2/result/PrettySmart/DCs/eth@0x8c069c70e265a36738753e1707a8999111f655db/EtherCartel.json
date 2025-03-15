@@ -1,0 +1,17 @@
+{
+ "contract": "EtherCartel",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "getFreeKilo",
+   "SHA3(msg.sender,0x5)"
+  ],
+  [
+   "whitelist",
+   "collectDrugs",
+   "SHA3(msg.sender,0x8)"
+  ]
+ ],
+ "PC_bypassed": []
+}

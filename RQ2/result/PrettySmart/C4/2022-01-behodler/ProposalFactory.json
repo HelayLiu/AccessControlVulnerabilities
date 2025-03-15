@@ -1,0 +1,12 @@
+{
+ "contract": "ProposalFactory",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setDAO",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

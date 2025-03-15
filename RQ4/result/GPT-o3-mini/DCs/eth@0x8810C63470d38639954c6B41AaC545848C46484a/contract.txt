@@ -1,0 +1,25 @@
+Below is our analysis of the contract code in terms of access control:
+
+1. The contract implements the standard ERC20 interface without any “owner”‑based restrictions. In other words, all functions (transfer, transferFrom, approve, approveAndCall, etc.) are meant to be callable by any token holder and are therefore “public” by design. This is the normal pattern for ERC20 tokens, where “access control” in the sense of “only owner may call” is not needed for standard transfers or allowance updates.
+
+2. In StandardToken the critical functions (transfer, transferFrom, approve) rely on internal balance or allowance checks. There is no function that exposes administrative power (such as minting new tokens or changing important contract parameters) that could have been misused if not properly restricted.
+
+3. One point of note (though not strictly an “access control” issue) is the well‐known potential race condition in the approve function. Because the function unconditionally sets allowed[msg.sender][_spender] to _value without requiring that it first be zero (or without a safe “reset” mechanism), a spender may front‑run an allowance change. This “ERC20 approve race condition” has been discussed widely in the community but is not an access control flaw per se—it is a known quirk of many ERC20 implementations.
+
+4. The fallback function in AditusToken (function () { throw; }) simply rejects Ether and does not introduce an access control problem. Likewise, the constructor (AditusToken) properly assigns the full initial supply to the deployer and is executed only once.
+
+Proof‑of‑Concept for the approve race issue (if one wishes to test the allowance race condition; note that many token contracts share this behavior):
+
+• Assume address A approves address B for 100 tokens.  
+• Before A can change the allowance, B can use transferFrom to spend the approved tokens.  
+• Then, when A sets a new allowance, B might race to use the old or new allowance if not done carefully.
+
+This issue is not an “access control” vulnerability (i.e. a failure to limit privileged operations to authorized users) but rather the classic ERC20 race condition.
+
+Conclusion:
+After our review, we did not identify any function that mistakenly allows an unauthorized party to modify critical state (other than the expected ERC20 behavior). In short, no functions here lack the proper “access control” checks in the context of an ERC20 token. 
+
+Output:
+• No vulnerable function (with inappropriate access control) was found in this contract.
+
+Note: Although the approve function (line ≈49 in StandardToken) has the known allowance race condition, this is a well‐understood limitation of many ERC20 contracts and does not directly constitute an “access control” issue in the sense of leaving an administrative function unprotected.

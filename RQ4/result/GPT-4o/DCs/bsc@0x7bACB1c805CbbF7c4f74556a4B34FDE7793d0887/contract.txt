@@ -1,0 +1,8 @@
+1. **Function `acceptAdmin()` (line 32-41)** has an access control issue. 
+   - **Reason**: The function allows the `pendingAdmin` to become the `admin` without any further checks or confirmations from the current `admin`. This could be exploited if the `pendingAdmin` address is set maliciously or if the `pendingAdmin` account is compromised.
+
+2. **Function `setImplementation(address implementation_)` (line 122-127)** has an access control issue.
+   - **Reason**: Although this function is protected by the `onlyAdmin` modifier, the initial `admin` is set to `msg.sender` in the constructor (line 112), which means the deployer of the contract has the ability to set the implementation. If the deployer is not the intended `admin`, this could lead to unauthorized changes to the implementation contract, potentially allowing arbitrary code execution.
+
+3. **Constructor `RewardVaultDelegator` (line 110-120)** has an access control issue.
+   - **Reason**: The constructor sets the `admin` to `msg.sender` initially, which means the deployer of the contract has full control over the contract during initialization. If the deployer is not the intended `admin`, this could lead to unauthorized control over the contract. Additionally, the constructor does not have any access control checks to ensure that the `_admin` address provided is a trusted entity.

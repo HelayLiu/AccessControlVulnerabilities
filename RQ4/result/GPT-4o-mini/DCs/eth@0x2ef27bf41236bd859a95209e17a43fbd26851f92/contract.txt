@@ -1,0 +1,9 @@
+1. Function owned() (line 6-8) has the access control issues. Reason: The owned() function sets the owner variable to the address that deploys the contract, which can be manipulated if the contract is not properly initialized or if the constructor is not used correctly.
+
+2. Function transferOwnership(address _newOwner) (line 18-21) has the access control issues. Reason: The function allows the current owner to transfer ownership to any address, including potentially malicious addresses, without any checks on the new owner's validity.
+
+3. Function blacklistAccount(address _target, bool _isBlacklisted) (line 66-68) has the access control issues. Reason: The function allows the owner to blacklist any address without any checks or restrictions, which could lead to abuse if the owner is compromised.
+
+4. Function mintTokens(uint256 _mintedAmount) (line 73-76) has the access control issues. Reason: The function allows the owner to mint an unlimited amount of tokens, which could lead to inflation and devaluation of the token if the owner is malicious or compromised.
+
+5. Function burn(uint256 _value) (line 81-88) has the access control issues. Reason: The function allows the owner to burn tokens from their own balance, but it does not have any checks to prevent the owner from burning tokens from other users' balances, which could lead to loss of funds if the owner is malicious.

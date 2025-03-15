@@ -1,0 +1,21 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `bridgeWithPayload` (line 128-139)**:
+   - **Reason**: This function is publicly accessible and allows any user to initiate a bridge operation with a payload. While it internally calls `_bridgeWithPayload`, which is an internal function, the lack of access control on `bridgeWithPayload` itself means that any user can trigger this operation without restrictions. This could lead to unauthorized bridging operations if not intended to be open to all users.
+
+2. **Function `bridge` (line 141-150)**:
+   - **Reason**: Similar to `bridgeWithPayload`, this function is also publicly accessible and allows any user to initiate a bridge operation. It calls `_bridgeWithPayload` with a different message type, but the lack of access control on `bridge` means that any user can trigger this operation. This could lead to unauthorized bridging operations if not intended to be open to all users.
+
+3. **Function `addLiquidityWeth` (line 197-202)**:
+   - **Reason**: This function is publicly accessible and allows any user to add liquidity in WETH. While it uses the `userDepositing` modifier to update the user's balance, there is no restriction on who can call this function. If the intention is to restrict liquidity addition to certain users or roles, additional access control is needed.
+
+4. **Function `removeLiquidityWeth` (line 204-209)**:
+   - **Reason**: This function is publicly accessible and allows any user to remove liquidity in WETH. It uses the `userIsWithdrawing` modifier to check the user's balance, but there is no restriction on who can call this function. If the intention is to restrict liquidity removal to certain users or roles, additional access control is needed.
+
+5. **Function `addLiquidityEth` (line 184-191)**:
+   - **Reason**: This function is publicly accessible and allows any user to add liquidity in ETH. It uses the `userDepositing` modifier and checks if the chain uses ETH as gas currency, but there is no restriction on who can call this function. If the intention is to restrict liquidity addition to certain users or roles, additional access control is needed.
+
+6. **Function `removeLiquidityEth` (line 193-195)**:
+   - **Reason**: This function is publicly accessible and allows any user to remove liquidity in ETH. It uses the `userIsWithdrawing` modifier and checks if the chain uses ETH as gas currency, but there is no restriction on who can call this function. If the intention is to restrict liquidity removal to certain users or roles, additional access control is needed.
+
+These functions should be reviewed to determine if they are intended to be publicly accessible or if additional access control mechanisms are required to restrict their usage to authorized users or roles.

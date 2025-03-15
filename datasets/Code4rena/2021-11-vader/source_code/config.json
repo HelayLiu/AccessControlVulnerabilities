@@ -1,0 +1,7 @@
+{
+    "CompilerVersion": "v0.8.9+commit.8d00100c",
+    "ContractName": ["VaderPoolV2","BasePoolV2"],
+    "via-ir":false,
+    "optimize":true
+    
+}

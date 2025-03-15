@@ -1,0 +1,10 @@
+Upon reviewing the provided smart contract, I have identified a potential access control issue. Here is the analysis:
+
+1. **Function `receiveFromBridge` (line 204-211)**:
+   - **Reason**: The `receiveFromBridge` function is a public function that allows any caller to execute a swap and a payment transaction. This function does not have any access control modifiers like `onlyOwner`, which means that any external user can call this function. This could potentially lead to unauthorized swaps and transactions being executed, which might not be the intended behavior. The function should include access control checks to ensure that only authorized entities can invoke it.
+
+Proof of Concept:
+- An unauthorized user can call the `receiveFromBridge` function with arbitrary parameters, potentially leading to unintended swaps and transactions. This could be exploited to manipulate the contract's behavior or drain funds if not properly controlled.
+
+Recommendation:
+- Implement access control checks, such as a modifier to restrict access to the `receiveFromBridge` function, ensuring that only authorized users or contracts can call it. This will prevent unauthorized access and potential misuse of the function.

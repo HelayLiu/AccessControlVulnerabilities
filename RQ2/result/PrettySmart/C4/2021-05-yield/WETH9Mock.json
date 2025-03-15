@@ -1,0 +1,12 @@
+{
+ "contract": "WETH9Mock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "withdraw",
+   "SHA3(msg.sender,0x1)"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,29 @@
+Below is one example of what an auditor might report. Note that in this library every “external‐entry” point (even though they are internal functions called via a higher‐level contract) takes an input parameter (params.msgSender) that is then used in critical calls (for example when transferring liquidity, bidding or repaying) but is never checked against the real msg.sender. In other words, none of these functions enforce “caller authorization” (for example, by requiring that msg.sender equals params.msgSender or by using a dedicated access control modifier). This lack of verification means that if the higher‐level contract does not wrap these calls with its own access control checks, an attacker could “spoof” the msgSender passed in the parameters and force the function to act on behalf of another user. A proof of concept attack would be to call (via a mis‐configured external contract) one of these functions (say, executeIsolateRepay) and set params.msgSender to an arbitrary victim address—even though the actual caller is not that victim—which could result in unexpected token transfers or state modifications.
+
+The report would list the following vulnerabilities:
+
+1. Function executeIsolateBorrow (approximately lines 18–70)
+  Reason: It uses the caller address provided by params.msgSender (used later when transferring liquidity and emitting events) without verifying that it matches the actual msg.sender. An attacker who can call the external wrapper could pass an arbitrary address and thereby execute borrowing actions on behalf of someone else.
+  Proof of concept: An attacker could submit a transaction that calls the external function that wraps executeIsolateBorrow with params.msgSender set to a victim’s address. Then, when VaultLogic.erc20TransferOutLiquidity is called (using the victim’s address), the asset transfer may be executed under the victim’s identity if the wrapper does not do its own authorization.
+
+2. Function executeIsolateRepay (approximately lines 71–145)
+  Reason: Like the borrow function, it relies on the passed-in params.msgSender (and sometimes params.onBehalf) to determine whose funds should be debited (e.g. via VaultLogic.erc20TransferInLiquidity) without any access control check (e.g. “require(msg.sender == params.msgSender)”) thereby opening the door for an attacker to revert normal permissions.
+  Proof of concept: An attacker could craft a call that “repays” for a victim by supplying the victim’s address in params.msgSender so that, for instance, the token transfers are done from the victim’s account if approvals are in place.
+
+3. Function executeIsolateAuction (approximately lines 146–215)
+  Reason: This function uses params.msgSender to record the firstBidder, lastBidder and to transfer funds from escrow. Without an explicit check that msg.sender is authorized for this operation, an attacker may impersonate another user in the auction process.
+  Proof of concept: A malicious user could set params.msgSender to a trusted bidder’s address. The function would then record that trusted bidder as the first or last bidder and (if combined with additional mis‐configured access in the external contract) may result in a wrong party receiving funds.
+
+4. Function executeIsolateRedeem (approximately lines 216–270)
+  Reason: Here too, the caller address (params.msgSender) is taken from the input parameters and used to both pull assets (via VaultLogic.erc20TransferInLiquidity) and to remit bid fines. With no check that the supplied address is really the caller (or authorized by the protocol), an attacker can substitute an arbitrary address to steer redeem operations.
+  Proof of concept: An attacker calls the redeem wrapper and sets params.msgSender to an arbitrary target so that the liquidation “repayment” is debited from the target’s funds and the victim’s address is erroneously used in the subsequent transfers.
+
+5. Function executeIsolateLiquidate (approximately lines 271–end)
+  Reason: Although this function performs several validation checks through ValidateLogic (and does update state accordingly), it too never confirms that the entity invoking it is authorized to do so since it depends on params.msgSender in the calling context. This means that if the external contract does not enforce access control, liquidation calls may be initiated on behalf of other parties.
+  Proof of concept: An attacker could call the liquidate wrapper with manipulated parameters so that the token transfers (including those that return any “excess bid” amounts) are executed with respect to an address provided in the parameters rather than the true msg.sender.
+
+─────────────────────────────
+Summary Recommendation:
+Ensure that every external entry point (or the wrapper functions that call these internal library functions) performs strict access control checks. In particular, require that the actual msg.sender (as determined by the EVM) be authenticated (for example, by comparing it to params.msgSender or by using a designated modifier/role-based access control) so that attackers cannot spoof the identity of the caller when changing state or transferring funds.
+
+This pattern of relying on a passed-in “msgSender” without cross-checking against the actual sender throughout all functions (borrow, repay, auction, redeem, liquidate) represents a serious access control vulnerability if not properly “wrapped” by higher level contracts.

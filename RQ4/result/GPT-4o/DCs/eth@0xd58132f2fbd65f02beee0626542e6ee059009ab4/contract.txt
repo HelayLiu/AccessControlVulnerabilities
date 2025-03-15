@@ -1,0 +1,11 @@
+1. Function `XBornID()` (line 82-85) has an access control issue. Reason: The constructor function `XBornID()` sets the `owner` to `msg.sender` without any access control. This means that whoever deploys the contract becomes the owner, which is expected behavior, but it should be noted that this is a critical point of control.
+
+2. Function `distr(address _to, uint256 _amount)` (line 101-112) has an access control issue. Reason: The function is marked as `private`, which restricts its access to within the contract. However, it is called by `getTokens()` which is a public function. The `getTokens()` function does not have an `onlyOwner` modifier, meaning any user can call it and trigger the `distr` function, potentially leading to unauthorized distribution of tokens.
+
+3. Function `getTokens()` (line 116-134) has an access control issue. Reason: This function is public and can be called by any user. Although it checks the `onlyWhitelist` modifier, it still allows any non-blacklisted user to receive tokens, which might not be the intended behavior if the distribution is meant to be controlled or limited to certain addresses.
+
+4. Function `transferOwnership(address newOwner)` (line 87-90) has an access control issue. Reason: While it uses the `onlyOwner` modifier, it does not emit an event to log the ownership transfer, which is a best practice for transparency and tracking changes in ownership.
+
+5. Function `withdraw()` (line 166-169) has an access control issue. Reason: This function uses the `onlyOwner` modifier, which is correct, but it is critical because it allows the owner to withdraw all Ether from the contract. If the ownership is compromised, all funds can be drained.
+
+6. Function `burn(uint256 _value)` (line 171-178) has an access control issue. Reason: This function uses the `onlyOwner` modifier, which is correct, but it allows the owner to burn tokens from their own balance, which could affect the total supply and distribution metrics. If the owner's account is compromised, it could lead to unintended token burns.

@@ -1,0 +1,11 @@
+Below is one example of a public‐facing function that fails to check that only an authorized party may call it, along with a brief proof‐of‑concept scenario:
+
+1. Function initialize (≈lines 90–107)  
+  • Issue: There is no access control on initialize. Anyone may call it if globalState.price is still zero.  
+  • Reason: This function sets the pool’s fundamental state (price, tick, unlocked flag) without restricting who may do so. An attacker—instead of the intended factory or pool deployer—could call initialize with an attacker‑chosen initialPrice. In a pool protocol this may result in misconfigured pricing, unexpected tick values, or lock the pool in a state that prevents later “proper” initialization.  
+   Proof‑of‑concept scenario:  
+   – An attacker observes that the newly deployed pool has not yet been initialized (globalState.price == 0).  
+   – The attacker calls initialize(initialPrice) with a “malicious” value – for example, setting the tick to an extreme value via the associated TickMath.getTickAtSqrtRatio call.  
+   – The pool’s internal state becomes set to attacker‑controlled parameters. As a result, all future interactions (mint, swap, etc.) operate on these attacker‑chosen parameters, potentially harming the intended pool economics and liquidity providers.
+
+No other functions in the file that modify significant state miss such access control (the permissioned functions properly use either onlyFactoryOwner or check against a trusted address), so initialize is the primary access control concern.

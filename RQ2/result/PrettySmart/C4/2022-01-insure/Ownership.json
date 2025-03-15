@@ -1,0 +1,17 @@
+{
+ "contract": "Ownership",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "acceptTransferOwnership",
+   "0x1"
+  ],
+  [
+   "owner",
+   "commitTransferOwnership",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

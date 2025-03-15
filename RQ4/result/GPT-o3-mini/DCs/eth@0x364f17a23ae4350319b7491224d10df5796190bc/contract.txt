@@ -1,0 +1,35 @@
+Below is one example of a potential “access control” weakness found during our audit. (Note that many “Zap‐style” routers or aggregators intentionally let anybody trigger the “deposit” or “withdraw” routines on behalf of an account if that account has preapproved the transfer of its tokens. However, doing so can be dangerous if the recipient does not intend third parties to be able to trigger these sensitive operations on its behalf.)
+
+──────────────────────────────────────────────
+1. Function withdraw (basketId == 0 branch) (roughly lines 105–112)
+──────────────────────────────────────────────
+Reason:
+• In the withdraw function the logic for basketId == 0 does not check that msg.sender matches the “account” parameter. (In contrast, when basketId != 0 there is a require(account == msg.sender || operators[msg.sender]).)
+• As written, any external caller can invoke withdraw specifying any “account” (for which that account’s LP token has been previously approved to the LiquidXv2Zap contract) so that the contract calls IERC20(pair).safeTransferFrom(account, address(this), amount).
+• Although once the LP tokens are “withdrawn” the later steps send the final tokens to the “account” (not to msg.sender), permitting anyone to trigger the removal of liquidity (and a corresponding swap) on behalf of any account might be unexpected and lead to loss of control or other unexpected side‐effects – especially when considering that it additionally triggers reward claims.
+ 
+Proof‐of‐Concept (conceptual steps):
+1. Assume a user “Alice” has deposited LP tokens (or approved her LP tokens to the contract) via a basket0 deposit.
+2. An attacker can then call withdraw with parameters set as follows:
+   • account = Alice’s address,
+   • basketId = 0,
+   • amount = some allowed amount,
+   • token0, token1, tokenOut, and swap parameters arbitrarily chosen.
+3. The contract will call safeTransferFrom(Alice, address(this), amount) (which will work if Alice has granted any allowance for LP tokens) and then continue to remove liquidity and perform swaps.
+4. Although the final proceeds (after liquidity removal and swapping) are always sent to Alice, the attacker is “stealing” the right to trigger this sensitive process on behalf of Alice. This could be abused to manipulate the timing of reward claims or to cause front‐running/confusion for the legitimate user.
+
+──────────────────────────────────────────────
+Notes on Other Functions:
+• The deposit function also takes an “account” parameter and does not check that msg.sender == account. In Zap contracts it is not unusual to let any entity trigger the deposit provided that the “account” has given a token allowance. However, if the intent is for only the token holder to call it, then the absence of an “onlyOwner‐or‐account” check is another potential risk.
+• Administrative functions (setRouterAndFactory, setSwapPlus, setRewarder, setOperator, setOperatorSetter) are all restricted by checking that msg.sender == operatorSetter – and operatorSetter is set only in the constructor (or updated later by setOperatorSetter). This is acceptable provided that operatorSetter remains trusted.
+
+──────────────────────────────────────────────
+Recommendation:
+If the design goal is to allow only the token holder (or an approved operator) to trigger a withdrawal that removes liquidity from their own balance, then the contract should enforce that msg.sender equals the “account” parameter (or an approved account) across deposit and withdrawal functions. Otherwise, an attacker could “front‐run” or cause state changes (including claiming rewards) on behalf of victims who may not have expected that third parties could trigger these operations.
+
+──────────────────────────────────────────────
+Final Output (Example):
+1. Function withdraw (lines ~105–112) has an access control issue.
+   Reason: In the branch for basketId == 0, the function does not verify that msg.sender equals the “account” parameter. This allows any external caller to trigger a withdrawal on behalf of any account (assuming that the account has previously allowed LP token transfers), which might let an attacker manipulate the timing of liquidity removal and reward claims.
+
+By reviewing and updating these access control checks, you can reduce the risk of unintended state changes induced by unauthorized external callers.

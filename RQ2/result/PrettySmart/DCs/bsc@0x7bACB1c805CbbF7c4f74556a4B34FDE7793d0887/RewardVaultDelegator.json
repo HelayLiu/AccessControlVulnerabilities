@@ -1,0 +1,22 @@
+{
+ "contract": "RewardVaultDelegator",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setImplementation",
+   "0x1"
+  ],
+  [
+   "owner",
+   "acceptAdmin",
+   "0x2"
+  ],
+  [
+   "owner",
+   "setPendingAdmin",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

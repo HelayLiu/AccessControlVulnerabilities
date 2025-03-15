@@ -1,0 +1,9 @@
+1. Function initialize() (line 20-34) has access control issues. Reason: The `initialize` function is public and can be called by anyone, which allows any user to set the underlying asset and other critical parameters of the contract, potentially leading to unauthorized access and manipulation of the contract's state.
+
+2. Function sweepToken() (line 56-63) has access control issues. Reason: The `sweepToken` function is public and does not have any access control checks, allowing any user to sweep tokens from the contract, which could lead to loss of funds if misused.
+
+3. Function _addReserves() (line 66-69) has access control issues. Reason: The `_addReserves` function is public and can be called by anyone, allowing any user to add reserves to the contract without any restrictions, which could lead to unauthorized manipulation of the reserves.
+
+4. Function _delegateCompLikeTo() (line 114-118) has access control issues. Reason: Although this function has an access control check for the admin, it is important to note that if the admin role is compromised, an attacker could delegate votes to any address, which could lead to governance manipulation. 
+
+These functions lack proper access control mechanisms, which could lead to significant vulnerabilities in the contract.

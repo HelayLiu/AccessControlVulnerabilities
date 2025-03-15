@@ -1,0 +1,14 @@
+1. Function `transferOwnership(address newOwner)` (line 108-112) has an access control issue. Reason: The function is public and does not have the `onlyOwner` modifier, allowing any user to change the contract's owner to any address, which can lead to unauthorized control over the contract.
+
+2. Function `unlock()` (line 132-137) has an access control issue. Reason: The function allows the `_previousOwner` to regain ownership after the lock period without any additional checks. If `_previousOwner` is compromised or if the lock mechanism is not properly managed, it could lead to unauthorized access.
+
+Proof of Concept for `transferOwnership`:
+- Deploy the contract.
+- Call `transferOwnership` with a new address as a parameter from any account.
+- Observe that the owner of the contract changes to the new address without any restriction.
+
+Proof of Concept for `unlock`:
+- Deploy the contract and lock the ownership using the `lock` function.
+- Wait for the lock period to expire.
+- Call `unlock` from the `_previousOwner` address.
+- Observe that the ownership is transferred back to `_previousOwner` without any additional checks.

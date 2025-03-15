@@ -1,0 +1,20 @@
+Below is one identified access‐control issue with details and a proof‑of‑concept.
+
+1. Vulnerable Function: distributeStrategyGainLoss  
+  Approximate Lines: 228–242
+
+Reason:
+  The function is intended to be callable only by approved “vault adaptor” contracts—that is, addresses that were previously registered (and thus have a nonzero index in the vaultIndexes mapping). However, the require statement reads:
+    require(index > 0 || index <= N_COINS + 1, "!VaultAdaptor");
+  Because the OR operator (||) is used, an address that was never registered will have vaultIndexes[msg.sender] equal to 0. In that case, the first condition (0 > 0) is false, but the second condition (0 <= N_COINS + 1) always holds true (since N_COINS is at least 1). As a result, any address (including unauthorized ones) can successfully call this function.
+  This flawed check allows an adversary to invoke distributeStrategyGainLoss with arbitrarily chosen “gain” and “loss” values. Through these calls they may manipulate the logic in IPnL(pnl).distributeStrategyGainLoss, leading to potential system misbehavior or financial abuse.
+
+Proof‑of‑Concept:
+  An attacker (an address not registered as a vault adaptor) can simply call:
+    Controller.distributeStrategyGainLoss(gain, loss);
+  with any numbers for gain and loss. Since vaultIndexes[attacker] is 0, the check passes (0 > 0 || 0 <= N_COINS+1 is true), and the function executes, allowing the attacker to affect internal PnL calculations.
+
+To fix the issue, the check should use the AND operator (&&) so that only addresses with index > 0 and index <= N_COINS + 1 pass the check. For example:
+  require(index > 0 && index <= N_COINS + 1, "!VaultAdaptor");
+
+This correction ensures that only properly registered vault adaptors can trigger the function.

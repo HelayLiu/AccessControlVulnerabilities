@@ -1,0 +1,22 @@
+{
+ "contract": "Claimable",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "claimOwnership",
+   "0x1"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

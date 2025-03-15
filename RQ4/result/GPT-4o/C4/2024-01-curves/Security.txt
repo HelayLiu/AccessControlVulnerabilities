@@ -1,0 +1,4 @@
+OutPut:
+1. Modifier onlyOwner (line 8-11) has an access control issue. Reason: The modifier onlyOwner does not enforce the access control check because it uses `msg.sender == owner;` instead of `require(msg.sender == owner);`. This means the condition is not actually checked, allowing any user to execute functions protected by this modifier.
+
+2. Modifier onlyManager (line 13-16) has an access control issue. Reason: Similar to the onlyOwner modifier, the onlyManager modifier does not enforce the access control check because it uses `managers[msg.sender] == true;` instead of `require(managers[msg.sender] == true);`. This means the condition is not actually checked, allowing any user to execute functions protected by this modifier.

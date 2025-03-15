@@ -1,0 +1,12 @@
+Below is one key finding from our audit:
+
+1. Function stakeToken (around lines 410–420) has an access control issue.  
+   • Issue Detail: stakeToken is declared as external and may be called by anyone. However, the function does not verify that msg.sender is the owner of the deposited token (stored in deposits[tokenId].owner). Instead, it simply reads the owner later in _stakeToken and uses it for bookkeeping (such as attaching the user to a gauge and setting the staked timestamp).  
+   • Why It Matters: An attacker (or any unauthorized actor) could call stakeToken on a token that was deposited by someone else. Even though the deposit’s owner remains unchanged in storage, forcing a staking operation on behalf of somebody else may reset the stakedTimestamp and alter the computation of subsequent rewards. In other words, the rightful token owner’s rewards could be reduced or manipulated, effectively interfering with the correct reward accrual mechanism.  
+   • Proof of Concept:  
+     1. Assume User A has deposited a Uniswap V3 NFT (with tokenId X) so that deposits[X].owner is User A.  
+     2. An attacker (User B) calls stakeToken(X) even though they are not the deposit owner.  
+     3. The _stakeToken function will use the tokenOwner (still User A) for gauge attachment and incentive bookkeeping while setting deposits[X].stakedTimestamp = block.timestamp.  
+     4. As a result, the incentive start time for tokenId X is effectively “reset” by an attacker. The reward calculation—dependent on the period during which the token was staked—is now unfairly altered, potentially harming User A’s rewards.  
+
+It is recommended that stakeToken (and any other token operations that “affect” a deposited position) include an explicit check that msg.sender == deposits[tokenId].owner to ensure only the rightful owner may initiate staking.

@@ -1,0 +1,30 @@
+After analyzing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `restakeDelegator` (line 204-222)**
+   - **Reason**: This function allows the restaking of tokens by transferring them to a delegator and calling the `restake` function on the delegator. It is restricted to the `DEFAULT_ADMIN_ROLE`, which is appropriate. However, the function does not verify if the `_stakedTokenAddress` is whitelisted before proceeding with the restake operation. This could potentially allow an admin to restake tokens that are not intended to be restaked, leading to unexpected behavior or loss of funds.
+
+2. **Function `queueWithdrawalDelegator` (line 224-233)**
+   - **Reason**: Similar to the `restakeDelegator` function, this function is restricted to the `DEFAULT_ADMIN_ROLE` but does not check if the `_stakedTokenAddress` is whitelisted before queuing a withdrawal. This could allow an admin to queue withdrawals for non-whitelisted tokens, which might not be the intended behavior.
+
+3. **Function `completeQueuedWithdrawalDelegator` (line 235-247)**
+   - **Reason**: This function is also restricted to the `DEFAULT_ADMIN_ROLE` and does not verify if the `_stakedTokenAddress` is whitelisted before completing a queued withdrawal. This could lead to the completion of withdrawals for tokens that should not be processed, potentially causing issues with token management.
+
+4. **Function `pullDelegator` (line 249-255)**
+   - **Reason**: This function allows the admin to pull tokens from a delegator. While it is restricted to the `DEFAULT_ADMIN_ROLE`, it does not check if the `_token` is whitelisted. This could allow the admin to pull tokens that are not intended to be managed by the protocol, leading to potential misuse of funds.
+
+**Proof of Concept for Issue 1:**
+
+To verify the issue with the `restakeDelegator` function, consider the following scenario:
+
+- Assume an admin with `DEFAULT_ADMIN_ROLE` calls `restakeDelegator` with a non-whitelisted `_stakedTokenAddress`.
+- The function will proceed to restake the tokens without any checks, potentially leading to unexpected behavior or loss of funds.
+
+**Output:**
+
+1. Function `restakeDelegator` (line 204-222) has an access control issue. Reason: The function does not verify if the `_stakedTokenAddress` is whitelisted before proceeding with the restake operation, which could lead to restaking of non-whitelisted tokens.
+
+2. Function `queueWithdrawalDelegator` (line 224-233) has an access control issue. Reason: The function does not check if the `_stakedTokenAddress` is whitelisted before queuing a withdrawal, potentially allowing withdrawals for non-whitelisted tokens.
+
+3. Function `completeQueuedWithdrawalDelegator` (line 235-247) has an access control issue. Reason: The function does not verify if the `_stakedTokenAddress` is whitelisted before completing a queued withdrawal, which could lead to processing withdrawals for non-whitelisted tokens.
+
+4. Function `pullDelegator` (line 249-255) has an access control issue. Reason: The function does not check if the `_token` is whitelisted before pulling it from a delegator, potentially allowing the pulling of non-whitelisted tokens.

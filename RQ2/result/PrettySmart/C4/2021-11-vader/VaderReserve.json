@@ -1,0 +1,12 @@
+{
+ "contract": "VaderReserve",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xb99573a3",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

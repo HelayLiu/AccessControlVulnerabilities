@@ -1,0 +1,26 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `initialize()` (line 22-39):**
+   - **Reason:** The `initialize()` function is marked as `external` and can be called by anyone. This function sets up critical roles and initializes important state variables. If this function is called by an unauthorized user, it could lead to improper initialization of the contract, potentially allowing unauthorized access to administrative functions. It should be protected by an access control modifier to ensure only authorized entities can call it.
+
+2. **Function `transferFrom()` (line 155-173):**
+   - **Reason:** The `transferFrom()` function allows transferring tokens from one address to another. While it checks for allowance, it does not have any role-based access control. This is typical for ERC20 tokens, but if the intention is to restrict certain transfers, additional access control might be necessary.
+
+3. **Function `_mint()` (line 202-218):**
+   - **Reason:** The `_mint()` function is an internal function that can be called by any function within the contract. While it is protected by the `onlyRole(MINTER_BURNER_ROLE)` modifier in the `mint()` function, any new internal function added in the future that calls `_mint()` should ensure proper access control is in place.
+
+4. **Function `_burn()` (line 230-246):**
+   - **Reason:** Similar to `_mint()`, the `_burn()` function is internal and can be called by any function within the contract. It is protected by the `onlyRole(MINTER_BURNER_ROLE)` modifier in the `burn()` function, but care should be taken to ensure any future internal calls to `_burn()` are properly controlled.
+
+**Proof of Concept for `initialize()` Function:**
+
+To demonstrate the potential issue with the `initialize()` function, consider the following scenario:
+
+1. Deploy the `Yieldy` contract.
+2. Call the `initialize()` function from an unauthorized address.
+3. Observe that the unauthorized address can set up roles and initialize state variables, potentially gaining control over the contract.
+
+**Output:**
+
+1. Function `initialize()` (line 22-39) has the access control issues. 
+   - **Reason:** The `initialize()` function can be called by any address, allowing unauthorized initialization of the contract, which includes setting up roles and critical state variables. This could lead to unauthorized access and control over the contract's functions.

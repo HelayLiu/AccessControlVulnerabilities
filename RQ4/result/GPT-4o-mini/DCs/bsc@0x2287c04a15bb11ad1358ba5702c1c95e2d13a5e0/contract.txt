@@ -1,0 +1,21 @@
+1. Function `warpWithdraw()` (line 118-120) has access control issues. Reason: The `warpWithdraw()` function can be called by any address that has access to the contract, but it should only be callable by the owner. This could allow unauthorized users to withdraw funds from the `warp` contract.
+
+2. Function `warpaddTokenldx(uint256 amount)` (line 123-125) has access control issues. Reason: Similar to `warpWithdraw()`, the `warpaddTokenldx()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to add tokens to the `warp` contract.
+
+3. Function `rescueToken(address tokenAddress, uint256 tokens)` (line 174-178) has access control issues. Reason: The `rescueToken()` function allows the owner to transfer tokens from the contract to their address. However, if the `_tokenOwner` variable is not properly managed, it could lead to unauthorized access to this function, allowing anyone to call it if they can manipulate the `_tokenOwner` address.
+
+4. Function `setSwapAndLiquifyEnabled(bool _enabled)` (line 130-132) has access control issues. Reason: The `setSwapAndLiquifyEnabled()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to enable or disable the swap and liquify functionality.
+
+5. Function `changeSwapWarp(EthWarp _warp)` (line 134-136) has access control issues. Reason: The `changeSwapWarp()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to change the `warp` contract address, potentially leading to malicious actions.
+
+6. Function `addOtherTokenPair(address _otherPair)` (line 139-141) has access control issues. Reason: The `addOtherTokenPair()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to add other token pairs, which could lead to manipulation of the contract's liquidity.
+
+7. Function `setSwapTokensAtAmount(uint256 _swapTokensAtAmount)` (line 145-147) has access control issues. Reason: The `setSwapTokensAtAmount()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to change the amount of tokens required for swapping, potentially leading to manipulation of the contract's liquidity.
+
+8. Function `excludeFromFees(address account, bool excluded)` (line 149-151) has access control issues. Reason: The `excludeFromFees()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to exclude accounts from fees, leading to potential abuse of the fee structure.
+
+9. Function `excludeMultipleAccountsFromFees(address[] calldata accounts, bool excluded)` (line 153-157) has access control issues. Reason: The `excludeMultipleAccountsFromFees()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to exclude multiple accounts from fees, leading to potential abuse of the fee structure.
+
+10. Function `updateUniswapV2Router(address newAddress)` (line 109-111) has access control issues. Reason: The `updateUniswapV2Router()` function can be called by any address, but it should only be callable by the owner. This could allow unauthorized users to change the router address, potentially leading to manipulation of the contract's liquidity.
+
+In summary, the contract has multiple functions that lack proper access control, allowing unauthorized users to perform sensitive actions that could compromise the integrity of the contract.

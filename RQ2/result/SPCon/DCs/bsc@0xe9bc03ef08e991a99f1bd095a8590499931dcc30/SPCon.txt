@@ -1,0 +1,3 @@
+ERROR:ContractSolcParsing:Missing function Variable not found: updateReward (context MintableSupplyStaking)
+ERROR:ContractSolcParsing:Missing function Variable not found: updateReward (context MintableAutoCompundRelockBonus)
+WARNING:symExec:No permission policy is detected. No permission bug.

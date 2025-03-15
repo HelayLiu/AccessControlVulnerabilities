@@ -1,0 +1,13 @@
+1. Function claimFeesFor(address recipient) (line 139-150) has access control issues. Reason: The function allows any user to claim fees for any recipient by passing the recipient's address as an argument. This can lead to unauthorized claims of fees by malicious actors.
+
+2. Function _transferFeesSupportingTaxTokens(address token, uint256 amount) (line 118-126) has access control issues. Reason: This function is public and can be called by anyone, allowing any user to transfer fees from the contract to any address without any restrictions.
+
+3. Function mint(address to) (line 292-314) has access control issues. Reason: The mint function is public and can be called by anyone, allowing any user to mint liquidity tokens and potentially manipulate the liquidity of the pool.
+
+4. Function burn(address to) (line 317-339) has access control issues. Reason: The burn function is public and can be called by anyone, allowing any user to burn liquidity tokens and withdraw funds from the pool without any restrictions.
+
+5. Function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes calldata data) (line 364-396) has access control issues. Reason: The swap function is public and can be called by anyone, allowing any user to swap tokens without any restrictions, which could lead to manipulation of the pool's reserves.
+
+6. Function skim(address to) (line 398-404) has access control issues. Reason: The skim function is public and can be called by anyone, allowing any user to withdraw excess tokens from the contract without any restrictions.
+
+7. Function sync() (line 406-412) has access control issues. Reason: The sync function is public and can be called by anyone, allowing any user to force the reserves to match balances without any restrictions, which could lead to manipulation of the pool's state.

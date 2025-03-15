@@ -1,0 +1,11 @@
+Below is one of the potential access control issues found in this contract:
+
+1. Function DrugDealer() (approximately lines 18–21) has a significant access control issue. 
+
+  Reason: In Solidity 0.4.18 a constructor is defined by having the same name as the contract (in this case EtherCartel). However, the function is named DrugDealer() so it is not recognized as the constructor. As a result, any caller can invoke DrugDealer() to reset ceoAddress to their own address. Since ceoAddress is later used to receive fees (for example in sellDrugs() and buyDrugs()), an attacker can call DrugDealer() before others and hijack the fee collection.
+
+Proof-of-Concept:
+  1. An attacker sends a transaction to call DrugDealer(), thereby setting ceoAddress = attacker's address.
+  2. Later, whenever any user sells or buys drugs, the contract transfers fees to ceoAddress—which now is controlled by the attacker.
+
+This vulnerability undermines the intended access control and authorization properly establishing an administrative role.

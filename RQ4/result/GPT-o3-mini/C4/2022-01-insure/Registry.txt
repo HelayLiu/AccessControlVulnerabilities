@@ -1,0 +1,24 @@
+Below is our analysis of the access control concerns in the contract:
+
+1. Function supportMarket (lines 46–54)  
+ • Issue: Instead of restricting registration solely to the contract owner, the function accepts calls from either the external factory address (stored in the public variable factory) or the owner (via ownership.owner()).  
+ • Reason: Allowing the factory to invoke supportMarket can be problematic if the factory contract is ever compromised (or set to a malicious contract) because it then can register arbitrary market addresses without further checks. In other words, the design “trust” placed in the factory address represents an access control risk.
+
+2. Function setExistence (lines 61–66)  
+ • Issue: Similar to supportMarket, setExistence allows both the factory and the owner to call it.  
+ • Reason: Unauthorized or compromised usage of the factory contract can lead to unintended registrations in the existence mapping. This may lead to unexpected state changes that adversaries could exploit in dependent logic.
+
+Additional note:
+– The onlyOwner modifier relies on an external IOwnership contract’s owner() value. If that external contract is poorly designed or becomes compromised, then even functions protected by onlyOwner (such as setFactory and setCDS) would become vulnerable. This external dependency should be audited carefully as well.
+
+Proof-of-Concept (PoC) Outline:
+• Deploy a malicious factory contract that calls supportMarket with a market address of the attacker’s choosing.  
+• Then, set the Registry’s factory to the malicious contract (using setFactory, callable only by the owner).  
+• Finally, invoke supportMarket from the malicious factory contract.  
+• If the market gets registered despite the security expectations, this demonstrates that an attacker controlling or compromising the factory may abuse these functions.
+
+Summary of Vulnerable Functions:
+1. supportMarket (lines 46–54): Access control weakness because it accepts calls from factory (which if compromised is unsafe) in addition to the owner.
+2. setExistence (lines 61–66): Similar weakness via allowing calls from the factory, making critical state updates accessible by anyone controlling the factory.
+
+Both issues stem from the design decision to “trust” the externally set factory contract for performing sensitive state updates without additional access checks.

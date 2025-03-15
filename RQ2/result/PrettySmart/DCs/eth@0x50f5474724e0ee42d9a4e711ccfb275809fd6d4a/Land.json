@@ -1,0 +1,47 @@
+{
+ "contract": "Land",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "transferQuad",
+   "SHA3(msg.sender,0x1)"
+  ],
+  [
+   "owner",
+   "setMetaTransactionProcessor",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "safeTransferFrom",
+   "SHA3(msg.sender,0x1)"
+  ],
+  [
+   "whitelist",
+   "transferFrom",
+   "SHA3(msg.sender,0x1)"
+  ],
+  [
+   "owner",
+   "changeAdmin",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "batchTransferQuad",
+   "SHA3(msg.sender,0x1)"
+  ],
+  [
+   "owner",
+   "setMinter",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setSuperOperator",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,37 @@
+1. Function transferOwnership(address newOwner) (line 118-123) has access control issues. Reason: The function allows anyone to change the ownership of the contract without any access control checks, which can lead to unauthorized control over the contract.
+
+2. Function unlock() (line 66-70) has access control issues. Reason: The function allows the previous owner to unlock the contract, but it does not check if the previous owner is the one calling the function, which could lead to unauthorized access.
+
+3. Function excludeFromReward(address account) (line 164-170) has access control issues. Reason: The function can be called by anyone to exclude any address from rewards, which can lead to manipulation of reward distribution.
+
+4. Function includeInReward(address account) (line 172-180) has access control issues. Reason: Similar to excludeFromReward, this function can be called by anyone to include any address back into the reward system, which can lead to unauthorized manipulation.
+
+5. Function setBuyBackMaxTimeForHistories(uint256 newMinutes) (line 370-373) has access control issues. Reason: This function can be called by anyone to set the buy back max time for histories, which can lead to unauthorized changes in the contract's behavior.
+
+6. Function setBuyBackDivisor(uint256 newDivisor) (line 375-378) has access control issues. Reason: This function can be called by anyone to set the buy back divisor, which can lead to unauthorized changes in the contract's behavior.
+
+7. Function setBuyBackTimeInterval(uint256 newMinutes) (line 386-389) has access control issues. Reason: This function can be called by anyone to set the buy back time interval, which can lead to unauthorized changes in the contract's behavior.
+
+8. Function setSwapMinutes(uint256 newMinutes) (line 396-399) has access control issues. Reason: This function can be called by anyone to set the swap minutes, which can lead to unauthorized changes in the contract's behavior.
+
+9. Function setTaxFeePercent(uint256 taxFee) (line 404-407) has access control issues. Reason: This function can be called by anyone to set the tax fee percentage, which can lead to unauthorized changes in the contract's behavior.
+
+10. Function setBuyFee(uint256 buyTaxFee, uint256 buyLiquidityFee) (line 409-412) has access control issues. Reason: This function can be called by anyone to set the buy fee, which can lead to unauthorized changes in the contract's behavior.
+
+11. Function setSellFee(uint256 sellTaxFee, uint256 sellLiquidityFee) (line 414-417) has access control issues. Reason: This function can be called by anyone to set the sell fee, which can lead to unauthorized changes in the contract's behavior.
+
+12. Function setLiquidityFeePercent(uint256 liquidityFee) (line 419-422) has access control issues. Reason: This function can be called by anyone to set the liquidity fee percentage, which can lead to unauthorized changes in the contract's behavior.
+
+13. Function setMaxTxAmount(uint256 maxTxAmount) (line 434-437) has access control issues. Reason: This function can be called by anyone to set the maximum transaction amount, which can lead to unauthorized changes in the contract's behavior.
+
+14. Function transferForeignToken(address _token, address _to) (line 487-493) has access control issues. Reason: This function can be called by anyone to transfer foreign tokens from the contract, which can lead to unauthorized withdrawals.
+
+15. Function Sweep() (line 495-498) has access control issues. Reason: This function can be called by anyone to sweep the contract's balance, which can lead to unauthorized withdrawals.
+
+16. Function Sweep(uint256 amount) (line 500-505) has access control issues. Reason: This function can be called by anyone to sweep a specified amount from the contract's balance, which can lead to unauthorized withdrawals.
+
+17. Function setAddressFee(address _address, bool _enable, uint256 _addressTaxFee, uint256 _addressLiquidityFee) (line 507-513) has access control issues. Reason: This function can be called by anyone to set address fees, which can lead to unauthorized manipulation of fees.
+
+18. Function setBuyAddressFee(address _address, bool _enable, uint256 _addressTaxFee, uint256 _addressLiquidityFee) (line 515-521) has access control issues. Reason: This function can be called by anyone to set buy address fees, which can lead to unauthorized manipulation of fees.
+
+19. Function setSellAddressFee(address _address, bool _enable, uint256 _addressTaxFee, uint256 _addressLiquidityFee) (line 523-529) has access control issues. Reason: This function can be called by anyone to set sell address fees, which can lead to unauthorized manipulation of fees.

@@ -1,0 +1,13 @@
+1. Function `owned()` (line 12-14) has access control issues. Reason: The `owned()` function sets the `owner` variable to `msg.sender`, which is significant because it grants ownership of the contract to the address that deploys it. However, this function does not have any access control checks, allowing anyone to call it and potentially change the owner.
+
+2. Function `transferOwnership(address newOwner)` (line 20-23) has access control issues. Reason: The `transferOwnership` function allows the current owner to transfer ownership to a new address. However, if the `owned()` function is called by an unauthorized user, they could change the owner without proper checks.
+
+3. Function `distributeToken(address[] addresses, uint256 _value)` (line 36-43) has access control issues. Reason: The `distributeToken` function allows the caller to distribute tokens to multiple addresses without any access control checks. This means that any user can call this function and distribute tokens from the contract's balance, which could lead to unauthorized token distribution.
+
+4. Function `B2X()` (line 61-70) has access control issues. Reason: The constructor `B2X()` initializes the total supply and assigns it to the deployer's balance. However, it does not have any access control checks, which means that if the contract is deployed by an unauthorized user, they can gain control over the entire token supply.
+
+In summary, the identified vulnerable functions are:
+- `owned()` (line 12-14)
+- `transferOwnership(address newOwner)` (line 20-23)
+- `distributeToken(address[] addresses, uint256 _value)` (line 36-43)
+- `B2X()` (line 61-70)

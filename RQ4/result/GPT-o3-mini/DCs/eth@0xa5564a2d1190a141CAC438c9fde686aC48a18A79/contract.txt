@@ -1,0 +1,2 @@
+1. Function swap (approximately lines 33–53) has an access control issue.  
+ Reason: The swap function is marked public without any restriction on msg.sender, meaning anyone can call it directly. This lack of access control permits a malicious actor to supply arbitrary swapData to the low‐level call targeting the pre‐approved zeroXExchangeProxy. In turn, an attacker could craft swapData to perform unintended operations on the underlying token (or related funds) during the swap process, potentially allowing misdirection of funds.

@@ -1,0 +1,11 @@
+Below is the audit result for the provided contract:
+
+1. Vulnerable Function: _burn (around lines 190–195)  
+ • Reason: Although this function is meant to be an internal utility for burning a token, it is declared as public. As a result, any external caller may invoke _burn directly. The only check performed is that the two input parameters “from” and “owner” must be equal. There is no verification that the provided “from” (which is also “owner”) is actually the current owner of the token (stored in _owners). Consequently, an attacker can call _burn with, for example, _burn(victim, victim, tokenId) and thereby force the token’s ownership data to be overwritten (burning the token) without having proper authorization.  
+
+Proof‐of‐concept:  
+An attacker could execute a call such as:  
+  ERC721BaseTokenInstance._burn(victimAddress, victimAddress, tokenId);  
+If victimAddress is provided for both “from” and “owner”, the require(from == owner) check passes even though the attacker is not the token owner. The token’s state is then altered (the token burned) regardless of the caller’s rights.
+
+Please review and change the visibility of _burn (for example, marking it internal) or add strict access control so that only approved functions (such as burn and burnFrom) can call it.

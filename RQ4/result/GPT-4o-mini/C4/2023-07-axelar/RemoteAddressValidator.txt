@@ -1,0 +1,9 @@
+1. Function addTrustedAddress(string memory chain, string memory addr) (line 66-73) has access control issues. Reason: The function is marked as `public` and can be called by anyone, allowing unauthorized users to add trusted addresses, which could lead to malicious actors being able to manipulate the contract's trusted address list.
+
+2. Function removeTrustedAddress(string calldata chain) (line 75-82) has access control issues. Reason: Similar to `addTrustedAddress`, this function is also marked as `external` and can be called by anyone, allowing unauthorized users to remove trusted addresses, which could disrupt the contract's functionality.
+
+3. Function addGatewaySupportedChains(string[] calldata chainNames) (line 84-92) has access control issues. Reason: This function is marked as `external` and can be called by anyone, allowing unauthorized users to add chains to the supported list, which could lead to manipulation of the contract's supported chains.
+
+4. Function removeGatewaySupportedChains(string[] calldata chainNames) (line 94-102) has access control issues. Reason: This function is also marked as `external` and can be called by anyone, allowing unauthorized users to remove chains from the supported list, which could disrupt the contract's functionality.
+
+In summary, the functions `addTrustedAddress`, `removeTrustedAddress`, `addGatewaySupportedChains`, and `removeGatewaySupportedChains` lack proper access control checks, allowing unauthorized users to manipulate critical mappings in the contract.

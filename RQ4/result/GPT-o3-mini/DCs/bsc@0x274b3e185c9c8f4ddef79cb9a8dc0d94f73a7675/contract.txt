@@ -1,0 +1,28 @@
+Below is an analysis of some functions whose “access control” (that is, who may call them) seems too loose relative to the sensitive state changes they perform. In our review we did not find a traditional “admin‐only” setter being missing a modifier (for example, getToken and setEx already use onlyOwner), but we do call attention to functions that let anyone trigger operations that affect the contract’s internal liquidity and referral‐mappings. (Remember that sometimes a “public” function is intended to be callable by anyone; however, if that openness would let an attacker manipulate the contract’s state or funds, it is a potential vulnerability.)
+
+1. Function setUPs(address to, address newAddr)  
+  Approximate lines: 180–183  
+  Issue: This function lets the “referrer” of some user address “to” update that user’s referral pointer to a new address. Although it requires that upaddress[to] equals msg.sender, if an attacker gets listed as the existing referral of a target (perhaps via the stake() logic that sets upaddress when it is zero) then the attacker can later change the referral to another address. In other words, the check only ensures that the caller was the recorded “up” at the time of the call but provides them with unrestricted power to change the referral relationship later. This may allow an attacker to hijack or redirect future referral rewards.
+
+2. Function removeLiquidity(address token, address token1)  
+  Approximate lines: 140–149  
+  Issue: This function is callable by anyone (there is no onlyOwner or similar protection) once block.timestamp exceeds startTime. When called it initiates a call to the router to remove liquidity and then uses the received tokens to perform additional “buy” and “add liquidity” steps. Because any external account may trigger these operations, an attacker could spam or time removeLiquidity() calls to manipulate liquidity pool rebalancing or interfere with the normal timing (note the startTime update) of the contract’s internal liquidity‐management process. In short, the lack of access restriction (or rate limiting) on an operation that can affect large token amounts is a potential concern.
+
+3. Function swapBuy(uint amount0In) payable and Function swapSell(uint256 tokenAmount)  
+  Approximate lines: 200–208 (swapBuy) and 210–213 (swapSell)  
+  Issue: Both functions are public and allow any caller to trigger swaps using the router. In swapBuy the caller sends ETH (via payable) and the function then directs the incoming funds to swap ETH for SELLC and sends the received tokens to a hardcoded address. In swapSell the contract calls the router to swap SELLC for ETH (again with the output going to a fixed recipient). Although these functions do not let the caller withdraw tokens directly, they do affect the contract’s token approvals and reserves (recall that in the constructor token approvals for SELLC, USDT, and even a router are set to the maximum). An attacker might abuse these functions—by repeatedly invoking them—to drive undesired price slippage or otherwise disrupt the intended balances in the contract.
+
+Note that while some functions (such as stake, sell, claim, and addLiquidity) apply internal checks on token addresses and amounts, the functions listed above allow interactions that (when combined with other contract logic) can be abused to change key state variables or to interfere with proper liquidity/referral accounting.
+
+Summary of findings:
+
+1. Function setUPs (approx. lines 180–183)  
+  Reason: It lets the current “up” (referrer) arbitrarily change the referral for a user. If an attacker manages to become recorded as someone’s upaddress via the stake() logic, they can later redirect referral rewards—this may not be the intended behavior.
+
+2. Function removeLiquidity (approx. lines 140–149)  
+  Reason: Being a public function that anyone may call (once block.timestamp > startTime), it lets an external user trigger liquidity removals and subsequent rebalancing. This can be abused to interfere with the contract’s liquidity management and timing.
+
+3. Functions swapBuy (approx. lines 200–208) and swapSell (approx. lines 210–213)  
+  Reason: They are open to any caller and use the contract’s preapproved tokens/ETH to perform swaps (sending outputs to fixed addresses). An attacker might use these functions repeatedly to adversely affect the token balance dynamics or trigger unwanted swaps.
+
+Each of these issues should be further evaluated in context to decide whether the design intent really was to allow public access or whether additional access restrictions (or additional safeguards) should be added to prevent potential abuse.

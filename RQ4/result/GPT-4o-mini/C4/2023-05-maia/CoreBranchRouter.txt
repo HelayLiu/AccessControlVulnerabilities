@@ -1,0 +1,5 @@
+1. Function addGlobalToken (line 36-50) has access control issues. Reason: The function is public and does not have any access control checks, allowing any user to add a global token to the branch, which could lead to unauthorized token additions.
+
+2. Function addLocalToken (line 53-67) has access control issues. Reason: Similar to addGlobalToken, this function is public and lacks access control checks, allowing any user to add a local token to the system, which could lead to unauthorized token additions.
+
+3. Function anyExecuteNoSettlement (line 139-174) has access control issues. Reason: This function is public and allows any user to execute various internal functions based on the provided data. Without proper access control, malicious users could trigger sensitive operations like adding global tokens, bridge agents, or managing strategies, leading to potential exploitation of the contract.

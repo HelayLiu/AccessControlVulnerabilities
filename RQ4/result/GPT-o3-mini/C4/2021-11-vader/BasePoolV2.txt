@@ -1,0 +1,9 @@
+1. Function rescue (around line 264) has an access control issue.  
+ • Reason: The rescue function is declared as external with no restrictions (e.g., no onlyOwner or onlyRouter modifier). This allows any caller to invoke rescue and transfer out any “unaccounted” foreign tokens from the contract. An attacker could send extra tokens to the contract, then call rescue to withdraw these tokens, effectively draining assets from the contract.  
+
+Proof of Concept:  
+ 1. An attacker sends a batch of a supported foreign asset directly to the BasePoolV2 contract address (ensuring the token balance becomes greater than what is recorded in pairInfo[foreignAsset].reserveForeign).  
+ 2. The attacker then calls the rescue function with that foreign asset as the parameter.  
+ 3. The contract computes the unaccounted amount (balance – reserve) and transfers that value to msg.sender (i.e., the attacker).  
+
+This demonstrates that without proper access restrictions on rescue, any user is able to withdraw tokens that were not meant for public extraction.

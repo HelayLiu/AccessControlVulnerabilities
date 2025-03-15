@@ -1,0 +1,12 @@
+{
+ "contract": "FixedTimeLockStaking",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "whitelist",
+   "withdraw",
+   "SHA3(msg.sender,0xa5)"
+  ]
+ ],
+ "PC_bypassed": []
+}

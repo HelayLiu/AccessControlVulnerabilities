@@ -1,0 +1,36 @@
+To identify potential access control issues in the provided smart contract, we need to analyze the functions and their access restrictions. Let's go through the contract and identify any functions that might have access control issues:
+
+1. **Function `initialize` (line 66-81):**
+   - **Reason:** The `initialize` function is a critical function that sets up the initial state of the contract, including setting the level manager, treasury, fees, and other important parameters. It is protected by the `initializer` modifier, which ensures it can only be called once. However, if the contract is not properly initialized or if the `initializer` modifier is bypassed, it could lead to unauthorized access or incorrect setup.
+
+2. **Function `setLevelManager` (line 126-128):**
+   - **Reason:** This function allows changing the `levelManager` address and is protected by the `onlyOwner` modifier. If the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could change the level manager, potentially affecting the contract's functionality.
+
+3. **Function `setTreasury` (line 130-132):**
+   - **Reason:** This function allows changing the `treasury` address and is protected by the `onlyOwner` modifier. Similar to the `setLevelManager` function, if the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could change the treasury, affecting the handling of reward tokens.
+
+4. **Function `setFixedApr` (line 134-137):**
+   - **Reason:** This function allows changing the `fixedApr` and is protected by the `onlyOwner` modifier. If the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could change the APR, affecting the reward calculations.
+
+5. **Function `setLockPeriod` (line 139-141):**
+   - **Reason:** This function allows changing the `lockPeriod` and is protected by the `onlyOwner` modifier. If the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could change the lock period, affecting the staking mechanism.
+
+6. **Function `setSecondaryStaking` (line 143-145):**
+   - **Reason:** This function allows setting the `secondaryStaking` address and is protected by the `onlyOwner` modifier. If the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could change the secondary staking contract, affecting the staking process.
+
+7. **Function `setFees` (line 147-162):**
+   - **Reason:** This function allows setting various fees and is protected by the `onlyOwner` modifier. If the `onlyOwner` modifier is not correctly implemented or if ownership is compromised, an unauthorized user could set arbitrary fees, affecting the economic model of the contract.
+
+8. **Function `halt` (line 186-189):**
+   - **Reason:** This function allows halting the contract and is protected by the `onlyOwnerOrAdmin` modifier. If the `onlyOwnerOrAdmin` modifier is not correctly implemented or if ownership/admin rights are compromised, an unauthorized user could halt the contract, disrupting its operation.
+
+9. **Function `setRewardPerBlock` (line 191-195):**
+   - **Reason:** This function allows setting the `rewardPerBlock` and is protected by the `onlyOwnerOrAdmin` modifier. If the `onlyOwnerOrAdmin` modifier is not correctly implemented or if ownership/admin rights are compromised, an unauthorized user could change the reward per block, affecting the reward distribution.
+
+10. **Function `setHigherPools` (line 563-565):**
+    - **Reason:** This function allows setting the `higherPools` and is protected by the `onlyOwnerOrAdmin` modifier. If the `onlyOwnerOrAdmin` modifier is not correctly implemented or if ownership/admin rights are compromised, an unauthorized user could change the higher pools, affecting the pool upgrade mechanism.
+
+11. **Function `setMigrationPool` (line 631-633):**
+    - **Reason:** This function allows setting the `migrationPool` and is protected by the `onlyOwnerOrAdmin` modifier. If the `onlyOwnerOrAdmin` modifier is not correctly implemented or if ownership/admin rights are compromised, an unauthorized user could change the migration pool, affecting the migration process.
+
+In summary, the primary access control issues in this contract revolve around the functions that are protected by the `onlyOwner` and `onlyOwnerOrAdmin` modifiers. If these modifiers are not correctly implemented or if ownership/admin rights are compromised, it could lead to unauthorized access and manipulation of critical contract parameters.

@@ -1,0 +1,8 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+INFO:symExec:Test Sequence: ['EAI_TokenERC20']
+INFO:symExec:SymExecEVM().symExec: EAI_TokenERC20(uint256,string,string)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['EAI_TokenERC20']
+INFO:symExec:Testing time: 15.805040121078491 seconds

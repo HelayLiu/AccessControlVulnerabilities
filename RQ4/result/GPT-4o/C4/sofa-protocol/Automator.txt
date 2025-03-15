@@ -1,0 +1,26 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `mintProducts` (line 144-166):**
+   - **Reason:** The `mintProducts` function allows any caller to mint products as long as the vault is valid and the maker's signature is valid. However, there is no restriction on who can call this function, which could potentially allow unauthorized users to mint products if they can provide a valid signature. This could be a security risk if the signature verification process is compromised or if signatures are leaked.
+
+2. **Function `burnProducts` (line 168-202):**
+   - **Reason:** Similar to `mintProducts`, the `burnProducts` function can be called by any user. While it requires valid vaults and products, there is no explicit access control to restrict who can initiate the burning process. This could lead to unauthorized burning of products if the caller has knowledge of valid vaults and products.
+
+3. **Function `harvest` (line 204-211):**
+   - **Reason:** The `harvest` function allows any user to collect the accumulated fees and transfer them to the `feeCollector`. There is no restriction on who can call this function, which could lead to unauthorized users triggering the fee collection process. Although the fees are sent to the `feeCollector`, the lack of access control could lead to unexpected behavior or misuse.
+
+**Proof of Concept:**
+
+To verify these issues, consider the following scenarios:
+
+- For `mintProducts` and `burnProducts`, an attacker could call these functions with valid parameters (e.g., valid vaults and products) if they have access to the necessary data, potentially leading to unauthorized minting or burning of products.
+
+- For `harvest`, any user could call this function to trigger the fee collection process, even if they are not intended to have control over when fees are collected.
+
+**Output:**
+
+1. Function `mintProducts` (line 144-166) has access control issues. Reason: The function can be called by any user without restriction, potentially allowing unauthorized minting of products if valid signatures are provided.
+
+2. Function `burnProducts` (line 168-202) has access control issues. Reason: The function can be called by any user without restriction, potentially allowing unauthorized burning of products if valid vaults and products are known.
+
+3. Function `harvest` (line 204-211) has access control issues. Reason: The function can be called by any user without restriction, allowing unauthorized users to trigger the fee collection process.

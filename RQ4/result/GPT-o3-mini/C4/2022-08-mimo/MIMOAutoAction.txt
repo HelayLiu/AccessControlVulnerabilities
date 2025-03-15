@@ -1,0 +1,11 @@
+Below is one potential access control concern found during the audit:
+
+1. Vulnerable Function: setAutomation (approximately lines 15–38)
+
+ • Reason: The setAutomation function is meant to be callable only by the vault’s owner. To enforce this, it retrieves the vault owner from an external data provider (a.vaultsData()) and then checks if either (a) msg.sender is the vault owner or (b) the “current proxy” associated with the caller (via proxyRegistry.getCurrentProxy(msg.sender)) equals the vault owner. This indirect authorization introduces two risks:
+
+  – It places significant trust in external contracts (both the vaultsData provider and the proxyRegistry). If either of these external contracts is misconfigured or subject to manipulation, an attacker might arrange for proxyRegistry.getCurrentProxy(msg.sender) to return an address matching the vault owner even when msg.sender is not truly the owner.
+
+  – The logic allowing a call via a proxy might be exploited if an attacker can control or game the proxy registry so that one of their addresses is seen as a valid “proxy” for a vault owner. In that case, the attacker may bypass the intended access control and set automation parameters on someone else’s vault.
+
+It is recommended that the integration with the external proxy registry be carefully reviewed and that additional on-chain checks be considered (or that the logic be reviewed in context with the governance of those external contracts) to ensure that only legitimate vault owners (or their properly sanctioned proxies) can call setAutomation.

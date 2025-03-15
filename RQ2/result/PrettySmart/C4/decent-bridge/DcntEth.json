@@ -1,0 +1,12 @@
+{
+ "contract": "DcntEth",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "burn",
+   "0xc"
+  ]
+ ],
+ "PC_bypassed": []
+}

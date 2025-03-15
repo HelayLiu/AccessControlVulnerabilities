@@ -1,0 +1,11 @@
+Below is one issue found during our audit:
+
+1. Function createJoin (lines 50–60) has an access control issue. 
+ • Reason: The createJoin function is declared external without any authentication or authorization checks. This means that anyone—not just privileged or whitelisted accounts—can call createJoin to deploy a new Join contract. In doing so, the caller immediately becomes the administrator (by receiving the ROOT role via join.grantRole) on the new instance. If the intended design was to restrict or whitelist who may create join instances, the lack of any access control (such as an onlyOwner or similar modifier) represents a serious vulnerability. 
+ 
+Proof of Concept: 
+An attacker could execute the following call:
+ joinFactory.createJoin(assetAddress);
+Since no restrictions are in place, the attacker becomes the owner (ROOT role) of the deployed Join contract. The attacker can then invoke any privileged functions on that Join instance, potentially undermining the security of the overall system.
+
+No other functions in this file display similar access control issues given the context that functions like calculateJoinAddress and getJoin are intended for public queries, and nextAsset is used only as temporary storage during join creation. However, if join creation is meant to be limited, then the missing restrictions in createJoin are indeed an access control flaw.

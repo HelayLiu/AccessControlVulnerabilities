@@ -1,0 +1,72 @@
+{
+ "contract": "VaultAdaptorYearnV2_032",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setController",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "strategyHarvest",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "owner",
+   "setStrategiesLength",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setStrategyRatioBuffer",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "invest",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "migrate",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x17648c57",
+   "0x0"
+  ],
+  [
+   "owner",
+   "removeFromWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setVaultReserve",
+   "0x0"
+  ],
+  [
+   "owner",
+   "addToWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setInvestThreshold",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

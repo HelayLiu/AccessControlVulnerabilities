@@ -1,0 +1,7 @@
+Below is one potential access control issue discovered during the audit:
+
+1. Vulnerable function: NewIntelTechMedia constructor (approximately lines 187–196)  
+ • Issue: The constructor accepts an _owner address as a parameter but does not check that _owner is a nonzero address.  
+ • Reason: Without a validation (for example, require(_owner != address(0))), a deployer (or a mistake) could initialize the contract with the zero address as the owner. Since functions such as pause(), unpause(), and transferOwnership are guarded by onlyOwner, having owner set to address(0) would mean that no externally controlled account could ever call these functions. This could lock administrative control permanently and potentially leave the contract in an unintended state.
+
+No other function in this flattened file shows a lack of proper access control checks in functions that change significant state variables. All owner-restricted or pausable operations correctly use the onlyOwner or whenNotPaused/whenPaused modifiers.

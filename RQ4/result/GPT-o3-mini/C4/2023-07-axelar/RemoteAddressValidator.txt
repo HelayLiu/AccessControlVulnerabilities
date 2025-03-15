@@ -1,0 +1,11 @@
+After a careful review of the contract, no access control issues were detected. Below is a summary of the key findings:
+
+1. All state‐modifying functions that change trusted addresses or gateway support—namely, addTrustedAddress, removeTrustedAddress, addGatewaySupportedChains, and removeGatewaySupportedChains—are properly restricted using the onlyOwner modifier. This ensures that only an authorized owner can call these functions.
+
+2. The _setup function is internal and is called as part of the upgrade/initialization process. It calls addTrustedAddress, and because the upgrade/initialization flow is expected to occur under controlled (typically owner) context, it does not create an exploitable access control risk.
+
+3. The read functions (validateSender, getRemoteAddress, and contractId) are marked as view or pure. Since they do not modify state, lacking administrative checks on them is expected.
+
+4. The constructor appropriately validates inputs (e.g. not accepting a zero address) and sets immutable variables correctly.
+
+Based on this analysis, no public or external function is missing necessary access control checks. Therefore, there are no vulnerable functions regarding access control in this contract.

@@ -1,0 +1,9 @@
+1. Vulnerable Function: quaker (lines 120–125)
+  Reason: The quaker function is public and does not include any access control (such as onlyOwner). As a result, any user can call quaker to reinitialize the token supply, set the owner's address (owner = msg.sender), and assign token balances. This means an attacker can assume ownership of the contract and later call restricted functions (e.g., mint, pullBack), compromising the contract’s integrity.
+
+• Proof of Concept:
+  An attacker can simply execute:
+   BOMBBA.quaker(attackerWalletAddress);
+  which sets msg.sender (the attacker) as the new owner. Once attacker is set as owner, they can execute onlyOwner-protected functions (like mint and pullBack) to manipulate token balances, further compromising the contract.
+
+This lack of proper access control in the quaker function constitutes a severe vulnerability.

@@ -1,0 +1,15 @@
+1. Function `quaker()` (line 79-84) has an access control issue. Reason: The `quaker()` function allows any caller to set the `owner` and `ownerWallet` variables, which are critical for controlling the contract. This function should be restricted to the current owner to prevent unauthorized changes to these important variables.
+
+Proof of Concept:
+```solidity
+// Deploy the contract
+BOMBBA bombba = new BOMBBA();
+
+// Any address can call the quaker function and set themselves as the owner
+bombba.quaker(attackerAddress);
+assert(bombba.owner() == attackerAddress); // This should not be possible
+```
+
+2. Function `mint()` (line 168-174) has an access control issue. Reason: Although the function is protected by the `onlyOwner` modifier, the logic within the function is flawed. The line `tokenBalances[wallet] = tokenBalances[wallet].add(tokenAmount);` incorrectly adds tokens to the `wallet` balance instead of subtracting them, which could lead to an unintended increase in the total supply.
+
+3. Function `pullBack()` (line 176-182) has an access control issue. Reason: Similar to the `mint()` function, while it is protected by the `onlyOwner` modifier, the logic within the function is flawed. The line `totalSupply=totalSupply.add(tokenAmount);` incorrectly increases the total supply when tokens are pulled back, which could lead to an unintended increase in the total supply.

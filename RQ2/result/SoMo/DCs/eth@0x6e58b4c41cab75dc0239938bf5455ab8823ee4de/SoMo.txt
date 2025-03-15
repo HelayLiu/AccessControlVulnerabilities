@@ -1,0 +1,18 @@
+Switched global version to 0.4.17
+Modifiers Status:
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: owner, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: Owned.owned()
+owner_1(address) := msg.sender(address)
+Entry Point: Owned.onlyOwner()
+owner_3(address) := ϕ(['owner_1', 'owner_0', 'owner_2'])
+TMP_18(bool) = msg.sender == owner_3
+TMP_19(None) = SOLIDITY_CALL require(bool)(TMP_18)
+
+

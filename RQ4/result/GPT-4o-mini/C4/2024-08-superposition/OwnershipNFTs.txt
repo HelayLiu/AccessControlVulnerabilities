@@ -1,0 +1,11 @@
+1. Function transferFrom(address _from, address _to, uint256 _tokenId, bytes calldata /* _data */) (line 83-86) has the access control issues. Reason: This function does not check if the caller is authorized to transfer the token, as it directly calls `_transfer` without verifying the caller's permissions. This could allow unauthorized users to transfer tokens.
+
+2. Function transferFrom(address _from, address _to, uint256 _tokenId) (line 88-91) has the access control issues. Reason: Similar to the previous function, this function also does not check if the caller is authorized to transfer the token, allowing unauthorized transfers.
+
+3. Function approve(address _approved, uint256 _tokenId) (line 106-109) has the access control issues. Reason: The function calls `_requireAuthorised(msg.sender, _tokenId)` to check if the caller is authorized, but if the token does not exist or the caller is not the owner, it could lead to unexpected behavior. The function should ensure that the token exists before allowing approval.
+
+4. Function setApprovalForAll(address _operator, bool _approved) (line 113-115) has the access control issues. Reason: This function allows any user to set approval for any operator without any checks on whether the caller is the owner of the NFTs. This could lead to unauthorized operators being granted approval.
+
+5. Function safeTransferFrom(address _from, address _to, uint256 _tokenId) (line 94-97) has the access control issues. Reason: This function does not check if the caller is authorized to transfer the token, as it directly calls `_transfer` without verifying the caller's permissions. This could allow unauthorized users to transfer tokens.
+
+6. Function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata /* _data */) (line 99-102) has the access control issues. Reason: Similar to the previous function, this function also does not check if the caller is authorized to transfer the token, allowing unauthorized transfers.

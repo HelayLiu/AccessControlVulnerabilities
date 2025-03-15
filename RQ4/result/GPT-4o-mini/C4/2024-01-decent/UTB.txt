@@ -1,0 +1,19 @@
+1. Function `performSwap(SwapInstructions memory swapInstructions)` (line 45-46) has access control issues. Reason: This function is marked as private, which means it can only be called from within the contract. However, it is invoked by the public function `swapAndExecute`, which does not have any access control checks to ensure that only authorized users can call it. This could lead to unauthorized users performing swaps without proper validation.
+
+2. Function `performSwap(SwapInstructions memory swapInstructions, bool retrieveTokenIn)` (line 56-57) has access control issues. Reason: Similar to the previous function, this function is also private and can be called from within the contract. However, it is invoked by the public function `swapAndExecute`, which does not have any access control checks. This could allow unauthorized users to perform swaps.
+
+3. Function `bridgeAndExecute(BridgeInstructions calldata instructions, FeeStructure calldata fees, bytes calldata signature)` (line 139-140) has access control issues. Reason: This function is public and allows anyone to initiate a bridging operation. There are no checks to ensure that the caller is authorized to perform this action, which could lead to unauthorized bridging of funds.
+
+4. Function `receiveFromBridge(SwapInstructions memory postBridge, address target, address paymentOperator, bytes memory payload, address payable refund)` (line 174-175) has access control issues. Reason: This function is public and can be called by anyone. There are no access control checks to ensure that only authorized bridge adapters can call this function, which could lead to unauthorized execution of swaps and payments.
+
+5. Function `registerSwapper(address swapper)` (line 197-198) has access control issues. Reason: This function is public and allows anyone to register a swapper. There are no checks to ensure that only the contract owner can register a swapper, which could lead to unauthorized addresses being registered as swappers.
+
+6. Function `registerBridge(address bridge)` (line 203-204) has access control issues. Reason: This function is public and allows anyone to register a bridge adapter. There are no checks to ensure that only the contract owner can register a bridge adapter, which could lead to unauthorized addresses being registered as bridge adapters.
+
+In summary, the following functions have access control issues:
+- `performSwap(SwapInstructions memory swapInstructions)` (line 45-46)
+- `performSwap(SwapInstructions memory swapInstructions, bool retrieveTokenIn)` (line 56-57)
+- `bridgeAndExecute(BridgeInstructions calldata instructions, FeeStructure calldata fees, bytes calldata signature)` (line 139-140)
+- `receiveFromBridge(SwapInstructions memory postBridge, address target, address paymentOperator, bytes memory payload, address payable refund)` (line 174-175)
+- `registerSwapper(address swapper)` (line 197-198)
+- `registerBridge(address bridge)` (line 203-204)

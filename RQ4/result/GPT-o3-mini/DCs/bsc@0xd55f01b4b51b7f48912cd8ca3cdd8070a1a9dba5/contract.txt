@@ -1,0 +1,8 @@
+1. Vulnerable Function: setOracleData (line 29-31)
+
+Reason: The setOracleData function does not enforce any access control (e.g., using an onlyOwner modifier or another restricted mechanism). This allows any external account to call it and update the oracleData mapping, thereby enabling an attacker to override the intended oracle addresses with arbitrary ones. As a result, an attacker could replace a legitimate price feed with a malicious one, potentially manipulating the output of getUnderlyingPrice and any other logic relying on these prices.
+
+Proof of Concept:
+• Deploy the SimplePriceOracle contract.
+• As an attacker, call setOracleData with the address of an asset and supply a malicious oracle contract address that returns manipulated price data.
+• Subsequently, any call to getUnderlyingPrice for that asset will use the malicious oracle’s data, demonstrating the impact of the vulnerability.

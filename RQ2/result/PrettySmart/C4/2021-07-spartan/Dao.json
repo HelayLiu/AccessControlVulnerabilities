@@ -1,0 +1,67 @@
+{
+ "contract": "Dao",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "burnBalance",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x9cd99aa2",
+   "0x0"
+  ],
+  [
+   "owner",
+   "purgeDeployer",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x73758988",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0xdb634d7c",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x8601b9e6",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x68bb97b3",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x46350821",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "deposit",
+   "SHA3(msg.sender,0x16)"
+  ],
+  [
+   "owner",
+   "0xaf045980",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "bond",
+   "SHA3(msg.sender,0x16)"
+  ],
+  [
+   "owner",
+   "0x572cf927",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

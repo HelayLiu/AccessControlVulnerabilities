@@ -1,0 +1,21 @@
+1. Function `setBonusPoolManager(address _bonusPoolManager)` (line 206-207) has access control issues. Reason: This function is marked with a comment indicating it should only be called by the owner, but there is no actual access control check implemented to enforce this restriction. Anyone can call this function and change the bonus pool manager address, which could lead to unauthorized access or manipulation of the liquidity manager's operations.
+
+2. Function `setFarmsContract(address newFarmsContract)` (line 197-198) has access control issues. Reason: Similar to the previous function, this function is intended to be restricted to the owner, but lacks the necessary access control checks. This allows any user to change the farms contract address, potentially leading to unauthorized actions within the contract.
+
+3. Function `setDiscountSetter(address newDiscountSetter)` (line 188-189) has access control issues. Reason: This function is also intended to be restricted to the owner, but does not implement any access control checks. As a result, any user can change the discount setter address, which could lead to unauthorized modifications to discount settings.
+
+4. Function `setFeeDelta(uint16 fee, uint16 delta)` (line 179-180) has access control issues. Reason: This function is meant to be restricted to certain roles (likely the owner or a designated role), but it lacks the necessary access control checks. This allows any user to set fee deltas, which could disrupt the intended fee structure of the pools.
+
+5. Function `modifyDefaultFeeChargePercent(uint24 _defaultFeeChargePercent)` (line 170-171) has access control issues. Reason: This function is intended to be restricted to the owner, but there are no access control checks in place. Any user can modify the default fee charge percent, which could lead to unauthorized changes in fee structures.
+
+6. Function `modifyChargeReceiver(address _chargeReceiver)` (line 161-162) has access control issues. Reason: This function is also meant to be restricted to the owner, but lacks the necessary access control checks. Any user can change the charge receiver address, which could lead to unauthorized access to funds.
+
+7. Function `enableFeeAmount(uint16 fee, uint24 pointDelta)` (line 143-144) has access control issues. Reason: This function is intended to be restricted to certain roles, but does not implement any access control checks. This allows any user to enable fee amounts, which could disrupt the intended fee structure of the pools.
+
+8. Function `setFarmsRatio(address _pool, uint256 ratio)` (line 134-135) has access control issues. Reason: This function is meant to be restricted to certain roles, but lacks the necessary access control checks. Any user can set the farms ratio for a pool, which could lead to unauthorized changes in liquidity distribution.
+
+9. Function `setDiscount(DiscountStr[] calldata discounts)` (line 125-126) has access control issues. Reason: This function is intended to be restricted to a specific role (DiscountSetter), but does not implement any access control checks. Any user can set discounts, which could lead to unauthorized modifications to discount settings.
+
+10. Function `newPool(address tokenX, address tokenY, uint16 fee, int24 currentPoint)` (line 112-113) has access control issues. Reason: This function is meant to create new pools, but lacks access control checks. Any user can create pools, which could lead to unauthorized pool creation and manipulation.
+
+In summary, multiple functions in the contract lack proper access control checks, allowing unauthorized users to perform sensitive operations that could compromise the integrity and security of the contract.

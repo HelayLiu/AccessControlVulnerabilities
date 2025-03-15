@@ -1,0 +1,7 @@
+Below is one major access control issue discovered in the contract:
+
+1. Function XBornID() (lines ~63–67) has an access control vulnerability. 
+ • Reason: The contract is named “XBORNID” but its constructor was mistakenly defined as “function XBornID()”. Because Solidity 0.4.25 is case sensitive when matching the constructor name, XBornID() does not act as the constructor but instead becomes a publicly callable function. Consequently, any user can invoke XBornID(), which resets the owner (owner = msg.sender) and reassigns the distributed tokens to the caller. Once an attacker becomes the owner, they can call critical functions (such as withdraw() and burn()) that are restricted with the onlyOwner modifier.
+ • Proof of Concept: An attacker can send a transaction to the public function XBornID() (which was intended to be the constructor) to become the owner. Afterwards, the attacker can call withdraw() to transfer the contract’s ETH balance for example.
+
+No other functions were found to have missing access control checks. However, this misnamed “constructor” undermines the intended security of the overall access control scheme.

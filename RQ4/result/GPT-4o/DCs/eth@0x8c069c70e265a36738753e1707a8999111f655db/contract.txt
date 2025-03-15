@@ -1,0 +1,14 @@
+1. Function `DrugDealer()` (line 19-21) has the access control issues. 
+   - **Reason**: The `DrugDealer()` function is a constructor that sets the `ceoAddress` to the address of the account deploying the contract. However, there is no modifier or access control mechanism to ensure that only the intended owner or authorized entity can deploy the contract. This could lead to unauthorized deployment and control over the contract.
+
+2. Function `seedMarket(uint256 drugs)` (line 74-78) has the access control issues.
+   - **Reason**: The `seedMarket` function can be called by any user to initialize the market and set the `marketDrugs` variable. There is no access control to restrict this function to only the contract owner or a specific authorized address. This could allow any user to manipulate the initial state of the market.
+
+3. Function `collectDrugs(address ref)` (line 23-38) has potential access control issues.
+   - **Reason**: While the function requires the contract to be initialized, it does not restrict who can call it. This means any user can call `collectDrugs` and potentially manipulate their `Kilos` and `claimedDrugs` without any restrictions, which could lead to abuse if not properly monitored.
+
+4. Function `sellDrugs()` (line 39-50) has potential access control issues.
+   - **Reason**: Similar to `collectDrugs`, the `sellDrugs` function can be called by any user without restrictions, allowing them to sell drugs and transfer Ether to their address. Without proper access control, this could be exploited by malicious users.
+
+5. Function `buyDrugs()` (line 51-58) has potential access control issues.
+   - **Reason**: The `buyDrugs` function allows any user to purchase drugs by sending Ether to the contract. While this is part of the intended functionality, there is no access control to prevent abuse or ensure that only legitimate transactions occur.

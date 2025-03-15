@@ -1,0 +1,17 @@
+{
+ "contract": "MockGvtToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "renounceOwnership",
+   "0x5"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,14 @@
+Below is one major access control issue found in the contract:
+
+1. Function init (approximately lines 15–22) has an access control issue.  
+ • Reason: The init function is declared public and lacks any “onlyOwner” or “initializer‐guard” modifier/check. This means that anyone on the network may call init at any time—even after the contract has been initialized—to reset critical state variables (for example, the token address, periods, interval, and especially the owner variable). An attacker could call init to set themselves as owner (or otherwise change important parameters), thereby gaining administrative control over the contract.
+
+No other functions were found to lack proper access control checks beyond those intended for public (or user‐triggered) operations (such as release, which is meant to be open for beneficiaries). However, the reinitialization flaw present in init is critical since it permits an unauthorized party to change the owner of the contract and override previously set configuration.
+
+Proof-of-Concept Steps (for testing the vulnerability):
+ 1. Deploy a fresh instance of the contract.
+ 2. Call init with valid parameters from an account you control—this sets the owner.
+ 3. From a different attacker address, call init again with alternative parameters (for example, set token to any ERC20, set periods/interval arbitrarily) and, crucially, have the owner variable be set to the attacker’s address (_msgSender()).  
+ 4. Once init is reexecuted, the attacker’s address becomes the owner, allowing them to call onlyOwner‐restricted functions such as withdraw or transferOwner.
+
+It is highly recommended that the contract includes an initialization guard (or uses a constructor/initializer modifier) to ensure that init can only be called once.

@@ -1,0 +1,14 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here is the analysis:
+
+1. **Function `receiveMessage` (line 66-73)**:
+   - **Reason**: The `receiveMessage` function is publicly accessible and does not have any access control modifiers. It relies on the `messageSender` function from the `IBridge` interface to determine the processor address. However, there is no check to ensure that the caller of `receiveMessage` is authorized to invoke this function. This could potentially allow unauthorized entities to call `receiveMessage` and process messages, leading to unintended behavior or security vulnerabilities.
+
+2. **Function `onTokenBridged` (line 79-88)**:
+   - **Reason**: The `onTokenBridged` function is also publicly accessible and does not have any access control modifiers. Although it checks if the `msg.sender` is the `l2TokenRelayer`, it does not restrict who can call this function. If the `l2TokenRelayer` address is compromised or incorrectly set, unauthorized entities could potentially call this function and process data, leading to security issues.
+
+**Proof of Concept**:
+To verify these issues, an attacker could deploy a contract that calls the `receiveMessage` or `onTokenBridged` functions directly, bypassing any intended access control mechanisms. If the contract processes the message or data without any errors or reverts, it confirms the lack of proper access control.
+
+**Output**:
+1. Function `receiveMessage` (line 66-73) has the access control issues. Reason: The function is publicly accessible without any access control checks, allowing unauthorized entities to call it and process messages.
+2. Function `onTokenBridged` (line 79-88) has the access control issues. Reason: The function is publicly accessible and relies solely on the `msg.sender` check, which could be bypassed if the `l2TokenRelayer` address is compromised or incorrectly set.

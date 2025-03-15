@@ -1,0 +1,11 @@
+1. Function addToBlacklist(address target, bool isFullBlacklisting) (line 98-104) has access control issues. Reason: The function allows any address with the BLACKLIST_MANAGER_ROLE to grant either FULL_RESTRICTED_STAKER_ROLE or SOFT_RESTRICTED_STAKER_ROLE to any target address, which could lead to unintended restrictions on users without proper oversight.
+
+2. Function removeFromBlacklist(address target, bool isFullBlacklisting) (line 107-113) has access control issues. Reason: Similar to the addToBlacklist function, this function allows any address with the BLACKLIST_MANAGER_ROLE to revoke either FULL_RESTRICTED_STAKER_ROLE or SOFT_RESTRICTED_STAKER_ROLE from any target address, which could lead to unintended consequences if misused.
+
+3. Function redistributeLockedAmount(address from, address to) (line 130-138) has access control issues. Reason: This function allows the DEFAULT_ADMIN_ROLE to redistribute locked amounts from any user with FULL_RESTRICTED_STAKER_ROLE to any other address, which could be exploited if the admin role is compromised or misused.
+
+4. Function rescueTokens(address token, uint256 amount, address to) (line 120-126) has access control issues. Reason: While this function is restricted to the DEFAULT_ADMIN_ROLE, it allows the admin to rescue any tokens sent to the contract, which could lead to potential misuse if the admin role is compromised.
+
+5. Function transferInRewards(uint256 amount) (line 73-82) has access control issues. Reason: The function allows any address with the REWARDER_ROLE to transfer rewards into the contract, which could be exploited if the REWARDER_ROLE is granted to an untrusted address. 
+
+These functions should have additional checks or restrictions to ensure that only authorized users can perform sensitive actions that could affect the contract's state or the rights of other users.

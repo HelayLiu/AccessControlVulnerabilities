@@ -1,0 +1,7 @@
+1. Function `onlyMinter` (line 40-41) has access control issues. Reason: The `onlyMinter` modifier does not contain a `require` statement to enforce the access control check. As a result, any user can call functions that use this modifier, potentially allowing unauthorized minting of tokens.
+
+2. Function `mint` (line 75-84) has access control issues. Reason: The `mint` function is intended to be restricted to the `minterAddress`, but since the `onlyMinter` modifier lacks a proper access control check, any user can call this function and mint tokens, which could lead to unauthorized token creation.
+
+To summarize:
+- The `onlyMinter` modifier does not enforce access control properly.
+- The `mint` function is vulnerable due to the ineffective `onlyMinter` modifier, allowing unauthorized users to mint tokens.

@@ -1,0 +1,12 @@
+Below is one concrete access control issue we found:
+
+1. Function setSwapPairs (around line 121)  
+  Reason: The function is meant to set an address as a swap pair (i.e. add an entry to the Pairs mapping) so that transfers later trigger fee‐calculation logic. However, the onlyOwner modifier is commented out. This means that any user—not just the contract owner—can call setSwapPairs and mark arbitrary addresses as “pairs.” An attacker could abuse this by adding addresses under their control (or targeting victims) to force transfers to incur unexpected fee deductions or bypass fees, thereby interfering with the token’s intended economic mechanics.
+
+Proof of Concept:
+ 1. An attacker calls setSwapPairs with an address they control:
+   setSwapPairs(attackerAddress);
+ 2. Later, when tokens are transferred from or to attackerAddress, the contract’s _transferAIS logic checks the Pairs mapping and applies fee calculations (burns and pending mint rewards) based on that flag.
+ 3. By manipulating the flag, the attacker may create an unintended fee or reward distribution, undermining the token’s intended mechanisms.
+
+Developers should reinstate the onlyOwner restriction (or another appropriate access control mechanism) on setSwapPairs to prevent unauthorized configuration changes.

@@ -1,0 +1,22 @@
+{
+ "contract": "RewardsHypervisor",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "transferTokenOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "snapshot",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

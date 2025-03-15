@@ -1,0 +1,12 @@
+{
+ "contract": "bHermesGauges",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "delegate",
+   "SHA3(msg.sender,0xb)"
+  ]
+ ],
+ "PC_bypassed": []
+}

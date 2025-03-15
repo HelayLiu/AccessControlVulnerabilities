@@ -1,0 +1,20 @@
+Below is our analysis of the contract from an access‐control perspective. To summarize, we inspected every function that modifies state (or sensitive variables) to verify that only authorized addresses may call them. In our review we noted the following:
+
+• The initialize function (and its internal call _setIndex) is an initializer protected by the initializer modifier. It sets up the ADMIN_ROLE for the caller so that only that address (or future addresses granted an appropriate role) can later perform privileged actions.
+
+• The initializeStakingContract function (lines ≈18–25) is protected by onlyRole(ADMIN_ROLE) and can only be called once (it checks that stakingContract is address(0)). Its purpose is to set the staking contract address and, in doing so, it grants MINTER_BURNER_ROLE and REBASE_ROLE exclusively to that address. (Note that this is a design decision; the admin must be very careful to pass a trusted contract address here because a malicious staking contract could then call mint, burn, and rebase functions.)
+
+• The rebase function (lines ≈27–44) is marked onlyRole(REBASE_ROLE) so that only addresses having that role (as later granted via initializeStakingContract) can trigger a rebase.
+
+• The mint (lines ≈101–107) and burn (lines ≈113–119) functions are both protected by onlyRole(MINTER_BURNER_ROLE).
+
+• The remaining functions (transfer, transferFrom, balanceOf, creditsForTokenBalance, tokenBalanceForCredits, getIndex, decimals) implement standard ERC20 behavior, and it is appropriate that they are public.
+
+Based on this review, every state‐changing function that requires restricted access is decorated with the proper role‐based modifier. We did not identify any function that modifies critical variables and lacks the necessary access control check.
+
+Proof‐of‐concept for misuse would normally involve showing that an attacker can call a function without the proper role and affect the system. For example, if rebase or mint had no onlyRole check then an attacker could arbitrarily change the total supply. In this contract, however, both rebase and mint (as well as burn) are properly restricted to trusted roles.
+
+OutPut:
+No vulnerable functions were found. Every sensitive function (initializeStakingContract, rebase, mint, burn) includes the appropriate role‑based access control. 
+
+Reason: The contract uses OpenZeppelin’s AccessControlUpgradeable to ensure that only addresses with the ADMIN_ROLE, MINTER_BURNER_ROLE, or REBASE_ROLE may call functions that modify the token supply or supply‐related variables, so there is no unprotected public function leading to an access control issue.

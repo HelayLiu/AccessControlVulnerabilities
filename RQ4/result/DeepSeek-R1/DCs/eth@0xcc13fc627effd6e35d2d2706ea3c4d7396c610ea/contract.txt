@@ -1,0 +1,19 @@
+1. Function setOwner() (line 22-24) has access control issues. Reason: The setOwner function allows anyone to change the owner of the contract without any access control checks, which can lead to unauthorized control over the contract.
+
+2. Function uploadBalances() (line 66-75) has access control issues. Reason: The uploadBalances function can be called by anyone since it does not have a proper access control check, allowing unauthorized users to modify balances.
+
+3. Function lockBalances() (line 78-80) has access control issues. Reason: The lockBalances function can be called by anyone since it does not have a proper access control check, allowing unauthorized users to lock balances.
+
+4. Function unlockToken() (line 118-120) has access control issues. Reason: The unlockToken function can be called by anyone since it does not have a proper access control check, allowing unauthorized users to unlock the token.
+
+5. Function setExportFee() (line 100-103) has access control issues. Reason: The setExportFee function can be called by anyone since it does not have a proper access control check, allowing unauthorized users to set export fees.
+
+6. Function setHoldingPeriod() (line 106-109) has access control issues. Reason: The setHoldingPeriod function can be called by anyone since it does not have a proper access control check, allowing unauthorized users to change the holding period.
+
+7. Function approveAndCall() (line 88-95) has access control issues. Reason: The approveAndCall function does not check if the caller is the owner or has the necessary permissions, allowing unauthorized users to approve and call the spender.
+
+8. Function approve() (line 96-101) has access control issues. Reason: The approve function does not check if the caller is the owner or has the necessary permissions, allowing unauthorized users to approve spending allowances.
+
+9. Function transfer() (line 54-72) has access control issues. Reason: The transfer function does not check if the caller is the owner or has the necessary permissions, allowing unauthorized users to transfer tokens.
+
+10. Function transferFrom() (line 74-92) has access control issues. Reason: The transferFrom function does not check if the caller is the owner or has the necessary permissions, allowing unauthorized users to transfer tokens on behalf of others.

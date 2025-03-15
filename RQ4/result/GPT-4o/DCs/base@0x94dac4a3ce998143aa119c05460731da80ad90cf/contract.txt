@@ -1,0 +1,50 @@
+Upon reviewing the `LeetSwapV2Pair` contract, I have identified the following potential access control issues:
+
+1. **Function `_transferFeesSupportingTaxTokens` (line 234-246)**
+   - **Reason**: This function is marked as `public`, which means it can be called by any external account. It allows transferring fees to the `fees` address, which could potentially be misused if not properly controlled. Typically, such functions should be restricted to certain roles or internal use to prevent unauthorized fee transfers.
+
+2. **Function `mint` (line 515-536)**
+   - **Reason**: The `mint` function is `external` and can be called by any account. While it is protected by a reentrancy lock, there are no additional access controls to restrict who can mint liquidity tokens. This could lead to unauthorized minting if not properly managed by the calling contract.
+
+3. **Function `burn` (line 540-564)**
+   - **Reason**: Similar to the `mint` function, `burn` is also `external` and lacks access control restrictions. This allows any account to burn liquidity tokens, which could be problematic if not properly managed by the calling contract.
+
+4. **Function `swap` (line 568-617)**
+   - **Reason**: The `swap` function is `external` and can be called by any account. Although it checks if the DEX is paused and includes a reentrancy lock, there are no specific access controls to restrict who can perform swaps. This could lead to unauthorized swaps if not properly managed by the calling contract.
+
+5. **Function `skim` (line 621-628)**
+   - **Reason**: The `skim` function is `external` and can be called by any account. It allows transferring excess tokens to a specified address, which could be misused if not properly controlled. Typically, such functions should be restricted to certain roles to prevent unauthorized transfers.
+
+6. **Function `sync` (line 631-637)**
+   - **Reason**: The `sync` function is `external` and can be called by any account. It updates the reserves to match the current balances, which could be misused if not properly controlled. Typically, such functions should be restricted to certain roles to prevent unauthorized updates.
+
+**Proof of Concept for `_transferFeesSupportingTaxTokens` Issue:**
+
+To demonstrate the potential misuse of the `_transferFeesSupportingTaxTokens` function, consider the following scenario:
+
+```solidity
+// Assume an attacker contract
+contract Attacker {
+    LeetSwapV2Pair public target;
+
+    constructor(address _target) {
+        target = LeetSwapV2Pair(_target);
+    }
+
+    function exploit() external {
+        // Call the public function to transfer fees
+        target._transferFeesSupportingTaxTokens(target.token0(), 1000);
+    }
+}
+```
+
+In this example, an attacker could deploy a contract that calls the `_transferFeesSupportingTaxTokens` function to transfer fees to the `fees` address without any restrictions.
+
+**Output:**
+
+1. Function `_transferFeesSupportingTaxTokens` (line 234-246) has the access control issues. Reason: The function is public and allows transferring fees to the `fees` address, which could be misused if not properly controlled.
+2. Function `mint` (line 515-536) has the access control issues. Reason: The function is external and lacks access control restrictions, allowing unauthorized minting of liquidity tokens.
+3. Function `burn` (line 540-564) has the access control issues. Reason: The function is external and lacks access control restrictions, allowing unauthorized burning of liquidity tokens.
+4. Function `swap` (line 568-617) has the access control issues. Reason: The function is external and lacks specific access controls, allowing unauthorized swaps.
+5. Function `skim` (line 621-628) has the access control issues. Reason: The function is external and allows transferring excess tokens, which could be misused if not properly controlled.
+6. Function `sync` (line 631-637) has the access control issues. Reason: The function is external and allows updating reserves, which could be misused if not properly controlled.

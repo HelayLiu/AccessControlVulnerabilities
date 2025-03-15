@@ -1,0 +1,10 @@
+Below is one vulnerability we uncovered during the audit:
+
+1. Vulnerable Function: addMeByRC (in TokenSale contract, approx. line 355)  
+ Reason: This public function is meant to register an RC contract by setting rc[msg.sender] = true. However, it uses a check based on tx.origin (require(tx.origin == owner)) instead of verifying msg.sender. This design is insecure because an attacker may craft a malicious contract (or use a proxy) to trick the token sale owner into inadvertently calling this function—thus making the attacker’s contract a “whitelisted” RC. In short, using tx.origin for access control can allow phishing–like scenarios in which the ultimate originator of the transaction (if manipulated) satisfies the check even though msg.sender (the calling contract) is untrusted.  
+  Proof-of-Concept:  
+  Assume that an attacker deploys a malicious RC contract whose constructor calls tokenSaleContract.addMeByRC(). If the token sale owner (or someone whose tx.origin equals the owner) is induced to interact with the attacker’s contract (for example via a deceptive dApp or link), then the require(tx.origin == owner) will pass and the attacker’s RC contract becomes authorized. Once authorized, the attacker’s RC contract can call functions like buyFromRC or claim that are restricted only by the “onlyRC” modifier, possibly interfering with the token sale flow.
+
+No other public or externally callable functions were found to be missing necessary access control checks – all administrative functions (like setTime, withdraw, etc.) correctly use onlyOwner or onlyTokenSaleOwner modifiers. 
+
+It is recommended that the access control in addMeByRC be re‑implemented using msg.sender or combined with a proper authentication/authorization pattern rather than relying on tx.origin.

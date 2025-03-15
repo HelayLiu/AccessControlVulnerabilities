@@ -1,0 +1,12 @@
+Below is one potential access control issue found in the contract:
+
+1. Vulnerable Function: burn (approximately line 460–465 in the file)
+  Reason: The burn function is declared as a public function and accepts an arbitrary address (named “account”) from which tokens will be deducted and then “burned” (sent to the DEAD address). There is no check that the caller is either the “account” itself or otherwise approved to remove tokens from that account. As a result, any user may call burn(victimAddress, amount) and cause tokens to be deducted from a victim’s balance without their consent.
+
+Proof of Concept:
+An attacker could execute the following call:
+  burn(victimAddress, amount);
+If the victim holds a positive token balance, the _transferFrom internal function will subtract the amount from victimAddress’s balance and send tokens to the DEAD address (i.e. “burning” them). This would allow an attacker to maliciously reduce other users’ token balances even if the intended intention was only to allow users to burn their own tokens.
+
+Recommendation:
+Include an access control check in the burn function so that only the account owner (or an approved role) can burn tokens from a given address. For example, adding a require(msg.sender == account, "Can only burn from your own balance") or an appropriate permission modifier would mitigate this vulnerability.

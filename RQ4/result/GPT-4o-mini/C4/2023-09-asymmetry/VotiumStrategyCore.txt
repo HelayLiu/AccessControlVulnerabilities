@@ -1,0 +1,16 @@
+1. Function `setChainlinkCvxEthFeed` (line 66-70) has access control issues. Reason: The function can be called by any address, allowing anyone to set the Chainlink feed address, which could lead to manipulation of price feeds.
+
+2. Function `setRewarder` (line 90-94) has access control issues. Reason: The function can be called by any address, allowing anyone to set the rewarder address, which could lead to unauthorized claiming of rewards.
+
+3. Function `depositRewards` (line 116-123) has access control issues. Reason: The function can be called by any address, allowing anyone to deposit rewards and potentially manipulate the contract's state without proper authorization.
+
+4. Function `withdrawStuckTokens` (line 129-134) has access control issues. Reason: The function can be called by any address, allowing anyone to withdraw any ERC20 tokens from the contract, which could lead to loss of funds.
+
+5. Function `applyRewards` (line 164-182) has access control issues. Reason: The function can be called by any address, allowing anyone to apply rewards and potentially manipulate the contract's state without proper authorization.
+
+In summary, the following functions have access control issues:
+- `setChainlinkCvxEthFeed` (line 66-70)
+- `setRewarder` (line 90-94)
+- `depositRewards` (line 116-123)
+- `withdrawStuckTokens` (line 129-134)
+- `applyRewards` (line 164-182)

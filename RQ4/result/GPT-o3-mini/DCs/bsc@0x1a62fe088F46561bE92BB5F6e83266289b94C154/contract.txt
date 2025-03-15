@@ -1,0 +1,10 @@
+After a detailed review of the contract’s public and external functions, we did not find any functions that erroneously allow an unauthorized user to call a sensitive operation. In summary:
+
+1. All administrative functions (setBaseURI, setMiner, setsoilAddress, setGSDAddress, setLFTAddress, setExtension, setPaused, and the Ownable‑inherited ownership functions) are protected by the onlyOwner modifier.
+2. The mint function is protected by a custom onlyMiner modifier (and onlyOwner can designate addresses as “miner”), so only approved accounts can mint.
+3. The upgrade function—which calls external token transfers—is restricted to the owner of the token (it checks ownerOf(_tokenId)==msg.sender) and further restricts contract calls by requiring msg.sender == tx.origin. Although the lack of a nonReentrant modifier might be noted from a reentrancy‐perspective (which is a separate class of issues), in terms of access control the upgrade function correctly restricts usage to token owners.
+4. Other view functions (e.g. tokenURI, gethistoryList, getLevel) do not need access control since they only return public state.
+
+Therefore, based on our analysis there are no access control issues in the provided file.
+
+No vulnerable function (with respect to access control) was identified.

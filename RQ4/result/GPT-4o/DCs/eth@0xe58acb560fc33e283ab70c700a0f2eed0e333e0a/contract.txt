@@ -1,0 +1,8 @@
+1. **Function `init()` (line 47-55)** has an access control issue. 
+   - **Reason**: The `init()` function is public and can be called by anyone to set the `owner` of the contract to the caller's address. This allows any user to take control of the contract by calling this function, which is a critical security risk.
+
+2. **Function `release()` (line 263-280)** has an access control issue.
+   - **Reason**: The `release()` function is public and does not have any access control modifiers. This means any user can call this function to release tokens to any beneficiary, potentially leading to unauthorized token transfers.
+
+3. **Function `transferOwner()` (line 353-357)** has an access control issue.
+   - **Reason**: Although this function is protected by the `onlyOwner` modifier, the `init()` function can be used by any user to set themselves as the owner, thereby allowing them to call `transferOwner()` and change the ownership to any address they choose. This is a consequence of the initial access control issue in the `init()` function.

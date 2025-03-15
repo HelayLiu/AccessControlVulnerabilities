@@ -1,0 +1,22 @@
+{
+ "contract": "Vault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x6108a445",
+   "0xb"
+  ],
+  [
+   "owner",
+   "claimOwnership",
+   "0xa"
+  ],
+  [
+   "owner",
+   "0xb9473461",
+   "0xc"
+  ]
+ ],
+ "PC_bypassed": []
+}

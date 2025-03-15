@@ -1,0 +1,10 @@
+OutPut:
+1. Function `changeTokenName` in the `IERC20` interface (line 44-49) has an access control issue. Reason: The `changeTokenName` function is declared in the `IERC20` interface without any access control modifiers. This means any contract implementing this interface could potentially allow unauthorized users to change the token name and symbol, which could lead to confusion or malicious behavior if not properly restricted in the implementing contract.
+
+2. Function `setOracleAddress` in the `ImportOracle` contract (line 25-27) has an access control issue. Reason: The `setOracleAddress` function is marked as `public` and only protected by the `onlyOwner` modifier. If the ownership of the contract is compromised, an attacker could change the oracle address to a malicious one, affecting the price feeds and potentially leading to incorrect calculations and financial losses.
+
+3. Function `setLeveragePoolInfo` in the `leveragedPool` contract (line 451-457) has an access control issue. Reason: The `setLeveragePoolInfo` function is marked as `external` and only protected by the `onlyOwner` modifier. If the ownership of the contract is compromised, an attacker could change critical parameters of the leverage pool, such as fees, thresholds, and rebalance worth, potentially leading to financial losses or manipulation of the pool's behavior.
+
+4. Function `setForceRebase` in the `leveragedPool` contract (line 678-681) has an access control issue. Reason: The `setForceRebase` function is marked as `external` and only protected by the `onlyOrigin` modifier. If the origin address is compromised, an attacker could force a rebase on the leverage or hedge coin, potentially affecting the token supply and market behavior.
+
+These functions should be carefully reviewed and potentially restricted further to ensure that only authorized entities can perform these critical operations.

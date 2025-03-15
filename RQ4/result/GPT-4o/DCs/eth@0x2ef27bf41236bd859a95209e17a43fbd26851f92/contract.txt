@@ -1,0 +1,13 @@
+OutPut:
+
+1. Function `owned()` (line 10-12) has the access control issues. 
+   Reason: The `owned()` function can change the `owner` variable, which is significant because with the role, the owner can perform any privileged operations on the contract. This function should be a constructor and should be named `Owned` to ensure it is only called once during contract deployment.
+
+2. Function `transferOwnership(address _newOwner)` (line 20-23) has the access control issues.
+   Reason: Although it uses the `onlyOwner` modifier, there is no check to ensure that `_newOwner` is a valid address (e.g., not the zero address). This could lead to loss of control over the contract if the ownership is transferred to an invalid address.
+
+3. Function `transferFrom(address _from, address _to, uint256 _amount)` (line 78-92) has the access control issues.
+   Reason: This function does not have any access control checks to ensure that the caller is authorized to transfer tokens on behalf of `_from`. It relies solely on the `allowed` mapping, which could be manipulated if not properly managed.
+
+4. Function `MorphToken()` (line 155-159) has the access control issues.
+   Reason: The `MorphToken()` function can change the `owner` variable, which is significant because with the role, the owner can perform any privileged operations on the contract. This function should be a constructor and should be named `MorphToken` to ensure it is only called once during contract deployment.

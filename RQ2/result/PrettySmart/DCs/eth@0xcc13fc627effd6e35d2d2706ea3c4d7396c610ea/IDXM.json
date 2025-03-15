@@ -1,0 +1,68 @@
+{
+ "contract": "IDXM",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "setHoldingPeriod",
+   "0x0"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "owner",
+   "setExportFee",
+   "0x0"
+  ],
+  [
+   "owner",
+   "uploadBalances",
+   "0x0"
+  ],
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x5)"
+  ],
+  [
+   "owner",
+   "unlockToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "lockBalances",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "owner",
+   "setHoldingPeriod",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setExportFee",
+   "0x0"
+  ],
+  [
+   "owner",
+   "uploadBalances",
+   "0x0"
+  ],
+  [
+   "owner",
+   "unlockToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "lockBalances",
+   "0x0"
+  ]
+ ]
+}

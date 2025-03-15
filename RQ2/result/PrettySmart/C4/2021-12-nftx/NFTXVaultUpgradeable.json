@@ -1,0 +1,27 @@
+{
+ "contract": "NFTXVaultUpgradeable",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setVaultMetadata",
+   "0xfc"
+  ],
+  [
+   "owner",
+   "deployEligibilityStorage",
+   "0xfc"
+  ],
+  [
+   "owner",
+   "disableVaultFees",
+   "0xfc"
+  ],
+  [
+   "owner",
+   "setFees",
+   "0xfc"
+  ]
+ ],
+ "PC_bypassed": []
+}

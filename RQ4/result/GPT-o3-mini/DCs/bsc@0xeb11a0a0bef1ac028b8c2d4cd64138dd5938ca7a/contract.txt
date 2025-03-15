@@ -1,0 +1,11 @@
+Below is one clear access‐control issue found during our review:
+
+1. Vulnerable Function: burn (found around the public function declaration “function burn(address from, uint256 amount) public { … }”)
+
+ • Reason: Unlike most transfer or mint functions that use ownable or whitelist modifiers, the burn function is completely public and does not validate that the caller is either the token holder or otherwise authorized to remove tokens from the “from” address. In other words, any external caller may invoke burn() and force tokens to be transferred from an arbitrary account (the “from” parameter) to the designated bridgeBurnAddress. This missing authorization check could allow an attacker to burn (i.e. remove) tokens from any account without the owner’s consent.
+
+ • Proof of Concept: An attacker may call
+  burn(victimAddress, amount)
+which will trigger _tokenTransfer() to debit “victimAddress” by the specified amount and send those tokens to the burn address—even though the victim never approved the transfer. This unauthorized burning of tokens clearly demonstrates the access control weakness.
+
+No other functions in this file demonstrate an access control gap (each sensitive function such as mint(), router/pair setup, fee/tier settings, and withdrawal functions are protected by onlyOwner or other suitable modifiers). However, the public burn() function represents a critical vulnerability because it allows anyone to drain token balances from arbitrary addresses.

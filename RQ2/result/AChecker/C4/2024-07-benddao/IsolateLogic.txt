@@ -1,0 +1,4 @@
+Checking contract for [4mViolated-AC-Check[0m 
+------------------
+Checking contract for [4mMissing-AC-Check[0m 
+------------------

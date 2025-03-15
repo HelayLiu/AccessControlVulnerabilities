@@ -1,0 +1,21 @@
+1. Function registerEtherToken(IEtherToken _token, bool _register) (line 164-168) has access control issues. Reason: This function allows the owner to register or unregister ether tokens, but if the ownership is compromised, an attacker could manipulate the list of ether tokens, potentially leading to unauthorized conversions or withdrawals.
+
+2. Function setMaxAffiliateFee(uint256 _maxAffiliateFee) (line 143-147) has access control issues. Reason: This function allows the owner to set the maximum affiliate fee, which could be exploited if the ownership is compromised, allowing an attacker to set an excessively high fee.
+
+3. Function withdrawTokens(IERC20Token _token, address _to, uint256 _amount) (line 206-210) has access control issues. Reason: This function allows the owner to withdraw tokens from the contract. If the owner is compromised, an attacker could withdraw tokens to their own address.
+
+4. Function updateRegistry() (line 118-134) has access control issues. Reason: This function allows the owner to update the contract registry. If the ownership is compromised, an attacker could point the contract to a malicious registry, leading to further exploits.
+
+5. Function restoreRegistry() (line 136-138) has access control issues. Reason: This function allows the owner to restore the previous contract registry. If the ownership is compromised, an attacker could restore a malicious registry.
+
+6. Function restrictRegistryUpdate(bool _onlyOwnerCanUpdateRegistry) (line 140-142) has access control issues. Reason: This function allows the owner to restrict who can update the registry. If the ownership is compromised, an attacker could prevent legitimate updates to the registry.
+
+7. Function transferOwnership(address _newOwner) (line 66-70) has access control issues. Reason: This function allows the current owner to transfer ownership to a new address. If the current owner is compromised, an attacker could transfer ownership to themselves or a malicious address.
+
+8. Function acceptOwnership() (line 73-78) has access control issues. Reason: This function allows a new owner to accept ownership. If an attacker can set themselves as the new owner, they can take control of the contract.
+
+9. Function convertByPath(IERC20Token[] _path, uint256 _amount, uint256 _minReturn, address _beneficiary, address _affiliateAccount, uint256 _affiliateFee) (line 204-205) has access control issues. Reason: This function allows any user to convert tokens, but if the conversion path is manipulated, it could lead to loss of funds or unauthorized conversions.
+
+10. Function doConversion(ConversionStep[] _data, uint256 _amount, uint256 _minReturn, address _affiliateAccount, uint256 _affiliateFee) (line 292-293) has access control issues. Reason: This function executes the conversion logic, but if the conversion data is manipulated, it could lead to unauthorized conversions or loss of funds.
+
+These functions should have proper access control checks to ensure that only authorized users can execute them, and to prevent potential exploits if ownership is compromised.

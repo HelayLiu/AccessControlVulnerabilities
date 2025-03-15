@@ -1,0 +1,8 @@
+Below is one potential access‐control issue found in the contract:
+
+1. Vulnerable function: initialize (approx. lines 22–25)  
+ • Reason: The initialize() function (which is required to set the swapHelper address used later in coreCallback) is declared external and is not protected by any role‐ or ownership‐based modifier. (It relies solely on the “initializer” modifier.) If the contract is deployed but not initialized immediately by a trusted party, then an attacker could call initialize() and supply a malicious swapHelper address. Later during a callback (coreCallback), when tokens are forwarded to swapHelper, the attacker-controlled address could steal funds.  
+    
+No other functions were found to have insufficient access control checks – the ones that change or use sensitive state (like orders or positions) all check that the caller “owns” the position via the per‐user mapping (initPosIds[msg.sender]) or are gated by onlyGovernor. (The fillOrder() function is deliberately left open to allow third‐party execution, so although anyone may call it, it first uses order and position data to ensure that the order belongs to a valid position; its design is consistent with decentralized order‐filling.)  
+
+Be sure to review the usage of the initializer modifier to confirm that it indeed prevents re‐initialization and that the contract is always initialized by a trusted account before any user interaction occurs.

@@ -1,0 +1,12 @@
+Based on the provided smart contract, here are the potential access control issues identified:
+
+1. **Function `setPendingMintBalance` (line 370-384)**
+   - **Reason**: This function allows the `MANAGER_ADMIN` role to arbitrarily set the pending mint balance for a user in a specific epoch. While it requires the `MANAGER_ADMIN` role, the function does not verify the correctness of the `oldBalance` parameter against the actual stored balance, which could lead to inconsistencies if the caller provides incorrect data. This could potentially be exploited if the `MANAGER_ADMIN` role is compromised or misused.
+
+2. **Function `setPendingRedemptionBalance` (line 788-808)**
+   - **Reason**: Similar to `setPendingMintBalance`, this function allows the `MANAGER_ADMIN` role to set the pending redemption balance for a user. It does not perform any checks to ensure that the new balance is consistent with the user's actual activity, which could lead to incorrect total burned calculations if misused.
+
+3. **Function `multiexcall` (line 918-940)**
+   - **Reason**: This function allows the `MANAGER_ADMIN` role to perform arbitrary calls to other contracts. While it is restricted to the `MANAGER_ADMIN` role and can only be executed when the contract is paused, it still poses a significant risk if the role is compromised, as it could be used to execute malicious or unintended transactions.
+
+These functions rely heavily on the assumption that the `MANAGER_ADMIN` role is securely managed and that the role holders act in the best interest of the contract. Any compromise or misuse of this role could lead to significant issues, including unauthorized changes to user balances and execution of arbitrary transactions.

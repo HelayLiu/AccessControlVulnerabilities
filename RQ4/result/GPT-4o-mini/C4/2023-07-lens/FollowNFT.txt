@@ -1,0 +1,21 @@
+1. Function `initialize(uint256 profileId)` (line 45-54) has access control issues. Reason: The function can be called by any address, and it sets the `_followedProfileId` and `_initialized` variables without any access control checks, allowing anyone to initialize the contract.
+
+2. Function `follow(uint256 followerProfileId, address transactionExecutor, uint256 followTokenId)` (line 56-78) has access control issues. Reason: The function is marked as `onlyHub`, but it does not check if the `transactionExecutor` is authorized to execute the follow action, which could lead to unauthorized follows.
+
+3. Function `unfollow(uint256 unfollowerProfileId, address transactionExecutor)` (line 80-100) has access control issues. Reason: The function checks if the `transactionExecutor` is approved but does not ensure that the `unfollowerProfileId` is indeed the one that is following, which could allow unauthorized unfollowing.
+
+4. Function `removeFollower(uint256 followTokenId)` (line 102-110) has access control issues. Reason: The function allows the caller to remove a follower if they are the owner or approved, but it does not check if the `followTokenId` is valid or if the caller is indeed the follower, which could lead to unauthorized removal.
+
+5. Function `approveFollow(uint256 followerProfileId, uint256 followTokenId)` (line 112-126) has access control issues. Reason: The function allows any address to approve a follow for any `followTokenId` without checking if they are the owner or have the necessary permissions, which could lead to unauthorized approvals.
+
+6. Function `wrap(uint256 followTokenId, address wrappedTokenReceiver)` (line 128-144) has access control issues. Reason: The function checks if the `msg.sender` is the owner of the `followerProfileId`, but it does not check if the `followTokenId` is valid or if the caller has the right to wrap the token, which could lead to unauthorized wrapping.
+
+7. Function `unwrap(uint256 followTokenId)` (line 146-153) has access control issues. Reason: The function does not check if the caller is the owner of the `followTokenId` before allowing it to be unwrapped, which could lead to unauthorized unwrapping.
+
+8. Function `processBlock(uint256 followerProfileId)` (line 155-171) has access control issues. Reason: The function does not check if the `followerProfileId` is valid or if the caller has the right to process the block, which could lead to unauthorized processing.
+
+9. Function `burn(uint256 followTokenId)` (line 173-179) has access control issues. Reason: The function allows any address to burn a `followTokenId` without checking if they are the owner or have the necessary permissions, which could lead to unauthorized burning.
+
+10. Function `tryMigrate(uint256 followerProfileId, address followerProfileOwner, uint256 idOfProfileFollowed, uint256 followTokenId)` (line 181-205) has access control issues. Reason: The function allows any address to attempt migration without verifying if they have the necessary permissions or if the parameters are valid, which could lead to unauthorized migrations.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized actions that could compromise the integrity of the contract.

@@ -1,0 +1,13 @@
+1. Function `delistTokenByUser` (line 292-307) has access control issues. Reason: The function does not properly check if the user is the token owner before allowing them to delist the token. The commented-out line `// require(tokenOwnerWithChainId[baseToken.chain][correspondingToken.chain][_baseToken][_correspondingToken] == msg.sender, "ONLY_TOKEN_LISTER_CAN_DELIST");` indicates that there was an intention to enforce this check, but it has been commented out, which could allow unauthorized users to delist tokens.
+
+2. Function `withdrawTokens` (line 368-392) has access control issues. Reason: The function checks if the user is the token owner using `require(user == _tokenOwner[token], "ONLY_TOKEN_LISTER_CAN_WITHDRAW");`, but it does not ensure that the token is actually listed or that the user has the right to withdraw the specified amount. This could lead to unauthorized withdrawals if the `_tokenOwner` mapping is not properly managed.
+
+3. Function `depositTokens` (line 335-353) has access control issues. Reason: The function checks if the user is the token owner using `require(user == _tokenOwner[token], "ONLY_LISTER_CAN_DEPOSIT");`, but it does not ensure that the token is actually listed or that the user has the right to deposit the specified amount. This could lead to unauthorized deposits if the `_tokenOwner` mapping is not properly managed.
+
+4. Function `listToken` (line 228-265) has access control issues. Reason: The function allows any user to list a token without verifying if they are authorized to do so. There should be a check to ensure that only authorized users (e.g., the token owner or an admin) can list tokens.
+
+5. Function `changeTokenLister` (line 460-474) has access control issues. Reason: The function allows the current token lister to change the ownership of the token listing without verifying if the new owner is valid or authorized. This could lead to unauthorized changes in token ownership.
+
+6. Function `migrateData` (line 493-511) has access control issues. Reason: The function allows the owner to migrate data without any checks on the validity of the tokens being migrated. This could lead to unauthorized or incorrect data being migrated if the function is misused.
+
+These functions should be reviewed and modified to include proper access control checks to ensure that only authorized users can perform sensitive actions.

@@ -1,0 +1,11 @@
+1. Function constructor (line 66-70) has the access control issues. Reason: The constructor initializes the `_newMPC` variable without any access control, allowing any address to be set as the new MPC, which can lead to unauthorized control over the contract.
+
+2. Function changeMPC (line 104-111) has the access control issues. Reason: The function allows the current MPC to change the MPC address, but if the `_newMPCEffectiveTime` is not properly managed, it could allow an attacker to set a new MPC address before the old one is effectively removed, leading to potential unauthorized access.
+
+3. Function anySwapIn (line 174-178) has the access control issues. Reason: This function is only callable by the MPC, but if the MPC is compromised, an attacker could execute this function and mint tokens to any address, leading to unauthorized token creation.
+
+4. Function anySwapInExactTokensForNative (line 290-298) has the access control issues. Reason: This function is also only callable by the MPC, and if the MPC is compromised, it could allow an attacker to withdraw native tokens from the contract, leading to potential loss of funds.
+
+5. Function anySwapFeeTo (line 246-250) has the access control issues. Reason: This function allows the MPC to extract fees, but if the MPC is compromised, it could lead to unauthorized extraction of funds from the contract.
+
+In summary, the main access control issues stem from the management of the MPC address and the functions that are restricted to the MPC. If the MPC is compromised, it could lead to significant vulnerabilities in the contract.

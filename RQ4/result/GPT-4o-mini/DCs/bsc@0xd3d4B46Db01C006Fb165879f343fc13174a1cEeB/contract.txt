@@ -1,0 +1,19 @@
+1. Function `setDevWalletAddress(address _addr)` (line 139-145) has access control issues. Reason: This function allows the owner to set a new developer wallet address without checking if the new address is already a developer wallet. If an attacker can call this function, they could set a malicious address as the developer wallet, which could lead to unauthorized access to funds.
+
+2. Function `replaceDevWalletAddress(address _addr, address _newAddr)` (line 147-157) has access control issues. Reason: This function allows the owner to replace a developer wallet address, but it does not check if the new address is valid or if it is already a developer wallet. An attacker could exploit this to replace a legitimate developer wallet with a malicious one.
+
+3. Function `burn(uint256 _value)` (line 164-166) has access control issues. Reason: This function allows any user to burn tokens from their own balance without any restrictions. If an attacker can manipulate the token supply, they could potentially cause issues with the token's economy.
+
+4. Function `setTaxFeePercent(uint256 taxFee)` (line 168-171) has access control issues. Reason: This function allows the owner to set the tax fee without any checks on the current state of the contract or the implications of changing the fee. An attacker could exploit this to set an extremely high tax fee, affecting all token holders.
+
+5. Function `setDevFeePercent(uint256 devFee)` (line 173-176) has access control issues. Reason: Similar to the tax fee function, this function allows the owner to set the developer fee without any checks. An attacker could set an excessively high fee, draining funds from the contract.
+
+6. Function `setBurnFeePercent(uint256 burnFee)` (line 178-181) has access control issues. Reason: This function allows the owner to set the burn fee without any checks. An attacker could set a high burn fee, leading to unintended consequences for token holders.
+
+7. Function `setMaxTxPercent(uint256 maxTxPercent)` (line 183-186) has access control issues. Reason: This function allows the owner to set the maximum transaction percentage without any checks on the current state of the contract. An attacker could set this to a very low value, effectively freezing transactions for most users.
+
+8. Function `disableFees()` (line 288-295) has access control issues. Reason: This function allows the owner to disable all fees without any checks or balances. An attacker could exploit this to disable fees, leading to potential abuse of the contract.
+
+9. Function `enableFees()` (line 297-303) has access control issues. Reason: This function allows the owner to re-enable fees without any checks. An attacker could exploit this to manipulate the fee structure after disabling it.
+
+These functions lack proper access control checks and could be exploited by an attacker to manipulate the contract's behavior or drain funds.

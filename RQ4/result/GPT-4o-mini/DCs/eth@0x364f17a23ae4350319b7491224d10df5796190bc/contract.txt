@@ -1,0 +1,15 @@
+1. Function `setRouterAndFactory(address _router)` (line 174-178) has access control issues. Reason: The function can be called by any address to set the router and factory addresses, which could lead to unauthorized changes to critical contract parameters.
+
+2. Function `setSwapPlus(address _swapPlus)` (line 180-184) has access control issues. Reason: Similar to the previous function, this function allows any address to set the swapPlus address, which could be exploited to redirect funds or manipulate swaps.
+
+3. Function `setRewarder(address _rewarder)` (line 186-190) has access control issues. Reason: This function allows any address to set the rewarder address, which could lead to unauthorized access to reward distribution.
+
+4. Function `setOperator(address _operator, bool mode)` (line 192-196) has access control issues. Reason: This function allows any address to set operators, which could lead to unauthorized users gaining operator privileges.
+
+5. Function `setOperatorSetter(address _operatorSetter)` (line 198-202) has access control issues. Reason: This function allows any address to change the operatorSetter, which could lead to unauthorized changes in operator management.
+
+6. Function `withdraw(address account, address token0, address token1, uint256 amount, address tokenOut, uint256 basketId, address tokenM, swapPath calldata wpath, uint256[3] memory amountMin)` (line 118-119) has access control issues. Reason: The function allows the caller to withdraw funds from any account if they are an operator, which could lead to unauthorized withdrawals if an operator is compromised.
+
+7. Function `deposit(address account, address token, address tokenM, swapPath calldata path, address token0, address token1, uint256[3] calldata amount, uint256 basketId)` (line 66-67) has access control issues. Reason: The function allows deposits from any account without proper checks, which could lead to unauthorized deposits or manipulation of balances.
+
+These functions lack proper access control mechanisms, allowing unauthorized users to manipulate critical aspects of the contract.

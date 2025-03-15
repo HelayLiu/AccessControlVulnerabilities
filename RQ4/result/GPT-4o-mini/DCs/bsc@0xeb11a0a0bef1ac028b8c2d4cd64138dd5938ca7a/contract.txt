@@ -1,0 +1,21 @@
+1. Function `migrate(address account, uint256 amount)` (line 370-377) has access control issues. Reason: The function can be called by any address, but it only checks if the caller is the migration address. If the migration address is compromised, an attacker could migrate tokens from any account, leading to potential loss of tokens.
+
+2. Function `setMigrationAddress(address _migration)` (line 335-338) has access control issues. Reason: This function allows the owner to set the migration address, but if the owner is compromised, the attacker can set a malicious migration address, allowing them to exploit the `migrate` function.
+
+3. Function `setWhitelistMint(address _wl)` (line 487-490) has access control issues. Reason: This function allows the owner to whitelist any address for minting tokens. If the owner is compromised, the attacker can whitelist their own address, allowing them to mint tokens without restriction.
+
+4. Function `mint(address user, uint256 amount)` (line 493-496) has access control issues. Reason: This function can be called by any address that is whitelisted, but if the whitelist is compromised, an attacker could mint tokens for themselves or others without any checks.
+
+5. Function `withdrawToken(address _token, uint256 _amount)` (line 482-485) has access control issues. Reason: This function allows the owner to withdraw any token from the contract. If the owner is compromised, an attacker could withdraw all tokens from the contract, leading to a total loss of funds.
+
+6. Function `withdrawBnb(uint256 _amount)` (line 479-481) has access control issues. Reason: Similar to the `withdrawToken` function, this allows the owner to withdraw BNB from the contract. If the owner is compromised, an attacker could withdraw all BNB from the contract.
+
+7. Function `setMaxTxPercent(uint256 maxTxPercent)` (line 455-458) has access control issues. Reason: This function allows the owner to set the maximum transaction amount. If the owner is compromised, an attacker could set this to a very high value, allowing them to drain the contract in a single transaction.
+
+8. Function `setSwapAndEvolveEnabled(bool _enabled)` (line 459-462) has access control issues. Reason: This function allows the owner to enable or disable the swap and evolve feature. If the owner is compromised, an attacker could disable this feature, preventing legitimate users from swapping tokens.
+
+9. Function `setEcoSystemFeeAddress(uint256 _tierIndex, address _ecoSystem)` (line 392-396) has access control issues. Reason: This function allows the owner to set the ecosystem fee address. If the owner is compromised, an attacker could set this to their own address, allowing them to collect fees.
+
+10. Function `setOwnerFeeAddress(uint256 _tierIndex, address _owner)` (line 398-402) has access control issues. Reason: Similar to the previous function, this allows the owner to set the owner fee address. If compromised, an attacker could redirect fees to their own address.
+
+These functions lack proper access control mechanisms, making them vulnerable to exploitation if the owner account is compromised or if the migration address is set to a malicious address.

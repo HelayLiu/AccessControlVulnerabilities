@@ -1,0 +1,17 @@
+{
+ "contract": "DVMVault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x9)"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0xa)"
+  ]
+ ],
+ "PC_bypassed": []
+}

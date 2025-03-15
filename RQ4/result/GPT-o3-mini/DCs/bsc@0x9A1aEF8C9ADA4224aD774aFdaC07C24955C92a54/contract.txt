@@ -1,0 +1,2 @@
+1. Function mint (around line 124–130) has an access control issue.  
+   Reason: The mint function is declared as public with no restrictions (e.g., an onlyOwner modifier or any other role-based check). This allows any externally owned account to call it and mint new tokens arbitrarily, which compromises the token’s integrity and supply control.

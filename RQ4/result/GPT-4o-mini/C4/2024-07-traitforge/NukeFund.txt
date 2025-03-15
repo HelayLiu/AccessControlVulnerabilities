@@ -1,0 +1,22 @@
+1. Function constructor (line 20-30) has the access control issues. Reason: The constructor does not restrict who can call it, which means anyone can deploy the contract and set the initial addresses for `nftContract`, `airdropContract`, `devAddress`, and `daoAddress`. This could lead to malicious actors setting these addresses to their own contracts or wallets.
+
+2. Function nuke(uint256 tokenId) (line 118-145) has the access control issues. Reason: While the function checks if the caller is the owner or approved for the NFT, it does not check if the NFT is actually owned by the caller. If a user calls this function with a token ID they do not own or have approved, it could lead to unexpected behavior or loss of funds.
+
+3. Function receive() (line 50-75) has the access control issues. Reason: The fallback function does not have any access control, meaning anyone can send ETH to the contract and trigger the logic that distributes funds to the developer, owner, or DAO address. This could be exploited if the contract is not designed to handle unexpected ETH transfers properly.
+
+4. Function setDevAddress(address payable account) (line 102-105) has the access control issues. Reason: The function allows the owner to set the developer's address, but if the owner is compromised, the attacker could redirect funds to their own address.
+
+5. Function setDaoAddress(address payable account) (line 108-111) has the access control issues. Reason: Similar to the previous function, this allows the owner to set the DAO address, which could be exploited if the owner is compromised.
+
+6. Function setTraitForgeNftContract(address _traitForgeNft) (line 94-97) has the access control issues. Reason: This function allows the owner to change the NFT contract address, which could lead to unexpected behavior if the new contract is malicious or not compatible with the existing logic.
+
+7. Function setAirdropContract(address _airdrop) (line 100-103) has the access control issues. Reason: This function allows the owner to change the airdrop contract address, which could lead to unexpected behavior if the new contract is malicious or not compatible with the existing logic.
+
+In summary, the following functions have access control issues:
+- Constructor (line 20-30)
+- nuke(uint256 tokenId) (line 118-145)
+- receive() (line 50-75)
+- setDevAddress(address payable account) (line 102-105)
+- setDaoAddress(address payable account) (line 108-111)
+- setTraitForgeNftContract(address _traitForgeNft) (line 94-97)
+- setAirdropContract(address _airdrop) (line 100-103)

@@ -1,0 +1,17 @@
+{
+ "contract": "ERC20PresetMinterPauserUpgradeable",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "Rolebased",
+   "mint",
+   "SHA3(msg.sender,SHA3(rolename,0x65))"
+  ],
+  [
+   "Rolebased",
+   "initialize",
+   "SHA3(msg.sender,SHA3(rolename,0x65))"
+  ]
+ ],
+ "PC_bypassed": []
+}

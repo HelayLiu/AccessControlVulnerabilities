@@ -1,0 +1,15 @@
+1. Function setTimelock (line 56-60) has access control issues. Reason: The function allows the governance to set a new timelock address, but it does not restrict who can call this function. If the governance address is compromised, an attacker could change the timelock to their own address, allowing them to bypass the intended access control.
+
+2. Function approveStrategy (line 83-87) has access control issues. Reason: This function allows the timelock to approve strategies, but if the timelock is compromised, an attacker could approve malicious strategies that could drain funds or perform unauthorized actions.
+
+3. Function setConvenienceFee (line 101-105) has access control issues. Reason: This function allows the timelock to set the convenience fee, but if the timelock is compromised, an attacker could set an excessively high fee, leading to financial loss for users.
+
+4. Function withdraw (line 157-161) has access control issues. Reason: The function allows any user to withdraw tokens from the contract as long as they are the jar associated with the token. If a malicious user can manipulate the jar mapping, they could withdraw funds that do not belong to them.
+
+5. Function inCaseTokensGetStuck (line 135-139) has access control issues. Reason: This function allows the strategist or governance to withdraw tokens that may get stuck in the contract. If either of these roles is compromised, an attacker could withdraw tokens that do not belong to them.
+
+6. Function inCaseStrategyTokenGetStuck (line 143-147) has access control issues. Reason: Similar to the previous function, this allows the strategist or governance to withdraw tokens from a strategy. If either role is compromised, an attacker could withdraw tokens that do not belong to them.
+
+7. Function yearn (line 118-120) has access control issues. Reason: This function allows the strategist or governance to perform actions that could lead to financial loss if either role is compromised. An attacker could manipulate the strategy or the tokens involved to their advantage.
+
+In summary, the contract has several access control issues primarily related to the governance and timelock roles, which, if compromised, could lead to unauthorized actions and financial loss.

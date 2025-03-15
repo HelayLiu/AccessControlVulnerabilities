@@ -1,0 +1,12 @@
+Below is one major access control issue discovered in TSURUWrapper:
+
+1. Vulnerable Function: onERC1155Received (within TSURUWrapper – approximately lines 193–203 in the provided file)  
+  Reason: Unlike the onERC721Received function (which correctly requires that msg.sender is the designated ERC721 contract), onERC1155Received does not enforce that the caller be the expected ERC1155 token contract. Instead, it simply checks that the provided token id matches and then conditionally (via “if (msg.sender == address(erc1155Contract))”) does nothing. In the “else” branch—when msg.sender is not the approved ERC1155 contract—it mints ERC20 tokens to the “from” address via _safeMint. This means that an attacker (or any malicious contract) may directly call onERC1155Received with a valid token id and an arbitrary “amount” to mint ERC20 tokens under their control, bypassing the intended control of token transfers coming only from the trusted ERC1155 contract.
+
+Proof of Concept Outline:
+ • Deploy (or use an existing account) a malicious contract or simply invoke TSURUWrapper.onERC1155Received directly.
+ • Call onERC1155Received with parameters: an arbitrary “operator” address, your own address as “from”, the correct tokenID value, and a chosen “amount.”
+ • Since msg.sender in your call will not equal the pre-set erc1155Contract address, the “if” condition fails, and the function will mint ERC20 tokens (equal to amount multiplied by ERC1155_RATIO) to your address.
+ • This allows arbitrary minting of tokens without control.
+
+This is a critical access control issue because onERC1155Received is meant to be called only by a trusted ERC1155 implementation—but here any caller can trigger minting by invoking the function directly.

@@ -1,0 +1,11 @@
+Below is one example of an access‐control vulnerability that was discovered during the audit:
+
+1. Function init (line ~32–48) has an access control issue. 
+
+ • Reason: This “initializer” function (using the reinitializer(2) modifier) is externally callable without restricting who may call it. In an upgradeable proxy setup the contract’s logic contract is meant to be initialized only once by the deployer–but if the proxy is not already initialized (or if initialization is mistakenly left uncalled during deployment) any user may call init. Because it invokes __Ownable_init (among other critical initializations), an attacker can call init to become the owner of the proxy (or otherwise set important parameters) and thus gain full control over the contract.
+
+Additionally, note that:
+
+– Function initNoWellToken (line ~53) is also an externally callable initializer (using initializer) but does not set critical state (for example it omits __Ownable_init). In a situation where the deployer forgets to call init and instead calls initNoWellToken, this could leave the contract in an unintended initialization state with no owner assigned, thereby opening up the possibility for later misuse.
+
+In summary, the lack of proper access checks on the initialization functions allows any unprivileged account to set the contract’s administrative parameters (or deliberately leave them uninitialized), which is a critical access control issue in upgradeable contracts.

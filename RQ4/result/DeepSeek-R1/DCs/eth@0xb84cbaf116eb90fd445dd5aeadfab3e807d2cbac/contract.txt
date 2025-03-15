@@ -1,0 +1,15 @@
+1. Function `setRootHash(bytes32 _updatedRootHash)` (line 103-106) has access control issues. Reason: The function can be called by anyone, allowing any user to change the root hash, which could lead to unauthorized access to minting functions that rely on the Merkle proof.
+
+2. Function `setBaseURI(string memory _newBaseURI)` (line 109-112) has access control issues. Reason: Similar to the previous function, this can be called by anyone, allowing any user to change the base URI for the token metadata, which could lead to misleading or malicious metadata being served.
+
+3. Function `setReserve(uint256 _reserve)` (line 115-118) has access control issues. Reason: This function can be called by anyone, allowing any user to change the reserve amount, which could lead to unauthorized minting of reserved tokens.
+
+4. Function `setNotRevealedURI(string memory _notRevealedURI)` (line 121-124) has access control issues. Reason: This function can be called by anyone, allowing any user to change the URI for unrevealed tokens, which could lead to misleading information about the tokens.
+
+5. Function `reveal()` (line 127-130) has access control issues. Reason: This function can be called by anyone, allowing any user to reveal the tokens, which could lead to unauthorized access to the revealed state of the tokens.
+
+6. Function `WhiteListMint(bytes32[] calldata _merkleProof, uint256 chosenAmount)` (line 144-145) has access control issues. Reason: While this function has some checks, it does not restrict who can call it, allowing anyone to attempt to mint tokens if they can provide a valid Merkle proof, potentially leading to unauthorized minting if the proof is valid.
+
+7. Function `withdraw()` (line 164-167) has access control issues. Reason: This function can be called by anyone, allowing any user to withdraw the contract's balance, which could lead to loss of funds for the contract owner.
+
+In summary, the contract has multiple functions that lack proper access control, allowing unauthorized users to modify critical contract parameters and potentially exploit the contract.

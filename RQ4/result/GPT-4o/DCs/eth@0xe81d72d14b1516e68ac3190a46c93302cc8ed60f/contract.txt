@@ -1,0 +1,17 @@
+OutPut:
+1. Function onlyOwner() (line 47-51) has an access control issue. Reason: The modifier `onlyOwner` is intended to restrict access to certain functions to only the contract owner. However, the condition `require(msg.sender != owner);` is incorrect and allows anyone except the owner to execute the functions protected by this modifier. This is a logical error that effectively negates the intended access control.
+
+Proof of Concept:
+To verify this issue, you can create a function in the contract that uses the `onlyOwner` modifier and attempt to call it with an account that is not the owner. The function will execute successfully, demonstrating the access control issue.
+
+```solidity
+function restrictedFunction() public onlyOwner returns (bool) {
+    // Some restricted logic
+    return true;
+}
+```
+
+Test:
+1. Deploy the contract with an account (let's call it Account A).
+2. Attempt to call `restrictedFunction()` with a different account (Account B).
+3. The function will execute successfully, indicating that the access control is not functioning as intended.

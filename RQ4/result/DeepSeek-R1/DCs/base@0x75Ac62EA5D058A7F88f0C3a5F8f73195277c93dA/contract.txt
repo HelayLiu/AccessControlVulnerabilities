@@ -1,0 +1,11 @@
+1. Function `onERC721Received` (line 118-126) has access control issues. Reason: The function checks if `_opened` is true before allowing minting, but it does not restrict who can call this function. Any address can call this function and mint tokens, which could lead to unauthorized minting if `_opened` is set to true.
+
+2. Function `onERC1155Received` (line 132-144) has access control issues. Reason: Similar to the previous function, this function allows any address to call it and mint tokens based on the amount received. There is no restriction on who can call this function, which could lead to unauthorized minting.
+
+3. Function `unwrap` (line 146-162) has access control issues. Reason: This function allows any user to unwrap ERC20 tokens without any checks on the caller's permissions or roles. If a malicious actor has enough ERC20 tokens, they can call this function and potentially exploit the contract.
+
+4. Function `open` (line 182-185) has access control issues. Reason: While this function is restricted to the owner, it allows the owner to open the contract for minting without any further checks. If the owner is compromised, they can enable minting for anyone.
+
+5. Function `close` (line 187-190) has access control issues. Reason: Similar to the `open` function, this function is also restricted to the owner but does not provide any additional checks or safeguards. If the owner is compromised, they can disable minting, which could lead to denial of service for legitimate users.
+
+In summary, the main access control issues arise from the lack of restrictions on who can call the minting functions (`onERC721Received` and `onERC1155Received`) and the potential for the owner to abuse their privileges with the `open` and `close` functions.

@@ -1,0 +1,12 @@
+{
+ "contract": "StandardToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x0)"
+  ]
+ ],
+ "PC_bypassed": []
+}

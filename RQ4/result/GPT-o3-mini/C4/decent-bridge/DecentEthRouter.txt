@@ -1,0 +1,10 @@
+Below is one finding from our audit of DecentEthRouter.sol.
+
+1. Vulnerable Function: redeemEth (approx. lines 173–177) and similarly redeemWeth (approx. lines 179–183)  
+ • Reason: Unlike the liquidity “remove” functions (removeLiquidityEth/Weth) that enforce an internal accounting check via the balanceOf mapping (using the userIsWithdrawing modifier), the redeem functions do not consult the user’s deposited balance. Instead they simply call  
+  dcntEth.transferFrom(msg.sender, address(this), amount)  
+ without verifying that the caller is entitled to redeem that amount based on a prior liquidity deposit. As a result, if a malicious actor manages to acquire (or be approved to spend) dcntEth tokens from any source—even if not originally deposited—the attacker may redeem ETH/WETH from the contract’s reserves. This gap in access control (i.e. missing a check to tie redemption rights to an internal liquidity accounting) can therefore allow unauthorized redemptions.
+
+No other state‐modifying functions were found to be missing appropriate access control checks. However, extra care is advised to ensure that the dcntEth token used in these transfers is functioning as intended, and that the intended redemption mechanism is properly coupled with a deposit mechanism (such as via the balanceOf mapping) so that users can only redeem their own funds.
+
+It is recommended that the redeemEth/redeemWeth flows be adjusted to enforce that only users with a sufficient liquidity deposit (tracked in balanceOf) can redeem and that the redemption amount is deducted from their deposit.

@@ -1,0 +1,7 @@
+Below is one potential access control issue found during our audit:
+
+1. Function confirmBaseInterestAllocator (approximately lines 90–105)
+  • Issue: This function is meant to finalize the new Base Interest Allocator after a waiting period. However, it does not include any owner-only (or any similar privileged) modifier. In other words, anyone can call confirmBaseInterestAllocator, supplying a candidate allocator address that matches the pending value. 
+  • Reason: Because setBaseInterestAllocator (which is protected by onlyOwner) only stores the candidate and a timestamp but does not “lock in” the change, the next external call to confirmBaseInterestAllocator is not restricted. This means that third parties—not just the owner or an authorized actor—can confirm (and thus enforce) the new Base Interest Allocator. If an attacker manages to time a call correctly, they could force an update that causes the protocol to approve and interact with an address of their choosing. This would potentially allow them to control asset allocation (via the subsequent approval for infinite tokens) and affect interest calculations, fees, and overall risk management.
+
+No other functions were found to miss explicit access control checks (the only sensitive functions like pausePool, setOptimalIdleRange, setBaseInterestAllocator, and setReallocationBonus are correctly protected); however, confirmBaseInterestAllocator is the critical oversight and should be restricted (for example, by adding onlyOwner) to ensure that only a trusted party can finalize a pending change.

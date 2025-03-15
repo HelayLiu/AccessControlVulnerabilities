@@ -1,0 +1,1 @@
+1. Function `rescue(IERC20 foreignAsset)` (line 164-171) has access control issues. Reason: The `rescue` function allows any user to withdraw unaccounted/unrealized foreign assets from the contract without any access control checks, which could lead to unauthorized users draining funds from the contract.

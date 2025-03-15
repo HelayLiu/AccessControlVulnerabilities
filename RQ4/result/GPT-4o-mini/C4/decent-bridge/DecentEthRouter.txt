@@ -1,0 +1,15 @@
+1. Function registerDcntEth (line 66-68) has access control issues. Reason: The `registerDcntEth` function can be called by any user, allowing them to set the `dcntEth` variable to any address, which could lead to unauthorized access to the contract's functionalities.
+
+2. Function addDestinationBridge (line 71-73) has access control issues. Reason: The `addDestinationBridge` function can be called by any user, allowing them to add a destination bridge for any chain ID, which could lead to unauthorized routing of funds.
+
+3. Function bridgeWithPayload (line 118-120) has access control issues. Reason: The `bridgeWithPayload` function is public and does not have any access control checks, allowing any user to initiate a bridge transaction, which could lead to unauthorized transfers.
+
+4. Function bridge (line 126-128) has access control issues. Reason: The `bridge` function is public and does not have any access control checks, allowing any user to initiate a bridge transaction, which could lead to unauthorized transfers.
+
+5. Function redeemEth (line 144-147) has access control issues. Reason: The `redeemEth` function is public and does not have any access control checks, allowing any user to redeem ETH, which could lead to unauthorized withdrawals.
+
+6. Function redeemWeth (line 151-154) has access control issues. Reason: The `redeemWeth` function is public and does not have any access control checks, allowing any user to redeem WETH, which could lead to unauthorized withdrawals.
+
+7. Function addLiquidityWeth (line 174-177) has access control issues. Reason: The `addLiquidityWeth` function is public and does not have any access control checks, allowing any user to add liquidity, which could lead to unauthorized manipulation of liquidity.
+
+8. Function removeLiquidityWeth (line 181-184) has access control issues. Reason: The `removeLiquidityWeth` function is public and does not have any access control checks, allowing any user to remove liquidity, which could lead to unauthorized manipulation of liquidity.

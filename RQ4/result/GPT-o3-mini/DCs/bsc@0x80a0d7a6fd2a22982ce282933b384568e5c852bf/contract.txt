@@ -1,0 +1,17 @@
+Below is one key access‐control concern discovered during the audit:
+
+1. Vulnerable function: swap (approximately lines 150–170)  
+ • Reason: The swap function is open to any caller and accepts an arbitrary external address (the “target” parameter). In the course of its execution, if the allowance of token “tokenAddr” from this contract to “target” is less than the “amount”, the contract unconditionally sets a MAX_UINT256 approval for that “target” via safeApprove. Because there is no whitelist or stricter validation on the target (aside from simply not being the null address or the contract itself), a malicious user can supply a target that is under their control. Later on this target (or any party controlling it) could potentially call transferFrom to drain tokens held by the contract. This use of an untrusted “target” with unlimited approval constitutes an access control issue.
+
+No other functions were found to be directly modifiable by an unauthorized party – functions such as vaultIn, vaultInAndCall, mintTo, call, and withdrawFee are all protected by onlyOwner or onlyController. However, exposing swap to arbitrary callers and allowing them to supply a target that receives unlimited token approval is the primary concern. 
+
+Proof‐of‐concept (PoC):  
+• An attacker (a token holder) calls swap with:  
+ – tokenAddr set to a token for which this contract currently holds a balance  
+ – amount set to some nonzero value  
+ – target set to an attacker–controlled contract  
+ – the other parameters set appropriately so that validation passes  
+• When the contract “sees” that its allowance to the attacker–controlled target is less than the amount, it will approve MAX_UINT256.  
+• Later the attacker’s malicious target, having been approved with an essentially unlimited allowance, can invoke token.transferFrom to pull any tokens held in this contract.
+
+It is therefore recommended that the design of swap be revisited. At a minimum, limits (or whitelisting) should be imposed on which target addresses may be used in order to avoid granting uncontrolled approval to an arbitrary caller.

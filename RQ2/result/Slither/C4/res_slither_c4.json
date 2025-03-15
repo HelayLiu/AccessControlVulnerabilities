@@ -1,0 +1,31 @@
+{
+    "2023-05-maia@CoreBranchRouter": [],
+    "2023-05-maia@RootBridgeAgent": [],
+    "2023-05-maia@UniswapV3Staker": [],
+    "2023-05-maia@BranchPort": [],
+    "2023-05-maia@UlyssesRouter": [],
+    "2023-09-maia@RootPort": [],
+    "2023-09-maia@VirtualAccount": [
+        "arbitrary-send-eth:VirtualAccount.payableCall(PayableCall[]) (VirtualAccount.sol#1811-1838) sends eth to arbitrary user\n\tDangerous calls:\n\t- (success,returnData[i]) = _call.target.call{value: val}(_call.callData) (VirtualAccount.sol#1827)\n"
+    ],
+    "2024-01-init-capital-invitational@MarginTradingHook": [],
+    "2024-01-decent@UTB": [],
+    "2023-10-wildcat@WildcatMarketConfig": [],
+    "2023-07-lens@LensHandles": [],
+    "2023-07-lens@FollowNFT": [],
+    "2023-08-verwa@LendingLedger": [],
+    "fixed-term-loan@MapleLoan": [],
+    "pt-v5-vault@Vault": [],
+    "2024-08-superposition@OwnershipNFTs": [],
+    "2023-01-astaria@PublicVault": [],
+    "2022-09-quickswap@AlgebraPool": [],
+    "2024-04-gondi@LiquidationDistributor": [],
+    "2024-04-gondi@Pool": [],
+    "decent-bridge@DecentEthRouter": [
+        "unchecked-transfer:DecentEthRouter._bridgeWithPayload(uint8,uint16,address,uint256,uint64,bytes,bool) (DecentEthRouter.sol#483-529) ignores return value by weth.transferFrom(msg.sender,address(this),_amount) (DecentEthRouter.sol#516)\n"
+    ],
+    "decent-bridge@DcntEth": [],
+    "2022-01-behodler@BurnFlashStakeDeposit": [],
+    "2022-01-behodler@FlashGovernanceArbiter": [],
+    "pt-v5-draw-auction@RngRelayAuction": []
+}

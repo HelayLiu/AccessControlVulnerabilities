@@ -1,0 +1,61 @@
+1. Function `setOwner(address owner_)` (line 12-14) has access control issues. Reason: The function can change the owner variable without proper checks, allowing any user to become the owner if they call this function.
+
+2. Function `stop()` (line 164-166) has access control issues. Reason: The function can be called by any user since it only checks for authorization through the `auth` modifier, which may not be properly enforced in all contexts, potentially allowing unauthorized users to stop the market.
+
+3. Function `setFeeBPS(uint256 _newFeeBPS)` (line 370-373) has access control issues. Reason: This function allows any user with the `auth` modifier to change the fee basis points, which could be exploited if the `auth` modifier is not properly restricted.
+
+4. Function `setFeeTo(address newFeeTo)` (line 392-395) has access control issues. Reason: Similar to the previous function, it allows any user with the `auth` modifier to change the fee recipient address, which could lead to unauthorized fund redirection.
+
+5. Function `setAqueductDistributionLive(bool live)` (line 384-387) has access control issues. Reason: This function allows any user with the `auth` modifier to enable or disable the aqueduct distribution, which could be exploited if the `auth` modifier is not properly restricted.
+
+6. Function `setAqueductAddress(address _Aqueduct)` (line 388-391) has access control issues. Reason: This function allows any user with the `auth` modifier to set the aqueduct address, which could lead to unauthorized access to the distribution mechanism.
+
+7. Function `initialize(bool _live, address _feeTo)` (line 236-248) has access control issues. Reason: The function can be called by any user to initialize the contract, which could lead to unauthorized initialization if the contract is not properly protected after deployment.
+
+8. Function `make(ERC20 pay_gem, ERC20 buy_gem, uint128 pay_amt, uint128 buy_amt)` (line 276-278) has access control issues. Reason: This function allows any user to create an offer without proper checks, which could lead to unauthorized offers being created.
+
+9. Function `offer(uint256 pay_amt, ERC20 pay_gem, uint256 buy_amt, ERC20 buy_gem)` (line 284-286) has access control issues. Reason: This function allows any user to create an offer without proper checks, which could lead to unauthorized offers being created.
+
+10. Function `take(bytes32 id, uint128 maxTakeAmount)` (line 290-292) has access control issues. Reason: This function allows any user to take an offer without proper checks, which could lead to unauthorized trades being executed.
+
+11. Function `cancel(uint256 id)` (line 302-304) has access control issues. Reason: This function allows any user to cancel an offer without proper checks, which could lead to unauthorized cancellations.
+
+12. Function `kill(bytes32 id)` (line 308-310) has access control issues. Reason: This function allows any user to kill an offer without proper checks, which could lead to unauthorized terminations of offers.
+
+13. Function `insert(uint256 id, uint256 pos)` (line 364-366) has access control issues. Reason: This function allows any user to insert an offer into the sorted list without proper checks, which could lead to unauthorized manipulations of the offer list.
+
+14. Function `del_rank(uint256 id)` (line 368-370) has access control issues. Reason: This function allows any user to delete an offer from the rank without proper checks, which could lead to unauthorized deletions.
+
+15. Function `setMinSell(ERC20 pay_gem, uint256 dust)` (line 374-377) has access control issues. Reason: This function allows any user with the `auth` modifier to set the minimum sell amount, which could be exploited if the `auth` modifier is not properly restricted.
+
+16. Function `setBuyEnabled(bool buyEnabled_)` (line 378-381) has access control issues. Reason: This function allows any user with the `auth` modifier to enable or disable buying, which could lead to unauthorized changes in market behavior.
+
+17. Function `setMatchingEnabled(bool matchingEnabled_)` (line 382-385) has access control issues. Reason: This function allows any user with the `auth` modifier to enable or disable matching, which could lead to unauthorized changes in market behavior.
+
+18. Function `getBestOffer(ERC20 sell_gem, ERC20 buy_gem)` (line 410-412) has access control issues. Reason: This function allows any user to retrieve the best offer without proper checks, which could lead to unauthorized access to sensitive market data.
+
+19. Function `getWorseOffer(uint256 id)` (line 414-416) has access control issues. Reason: This function allows any user to retrieve the worse offer without proper checks, which could lead to unauthorized access to sensitive market data.
+
+20. Function `getBetterOffer(uint256 id)` (line 418-420) has access control issues. Reason: This function allows any user to retrieve the better offer without proper checks, which could lead to unauthorized access to sensitive market data.
+
+21. Function `getOfferCount(ERC20 sell_gem, ERC20 buy_gem)` (line 422-424) has access control issues. Reason: This function allows any user to retrieve the offer count without proper checks, which could lead to unauthorized access to sensitive market data.
+
+22. Function `getFirstUnsortedOffer()` (line 426-428) has access control issues. Reason: This function allows any user to retrieve the first unsorted offer without proper checks, which could lead to unauthorized access to sensitive market data.
+
+23. Function `getNextUnsortedOffer(uint256 id)` (line 430-432) has access control issues. Reason: This function allows any user to retrieve the next unsorted offer without proper checks, which could lead to unauthorized access to sensitive market data.
+
+24. Function `sellAllAmount(ERC20 pay_gem, uint256 pay_amt, ERC20 buy_gem, uint256 min_fill_amount)` (line 434-438) has access control issues. Reason: This function allows any user to sell all amounts without proper checks, which could lead to unauthorized trades being executed.
+
+25. Function `buyAllAmount(ERC20 buy_gem, uint256 buy_amt, ERC20 pay_gem, uint256 max_fill_amount)` (line 440-444) has access control issues. Reason: This function allows any user to buy all amounts without proper checks, which could lead to unauthorized trades being executed.
+
+26. Function `getBuyAmount(ERC20 buy_gem, ERC20 pay_gem, uint256 pay_amt)` (line 446-450) has access control issues. Reason: This function allows any user to retrieve the buy amount without proper checks, which could lead to unauthorized access to sensitive market data.
+
+27. Function `getPayAmount(ERC20 pay_gem, ERC20 buy_gem, uint256 buy_amt)` (line 452-456) has access control issues. Reason: This function allows any user to retrieve the pay amount without proper checks, which could lead to unauthorized access to sensitive market data.
+
+28. Function `setFeeTo(address newFeeTo)` (line 392-395) has access control issues. Reason: This function allows any user with the `auth` modifier to change the fee recipient address, which could lead to unauthorized fund redirection.
+
+29. Function `setAqueductAddress(address _Aqueduct)` (line 388-391) has access control issues. Reason: This function allows any user with the `auth` modifier to set the aqueduct address, which could lead to unauthorized access to the distribution mechanism.
+
+30. Function `setAqueductDistributionLive(bool live)` (line 384-387) has access control issues. Reason: This function allows any user with the `auth` modifier to enable or disable the aqueduct distribution, which could be exploited if the `auth` modifier is not properly restricted.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to manipulate critical aspects of the contract, such as ownership, fees, offers, and market behavior.

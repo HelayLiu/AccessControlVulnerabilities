@@ -1,0 +1,9 @@
+1. Function executeIsolateBorrow (line 20-21) has access control issues. Reason: The function does not check if the caller has the necessary permissions to borrow assets, which could allow unauthorized users to execute borrowing operations.
+
+2. Function executeIsolateRepay (line 66-67) has access control issues. Reason: The function does not verify if the caller is allowed to repay the loan on behalf of the borrower, which could lead to unauthorized repayments.
+
+3. Function executeIsolateAuction (line 114-115) has access control issues. Reason: The function does not check if the caller is authorized to initiate an auction, which could allow unauthorized users to manipulate the auction process.
+
+4. Function executeIsolateRedeem (line 164-165) has access control issues. Reason: The function does not verify if the caller is allowed to redeem the assets, which could lead to unauthorized redemptions.
+
+5. Function executeIsolateLiquidate (line 213-214) has access control issues. Reason: The function does not check if the caller is authorized to liquidate the loan, which could allow unauthorized users to perform liquidations.

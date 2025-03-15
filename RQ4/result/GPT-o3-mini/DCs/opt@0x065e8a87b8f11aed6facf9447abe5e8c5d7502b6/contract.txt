@@ -1,0 +1,19 @@
+Below is one potential access control issue that we discovered during our audit:
+
+1. Vulnerable Function: setRoyalty (roughly lines 485–493)
+ • Reason: This function is intended to let the “owner” of an NFT (i.e. the NFT’s Ownable controller) set or update royalty information for that token’s contract. Instead of protecting the function itself with onlyOwner (or some other centralized access control), the function reads the owner from the external NFT’s contract by “casting” the given contract address to Ownable and then checking that _msgSender() equals ownableNFTContract.owner(). This pattern depends entirely on the NFT contract correctly implementing the Ownable interface. If (or when) an NFT contract supports ERC721/ERC1155 but does not implement Ownable as expected – or does so incorrectly – then the check may be bypassed. A malicious actor might call setRoyalty on a non‐Ownable NFT contract (or one with a misconfigured owner) to set arbitrary royalty payout addresses and percentages. In effect, the function’s access control is “outsourced” to another contract’s owner() function rather than being enforced within the Exchange itself.
+
+No other function in this file exhibits a comparable risk in which a public or external function fails to perform its own internal access‐control check before altering significant state (other than the intended offchain meta‑transaction signature “proof”). However, because setRoyalty uses user-supplied contract addresses and relies on external Ownable behavior, it is a potential attack vector.
+
+Proof‐of‑Concept (Conceptual):
+• Assume an NFT contract “FakeNFT” supports ERC721 but does not implement Ownable properly (or its owner() method always returns an address that an attacker can satisfy).
+• The attacker calls setRoyalty(FakeNFT, attackerPayoutAddress, someAllowedRoyaltyRate) and passes no further restrictions.
+• If FakeNFT.owner() returns the attacker’s address (or the check is otherwise bypassed), then the attacker gets to “set” the royalty payouts arbitrarily—even though they are not the creator or rightful owner of the NFT.
+
+It is recommended to either require that the caller be the owner of the Exchange contract or to have a dedicated access control mechanism registered on the Exchange rather than relying solely on the external NFT’s owner() value.
+
+──────────────────────────────
+In summary:
+
+1. Vulnerable function: setRoyalty (approximately lines 485–493)
+ Reason: It depends entirely on the external NFT contract’s own owner() function for authorization. If an NFT contract supports ERC721/ERC1155 but does not implement or correctly secure Ownable, unauthorized users may be able to set royalty payout parameters.

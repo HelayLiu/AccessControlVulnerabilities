@@ -1,0 +1,2 @@
+OutPut:
+1. Function `mint()` (line 365-368) has the access control issues. Reason: The `mint()` function allows any user to mint new tokens to their own account without any restrictions or access control checks. This can lead to an unlimited supply of tokens being created by any user, which can severely impact the token's value and integrity.

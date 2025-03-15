@@ -1,0 +1,12 @@
+{
+ "contract": "RC",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "buyTokens",
+   "SHA3(msg.sender,0x9)"
+  ]
+ ],
+ "PC_bypassed": []
+}

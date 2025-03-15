@@ -1,0 +1,12 @@
+Below is one example of an access control weakness found in the contract:
+
+1. Vulnerable Function: listToken  
+ • Approximate Location: Lines ~145–185 (the exact line numbers will depend on formatting)  
+ • Reason: The listToken function is meant to let a “token owner” list a token pair so that deposit/withdraw functions can use the token owner information (stored in _tokenOwner and tokenOwnerWithChainId). However, there is no check that the caller “owns” (or is in any way authorized over) the token being listed. In effect, any external user may call listToken and designate themselves as the owner for an arbitrary token (or token pair), even if they have no rights over that token. Later, functions such as depositTokens, withdrawTokens, or changeTokenLister rely solely on the stored _tokenOwner or tokenOwnerWithChainId mappings for authorization. An attacker therefore can list any token, become its “owner” in the bridge’s records, and then deposit and withdraw tokens without proper rights.  
+
+Proof of Concept (PoC) Outline:  
+ 1. Attacker calls listToken with valid (but publicly known) token addresses for baseToken and correspondingToken and sets _isMintable as desired. Since there is no ownership check, the contract stores msg.sender as the token lister in both _tokenOwner and tokenOwnerWithChainId mappings.  
+ 2. Later, if for instance the bridge requires the token lister to deposit tokens (via depositTokens) or (worse) withdraw tokens (via withdrawTokens), only the stored owner (i.e. the attacker) is authorized to perform these actions.  
+ 3. An attacker thus misrepresents token ownership and undermines the intended trust model of the bridge.  
+
+This issue means that listing tokens is not properly access‐controlled, which may allow a malicious actor to abuse the bridge’s deposit and withdrawal functions for tokens they do not legitimately control.

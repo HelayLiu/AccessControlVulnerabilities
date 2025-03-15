@@ -1,0 +1,6 @@
+{
+    "CompilerVersion": "v0.8.21+commit.c7dfd78e",
+    "ContractName": ["LiquidationDistributor","Pool"],
+    "via-ir": true,
+    "optimize":true
+}

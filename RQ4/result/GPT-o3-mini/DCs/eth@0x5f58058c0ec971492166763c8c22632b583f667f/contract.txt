@@ -1,0 +1,33 @@
+Below is an example write‐up of two potential access control issues found in the audited code. (Note that line numbers are estimates based on the provided file, and the POC descriptions assume the contracts are deployed as written.)
+
+─────────────────────────────────────────────  
+1. Function updateRegistry (in ContractRegistryClient, approx. lines 83–95)  
+─────────────────────────────────────────────  
+Reason:  
+• The updateRegistry function uses a “require(msg.sender == owner || !onlyOwnerCanUpdateRegistry)” check. By default the onlyOwnerCanUpdateRegistry flag is false (its default value), which means that !onlyOwnerCanUpdateRegistry evaluates to true for all callers. As a result, any external account (not only the owner) can call updateRegistry and force the contract to read a new registry address (via registry.addressOf(CONTRACT_REGISTRY)). This could allow an attacker to point the registry to an attacker‐controlled contract and thereby hijack other contract calls that rely on registry addresses.  
+
+Proof‐of-Concept:  
+– As a non‐owner, an attacker can simply call updateRegistry(). Because onlyOwnerCanUpdateRegistry is false by default, the require check passes. The attacker can then manipulate the registry (for example by setting an address for a key like BANCOR_NETWORK to point to a malicious contract), which can compromise later interactions in the system.  
+
+─────────────────────────────────────────────  
+2. Public Token Operations in TokenHandler (functions safeApprove, safeTransfer, safeTransferFrom; approx. lines 540–580)  
+─────────────────────────────────────────────  
+Reason:  
+• The functions safeApprove, safeTransfer, and safeTransferFrom are declared public in the TokenHandler contract. These functions serve as wrappers to perform ERC20 calls from the contract’s own balance using “execute(…)”. However, because they are not protected (for example, by an owner-only modifier), an attacker can directly call them on any contract that inherits from TokenHandler (for example, on BancorNetwork).  
+• Since these functions ultimately call the target token’s transfer/approve functions using the “this” contract as the sender, an attacker could order an arbitrary transfer – draining tokens that the contract holds – without proper authorization.  
+
+Proof‐of-Concept:  
+– Suppose BancorNetwork (which inherits from TokenHolder and TokenHandler) holds some ERC20 tokens accidentally. An attacker can call safeTransfer(tokenAddress, attackerAddress, amount) on the BancorNetwork contract. This causes the BancorNetwork contract to execute token.transfer(attackerAddress, amount), transferring tokens from the contract’s balance to the attacker’s account, even though the caller is not the owner.  
+
+─────────────────────────────────────────────  
+Summary  
+─────────────────────────────────────────────  
+1. updateRegistry (ContractRegistryClient, approx. lines 83–95):  
+  • Access control weakness due to the public updateRegistry function being callable by any account when onlyOwnerCanUpdateRegistry is false (its default).  
+  • This allows an attacker to update key pointers (registry address), potentially redirecting critical contract calls to malicious implementations.  
+
+2. safeApprove, safeTransfer, and safeTransferFrom (TokenHandler, approx. lines 540–580):  
+  • These public utility functions lack ownership or permission checks.  
+  • An attacker can call these functions to trigger token transfers from the contract itself, draining funds without proper authorization.  
+
+It is recommended to either restrict such token-handling functions (making them internal or protected via an onlyOwner modifier) or refactor the design so that external calls cannot trigger unauthorized token movements.

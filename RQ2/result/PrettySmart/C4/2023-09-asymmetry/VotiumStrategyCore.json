@@ -1,0 +1,17 @@
+{
+ "contract": "VotiumStrategyCore",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xe656be9d",
+   "0x98"
+  ],
+  [
+   "owner",
+   "0x8aacb080",
+   "0x98"
+  ]
+ ],
+ "PC_bypassed": []
+}

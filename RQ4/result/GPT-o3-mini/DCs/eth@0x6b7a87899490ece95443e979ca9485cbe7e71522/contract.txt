@@ -1,0 +1,8 @@
+Below is the summary of our access‐control review:
+
+After carefully reviewing every function and modifier, we found that all functions that change critical state or call sensitive token functions (such as mint, burn, depositVault, withdrawVault, changeMPC, changeVault, fee collection, and cross‐chain “in” swaps) are gated by the onlyMPC modifier or by expected checks (including the ensure(deadline) modifier). All externally callable “swap out” functions are meant to be public so that any user holding the appropriate tokens may initiate a swap (with the token “burn” logic verifying the caller’s balance/allowance). In addition, the permit and transferPermit functions delegate the authority based on standard ERC20 “permit” flows.
+
+Therefore, we did not identify any functions where sensitive variables are modified or critical operations are performed without proper access control checks.
+
+Output:
+No vulnerable function found – all functions have the appropriate access control checks (or are intentionally public for user‑initiated token bridging).

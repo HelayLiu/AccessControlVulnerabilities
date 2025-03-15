@@ -1,0 +1,17 @@
+Below is one concrete example of an access control issue found during the audit:
+
+1. Vulnerable Function: burn(uint256 followTokenId)  
+   Approximate Lines: 210–214  
+   Reason: The burn() function is declared public and does not check whether the caller is the owner or an approved operator of the token. This lack of access control means that any arbitrary address can call burn() to “unfollow” a follower (by burning its Follow NFT) even if that caller has no authority over the token. This would allow a malicious user to cancel another user’s follow relationship without permission.  
+
+2. Vulnerable Function: unwrap(uint256 followTokenId)  
+   Approximate Lines: 170–174  
+   Reason: The unwrap() function also calls super.burn(followTokenId) without prior verification that msg.sender is the token owner (or otherwise authorized). Consequently, any external account that passes the simple check (that the stored followerProfileId is nonzero) can force the token’s burning, again removing a user’s follow relationship without proper rights.
+
+Proof of Concept Steps:
+• Assume User A legitimately holds a Follow NFT (with followTokenId) representing their follow relationship.
+• An attacker (User B), without owning the token, calls the public burn(followTokenId) (or unwrap(followTokenId)) function.
+• No checks ensure that User B is the owner or an approved operator, so the token is burned via super.burn(followTokenId).
+• This unauthorized burn operation removes User A’s follow relationship.
+
+Both functions therefore lack the expected access restrictions on critical state changes (burning a Follow NFT and “unfollowing”) enabling privilege escalation via unauthorized token burns.

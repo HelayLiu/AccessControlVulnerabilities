@@ -1,0 +1,38 @@
+Below is one example of an access‐control misconfiguration that appears repeatedly in the code. In several contracts the “onlyOwner” role is meant to restrict “owner‐only” functions (for example, transferOwnership, setOracleAddress, setManager, etc.). However, the modifier is implemented as follows in proxyOwner:
+
+  modifier onlyOwner() {
+    require(isOwner(), "proxyOwner: caller must be the proxy owner and a contract and not expired");
+    _;
+  }
+
+and the helper isOwner() is defined as
+
+  function isOwner() public view returns (bool) {
+    return msg.sender == owner() && isContract(msg.sender);
+  }
+
+Because owner() is initially set in the constructor using msg.sender (which, in most cases, is an externally owned account [EOA]), the check isContract(msg.sender) will return false when the real owner is an EOA. This forces onlyOwner functions (such as transferOwnership, setFeeAddress, setOracleAddress, etc.) to succeed only if called by a contract. (In contrast, functions protected by OwnerOrOrigin allow an EOA call but also invoke a multi‑signature check.) As a result, a legitimate EOA owner is effectively “locked out” of functions it should be able to call—and an attacker might try to exploit or force the owner to take extra (and possibly error‐prone) measures by deploying a contract in place of the EOA.
+
+Below are a few concrete examples (line numbers are approximate within each source file):
+
+1. Function transferOwnership (in file proxyOwner.sol, approximately lines 35–40)  
+ – Vulnerable because it is declared public with modifier onlyOwner. The onlyOwner modifier calls isOwner(), which requires msg.sender to be a contract. Since the owner is set using msg.sender in the constructor (typically an EOA), a legitimate owner (if an EOA) cannot call transferOwnership.  
+ – Reason: The access control check is misconfigured so that the owner must be a contract (isContract(msg.sender)==true), preventing an EOA owner from performing owner‐only tasks.
+
+2. Function setOracleAddress (in contract ImportOracle, approximately lines 100–105)  
+ – This function is public and restricted by onlyOwner. For the same reason as above, if the owner is an EOA the check in onlyOwner will fail.  
+ – Reason: OnlyOwner’s check forces the caller to be a contract; thus a legitimate owner (an EOA) is blocked from updating the oracle address.
+
+3. Function setManager (in contract proxyOperator, approximately lines 110–115)  
+ – This function is declared public with onlyOwner and therefore suffers from the same issue.  
+ – Reason: The requirement that msg.sender be a contract (via isOwner()) disallows a real owner set as an EOA from calling setManager.
+
+Overall, any function secured solely by onlyOwner (or by modifiers that rely on isOwner) is potentially “vulnerable” in that the intended controlling account (if it is an externally owned account) will be prevented from calling the function. In a production system this could lock out the real owner or force them to call via an intermediary contract—which may be undesirable or be exploited if not carefully managed.
+
+Proof‐of‐Concept (Conceptual):
+
+1. Deploy the proxyOwner (or a contract inheriting it) by an EOA account. In its constructor, owner is set to msg.sender (the EOA).  
+2. Later, try calling transferOwnership (or setOracleAddress) from the same EOA.  
+3. The call fails because isContract(msg.sender) returns false for the EOA, and the require() in onlyOwner is not met.
+
+Thus, the core design error is that the “onlyOwner” modifier requires msg.sender to be a contract rather than accepting a normal externally owned account—which is contrary to common expectations for ownership access control.

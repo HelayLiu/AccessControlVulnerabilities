@@ -1,0 +1,7 @@
+OutPut:
+1. Function `owned()` (line 16-18) has the access control issues. Reason: The `owned()` function can change the `owner` variable to any arbitrary address that calls it. This is significant because the `owner` has special privileges in the contract, such as freezing accounts, burning tokens, and minting new tokens. Without proper access control, any user can become the owner and exploit these privileges.
+
+Proof of Concept:
+- Deploy the contract.
+- Call the `owned()` function from an address other than the deployer.
+- Verify that the `owner` variable has been changed to the address that called `owned()`.

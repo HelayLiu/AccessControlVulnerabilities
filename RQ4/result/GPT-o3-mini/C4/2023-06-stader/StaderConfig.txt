@@ -1,0 +1,27 @@
+Below is one example of what can go wrong if the careful distinction between roles isn’t enforced. Although every external “setter” function is protected by a role‐modifier, we did identify one set of functions whose choice of role (and their inconsistent use relative to related setters) could lead to unexpected behavior if roles are not carefully managed. In this contract the update functions that change the deposit limits are restricted to an account with the MANAGER role while the withdraw‑limits setters use the DEFAULT_ADMIN_ROLE. In many designs one would expect the “limits” to be configured together and by the same privileged role. Otherwise, if for whatever reason a MANAGER (or an account that has been granted this role improperly) becomes malicious, they can change deposit parameters (min/max deposit) without being able to also change the withdraw settings. This inconsistency could lead (for example) to a situation where deposit limits are set to values that don’t “line up” with withdraw limits, potentially interfering with how funds are handled by the system.
+
+Proof‑of‑Concept (PoC):
+1. Assume an attacker gains (or is mistakenly granted) the MANAGER role.
+2. The attacker calls updateMinDepositAmount (or updateMaxDepositAmount) to change the deposit limit.
+3. Since the withdraw‐limit functions require DEFAULT_ADMIN_ROLE, the attacker cannot adjust the corresponding withdraw parameters. 
+4. This may allow the attacker to force the protocol into an inconsistent configuration (or even to “game” parts of the system that rely on the limits matching up) until the configuration is noticed and corrected.
+
+The (possible) vulnerable functions are:
+
+1. Function updateMinDepositAmount (around line 70–80)
+   • What it does: Updates the MIN_DEPOSIT_AMOUNT variable and then calls verifyDepositAndWithdrawLimits().
+   • Access control: Restricted to accounts with the MANAGER role.
+   • Reason for concern: Because deposit‐related parameters are modifiable solely by a MANAGER while withdraw‐related ones are only modifiable by DEFAULT_ADMIN_ROLE, a malicious or mis‐assigned MANAGER can unilaterally change a critical configuration parameter (min deposit amount) that could unbalance the intended constraints. This asymmetry might lead to unexpected behaviors in a system that requires deposit and withdraw limits to be configured in tandem.
+
+2. Function updateMaxDepositAmount (around line 80–90)
+   • What it does: Updates the MAX_DEPOSIT_AMOUNT variable and then calls verifyDepositAndWithdrawLimits().
+   • Access control: Also allowed only for MANAGER.
+   • Reason for concern: See above—the fact that deposit limits can be modified by a MANAGER while withdraw limits are controlled only by DEFAULT_ADMIN_ROLE creates an inconsistency in access rights that could be abused if a MANAGER account is compromised or mis‐granted.
+
+It is important to note that the functions themselves check the caller’s role correctly per the modifier provided by OpenZeppelin; however, the underlying design (that different types of limit parameters are controlled by different roles) can be an access control “misconfiguration” risk. This risk should be carefully reviewed to ensure that the separation of roles is intentional and that the MANAGER role is not granted too liberally.
+
+If the intended design is to allow one privileged role to update all “limits” parameters, then the access control on updateMinDepositAmount and updateMaxDepositAmount should be harmonized with updateMinWithdrawAmount and updateMaxWithdrawAmount (or vice versa). Otherwise, a mis-assignment in roles could result in inconsistent configuration and unexpected behaviors in the protocol.
+
+In summary, while there is no “missing” modifier on a public function, the inconsistent use of managerial roles for similar critical parameters constitutes a potential access control issue.
+
+Always ensure that role assignments follow the intended governance and that a lower privileged role (MANAGER in this case) cannot unilaterally set parameters that by design must be controlled in a holistic manner.

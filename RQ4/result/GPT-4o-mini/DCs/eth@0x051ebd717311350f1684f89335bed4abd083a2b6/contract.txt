@@ -1,0 +1,21 @@
+1. Function init(address maintainer, address baseTokenAddress, address quoteTokenAddress, uint256 lpFeeRate, address mtFeeRateModel, uint256 i, uint256 k, bool isOpenTWAP) (line 276-290) has access control issues. Reason: The init function can be called by anyone, allowing any address to set the maintainer, base token, quote token, and other critical parameters without any access control checks, potentially leading to unauthorized control over the contract.
+
+2. Function transferOwnership(address newOwner) (line 40-43) has access control issues. Reason: The transferOwnership function can be called by anyone, allowing any address to set a new owner without any access control checks, which could lead to unauthorized ownership changes.
+
+3. Function claimOwnership() (line 48-53) has access control issues. Reason: The claimOwnership function can be called by anyone who knows the new owner's address, allowing any address to claim ownership without proper verification, which could lead to unauthorized ownership claims.
+
+4. Function setFeeProxy(address _feeRateImpl) (line 66-69) has access control issues. Reason: The setFeeProxy function can be called by anyone, allowing any address to set the fee rate implementation address without any access control checks, which could lead to unauthorized changes in fee calculations.
+
+5. Function sync() (line 164-167) has access control issues. Reason: The sync function can be called by anyone, allowing any address to update the reserves without any access control checks, which could lead to unauthorized manipulation of the contract's state.
+
+6. Function sellShares(uint256 shareAmount, address to, uint256 baseMinAmount, uint256 quoteMinAmount, bytes calldata data, uint256 deadline) (line 370-392) has access control issues. Reason: The sellShares function can be called by anyone, allowing any address to sell shares without proper verification of ownership, which could lead to unauthorized share sales.
+
+7. Function flashLoan(uint256 baseAmount, uint256 quoteAmount, address assetTo, bytes calldata data) (line 305-335) has access control issues. Reason: The flashLoan function can be called by anyone, allowing any address to initiate a flash loan without any access control checks, which could lead to unauthorized borrowing of funds.
+
+8. Function transfer(address to, uint256 amount) (line 164-171) has access control issues. Reason: The transfer function can be called by anyone, allowing any address to transfer shares without proper verification of ownership, which could lead to unauthorized transfers.
+
+9. Function transferFrom(address from, address to, uint256 amount) (line 178-186) has access control issues. Reason: The transferFrom function can be called by anyone, allowing any address to transfer shares on behalf of another address without proper verification, which could lead to unauthorized transfers.
+
+10. Function approve(address spender, uint256 amount) (line 193-198) has access control issues. Reason: The approve function can be called by anyone, allowing any address to approve spending of shares without proper verification, which could lead to unauthorized approvals.
+
+These functions lack proper access control mechanisms, allowing unauthorized users to manipulate critical aspects of the contract.

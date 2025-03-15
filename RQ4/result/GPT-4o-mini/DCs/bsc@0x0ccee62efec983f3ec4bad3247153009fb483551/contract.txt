@@ -1,0 +1,5 @@
+1. Function setNewImpl(address impl) (line 56-59) has access control issues. Reason: The setNewImpl function can change the implementation address (swapXImpl) without any checks on the new implementation contract, which could lead to the contract being pointed to a malicious implementation that could drain funds or manipulate the contract's behavior.
+
+2. Function swap(IERC20 srcToken, IERC20 dstToken, address dstReceiver, uint256 amount, uint256 minReturnAmount, address referrer, bytes calldata data) (line 66-104) has access control issues. Reason: The swap function does not have any checks to ensure that the caller is authorized to perform the swap operation, which could allow any user to execute swaps, potentially leading to unauthorized access to funds.
+
+3. Function rescueFund(IERC20 asset, uint256 amount) (line 106-109) has access control issues. Reason: The rescueFund function allows the owner to transfer any ERC20 tokens from the contract to their address, but if the ownership is compromised, an attacker could misuse this function to withdraw funds from the contract.

@@ -1,0 +1,16 @@
+1. Function _init() (line 45-56) has access control issues. Reason: The _init() function can be called by any address since it is marked as external, which allows any user to initialize the contract and set the holographer address, potentially leading to unauthorized access.
+
+2. Function _setOwner(address ownerAddress) (line 83-86) has access control issues. Reason: The _setOwner() function is an internal function that can be called by any function within the contract, but there are no access control checks to ensure that only the current owner or authorized addresses can change the owner, which could lead to unauthorized ownership changes.
+
+3. Function supportsInterface(bytes4) (line 73-75) has access control issues. Reason: The supportsInterface() function is public and does not have any access control checks, which means any user can call this function and potentially exploit it if it were to be modified in the future to include sensitive logic.
+
+4. Function isOwner() (line 66-70) has access control issues. Reason: The isOwner() function is public and can be called by anyone to check if they are the owner, which could lead to information leakage about the ownership status of the contract.
+
+5. Function isOwner(address wallet) (line 72-74) has access control issues. Reason: The isOwner(address wallet) function is public and allows anyone to check if a specific address is the owner, which could lead to information leakage about the ownership status of the contract.
+
+In summary, the following functions have access control issues:
+- _init() (line 45-56)
+- _setOwner(address ownerAddress) (line 83-86)
+- supportsInterface(bytes4) (line 73-75)
+- isOwner() (line 66-70)
+- isOwner(address wallet) (line 72-74)

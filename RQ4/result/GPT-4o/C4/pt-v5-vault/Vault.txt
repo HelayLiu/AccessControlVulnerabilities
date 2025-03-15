@@ -1,0 +1,41 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `setHooks(VaultHooks memory hooks)` (line 510-514)**
+   - **Reason**: This function allows any user to set hooks for themselves without any access control. While this might be intended, it could potentially be exploited if a user sets malicious hooks that could interfere with the contract's operations or other users' interactions.
+
+2. **Function `setClaimer(address claimer_)` (line 502-508)**
+   - **Reason**: This function is protected by the `onlyOwner` modifier, which is appropriate. However, the function does not check if the new `claimer_` address is a valid address (e.g., not the zero address). Setting the claimer to an invalid address could disrupt the prize claiming process.
+
+3. **Function `setLiquidationPair(LiquidationPair liquidationPair_)` (line 520-533)**
+   - **Reason**: This function is also protected by the `onlyOwner` modifier, which is appropriate. However, similar to the `setClaimer` function, it does not check if the new `liquidationPair_` address is a valid address (e.g., not the zero address). Although there is a check for zero address, it is important to ensure that the new address is a valid contract implementing the expected interface.
+
+4. **Function `setYieldFeePercentage(uint256 yieldFeePercentage_)` (line 540-546)**
+   - **Reason**: This function is protected by the `onlyOwner` modifier, which is appropriate. However, setting an excessively high yield fee percentage (even though capped at `1e9`) could potentially be detrimental to the users of the contract. It is important to ensure that the owner cannot set a fee that is too high without proper governance or user consent.
+
+5. **Function `setYieldFeeRecipient(address yieldFeeRecipient_)` (line 550-556)**
+   - **Reason**: This function is protected by the `onlyOwner` modifier, which is appropriate. However, it does not check if the new `yieldFeeRecipient_` address is a valid address (e.g., not the zero address). Setting the yield fee recipient to an invalid address could result in loss of yield fees.
+
+**Proof of Concept for Issue 1:**
+To demonstrate the potential issue with the `setHooks` function, consider the following scenario:
+- A malicious user could set hooks that execute arbitrary code when prizes are claimed, potentially disrupting the prize distribution process or causing unexpected behavior.
+
+```solidity
+// Malicious contract implementing VaultHooks
+contract MaliciousHooks is VaultHooks {
+    function beforeClaimPrize(address winner, uint8 tier, uint32 prizeIndex) external returns (address) {
+        // Execute arbitrary code or revert
+        revert("Malicious behavior");
+    }
+
+    function afterClaimPrize(address winner, uint8 tier, uint32 prizeIndex, uint256 prizeAmount, address recipient) external {
+        // Execute arbitrary code
+    }
+}
+
+// User sets malicious hooks
+Vault vault = Vault(vaultAddress);
+MaliciousHooks hooks = new MaliciousHooks();
+vault.setHooks(VaultHooks(address(hooks)));
+```
+
+In this scenario, the malicious hooks could interfere with the normal operation of the prize claiming process, potentially causing disruptions or loss of funds.

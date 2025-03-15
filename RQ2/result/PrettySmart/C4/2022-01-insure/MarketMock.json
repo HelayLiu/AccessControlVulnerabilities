@@ -1,0 +1,12 @@
+{
+ "contract": "MarketMock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven",
+   "withdraw",
+   "SHA3(msg.sender,0x13)"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,18 @@
+Switched global version to 0.4.24
+Modifiers Status:
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: owner, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: BOMBBA.quaker(address)
+owner_5(address) := msg.sender(address)
+Entry Point: Ownable.onlyOwner()
+owner_5(address) := ϕ(['owner_0', 'owner_4', 'owner_1'])
+TMP_25(bool) = msg.sender == owner_5
+TMP_26(None) = SOLIDITY_CALL require(bool)(TMP_25)
+
+

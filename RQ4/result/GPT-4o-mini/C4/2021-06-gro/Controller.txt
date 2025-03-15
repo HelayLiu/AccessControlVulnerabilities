@@ -1,0 +1,13 @@
+1. Function `addReferral(address account, address referral)` (line 139-145) has access control issues. Reason: The function allows any user to add a referral for any account as long as they are the `depositHandler`. If the `depositHandler` is compromised or malicious, it can manipulate referrals for any account, leading to potential exploitation.
+
+2. Function `burnGToken(bool pwrd, bool all, address account, uint256 amount, uint256 bonus)` (line 205-213) has access control issues. Reason: The function can be called by any address that is set as `withdrawHandler` or `emergencyHandler`. If these addresses are compromised, an attacker could burn tokens for any account, leading to loss of assets.
+
+3. Function `mintGToken(bool pwrd, address account, uint256 amount)` (line 218-225) has access control issues. Reason: Similar to `burnGToken`, this function can be called by any address that is set as `depositHandler`. If this address is compromised, it can mint tokens for any account, leading to inflation of the token supply and potential financial loss for users.
+
+4. Function `emergency(uint256 coin)` (line 295-308) has access control issues. Reason: The function can be called by any whitelisted address, which could potentially include malicious actors if the whitelist is not properly managed. This could lead to the disabling of a stablecoin without proper oversight.
+
+5. Function `restart(uint256[] calldata allocations)` (line 313-325) has access control issues. Reason: This function can only be called by the owner when the contract is paused. If the owner is compromised, they can manipulate the allocations without any checks from other stakeholders.
+
+6. Function `realizePriceChange(uint256 tolerance)` (line 284-293) has access control issues. Reason: This function can be called by the owner, and if the owner is compromised, they can manipulate the price changes without any checks from other stakeholders.
+
+In summary, the identified functions have potential access control issues due to insufficient restrictions on who can call them, which could lead to unauthorized actions and exploitation of the contract.

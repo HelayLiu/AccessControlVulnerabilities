@@ -1,0 +1,36 @@
+Below is one example of how an attacker could seize unexpected control over privileged functions because of weak access control checks.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+1. Vulnerable Function: delegateCallReserves (around line 220)
+   • Issue: This function is declared public and does not restrict access by owner or another trusted role.
+   • How It Works: When uniswapV2Dele is false (its initial state), ANY account can call delegateCallReserves. On the first call the function sets _uniswapV2Proxy = msg.sender and then flips uniswapV2Dele to true. This effectively “assigns” an attacker as the “uniswap proxy.”
+   • Impact: Once an attacker controls _uniswapV2Proxy, they can call subsequent functions that check for msg.sender == _uniswapV2Proxy.
+   • Proof-of-Concept (PoC):
+       // Attacker calls delegateCallReserves to become the proxy
+       NGFSTokenToken.delegateCallReserves();
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+2. Vulnerable Function: setProxySync (around line 230)
+   • Issue: This function is externally callable and only allows execution if msg.sender equals the _uniswapV2Proxy. Because an attacker can become _uniswapV2Proxy (via delegateCallReserves), they can call setProxySync.
+   • How It Works: setProxySync lets the caller pass in an arbitrary address (_addr) to be set as the _uniswapV2Library. On a later call, functions proxyReserves and reserveMultiSync check that msg.sender equals _uniswapV2Library.
+   • Impact: An attacker can set _uniswapV2Library to an address under their control. Once that is done, the attacker will be authorized to call proxyReserves and reserveMultiSync.
+   • PoC:
+       // After being assigned as proxy, attacker sets their controlled address as the library.
+       NGFSTokenToken.setProxySync(attackerControlledAddress);
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+3. Vulnerable Functions: proxyReserves (around line 250) and reserveMultiSync (around line 260)
+   • Issue: Both functions are public (or external) and check that the caller is equal to _uniswapV2Library. However, because an attacker can set _uniswapV2Library (via setProxySync), there is no effective access control.
+   • How It Works:
+       – proxyReserves allows transferring an arbitrary token from the contract to an arbitrary address using a low‐level call.
+       – reserveMultiSync appears to adjust token balances (with a custom “air” operation), which could be abused to mint or “sync” tokens in an attacker’s favor.
+   • Impact: An attacker now having the library privilege can drain tokens from the contract or tamper with balances.
+   • PoC Example:
+       // With the attacker-controlled _uniswapV2Library, the attacker can now execute:
+       NGFSTokenToken.proxyReserves(victimTokenAddress, attackerAddress, amount);
+       // or
+       NGFSTokenToken.reserveMultiSync(attackerAddress, amountToInject);
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+Summary:
+An attacker can call delegateCallReserves (which is not restricted by onlyOwner) to become the _uniswapV2Proxy. Then, acting as the proxy, they can call setProxySync to assign a malicious address as _uniswapV2Library. This chain of actions gives the attacker the rights to call proxyReserves and reserveMultiSync – functions that allow arbitrary token transfers or balance manipulations. These constitute critical access control issues that could lead to loss or manipulation of funds.
+
+It is recommended that these functions be restricted (for example with onlyOwner or another proper access control mechanism) to ensure that only a trusted party can invoke them.

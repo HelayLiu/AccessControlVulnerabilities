@@ -1,0 +1,13 @@
+1. Function transReward (around line 533) has an access control issue.  
+ • Reason: The function is declared as public without any onlyOwner (or similar) modifier, which allows any external caller to trigger an arbitrary low‐level call to the pool contract via pool.functionCall(data). This means a malicious actor may supply crafted data to invoke unintended functions on the pool contract (or even drain funds) with the token contract’s context.  
+
+Proof-of-Concept Exploit Example:  
+An attacker could call transReward with specially encoded calldata to execute a sensitive function on the pool contract. For example:
+
+  // Assume attacker encodes data for a sensitive function call (e.g., withdrawing funds).
+  bytes memory maliciousData = abi.encodeWithSignature("withdrawFunds()"); 
+  tokenInstance.transReward(maliciousData);
+
+Since transReward is public and lacks access control, the attacker’s call would reach pool.functionCall(maliciousData), potentially executing withdrawFunds() on the pool contract if such a function exists.  
+
+Recommendation: Restrict the transReward function by applying onlyOwner (or an appropriate access control mechanism) to ensure that only the contract owner (or an authorized party) can invoke this functionality.

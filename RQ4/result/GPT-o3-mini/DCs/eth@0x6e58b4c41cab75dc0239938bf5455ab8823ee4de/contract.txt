@@ -1,0 +1,17 @@
+Below is our audit finding with the associated proof‐of‐concept for the access control issue:
+
+1. Vulnerable Function: owned() in contract Owned (approximately lines 16–18)  
+   Reason: In Solidity 0.4.17 the constructor should have the same name as the contract (“Owned”) but here the function is named “owned()” (with a lowercase “o”). Because of this mismatch, owned() is treated as a normal public function instead of a constructor. This means any external account can call owned() at any time and reset the owner to themselves. Once an attacker becomes the owner, they can invoke transferOwnership or any other “onlyOwner” functions to control the contract.
+
+Proof of Concept:
+---------------------------------
+Assume the contract is deployed and the legitimate owner is A. An attacker (account X) can call the public function owned() using the following transaction:
+  
+  Transaction from account X:
+     - Call: owned()
+
+After the transaction, owner will be set to account X. Then account X can call transferOwnership() (or any other owner‐restricted function) and fully take over the contract control.
+  
+This is a classic misnamed-constructor issue that breaks the intended access control.
+  
+No other functions in the provided code lack proper access control.

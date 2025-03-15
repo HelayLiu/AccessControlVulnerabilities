@@ -1,0 +1,32 @@
+Upon reviewing the provided `MapleLoan` contract, I have identified potential access control issues. Below are the details:
+
+1. **Function `migrate` (line 20-23)**
+   - **Reason**: The `migrate` function is restricted to be called only by the factory, which is appropriate. However, if the factory address is compromised or incorrectly set, it could lead to unauthorized migrations. It is crucial to ensure that the factory address is securely managed and verified.
+
+2. **Function `setImplementation` (line 25-28)**
+   - **Reason**: Similar to the `migrate` function, `setImplementation` is restricted to the factory. The same concerns apply regarding the security and correctness of the factory address.
+
+3. **Function `upgrade` (line 30-35)**
+   - **Reason**: This function allows the borrower to upgrade the contract version. While it is restricted to the borrower, it is important to ensure that the borrower address is correctly set and that the upgrade process is secure to prevent unauthorized upgrades.
+
+4. **Function `acceptBorrower` (line 38-43)**
+   - **Reason**: This function allows the pending borrower to become the active borrower. It is crucial to ensure that the `_pendingBorrower` address is securely managed to prevent unauthorized access.
+
+5. **Function `acceptLender` (line 98-103)**
+   - **Reason**: This function allows the pending lender to become the active lender. Similar to `acceptBorrower`, it is important to ensure that the `_pendingLender` address is securely managed.
+
+6. **Function `skim` (line 166-174)**
+   - **Reason**: The `skim` function can be called by either the borrower or the lender to transfer tokens that are not part of the loan's funds or collateral. While it checks that the token is not the funds or collateral asset, it is important to ensure that the borrower and lender addresses are correctly set to prevent unauthorized skimming of tokens.
+
+**Proof of Concept for Access Control Issue:**
+
+To verify the access control issues, you can simulate scenarios where the factory, borrower, or lender addresses are incorrectly set or compromised. For example, if the factory address is set to an unauthorized address, attempt to call `migrate` or `setImplementation` to observe if unauthorized actions can be performed. Similarly, test the `upgrade`, `acceptBorrower`, `acceptLender`, and `skim` functions with incorrect borrower or lender addresses to check for unauthorized access.
+
+**Output:**
+
+1. Function `migrate` (line 20-23) has potential access control issues. Reason: If the factory address is compromised, unauthorized migrations could occur.
+2. Function `setImplementation` (line 25-28) has potential access control issues. Reason: If the factory address is compromised, unauthorized implementation changes could occur.
+3. Function `upgrade` (line 30-35) has potential access control issues. Reason: If the borrower address is incorrectly set, unauthorized upgrades could occur.
+4. Function `acceptBorrower` (line 38-43) has potential access control issues. Reason: If the `_pendingBorrower` address is compromised, unauthorized borrower acceptance could occur.
+5. Function `acceptLender` (line 98-103) has potential access control issues. Reason: If the `_pendingLender` address is compromised, unauthorized lender acceptance could occur.
+6. Function `skim` (line 166-174) has potential access control issues. Reason: If the borrower or lender addresses are incorrectly set, unauthorized skimming of tokens could occur.

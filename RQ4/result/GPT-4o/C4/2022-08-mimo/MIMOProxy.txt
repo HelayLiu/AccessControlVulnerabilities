@@ -1,0 +1,13 @@
+OutPut:
+
+1. Function `initialize()` (line 23-27) has the access control issues. 
+   Reason: The `initialize()` function can be called by anyone due to the `external` visibility and lack of access control checks. This function sets the `owner` of the contract, which is a critical role. If this function is not properly restricted, it could allow an unauthorized user to take control of the contract.
+
+2. Function `execute()` (line 47-87) has a potential access control issue.
+   Reason: Although the function checks if the caller is the `owner` or an authorized `envoy`, it relies on the `_permissions` mapping for authorization. If there is any flaw in how permissions are set or managed, it could lead to unauthorized execution of functions on target contracts. Additionally, the function does not restrict the `target` contract, which could lead to unintended interactions if not properly managed.
+
+3. Function `setPermission()` (line 98-104) has a potential access control issue.
+   Reason: This function allows the `owner` to set permissions for any `envoy`, `target`, and `selector`. If the `owner` account is compromised, an attacker could grant themselves permissions to execute any function on any target contract.
+
+4. Function `transferOwnership()` (line 106-114) has a potential access control issue.
+   Reason: This function allows the `owner` to transfer ownership to a new address. If the `owner` account is compromised, an attacker could transfer ownership to themselves, gaining full control over the contract.

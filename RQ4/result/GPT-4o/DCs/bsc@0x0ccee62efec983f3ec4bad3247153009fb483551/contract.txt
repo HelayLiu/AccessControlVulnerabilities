@@ -1,0 +1,12 @@
+Upon reviewing the provided `SwapXProxy` contract, I have identified the following access control issues:
+
+1. **Function `constructor(address impl)` (line 33-36):**
+   - **Reason:** The constructor function calls `setNewImpl(impl)` to set the `swapXImpl` address. While this is a common practice, it is crucial to ensure that the initial implementation address is set correctly and securely. If the contract is deployed with an incorrect or malicious implementation address, it could lead to unauthorized access or manipulation of the contract's functionality. However, since this is a constructor, it is only called once during deployment, and the risk is primarily during the deployment phase.
+
+2. **Function `setNewImpl(address impl)` (line 50-53):**
+   - **Reason:** This function allows the owner to update the `swapXImpl` address. While it is protected by the `onlyOwner` modifier, it is critical to ensure that the owner account is secure. If an attacker gains control of the owner account, they could set a malicious implementation contract, potentially compromising the entire contract's functionality.
+
+3. **Function `swap(...)` (line 55-95):**
+   - **Reason:** The `swap` function relies on the external call to `swapXImpl.call{value: msg.value}(data)`. This call is made to the address stored in `swapXImpl`, which can be updated by the owner. If the `swapXImpl` address is set to a malicious contract, it could lead to unauthorized access or manipulation of the swap process. Although the function is protected by the `whenNotPaused` modifier, ensuring the integrity of the `swapXImpl` address is crucial for maintaining the security of the swap operation.
+
+In summary, the primary access control concerns revolve around the management and security of the `swapXImpl` address, which is central to the contract's functionality. Proper security measures should be in place to protect the owner account and ensure the integrity of the implementation address.

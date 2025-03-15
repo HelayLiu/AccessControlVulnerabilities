@@ -1,0 +1,42 @@
+{
+ "contract": "Vader",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "0xc91b6b46",
+   "0x14"
+  ],
+  [
+   "owner",
+   "setRewardAddress",
+   "0x14"
+  ],
+  [
+   "owner",
+   "0x19234334",
+   "0x14"
+  ],
+  [
+   "owner",
+   "flipMinting",
+   "0x14"
+  ],
+  [
+   "owner",
+   "setParams",
+   "0x14"
+  ],
+  [
+   "owner",
+   "changeDAO",
+   "0x14"
+  ],
+  [
+   "owner",
+   "0xfe1fa8fa",
+   "0x14"
+  ]
+ ],
+ "PC_bypassed": []
+}

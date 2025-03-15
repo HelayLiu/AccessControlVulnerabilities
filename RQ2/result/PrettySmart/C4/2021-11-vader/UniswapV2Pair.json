@@ -1,0 +1,12 @@
+{
+ "contract": "UniswapV2Pair",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "initialize",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

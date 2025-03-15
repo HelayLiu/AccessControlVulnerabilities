@@ -1,0 +1,13 @@
+1. Function ToOwner() (line 42-45) has access control issues. Reason: The ToOwner() function allows anyone to call it and assigns the total supply of tokens to the caller, which can lead to unauthorized token distribution.
+
+2. Function Mining24() (line 48-52) has access control issues. Reason: The Mining24() function allows anyone to call it and sets the owner, value, and minReq variables, which can lead to unauthorized changes to critical contract parameters.
+
+3. Function distr() (line 104-118) has access control issues. Reason: The distr() function is marked as private but is called from public functions (like airdrop, distribution, distributeAmounts), which means it can be exploited if the public functions are not properly controlled.
+
+4. Function getTokens() (line 139-157) has access control issues. Reason: The getTokens() function allows anyone to call it and potentially receive tokens without proper checks on the amount of ether sent, which can lead to unauthorized token distribution.
+
+5. Function withdraw() (line 174-177) has access control issues. Reason: The withdraw() function allows the owner to withdraw all ether from the contract, but if the owner is compromised, it can lead to loss of funds.
+
+6. Function burn() (line 180-186) has access control issues. Reason: The burn() function allows the owner to burn tokens, but if the owner is compromised, it can lead to unauthorized token destruction.
+
+7. Function withdrawForeignTokens() (line 189-194) has access control issues. Reason: The withdrawForeignTokens() function allows the owner to withdraw foreign tokens from the contract, but if the owner is compromised, it can lead to loss of tokens.

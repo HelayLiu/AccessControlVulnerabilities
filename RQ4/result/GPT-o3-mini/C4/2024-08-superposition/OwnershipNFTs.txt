@@ -1,0 +1,25 @@
+Below is our audit based on the provided OwnershipNFTs contract:
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Overall Analysis:
+• All public functions that modify state (transferFrom, safeTransferFrom, approve, setApprovalForAll) protect their actions by checking authorization. In particular, the internal function _requireAuthorised ensures that msg.sender is either the owner (as verified by ownerOf) or an approved operator/approved address.
+• The two overloaded transferFrom functions both call _transfer, which in turn begins with a call to _requireAuthorised. This makes sure that only an authorized party (the token owner or an approved operator) can trigger a transfer.
+• The approve function also uses _requireAuthorised(msg.sender, _tokenId), ensuring that only the token owner (or someone already approved) can grant an approval.
+• The mappings getApproved and isApprovedForAll are only updated in functions that use msg.sender as the “acting” party.
+• The only functions with state changes in this NFT “wrapper” contract are safeguarded by the authorization checks.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Conclusion on Access Control Issues:
+After careful review, we have not found any functions that fail to perform the necessary access control checks prior to modifying state or calling sensitive external functions. In every case the _requireAuthorised (or an equivalent “only the owner/approved” check) is in place.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Note on a Related Issue (Not Access Control):
+• The internal _onTransferReceived function (lines ~33–43) calls the recipient’s onERC721Received and then requires that the returned bytes4 value is NOT equal to the IERC721TokenReceiver.onERC721Received.selector. (Normally the ERC721 standard expects the receiver to return that selector to confirm acceptance.) Although this is a logical error that will likely break compatibility with contracts that correctly implement the receiver interface, it does not represent an access control vulnerability per se.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Summary of Findings:
+No public function has been found to lack the required authorization checks prior to performing sensitive operations. Therefore, with respect to access control, the OwnershipNFTs contract appears to be correctly implemented.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Final Output:
+No vulnerable function (with respect to access control issues) was identified in the provided contract.

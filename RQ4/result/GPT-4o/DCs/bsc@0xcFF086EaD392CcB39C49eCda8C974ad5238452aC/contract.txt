@@ -1,0 +1,13 @@
+1. Function `transReward(bytes memory data)` (line 563-565) has an access control issue. Reason: This function allows any caller to execute arbitrary function calls on the `pool` contract using the provided `data`. There is no access control to restrict who can call this function, which could lead to unauthorized actions being performed on the `pool` contract.
+
+2. Function `initPool(address _Pool)` (line 558-560) has an access control issue. Reason: Although it is protected by `onlyOwner`, it can only be called once to set the `pool` address. If the owner mistakenly sets the wrong address, it cannot be changed, which could lead to a permanent misconfiguration.
+
+3. Function `excludeFromFees(address account)` (line 531-533) has an access control issue. Reason: This function is protected by `onlyOwner`, but it allows the owner to exclude any account from fees, which could be misused to favor certain accounts or for malicious purposes.
+
+4. Function `includeFromFees(address account)` (line 535-537) has an access control issue. Reason: Similar to `excludeFromFees`, this function allows the owner to include any account in fees, which could be misused to target specific accounts.
+
+5. Function `excludeMultipleAccountsFromFees(address[] calldata accounts, bool excluded)` (line 548-551) has an access control issue. Reason: This function allows the owner to exclude or include multiple accounts from fees at once, which could be misused for malicious purposes.
+
+6. Function `rescueToken(address tokenAddress, uint256 tokens)` (line 678-682) has an access control issue. Reason: This function allows the owner to transfer any tokens held by the contract to their own address, which could be misused to drain the contract of its assets.
+
+7. Function `rescueEth()` (line 684-687) has an access control issue. Reason: This function allows the owner to transfer all Ether held by the contract to their own address, which could be misused to drain the contract of its Ether balance.

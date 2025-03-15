@@ -1,0 +1,4 @@
+OutPut:
+1. Function `setAddressesCurve` (line 16-24) has the access control issues. Reason: The `setAddressesCurve` function is marked as `internal`, which means it can be called by any derived contract. This function sets critical addresses like `TriPool`, `ADDRESSPROVIDER`, `USDC_ADDRESS`, and `USDT_ADDRESS`. If a derived contract does not implement proper access control, it could allow unauthorized changes to these addresses, potentially leading to misdirection of funds or other malicious activities.
+
+2. Function `approveToken` (line 52-56) has the access control issues. Reason: The `approveToken` function is marked as `public`, allowing any external user to call it. This function can approve any amount of tokens from the contract to a specified spender, which could be exploited by an attacker to drain tokens from the contract if not properly restricted.

@@ -1,0 +1,16 @@
+1. Function updateSettings() (line 118-130) has access control issues. Reason: The function can be called by any address since it is marked as `external` and does not have proper access control checks to ensure that only the owner can update the settings. Although it has the `onlyOwner` modifier, if the ownership is not properly managed, it could lead to unauthorized access.
+
+2. Function claimStakingReward() (line 132-144) has access control issues. Reason: The function can be called by any address since it is marked as `external` and does not have proper access control checks to ensure that only the userStakingPoolAddress can claim the staking reward. If the userStakingPoolAddress is not properly set or is compromised, any address could call this function and claim rewards.
+
+3. Function fundDAO() (line 146-164) has access control issues. Reason: The function can be called by any address since it is marked as `external` and does not have proper access control checks to ensure that only authorized addresses can fund the DAO. This could lead to unauthorized funding of the DAO.
+
+4. Function sellTokenForLRC() (line 166-188) has access control issues. Reason: The function can be called by any address since it is marked as `external` and does not have proper access control checks to ensure that only authorized addresses can sell tokens for LRC. This could lead to unauthorized token sales.
+
+5. Function getProtocolFeeStats() (line 190-210) has access control issues. Reason: The function is marked as `public` and can be called by any address. While it is a view function, it exposes sensitive information about the protocol's fee stats that could be exploited by malicious actors. 
+
+In summary, the following functions have access control issues:
+- updateSettings() (line 118-130)
+- claimStakingReward() (line 132-144)
+- fundDAO() (line 146-164)
+- sellTokenForLRC() (line 166-188)
+- getProtocolFeeStats() (line 190-210)

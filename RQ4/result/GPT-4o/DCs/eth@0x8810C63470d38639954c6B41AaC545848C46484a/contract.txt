@@ -1,0 +1,7 @@
+OutPut:
+
+1. Function `AditusToken()` (line 66-72) has an access control issue. 
+   - **Reason**: The constructor `AditusToken()` assigns the entire initial token supply to the `msg.sender`, which is the account deploying the contract. This means that whoever deploys the contract will have full control over the initial token supply. If this is not intended, it could lead to centralization and misuse of the token supply.
+
+2. Function `approveAndCall()` (line 76-87) has a potential access control issue.
+   - **Reason**: The function allows any user to approve a spender and then call a function on the spender's contract. This could be exploited if the spender's contract is malicious or if the spender's contract does not handle the call correctly. There is no access control to ensure that only authorized contracts can be called, which could lead to unexpected behavior or reentrancy attacks.

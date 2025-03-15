@@ -1,0 +1,9 @@
+1. Function claim() (line 45-98) has access control issues. Reason: The claim function does not have sufficient access control checks to ensure that only authorized users can call it. Although it checks for ownership of NFTs, it does not restrict who can initiate a claim, which could lead to unauthorized users claiming tokens if they can provide a valid signature.
+
+2. Function setContractSupports() (line 100-106) has access control issues. Reason: The setContractSupports function allows the owner to modify the contractSupports mapping, but if the ownership of the contract is compromised, an attacker could manipulate which contracts are supported, potentially leading to unauthorized claims.
+
+3. Function setSignatureManager() (line 108-112) has access control issues. Reason: The setSignatureManager function allows the owner to change the signature manager address. If an attacker gains control of the owner account, they could change the signature manager to an address they control, allowing them to create valid signatures for unauthorized claims.
+
+4. Function finish() (line 114-118) has access control issues. Reason: The finish function allows the owner to burn all tokens held by the contract. If the ownership is compromised, an attacker could call this function to destroy the contract's tokens, leading to a loss of funds.
+
+5. Function withdraw() (line 120-128) has access control issues. Reason: The withdraw function allows the owner to withdraw funds from the contract. If the ownership is compromised, an attacker could withdraw all funds, leading to a complete loss of assets held by the contract.

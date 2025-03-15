@@ -1,0 +1,19 @@
+1. Function `setSwapPairs(address _address)` (line 66) has access control issues. Reason: The function is public and can be called by anyone, allowing any address to be set as a swap pair without any restrictions, which could lead to unauthorized trading pairs being created.
+
+2. Function `setMarketAddress(address _address)` (line 97) has access control issues. Reason: Similar to `setSwapPairs`, this function is public and can be called by anyone, allowing any address to be set as the market address, which could lead to unauthorized access to market-related functionalities.
+
+3. Function `harvestMarket()` (line 88) has access control issues. Reason: This function can be called by anyone, allowing any user to mint tokens from the contract without any restrictions, as long as there are pending tokens available, which could lead to unauthorized minting of tokens.
+
+4. Function `_transferAIS(address from, address to, uint256 value)` (line 78) has access control issues. Reason: This function is private and is called within the `transfer` and `transferFrom` functions, but it does not have any checks to ensure that the caller is authorized to perform the transfer, which could lead to unauthorized transfers if the function is misused.
+
+5. Function `transfer(address to, uint256 value)` (line 102) has access control issues. Reason: This function overrides the ERC20 transfer function but relies on `_transferAIS` which does not enforce any access control checks, allowing any user to transfer tokens without proper validation.
+
+6. Function `transferFrom(address from, address to, uint256 value)` (line 113) has access control issues. Reason: Similar to the `transfer` function, this function relies on `_transferAIS` which does not enforce any access control checks, allowing any user to transfer tokens on behalf of another user without proper validation.
+
+In summary, the following functions have access control issues:
+- `setSwapPairs(address _address)` (line 66)
+- `setMarketAddress(address _address)` (line 97)
+- `harvestMarket()` (line 88)
+- `_transferAIS(address from, address to, uint256 value)` (line 78)
+- `transfer(address to, uint256 value)` (line 102)
+- `transferFrom(address from, address to, uint256 value)` (line 113)

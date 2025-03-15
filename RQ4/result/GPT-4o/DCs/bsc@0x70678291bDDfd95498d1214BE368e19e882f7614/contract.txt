@@ -1,0 +1,10 @@
+1. Function `changeNodePrice(uint256 newNodePrice)` (line 366-368) has an access control issue. Reason: The function is public and allows anyone to change the `nodePrice` without any access control checks. This could lead to unauthorized changes to the node price, affecting the economic model of the contract.
+
+2. Function `changeRewardPerNode(uint256 _rewardPerDay)` (line 370-372) has an access control issue. Reason: The function is public and allows anyone to change the `rewardPerDay` without any access control checks. This could lead to unauthorized changes to the reward distribution, affecting the contract's reward system.
+
+Proof of Concept:
+- Deploy the contract.
+- Call `changeNodePrice` with a new value as any address other than the owner.
+- Observe that the `nodePrice` is updated without any restriction.
+- Similarly, call `changeRewardPerNode` with a new value as any address other than the owner.
+- Observe that the `rewardPerDay` is updated without any restriction.

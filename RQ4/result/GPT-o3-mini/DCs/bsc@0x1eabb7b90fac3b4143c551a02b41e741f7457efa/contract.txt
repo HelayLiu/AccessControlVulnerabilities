@@ -1,0 +1,48 @@
+Below is an analysis of some functions where the caller‐oriented control (or lack thereof) may allow unintended use. In our review, we identified the following potential “access control” issues along with a proof‐of‐concept explanation:
+
+─────────────────────────────  
+1. Function _swap (≈line 335)  
+─────────────────────────────  
+Issue: _swap is declared public without any access‐control modifier.  
+Reason: Because _swap can be called by any external actor (and is not marked internal or protected by nonReentrant/onlyOwner), a malicious user can supply arbitrary aggregatorData when calling it. In doing so the attacker may force the contract to approve its entire balance of a given ERC20 token to the oneInchAggregatorAddress and then invoke an external call on that aggregator with data it controls. Although the function merely returns the decoded amount, the unintended external call may be used as a “gadget” to trigger unexpected behavior in the aggregator (or other downstream logic) or even interfere with the contract’s token approval state.  
+Proof‑of‑Concept:  
+• An attacker calls _swap(token, maliciousAggregatorData) directly.  
+• The call forces the contract to approve oneInchAggregatorAddress for the entire token balance.  
+• Then the call to oneInchAggregatorAddress is made with malicious payload data that, if the aggregator were not properly hardened against reentrancy or other misuse, might lead to unexpected token flows or state changes.  
+─────────────────────────────  
+2. Function deposit(DepositData calldata depositData) (≈line 135)  
+─────────────────────────────  
+Issue: deposit mints new portfolio shares to the address provided in depositData.receiver without checking that msg.sender equals that receiver.  
+Reason: Even though deposit transfers tokens using msg.sender’s approval, it mints the shares (i.e. the “rights” inside the protocol) to an arbitrary address given by the caller. This may allow an attacker to deposit funds from their own wallet but specify a third‐party address as the receiver so that the benefits (such as accumulated rewards or liquidation rights) go to a different party without an explicit “opt‑in” mechanism. (If this was not the intended design then it represents an access control flaw.)  
+Proof‑of‑Concept:  
+• An attacker (or any user) calls deposit with depositData.tokenIn equal to their own token address, depositData.amount > 0, and depositData.receiver set to an address V.  
+• The contract will transfer tokens from msg.sender but then _mintShares for address V.  
+• As a result, V ends up receiving portfolio shares (and any future benefit) even though they never initiated the deposit.  
+─────────────────────────────  
+3. Function redeem(RedeemData calldata redeemData) (≈line 155)  
+─────────────────────────────  
+Issue: redeem burns shares from msg.sender but sends redeemed funds to the address specified in redeemData.receiver without verifying that it matches msg.sender.  
+Reason: Similar to deposit, permitting the caller to specify a different receiver means that an attacker could redeem their own shares yet have the resulting redeemed assets (including any token swaps via aggregatorData) sent to an arbitrary address. This may be acceptable if “third‑party redemption” was a design goal, but if the intent was to restrict redemptions to the share owner then this is an access control oversight.  
+Proof‑of‑Concept:  
+• A user holding portfolio shares invokes redeem with redeemData.amount less than or equal to their balance and sets redeemData.receiver to an address X different from msg.sender.  
+• The redemption process burns the caller’s shares but directs the converted assets to X.  
+• X then benefits from the redemption even though they did not “own” the share being redeemed.  
+─────────────────────────────
+
+Important Note:  
+It is possible (and sometimes desired) for protocols to allow deposits/withdrawals on behalf of others. If the intention was to support “gift” deposits or third‑party redemptions then these issues might be acceptable. However, if the contract was expected to check that msg.sender and the target receiver are identical, then the lack of such a check constitutes an access control problem.
+
+In summary, based on our audit the above functions are the ones that “touch” significant state (or approval and fund flows) and could be abused if they were not intended to allow an arbitrary receiver to be specified or if a public _swap were to be misused.
+
+─────────────────────────────  
+Summary of Vulnerable Functions:  
+1. _swap (≈line 335)  
+  Reason: Lack of access control lets any external user trigger an external swap call on the contract’s token balances using arbitrary calldata.  
+  
+2. deposit (≈line 135)  
+  Reason: Accepting a depositData.receiver parameter without enforcing that msg.sender equals the receiver potentially allows an attacker to deposit funds that credit portfolio shares to a victim’s address.  
+  
+3. redeem (≈line 155)  
+  Reason: Allowing redemption funds to be sent to an arbitrary receiver (separate from msg.sender) could be abused to direct redeemed assets to unintended recipients.  
+
+These potential issues should be carefully reviewed in the context of the protocol’s intended design.

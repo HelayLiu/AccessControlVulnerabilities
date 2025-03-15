@@ -1,0 +1,17 @@
+Below are the potential access control issues detected in the contract:
+
+1. Function mintProducts (approximately lines 70–83)  
+ • Issue: This public function does not restrict who can call it. Instead, it relies solely on an aggregated maker signature check to “authorize” the minting. The aggregation is done by XORing the keccak256 hashes of each product’s makerSignature, and then later recovering a signer that is checked against a makers mapping.  
+ • Why It’s Problematic:  
+  – The use of XOR to combine multiple signature hashes is non‐standard and can be error‑prone. For example, under some (even if contrived) circumstances the XOR combination might cancel out or be manipulated by an attacker to yield a value that, when “signed” with a specifically crafted signature, recovers to an approved maker address.  
+  – Furthermore, there is no restriction on who can call mintProducts – any external caller may supply an array of products and a “combined” signature. If the aggregated signature check is bypassed or mis‑implemented, unauthorized parties may be able to mint products without proper maker authorization.  
+  – As a result, the function’s design does not enforce proper access control on minting operations.
+
+2. Function burnProducts (approximately lines 85–100)  
+ • Issue: This public function also lacks any role- or permission-based restrictions.  
+ • Why It’s Problematic:  
+  – Anyone may call burnProducts and provide an array of product data (including potentially inconsistent or manipulated data) that will be passed to the external vault’s burnBatch function.  
+  – The function later uses the supplied product data to compute earned amounts, adjust the collateral tally, and calculate fees. Without an access control check (for example, verifying that the caller is authorized to “burn” products coming from a mint), a malicious user could craft calls that manipulate the contract’s internal state (such as totalCollateral, _positions, and fee calculations).  
+  – Although the vaults used are validated against an enabled list, there is no check linking the caller to a “legitimate” role (e.g. a maker or an approved operator), which leaves room for unauthorized state manipulations.
+
+In summary, both mintProducts and burnProducts are publicly callable without additional access control checks beyond validating parameters against whitelists or maker signatures. The non‑standard aggregation technique in mintProducts and the complete absence of role restrictions in burnProducts raise concerns that an attacker may abuse these functions to perform unauthorized operations and affect the contract’s state.

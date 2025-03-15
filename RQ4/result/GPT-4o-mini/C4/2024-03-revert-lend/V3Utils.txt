@@ -1,0 +1,11 @@
+1. Function `execute(uint256 tokenId, Instructions memory instructions)` (line 90-91) has access control issues. Reason: The function does not check if the caller is authorized to execute the instructions on the provided NFT. This could allow any user to manipulate the NFT without proper authorization.
+
+2. Function `onERC721Received(address, address from, uint256 tokenId, bytes calldata data)` (line 164-165) has access control issues. Reason: The function does not verify if the `from` address is authorized to send the NFT to this contract. This could allow unauthorized users to trigger the execution of instructions on the NFT.
+
+3. Function `swap(SwapParams calldata params)` (line 236-237) has access control issues. Reason: The function does not restrict who can call it, allowing any user to initiate a swap, which could lead to unauthorized token transfers.
+
+4. Function `swapAndMint(SwapAndMintParams calldata params)` (line 284-285) has access control issues. Reason: The function does not restrict who can call it, allowing any user to mint new tokens and potentially manipulate liquidity positions without authorization.
+
+5. Function `swapAndIncreaseLiquidity(SwapAndIncreaseLiquidityParams calldata params)` (line 335-336) has access control issues. Reason: The function does not restrict who can call it, allowing any user to increase liquidity for any position, which could lead to unauthorized manipulation of liquidity.
+
+These functions lack proper access control checks, which could lead to unauthorized actions being performed on the contract.

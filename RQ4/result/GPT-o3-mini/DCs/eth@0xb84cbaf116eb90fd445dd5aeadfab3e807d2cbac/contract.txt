@@ -1,0 +1,19 @@
+Below is our analysis of the contract with respect to access‐control issues:
+
+• We examined every function that changes contract state (minting, updating URIs, toggling pause/reveal, withdrawing funds, etc.) and found that each such function is either marked with the onlyOwner modifier or, in the case of public minting, applies its own checks (for example, verifying the caller’s eligibility via a Merkle proof in WhiteListMint).
+
+• In addition, the functions inherited from ERC721A (transferFrom, safeTransferFrom, approve, etc.) enforce the proper checks for the token owner or approved accounts. The administrative functions in Bad_Guys_by_RPF—flipPauseMinting, setRootHash, setBaseURI, setReserve, setNotRevealedURI, reveal, mintReservedTokens, and withdraw—are all restricted via onlyOwner.
+
+• Although one might note that the WhiteListMint function is public, it is meant to be accessible by approved users. It limits each caller (by checking _numberMinted(msg.sender) < 1) and verifies their eligibility through the supplied Merkle proof. This is an intended design rather than an imbalance in access control.
+
+Based on our review, we did not identify any public function that allows an unauthorized address to perform a state-changing action. No functions in the contract are missing the necessary access control checks.
+
+Proof of Concept (POC): Since all state‐changing functions have proper restrictions and no external account (other than the owner or appropriately validated whitelist addresses) can call a function that would alter the contract’s state unexpectedly, an attempt to call—for example—the withdraw or setReserve function from a non‐owner account is correctly rejected by the onlyOwner modifier.
+
+Output:
+
+No vulnerable functions were found:
+• All administrative functions (flipPauseMinting, setRootHash, setBaseURI, setReserve, setNotRevealedURI, reveal, mintReservedTokens, withdraw) are protected by onlyOwner.
+• The public WhiteListMint function performs the necessary eligibility and state checks (via a Merkle proof and a per-address limit) to prevent unauthorized minting.
+
+Thus, in our audit we did not detect any access control issues in this contract.

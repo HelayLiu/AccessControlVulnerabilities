@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 29, in execute_command
+    main_collecttransaction_history(address=args.eth_address, workdir=args.workspace, date = args.date, chain=args.network)
+  File "../SpCon/spcon/query_new.py", line 336, in main_collecttransaction_history
+    limit = calls_statistics_res["data"]["ethereum"]["smartContractCalls"][0]["count"]
+TypeError: list indices must be integers or slices, not str

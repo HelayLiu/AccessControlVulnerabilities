@@ -1,0 +1,19 @@
+1. Function addOwner(address owner) (line 83-90) has access control issues. Reason: The function can be called by anyone since it is public and only checks if the caller is the wallet. This could allow unauthorized users to add themselves as owners if they can somehow call the function.
+
+2. Function removeOwner(address owner) (line 92-101) has access control issues. Reason: Similar to addOwner, this function can be called by anyone since it is public and only checks if the caller is the wallet. An unauthorized user could potentially remove an existing owner.
+
+3. Function replaceOwner(address owner, address newOwner) (line 103-113) has access control issues. Reason: This function can also be called by anyone since it is public and only checks if the caller is the wallet. An unauthorized user could replace an existing owner with a new address.
+
+4. Function changeRequirement(uint _required) (line 115-123) has access control issues. Reason: This function can be called by anyone since it is public and only checks if the caller is the wallet. An unauthorized user could change the required confirmations needed for transactions.
+
+5. Function executeTransaction(uint transactionId) (line 145-157) has access control issues. Reason: This function can be called by anyone since it is public and does not check if the caller is an owner. This could allow unauthorized users to execute transactions that they should not have access to.
+
+6. Function _setImplementation(address payable _newImp) (line 164-170) has access control issues. Reason: This function can be called by anyone since it is public and only checks if the caller is the wallet. An unauthorized user could set a new implementation address, potentially leading to a malicious contract being used.
+
+In summary, the following functions have access control issues:
+- addOwner (line 83-90)
+- removeOwner (line 92-101)
+- replaceOwner (line 103-113)
+- changeRequirement (line 115-123)
+- executeTransaction (line 145-157)
+- _setImplementation (line 164-170)

@@ -1,0 +1,13 @@
+Below is one potential access‐control weakness discovered in the code:
+
+1. Vulnerable Function: addTransaction (in MultiSigWallet, around line 124–134)
+
+ • Issue Description: Unlike nearly every other state‐changing function in this “multi‐sig” design, addTransaction is declared as public and is not gated by any owner– or wallet–only modifier. (In many multi–sig wallet designs this helper is “internal” so that only a submission function (which itself requires the caller to be an owner) may add a transaction to the wallet’s list.)  
+ • Impact: Because any external address (not just an owner) can call addTransaction with arbitrary parameters (destination, value, data), an attacker can “inject” a pending transaction into the wallet’s transaction mapping. Although the transaction still must acquire the requisite number of owner confirmations before it can execute, an attacker–controlled transaction could later be confirmed (via social engineering or other compromise of owner keys) and then executed to transfer funds or invoke arbitrary logic.  
+ • Proof of Concept (Conceptual):  
+  1. An attacker (who is not an owner) calls addTransaction with a crafted malicious destination address and payload.  
+  2. That call succeeds and a new transaction record is created in the wallet (with an auto–incremented transactionId).  
+  3. Later, if one or more owners inadvertently (or after being social engineered) confirm that transaction (e.g. via confirmTransaction) so that the total confirmations meet the “required” threshold, the attacker’s transaction is executed.  
+  4. This leads to unauthorized execution of the malicious transaction through the wallet contract.
+
+In summary, the lack of an access check on addTransaction is the key access–control vulnerability in the given file.

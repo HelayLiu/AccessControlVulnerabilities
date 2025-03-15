@@ -1,0 +1,5 @@
+1. Function setAddressesCurve(address TriPool_, address ADDRESSPROVIDER_, address USDC_ADDRESS_, address USDT_ADDRESS_) (line 10-17) has access control issues. Reason: The function is marked as `internal`, which means it can be called by any contract that inherits from `CurveSwap`. This could allow any derived contract to change critical addresses that affect the contract's functionality without proper access control checks.
+
+2. Function approveToken(address token, address spender, uint _amount) (line 56-60) has access control issues. Reason: The function is marked as `public`, which allows any external user to call it and approve any amount of tokens for any spender. This could lead to unauthorized token approvals, allowing malicious actors to spend tokens on behalf of the user without their consent. 
+
+In summary, both functions lack proper access control mechanisms to restrict who can invoke them, potentially leading to unauthorized changes to critical contract state and token approvals.

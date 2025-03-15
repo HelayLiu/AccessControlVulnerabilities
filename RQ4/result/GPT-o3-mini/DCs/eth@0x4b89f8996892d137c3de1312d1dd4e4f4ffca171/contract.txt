@@ -1,0 +1,23 @@
+Below is our detailed review of the access‐control checks in the provided smart contracts code.
+
+1. In the ProtocolFeeVault contract all functions that modify the vault’s important state or transfer tokens/ETH have been “gated” as follows:
+
+ • updateSettings (lines ≈277–287) is marked nonReentrant and onlyOwner. Only the owner (set at deployment and changeable via the Claimable/Ownable pattern) can update the vault settings.
+
+ • claimStakingReward (lines ≈289–298) checks that msg.sender equals userStakingPoolAddress so that only the designated staking pool can claim rewards.
+
+ • fundDAO (lines ≈300–318) is marked nonReentrant. Although it is not restricted to onlyOwner or a specific role, the design intent is to allow anyone to trigger the DAO funding and LRC burn (which always sends tokens either to daoAddress – if set – or to the owner). In other words, even if someone calls it, they cannot redirect funds to their own address.
+
+ • sellTokenForLRC (lines ≈320–332) is also nonReentrant and does not limit its caller. Its behavior is defined so that tokens (or Ether) are sent to the tokenSellerAddress if set or else to the owner, and then a sell is attempted via the ITokenSeller interface. An external caller cannot change who receives the tokens because that “recipient” is chosen solely based on the contract’s stored addresses (which can only be changed via updateSettings by the owner).
+
+2. In the supporting Ownable and Claimable contracts all sensitive functions (including transferOwnership and claimOwnership) correctly require that the caller holds the expected privilege (onlyOwner or onlyPendingOwner).
+
+3. In the libraries (AddressUtil, ERC20SafeTransfer, MathUint) and in ReentrancyGuard, the functions are internal or used as helpers; they do not expose access control vulnerabilities.
+
+Conclusion:
+Based on our review and given the intended design (where some functions are intentionally made callable by anyone as “triggers” for distribution or sale), we have not found any functions that fail to check access before modifying important state or transferring assets. There are no uncovered access control issues.
+
+OutPut:
+No vulnerable functions were identified.
+
+All functions that change privileged state or transfer funds have appropriate access restrictions as per the design.

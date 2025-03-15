@@ -1,0 +1,27 @@
+<think>
+Okay, let's start by looking at the provided contract. The goal is to find access control issues. First, I need to understand what functions are present and what they do.
+
+The contract is CoreBranchRouter, which seems to handle token management and bridge agents. It imports Ownable from solady, which might mean it uses some ownership pattern. Let me check if there are any modifiers or onlyOwner checks.
+
+Looking at the functions, the first one is addGlobalToken. It's external and payable. The function encodes some data and calls performCallOut on IBridgeAgent. But where's the access control here? There's no modifier like onlyOwner, so anyone can call this function. That's a problem because adding a global token should probably be restricted.
+
+Next is addLocalToken, also external and payable. Similarly, no access control. Creating a new token via the factory should be restricted. If anyone can call this, they can create tokens without permission.
+
+Then there's the anyExecuteNoSettlement function. It's external and has a requiresAgentExecutor modifier. Let me check if that modifier enforces access control. The modifier is from IBranchRouter, which might check that the caller is a valid agent executor. But if the modifier isn't properly implemented, this could be an issue. However, the modifier's presence suggests some control, so maybe this function is okay.
+
+The internal functions like _receiveAddGlobalToken and others are called via anyExecuteNoSettlement. Since they're internal, they can't be called directly, so their access depends on the external functions that trigger them.
+
+The fallback function is payable but doesn't do anything, which is probably fine.
+
+Now, the key issue is that addGlobalToken and addLocalToken are external and lack any access control. They should have modifiers like onlyOwner or similar to restrict who can call them. Without that, any user can trigger these functions, leading to unauthorized token additions or bridge agent modifications.
+
+For example, addGlobalToken allows anyone to send a cross-chain request to add a global token. This could lead to malicious actors adding tokens they control, disrupting the system. Similarly, addLocalToken lets anyone create new hTokens, which should be a privileged action.
+
+The constructors set hTokenFactoryAddress and localPortAddress, but those are initial setups and not the issue here. The errors like UnrecognizedBridgeAgent are thrown in internal functions, but the problem is the entry points (external functions) not having proper checks.
+
+So the main vulnerabilities are in addGlobalToken and addLocalToken functions due to missing access control modifiers.
+</think>
+
+1. Function addGlobalToken (lines 40-60) has the access control issues. Reason: The addGlobalToken function is external and lacks access control modifiers (e.g., onlyOwner), allowing any user to trigger cross-chain requests to add global tokens, which could lead to unauthorized token additions affecting the system's integrity.
+
+2. Function addLocalToken (lines 66-85) has the access control issues. Reason: The addLocalToken function is external and payable without any access restrictions, enabling any user to create new hToken instances through the factory, potentially flooding the system with unauthorized tokens.

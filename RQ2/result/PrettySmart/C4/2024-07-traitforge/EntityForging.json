@@ -1,0 +1,12 @@
+{
+ "contract": "EntityForging",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xbc54d6d7",
+   "0x2"
+  ]
+ ],
+ "PC_bypassed": []
+}

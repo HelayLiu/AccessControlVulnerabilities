@@ -1,0 +1,11 @@
+1. Function mintProducts(ProductMint[] calldata products, bytes calldata signature) (line 118-138) has access control issues. Reason: The function does not check if the caller is a valid maker before processing the minting of products. This could allow unauthorized users to mint products if they can provide valid parameters, potentially leading to financial loss or exploitation of the contract.
+
+2. Function burnProducts(ProductBurn[] calldata products) (line 140-174) has access control issues. Reason: The function does not perform any access control checks to ensure that only authorized users can burn products. This could allow unauthorized users to manipulate the state of the contract by burning products, which could lead to loss of funds or other unintended consequences.
+
+3. Function enableVaults(address[] calldata vaults_) (line 204-210) has access control issues. Reason: The function is only restricted to the owner, but if the owner is compromised, it could lead to unauthorized vaults being enabled, allowing potentially malicious vaults to interact with the contract.
+
+4. Function disableVaults(address[] calldata vaults_) (line 212-218) has access control issues. Reason: Similar to enableVaults, this function is only restricted to the owner, and if the owner is compromised, it could lead to unauthorized vaults being disabled, which could disrupt the intended functionality of the contract.
+
+5. Function enableMakers(address[] calldata makers_) (line 220-226) has access control issues. Reason: This function is also only restricted to the owner, and if the owner is compromised, it could allow unauthorized makers to be enabled, which could lead to exploitation of the contract.
+
+6. Function disableMakers(address[] calldata makers_) (line 228-234) has access control issues. Reason: Similar to enableMakers, this function is only restricted to the owner, and if the owner is compromised, it could allow unauthorized makers to be disabled, which could disrupt the intended functionality of the contract.

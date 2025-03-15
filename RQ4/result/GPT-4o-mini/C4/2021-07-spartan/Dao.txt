@@ -1,0 +1,33 @@
+1. Function `setGenesisAddresses(address _router, address _utils, address _reserve)` (line 83-86) has access control issues. Reason: This function allows the deployer to set critical contract addresses without any checks on the new addresses, which could lead to the contract being pointed to malicious contracts if the deployer is compromised.
+
+2. Function `setVaultAddresses(address _daovault, address _bondvault, address _synthVault)` (line 90-93) has access control issues. Reason: Similar to the previous function, this allows the deployer to set important vault addresses without validation, which could be exploited if the deployer is compromised.
+
+3. Function `setFactoryAddresses(address _poolFactory, address _synthFactory)` (line 98-101) has access control issues. Reason: This function allows the deployer to set factory addresses without any checks, which could lead to the contract being manipulated if the deployer is compromised.
+
+4. Function `setGenesisFactors(uint32 _coolOff, uint32 _daysToEarn, uint32 _majorityFactor, uint32 _daoClaim, uint32 _daoFee)` (line 106-111) has access control issues. Reason: This function allows the deployer to change important parameters of the DAO without any checks, which could lead to manipulation of the DAO's governance.
+
+5. Function `purgeDeployer()` (line 116-119) has access control issues. Reason: This function allows the deployer to set the `DEPLOYER` address to zero, effectively removing their ability to manage the contract. If called prematurely or maliciously, it could lock the contract's management.
+
+6. Function `moveBASEBalance(address newDAO)` (line 195-198) has access control issues. Reason: This function allows the deployer to transfer all SPARTA tokens to a new DAO address without any checks on the new address, which could lead to loss of funds if the new address is malicious.
+
+7. Function `listBondAsset(address asset)` (line 205-210) has access control issues. Reason: This function allows the deployer to list any asset for bonding without any checks, which could lead to the inclusion of malicious assets.
+
+8. Function `delistBondAsset(address asset)` (line 213-216) has access control issues. Reason: This function allows the deployer to delist any asset without checks, which could lead to the removal of legitimate assets from the bonding program.
+
+9. Function `newActionProposal(string memory typeStr)` (line 335-340) has access control issues. Reason: This function allows any user to create a new proposal without checks on their membership status, which could lead to spam proposals or malicious actions.
+
+10. Function `newParamProposal(uint32 param, string memory typeStr)` (line 343-348) has access control issues. Reason: Similar to the previous function, this allows any user to create a proposal with a parameter without checks on their membership status.
+
+11. Function `newAddressProposal(address proposedAddress, string memory typeStr)` (line 351-356) has access control issues. Reason: This function allows any user to create a proposal with a new address without checks on their membership status.
+
+12. Function `newGrantProposal(address recipient, uint amount)` (line 359-364) has access control issues. Reason: This function allows any user to create a grant proposal without checks on their membership status, which could lead to unauthorized fund distribution.
+
+13. Function `voteProposal()` (line 469-482) has access control issues. Reason: This function allows any user to vote on a proposal without checks on their membership status, which could lead to manipulation of the voting process.
+
+14. Function `removeVote()` (line 485-494) has access control issues. Reason: This function allows any user to remove their vote without checks on their membership status, which could lead to manipulation of the voting process.
+
+15. Function `finaliseProposal()` (line 516-532) has access control issues. Reason: This function allows any user to finalize a proposal without checks on their membership status, which could lead to unauthorized finalization of proposals.
+
+16. Function `grantFunds(uint _proposalID)` (line 646-653) has access control issues. Reason: This function allows the finalization of a grant proposal without checks on the proposal's legitimacy, which could lead to unauthorized fund distribution.
+
+These functions lack proper access control checks, allowing unauthorized users to perform critical actions that could compromise the integrity and security of the contract.

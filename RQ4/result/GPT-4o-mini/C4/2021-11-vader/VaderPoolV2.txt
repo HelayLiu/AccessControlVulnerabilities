@@ -1,0 +1,28 @@
+1. Function initialize() (line 45-66) has access control issues. Reason: The function can be called by anyone since it is marked as `external` without any access control checks, which allows unauthorized users to initialize the contract and set critical state variables like `wrapper`, `synthFactory`, and `router`.
+
+2. Function mintSynth() (line 68-102) has access control issues. Reason: The function is marked as `external` and does not have any access control checks, allowing any user to mint synthetic assets, which could lead to unauthorized minting and manipulation of the contract's state.
+
+3. Function burnSynth() (line 104-134) has access control issues. Reason: Similar to `mintSynth`, this function is also marked as `external` and lacks access control checks, allowing any user to burn synthetic assets, which could lead to unauthorized asset destruction and manipulation of the contract's state.
+
+4. Function burn() (line 136-164) has access control issues. Reason: The function is marked as `external` and is only restricted by the `onlyRouter` modifier, which may not be adequately enforced or verified, potentially allowing unauthorized users to call this function if the `onlyRouter` modifier is not properly implemented.
+
+5. Function mintFungible() (line 166-205) has access control issues. Reason: This function is marked as `external` and does not have any access control checks, allowing any user to mint fungible tokens, which could lead to unauthorized minting and manipulation of the contract's state.
+
+6. Function burnFungible() (line 207-239) has access control issues. Reason: Similar to `mintFungible`, this function is also marked as `external` and lacks access control checks, allowing any user to burn fungible tokens, which could lead to unauthorized asset destruction and manipulation of the contract's state.
+
+7. Function toggleQueue() (line 241-248) has access control issues. Reason: Although this function is marked with `onlyOwner`, it is critical to ensure that the owner is properly set and verified, as any unauthorized change to the queue status could affect the contract's functionality.
+
+8. Function setTokenSupport() (line 250-261) has access control issues. Reason: This function is also marked with `onlyOwner`, but it is essential to ensure that the owner is properly set and verified, as unauthorized changes to token support could lead to significant issues in the contract's operation.
+
+9. Function setFungibleTokenSupport() (line 263-272) has access control issues. Reason: Similar to `setTokenSupport`, this function is marked with `onlyOwner`, and it is crucial to ensure that the owner is properly set and verified to prevent unauthorized creation of fungible token wrappers.
+
+In summary, the following functions have access control issues:
+- initialize() (line 45-66)
+- mintSynth() (line 68-102)
+- burnSynth() (line 104-134)
+- burn() (line 136-164)
+- mintFungible() (line 166-205)
+- burnFungible() (line 207-239)
+- toggleQueue() (line 241-248)
+- setTokenSupport() (line 250-261)
+- setFungibleTokenSupport() (line 263-272)

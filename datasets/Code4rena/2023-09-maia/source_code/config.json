@@ -1,0 +1,6 @@
+{
+    "CompilerVersion": "v0.8.19+commit.c7dfd78e",
+    "ContractName": ["VirtualAccount","RootPort"],
+    "via-ir":true,
+    "optimize":true
+}

@@ -1,0 +1,5 @@
+1. Function `executeInflationRateUpdate()` (line 98-100) has an access control issue. Reason: The function `executeInflationRateUpdate()` is a public function that calls the internal function `_executeInflationRateUpdate()`. There is no access control modifier applied to `executeInflationRateUpdate()`, allowing any user to call this function and potentially manipulate the inflation rate update process.
+
+2. Function `mint(address beneficiary, uint256 amount)` (line 108-116) has an access control issue. Reason: The function `mint()` checks if the caller is the `controller.inflationManager()`, but this check is performed using a simple `require` statement. If the `controller` or its `inflationManager()` function is compromised or incorrectly set, unauthorized users could potentially mint tokens.
+
+3. Function `_mint(address beneficiary, uint256 amount)` (line 157-171) has an access control issue. Reason: Although `_mint()` is an internal function, it is called by the public `mint()` function. If the access control in `mint()` is bypassed or compromised, `_mint()` could be exploited to mint tokens without proper authorization.

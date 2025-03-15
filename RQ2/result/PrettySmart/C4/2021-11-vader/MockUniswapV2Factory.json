@@ -1,0 +1,17 @@
+{
+ "contract": "MockUniswapV2Factory",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setFeeTo",
+   "0x1"
+  ],
+  [
+   "owner",
+   "setFeeToSetter",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

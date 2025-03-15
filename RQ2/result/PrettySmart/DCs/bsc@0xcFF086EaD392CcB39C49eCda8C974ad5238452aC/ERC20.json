@@ -1,0 +1,22 @@
+{
+ "contract": "ERC20",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "transferFrom",
+   "SHA3(msg.sender,0x3)"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

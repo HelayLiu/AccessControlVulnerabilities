@@ -1,0 +1,5 @@
+1. Function `Ownable()` (line 15-17) has the access control issues. 
+   - **Reason**: The `Ownable()` function is a constructor that sets the `owner` of the contract to the sender's address. However, in Solidity versions prior to 0.5.0, constructors are defined as functions with the same name as the contract. This can lead to potential issues if the function is called again after deployment, which could unintentionally change the owner. In this contract, the constructor is correctly named, but it is important to note this potential issue in older Solidity versions.
+
+2. Function `NewIntelTechMedia()` (line 209-217) has the access control issues.
+   - **Reason**: The `NewIntelTechMedia()` function is a constructor that sets the `owner` of the contract to the `_owner` parameter. There is no access control on who can deploy this contract, meaning anyone can deploy it and set themselves as the owner. This could lead to unauthorized control over the contract if not deployed by a trusted party. Additionally, the constructor does not have any access control checks to ensure that the `_owner` address is valid or trusted.

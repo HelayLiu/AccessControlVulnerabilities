@@ -1,0 +1,4 @@
+OutPut:
+1. Function `WhiteListMint` (line 694-711) has an access control issue. Reason: The `WhiteListMint` function allows any user to mint tokens if they provide a valid Merkle proof. However, there is no restriction on who can call this function, meaning anyone with a valid proof can mint tokens, potentially leading to unauthorized minting if the Merkle tree is not properly managed or if proofs are leaked.
+
+2. Function `withdraw` (line 768-771) is correctly restricted with `onlyOwner`, so there is no access control issue here. However, it is important to ensure that the `onlyOwner` modifier is correctly implemented and that ownership is securely managed to prevent unauthorized withdrawals.

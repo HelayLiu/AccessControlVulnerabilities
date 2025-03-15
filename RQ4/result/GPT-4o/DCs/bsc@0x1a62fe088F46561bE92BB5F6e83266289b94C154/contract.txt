@@ -1,0 +1,4 @@
+OutPut:
+1. Function `setMiner(address _addr,bool _bool)` (line 104-106) has the access control issues. Reason: The function allows the owner to set any address as a miner, which can then mint tokens. If the owner's account is compromised, an attacker could set themselves as a miner and mint unlimited tokens, potentially leading to inflation or other economic issues within the contract.
+
+2. Function `mint(address player,uint256 amount)` (line 276-280) has the access control issues. Reason: This function is restricted to only miners, but the miners can be set by the owner using the `setMiner` function. If the owner is compromised, an attacker could mint tokens without any further checks, leading to potential abuse of the minting process.

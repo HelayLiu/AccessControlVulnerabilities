@@ -1,0 +1,64 @@
+Below is an analysis of the contract, along with a proof‐of‐concept (PoC) for the key access control issue discovered.
+
+───────────────────────────── Analysis ──────────────────────────────
+
+After walking through each function and modifier, all state‐changing functions that affect staking, reward calculations, taxes, and timing (such as stake, withdraw, setRewardRate, and setStartTime) are either internal, protected by modifiers (like updateReward or canStake/canWithdraw), or explicitly restricted (by onlyRole(DEFAULT_ADMIN_ROLE)). However, one function stands out:
+
+• setToken(address _addr)
+
+This function is declared as public and lacks any access control modifier (for example, onlyOwner or onlyRole). As a result, any external account can call setToken and update both the staking token and the rewards token addresses stored in configuration to any address they choose. Changing these addresses arbitrarily may redirect reward tokens and possibly allow an attacker to mint or steal funds when other functions use configuration.stakingToken or configuration.rewardsToken.
+
+───────────────────────────── Proof of Concept ──────────────────────────────
+
+A malicious actor can exploit this vulnerability by doing the following:
+
+1. Deploy an attacker-controlled ERC20 token contract (or use an existing malicious token).
+2. Call the setToken function on the staking contract, passing in the address of their malicious token.
+3. As a result, subsequent operations (for example, allocateBonus calls that mint tokens using configuration.rewardsToken, or stake/withdraw transfers that assume the configuration.stakingToken) will use the attacker’s token.
+
+Pseudo-code for the exploit might look like this:
+
+-------------------------------------------------
+pragma solidity ^0.8.0;
+
+interface IStakingContract {
+    function setToken(address _addr) external;
+}
+
+contract Exploit {
+    IStakingContract public staking;
+    address public maliciousToken;
+
+    constructor(address _stakingAddress, address _maliciousToken) {
+        staking = IStakingContract(_stakingAddress);
+        maliciousToken = _maliciousToken;
+    }
+
+    function exploitSetToken() external {
+        // The malicious account calls setToken to replace staking and rewards tokens.
+        staking.setToken(maliciousToken);
+    }
+}
+-------------------------------------------------
+
+Once the token configuration is changed, any function relying on configuration.stakingToken or configuration.rewardsToken (for example, allocateBonus and parts of _withdraw) will operate with the attacker’s token, potentially allowing misdirection of funds.
+
+───────────────────────────── Vulnerable Function Details ──────────────────────────────
+
+1. Function: setToken(address _addr)  
+   Approximate Location: Near the end of the contract (after setStartTime)  
+   Issue: Missing access control. It is a public function with no role‐based or ownership check.  
+   Reason: This lack of protection allows any caller to update the staking and rewards token addresses within the configuration. Such an update can fundamentally change the behavior of the contract (e.g., redirecting reward distributions or token transfers) and can be exploited to steal or misappropriate funds.
+
+───────────────────────────── Recommendations ──────────────────────────────
+
+To fix this issue, add an appropriate access control modifier (like onlyOwner or onlyRole(DEFAULT_ADMIN_ROLE)) to setToken. For example:
+
+   function setToken(address _addr) public onlyRole(DEFAULT_ADMIN_ROLE) {
+       configuration.stakingToken = ERC20(_addr);
+       configuration.rewardsToken = ERC20(_addr);
+   }
+
+This ensures that only authorized accounts can modify the critical token configuration.
+
+By adding this check, the contract prevents unauthorized changes to token addresses, thereby safeguarding users’ funds and preserving the intended security of the staking system.

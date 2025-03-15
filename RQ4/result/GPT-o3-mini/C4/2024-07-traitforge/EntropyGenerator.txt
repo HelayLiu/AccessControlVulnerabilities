@@ -1,0 +1,24 @@
+Below are the access control issues found in the contract along with a brief proof‐of‐concept demonstrating how an attacker might abuse them:
+
+1. Vulnerable Function: writeEntropyBatch1 (roughly lines 34–47)  
+ • Issue: This function is public and does not restrict who may call it. It allows anyone—even an attacker—to trigger the entropy initialization batch. In a system where the timing or order of entropy initialization is important (or should be performed only by a trusted party), this can be abused to manipulate when (and possibly how) the entropySlots array is populated.  
+ • Proof of Concept (POC):  
+  - As an attacker, you can simply send a transaction calling writeEntropyBatch1 even if you are not the owner or the intended allowed caller.  
+  - This call will execute the for‑loop that writes into entropySlots using block data, thereby interfering with or pre‐empting the proper initialization flow intended by the contract administrator.  
+
+2. Vulnerable Function: writeEntropyBatch2 (roughly lines 49–61)  
+ • Issue: Similar to batch1, this function is public and lacks any access restrictions. Anyone can call writeEntropyBatch2—provided that the internal state (lastInitializedIndex) falls within the required range—to execute a batch update on entropySlots.  
+ • Proof of Concept (POC):  
+  - An attacker monitors the chain until the batch1 initialization has been done (or even executes it himself) and then calls writeEntropyBatch2, setting values in the slots array at a time of his choosing.  
+  - This manipulation may impact the output of later randomness-dependent functions (like getNextEntropy or deriveTokenParameters).  
+
+3. Vulnerable Function: writeEntropyBatch3 (roughly lines 62–72)  
+ • Issue: Again, this function is public with no access control protection. Therefore any external party can call writeEntropyBatch3 when the state variable lastInitializedIndex satisfies the require condition. This allows unauthorized re-initialization of the remaining entropy slots.  
+ • Proof of Concept (POC):  
+  - An attacker calls writeEntropyBatch3 when lastInitializedIndex ≥ batchSize2 and less than maxSlotIndex.  
+  - This unauthorized call modifies the contents of entropySlots for the remainder of the slots—even if the attacker does not have the privileges that the contract owner would normally require.  
+
+Reasoning Summary:  
+Each of the three "writeEntropyBatch" functions modifies key state variables (namely the entropySlots array and the lastInitializedIndex pointer) that directly affect the contract’s randomness output. Because they are public and lack restrictions (e.g., onlyOwner or onlyAllowedCaller), they create an attack surface whereby an adversary can control or expedite portions of the entropy initialization process. This could lead to manipulation of the pseudo-random outputs relied upon later in the system.
+
+It is recommended that these functions, if they are meant to be executed only by a trusted party (such as the owner or allowed caller), should be modified to include an appropriate access control modifier.

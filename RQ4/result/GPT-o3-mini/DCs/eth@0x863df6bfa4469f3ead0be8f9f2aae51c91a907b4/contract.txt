@@ -1,0 +1,74 @@
+Below is one example of how an access‐control “bug” in these contracts can occur. In our review we discovered that several key functions use bitwise checks that are written without the proper parentheses. In Solidity 0.4.10 the operator precedence causes expressions such as
+
+  pending.ownersDone & ownerIndexBit > 0
+
+to be parsed as
+
+  pending.ownersDone & (ownerIndexBit > 0)
+
+rather than the intended
+
+  (pending.ownersDone & ownerIndexBit) > 0
+
+Because ownerIndexBit is always greater than zero, (ownerIndexBit > 0) evaluates to true (i.e. 1), so the check becomes equivalent to “pending.ownersDone & 1.” As a consequence:
+
+• In the revoke() function the check
+
+  if (pending.ownersDone & ownerIndexBit > 0) { … }
+
+will only “see” the lowest bit of pending.ownersDone. This miscalculation may allow an attacker (or even an honest owner acting from a non‐first index) to have their confirmation (or revocation) misinterpreted. An owner’s confirmation might never be properly registered or revoked, thereby undermining the multi‑sig logic.
+
+• In hasConfirmed() the expression
+
+  return !(pending.ownersDone & ownerIndexBit == 0);
+
+is also evaluated as
+
+  return !((pending.ownersDone & (ownerIndexBit == 0)));
+
+Since (ownerIndexBit == 0) is always false (i.e. 0), the bitwise AND always yields 0 and the function always returns “true==! (0==0)” → false. This makes it impossible for external callers to correctly determine whether a given owner has confirmed an operation.
+
+• In confirmAndCheck() the check
+
+  if (pending.ownersDone & ownerIndexBit > 0) { … }
+
+suffers from the same problem. Instead of testing whether the caller’s confirmation bit is already set, it only inspects bit‑0. This misbehaviour could lead to the multi‑sig “yetNeeded” count being adjusted incorrectly and, in effect, allow an operation to be executed with fewer confirmations than the m_required value.
+
+────────────────────────────
+Proof of Concept (PoC)
+
+An attacker (or a colluding group) could perform the following steps to “game” the confirmation system:
+
+1. As one of the owners (for example, the owner with index 1 whose bit is actually located in bit‑0 of the confirmation bitmap), call a function such as execute(), changeOwner(), addOwner(), etc. When the multi‑sig logic is invoked, the confirmation state is recorded and the bit corresponding to owner index 1 is set properly.
+
+2. Then, an attacker who is _not_ the owner in position 1 – because of the faulty bit‑check – may call confirm() (or trigger confirmAndCheck() via execute()) and have the confirmation “pass” simply because the library only checks the lowest bit. In other words, the confirmation count may be incremented (or not decremented) even if the real owner’s bit was not set.
+
+3. Thus the multi‑sig protection may be bypassed so that an operation requiring, say, two confirmations from three owners is executed even though only the owner with index “1” has properly confirmed.
+
+────────────────────────────
+Vulnerable Functions (with approximate line numbers)
+
+1. Function revoke(bytes32 _operation) (around line 40–48 in WalletLibrary):
+  Issue: Uses the check “if (pending.ownersDone & ownerIndexBit > 0)” without enclosing the bit‐wise AND in parentheses. As a result, only bit‑0 is examined. This may allow a revocation call to “count” an confirmation from an unrelated owner.
+
+2. Function hasConfirmed(bytes32 _operation, address _owner) (around line 60–67 in WalletLibrary):
+  Issue: The expression “!(pending.ownersDone & ownerIndexBit == 0)” is mis‐interpreted due to operator precedence so that it always returns false. This function therefore fails to report the true confirmation status.
+
+3. Function confirmAndCheck(bytes32 _operation) (around line 90–100 in WalletLibrary):
+  Issue: Again, the check “if (pending.ownersDone & ownerIndexBit > 0)” is mis‐written. It does not correctly test whether the caller’s confirmation bit is already set. As a result, the required number of confirmations (m_required) may be bypassed.
+
+────────────────────────────
+Recommendation
+
+Modify each of these expressions to force the intended evaluation order. For example, update the code so that the check in each case is written as:
+
+  if ((pending.ownersDone & ownerIndexBit) > 0) { … }
+  // and in hasConfirmed:
+  return !((pending.ownersDone & ownerIndexBit) == 0);
+
+This change will ensure that the bitwise operations correctly reflect each owner’s contribution towards confirming a sensitive operation, and in turn the convenient access control enforced by the multi‑sig scheme will be properly maintained.
+
+────────────────────────────
+Summary
+
+The failure to put parentheses around the bit‑wise operation in the confirmation checks leads to mis‑interpretation of the confirmation bitmap. An attacker may thereby execute operations with too few confirmations—and ultimately with insufficient access control.

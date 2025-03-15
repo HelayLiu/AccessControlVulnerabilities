@@ -1,0 +1,7 @@
+1. Function `setQuoteAsset` (line 164-173) has access control issues. Reason: The function can be called by any address, but it should only be callable by the governor. If the governor role is compromised, an attacker could set arbitrary quote assets, potentially leading to manipulation of trading pairs.
+
+2. Function `cancelOrder` (line 150-157) has access control issues. Reason: The function allows any user to cancel any order as long as they provide a valid position ID and order ID. This could allow an attacker to cancel orders that do not belong to them, leading to potential financial loss for the original order owner.
+
+3. Function `fillOrder` (line 174-189) has access control issues. Reason: The function does not check if the caller is the owner of the order being filled. This could allow any user to fill any order, which could lead to unauthorized access to funds and manipulation of the order system.
+
+4. Function `updateOrder` (line 292-303) has access control issues. Reason: The function does not verify that the caller is the owner of the order being updated. This could allow any user to modify orders that do not belong to them, leading to potential financial loss for the original order owner.

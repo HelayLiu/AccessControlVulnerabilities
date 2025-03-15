@@ -1,0 +1,8 @@
+Below is one example of an access control “gotcha” found in the contract:
+
+1. Vulnerable Function: bondToAccount (roughly lines 24–34 in the provided code)
+  Reason: This public function allows the caller to supply any target “account” parameter even though the token transfer is executed from msg.sender. In other words, anyone can call bondToAccount with an arbitrary address so that while the caller’s tokens are transferred into the contract, the “bonded” state is credited to an address of the caller’s choosing. (There is only a check that if msg.sender is not equal to the predetermined “offering” address, then _notSameBlock() is called—but this does not restrict the beneficiary account.) This could allow a malicious actor to “donate” tokens on their own behalf while crediting the bonded balance to someone else (or even accumulate benefits for a colluding party), which may lead to unintended reward allocation or other abuse of the reward/minting mechanism.
+
+No other publicly callable functions (such as unbond, unbondAndBreak, or the privileged setters) lack their proper access control checks; the admin functions are gated by onlyRole(ADMIN_ROLE) and the withdrawal‐type functions correctly use msg.sender. 
+
+Please review whether the “bond to someone else” functionality is truly intended. If not, then either bondToAccount should require that account == msg.sender or otherwise restrict who may supply an arbitrary target account.

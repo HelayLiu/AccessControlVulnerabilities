@@ -1,0 +1,15 @@
+1. Function `initPool(address _Pool)` (line 139-143) has access control issues. Reason: This function allows the owner to set the `pool` address, but there is no check to ensure that the `pool` address is not already set. This could lead to unintended behavior if called multiple times.
+
+2. Function `transReward(bytes memory data)` (line 157-160) has access control issues. Reason: This function allows any user to call it and execute a function on the `pool` contract without any access control checks. This could allow malicious users to execute arbitrary functions on the `pool` contract.
+
+3. Function `excludeFromFees(address account)` (line 113-116) has access control issues. Reason: This function allows the owner to exclude any account from fees, but there is no check to ensure that the account being excluded is not the zero address or the contract itself, which could lead to unintended consequences.
+
+4. Function `includeFromFees(address account)` (line 118-121) has access control issues. Reason: Similar to the previous function, this allows the owner to include any account back into fees without checks for the zero address or the contract itself.
+
+5. Function `_transfer(address from, address to, uint256 amount)` (line 205-270) has access control issues. Reason: This function contains logic that allows transfers to and from the `pool` address without proper checks, which could lead to unintended transfers or manipulation of the token's liquidity.
+
+6. Function `rescueToken(address tokenAddress, uint256 tokens)` (line 335-339) has access control issues. Reason: This function allows the owner to rescue any tokens from the contract, but there is no check to ensure that the token being rescued is not the contract's own token, which could lead to loss of liquidity.
+
+7. Function `rescueEth()` (line 341-344) has access control issues. Reason: This function allows the owner to withdraw all ETH from the contract without any checks on the contract's state or balance, which could lead to loss of funds if misused.
+
+These functions should implement proper access control checks to ensure that only authorized users can execute them, and to prevent unintended consequences.

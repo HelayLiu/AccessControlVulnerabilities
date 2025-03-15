@@ -1,0 +1,13 @@
+Below is one critical access control issue found during the audit:
+
+1. Vulnerable Function: UBSexToken (in contract BAFCToken, approximately lines 105–111)
+
+ • Reason: In Solidity 0.4.24 the constructor must have the same name as the contract. Since the contract is named BAFCToken but the “constructor” is named UBSexToken, it is not treated as a constructor but as a public function. This means that any external account can call UBSexToken at any time. When invoked, it reinitializes the owner to msg.sender, sets the total supply, and assigns the entire token balance to the caller. An attacker can exploit this to seize control over the token contract, effectively bypassing any intended ownership/access control.
+
+Proof of Concept:
+ 1. Deploy the contract (by an honest deployer who does not correctly initialize ownership due to the misnamed constructor).
+ 2. An attacker calls the public UBSexToken() function in a transaction.
+ 3. This call reassigns owner = attacker address, resets totalSupply, and updates balances accordingly.
+ 4. With ownership controlled by the attacker, any subsequent restricted functions (such as freezeAccount, transferOwnership, switchLiquidity) can be invoked by the attacker.
+
+This access control issue allows unauthorized reinitialization of critical state variables and control over the contract, leading to a complete ownership takeover.

@@ -1,0 +1,9 @@
+1. Function writeEntropyBatch1() (line 42-54) has access control issues. Reason: This function is public and can be called by anyone, allowing unauthorized users to initialize entropy values, which could lead to manipulation of the entropy generation process.
+
+2. Function writeEntropyBatch2() (line 56-68) has access control issues. Reason: Similar to writeEntropyBatch1(), this function is public and can be called by anyone, allowing unauthorized users to initialize entropy values, which could lead to manipulation of the entropy generation process.
+
+3. Function writeEntropyBatch3() (line 70-82) has access control issues. Reason: This function is public and can be called by anyone, allowing unauthorized users to initialize entropy values, which could lead to manipulation of the entropy generation process.
+
+4. Function getNextEntropy() (line 84-106) has access control issues. Reason: Although this function is restricted to the allowed caller, if the allowedCaller is not set correctly or is changed to an unauthorized address, it could allow unauthorized access to retrieve entropy values.
+
+5. Function initializeAlphaIndices() (line 144-156) has access control issues. Reason: This function is public and can be called by anyone, allowing unauthorized users to set the selection points for entropy generation, which could lead to predictable or manipulated entropy values.

@@ -1,0 +1,32 @@
+{
+ "contract": "MockController",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0xfb4a69c8",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setCurveVault",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x3a239711",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

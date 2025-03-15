@@ -1,0 +1,34 @@
+Below is our analysis and the identified potential access control issue in the provided contract:
+
+──────────────────────────────
+1. Vulnerable Function: parameterize (line ~13-21)
+──────────────────────────────
+Reason:
+• The parameterize function is declared public with only the modifier notCurrent and no further access control.
+• This function allows anyone to set or update the critical execution parameters (user, asset, amount, flashGoverner, targetContract) without any additional restrictions.
+• As a result, an attacker could call parameterize with malicious addresses or values. When the execute() function (which is internal and later triggered by the Proposal logic) reads these parameters, it will invoke FlashGovernanceArbiterLike(params.flashGoverner).burnFlashGovernanceAsset using attacker-controlled arguments. This may lead to unauthorized burning (or slashing) of tokens or collateral.
+  
+──────────────────────────────
+Proof-of-Concept (PoC)
+──────────────────────────────
+Assume an attacker account (Attacker) interacts with the BurnFlashStakeDeposit contract:
+
+1. Attacker deploys their own malicious contract or identifies a compromised flashGoverner address that will perform unexpected behavior when burnFlashGovernanceAsset is called.
+2. Using the public parameterize function, the attacker sets:
+   • user: Attacker's address (or another target’s address)
+   • asset: An asset address that attacker wishes to maliciously burn
+   • amount: A chosen amount that could cause collateral damages
+   • flashGoverner: A malicious or attacker-controlled contract address
+   • targetContract: An address that, when passed, triggers undesired execution in the flashGoverner’s burnFlashGovernanceAsset function
+
+3. Once these parameters are set, when the Proposal framework triggers the execute() function, it will use these attacker-set parameters and call:
+   FlashGovernanceArbiterLike(params.flashGoverner).burnFlashGovernanceAsset(params.targetContract, params.user, params.asset, params.amount);
+   
+4. This results in unauthorized execution of the burnFlashGovernanceAsset function with attacker-controlled inputs.
+
+──────────────────────────────
+Conclusion
+──────────────────────────────
+The lack of proper role- or ownership-based access control in the parameterize function (making it unrestrictedly public aside from notCurrent) makes it possible for an attacker to maliciously configure the critical parameters. This leads to a potential scenario where an attacker can force the burning (or slashing) of assets on behalf of arbitrary users.
+
+It is recommended to add an appropriate access control modifier (e.g., onlyOwner, onlyAuthorized, or a specific proposal configurator role) to the parameterize function in order to restrict its usage to trusted parties only.

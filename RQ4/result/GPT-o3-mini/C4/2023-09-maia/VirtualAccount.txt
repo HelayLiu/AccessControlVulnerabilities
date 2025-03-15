@@ -1,0 +1,11 @@
+1. Function payableCall (line 85–112) has an access control issue.  
+   Reason: Unlike the other external functions (withdrawNative, withdrawERC20, withdrawERC721, and call) that are decorated with the requiresApprovedCaller modifier, payableCall lacks any access control. This omission allows any external caller—even one that is not the designated userAddress or an approved router—to invoke payableCall and execute arbitrary calls (with specified ETH values) on behalf of the VirtualAccount. An attacker could leverage this flaw to have the VirtualAccount execute unintended external calls or transfer funds out, provided they supply the exact value sum as required.  
+
+Proof-of-Concept:  
+An attacker could craft a transaction calling payableCall with a single PayableCall struct containing:  
+  - target: an attacker–controlled contract that in its fallback transfers all received ETH to the attacker’s wallet,  
+  - callData: data that triggers the malicious action, and  
+  - value: a portion of the VirtualAccount’s ETH balance.  
+Since there is no check on msg.sender, the attacker can invoke payableCall directly and drain funds.
+
+In summary, the function payableCall is vulnerable because it lacks the necessary access control, opening the door to unauthorized arbitrary external calls and potential loss of funds.

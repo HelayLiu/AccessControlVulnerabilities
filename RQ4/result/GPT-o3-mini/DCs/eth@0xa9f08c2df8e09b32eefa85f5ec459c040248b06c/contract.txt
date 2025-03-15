@@ -1,0 +1,14 @@
+Below is a summary of our findings regarding access control in the contract:
+
+After examining all functions—and in particular those that change state or interact with critical variables—we did not find any functions that are missing the proper access control checks. In summary:
+
+1. All administrative and sensitive operations (for example, setting mappings, updating the eigenLayerStrategyManagerAddress, adding/updating delegators, and executing delegated restake/withdrawal functions) are protected using the appropriate role‐based modifiers (onlyRole(DEFAULT_ADMIN_ROLE), onlyRole(PAUSER_ROLE), onlyRole(UPGRADER_ROLE), or onlyRole(REBASER_ROLE)).  
+2. User functions (such as deposit, withdraw, claim, and completeQueuedWithdrawal) perform the necessary checks on msg.sender (by comparing against stored addresses or via token allowances) so that a caller can only affect their own funds.  
+3. Functions that are called publicly (for instance, processWithdrawals) are intentionally left available so that anyone can help trigger the processing of queued withdrawals—and their implementations do not grant any extra privileges.
+
+For example, consider a few cases:
+• The setStakedTokenMapping (lines ~54–62) and setEigenLayerStrategyManagerAddress (lines ~44–50) functions are only callable by the DEFAULT_ADMIN_ROLE.
+• The deposit (line ~168–182) and withdraw (line ~184–225) functions let users deposit and withdraw their tokens but include proper checks (whitelisting, allowance, and balance checks) so that one user cannot affect another’s funds.
+• The claim (line ~227–242) and completeQueuedWithdrawal (lines ~263–294 "TO BE DEPRECATED") functions use msg.sender verification to ensure that only the recorded withdrawer can claim or complete their own withdrawal.
+
+Based on the review, we conclude that there are no access control vulnerabilities in the provided contract.

@@ -1,0 +1,14 @@
+Below is one potential access control issue uncovered during the audit:
+
+1. Vulnerable Function: replenishReserves (roughly lines 61–77)
+  • Reason: This function is declared external and does not include an explicit access control modifier (for example, it is not restricted to a particular role such as an authorized keeper, a Port Strategy, or an admin). Although it does check that the supplied _token is a recognized Strategy Token and that the supplied _strategy is registered for that token, any external account (including an attacker) that can supply values making those checks pass is allowed to call replenishReserves. In doing so, the function calls IPortStrategy(_strategy).withdraw(address(this), _token, amountToWithdraw) to pull tokens from the Port Strategy, and then it “repays” (reduces) internal debt records. An attacker controlling or manipulating the parameters or exploiting any weaknesses in the external Port Strategy’s withdraw method could force unauthorized transfers “from” a Port Strategy contract or cause unexpected changes in the internal debt accounting.
+
+Proof-of-Concept:
+  Assume an attacker finds (or engineers) a situation where:
+   – _token is one that is already whitelisted (isStrategyToken[_token] == true),
+   – _strategy is an address that is registered (isPortStrategy[_strategy][_token] == true) and whose associated Port Strategy’s withdraw function does not properly restrict who may trigger a withdrawal.
+  Then the attacker (an arbitrary EOA) can call:
+   BranchPort.replenishReserves(_strategy, _token, chosenAmount);
+  If chosenAmount is less than or equal to the “lacking” reserves, the function will call withdraw on the Port Strategy, transferring funds from that strategy to the BranchPort contract and unwittingly reducing the recorded debt. As a result, funds may be moved in a manner not intended by the original system design.
+
+It is recommended that the replenishReserves function be explicitly access‐controlled (for example, restricted only to a “keeper” or admin role or possibly to the Port Strategy itself) so that arbitrary external accounts cannot invoke this operation.

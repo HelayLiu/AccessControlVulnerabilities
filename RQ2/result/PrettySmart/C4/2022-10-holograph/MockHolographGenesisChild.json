@@ -1,0 +1,22 @@
+{
+ "contract": "MockHolographGenesisChild",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "0xa07d7316",
+   "SHA3(msg.sender,0x0)"
+  ],
+  [
+   "whitelist",
+   "0x51724d9e",
+   "SHA3(msg.sender,0x0)"
+  ],
+  [
+   "whitelist",
+   "0xe776ecf1",
+   "SHA3(msg.sender,0x0)"
+  ]
+ ],
+ "PC_bypassed": []
+}

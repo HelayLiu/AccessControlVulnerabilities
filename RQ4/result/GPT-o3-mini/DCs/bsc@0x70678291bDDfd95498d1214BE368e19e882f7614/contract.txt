@@ -1,0 +1,32 @@
+Below is the analysis of the contract that shows two functions that change important economic parameters but lack any access control checks, which means any actor can call them.
+
+──────────────────────────────
+1. Function: changeNodePrice(uint256 newNodePrice)
+  Approximate location: around line 322
+  Issue:
+   • This function updates the price to create nodes.
+   • It is declared external without using onlyOwner (or any admin access modifier).
+   • This allows any user to call the function and arbitrarily set nodePrice (for example, setting it to 0 so that nodes can be created without paying), which undermines the intended economic mechanism of the system.
+  Proof-of-Concept:
+   a) An attacker can simply call changeNodePrice(0) and set the node price to zero.
+   b) Then, when calling createNode(), the attacker would not need to transfer any tokens, effectively letting the attacker create nodes for free.
+──────────────────────────────
+2. Function: changeRewardPerNode(uint256 _rewardPerDay)
+  Approximate location: around line 326
+  Issue:
+   • This function updates the reward per day for each node.
+   • It is declared external with no ownership (onlyOwner) restriction.
+   • An attacker can set rewardPerDay to an extremely high value, allowing them to later claim excessive rewards from claimNodeReward or claimAllNodesReward.
+  Proof-of-Concept:
+   a) The attacker calls changeRewardPerNode(veryHighValue) to set an exorbitant reward rate.
+   b) Later, by calling claimAllNodesReward(), the attacker can drain the contract by transferring an enormous amount of tokens.
+──────────────────────────────
+Summary:
+
+• Vulnerable Function: changeNodePrice (approx. line 322)
+  Reason: No access control; any external user can modify the node price and bypass the intended token-cost mechanism for creating nodes.
+
+• Vulnerable Function: changeRewardPerNode (approx. line 326)
+  Reason: No access control; any external user can arbitrarily set the node reward rate to an undesired level, leading to potential misuse in claiming tokens.
+
+Implementing an onlyOwner modifier on these functions would be necessary to protect the contract’s economic parameters from manipulation.

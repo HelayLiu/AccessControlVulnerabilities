@@ -1,0 +1,15 @@
+Below is one clear access control issue found during the review:
+
+1. Function init (roughly lines 28–45) has an access control issue.  
+  Reason: The init function is declared external without any modifier (such as onlyOwner or an initializer check) to prevent reinitialization. This means that any external user can call init at any time to reset key parameters such as the owner (via _transferOwnership(newOwner)), token name, and token symbol. An attacker could call init to seize control of the contract and change its core metadata, ultimately compromising the integrity and control of the NFT contract.
+
+Proof of Concept:
+Assume the contract has already been deployed and even initialized by its legitimate owner. An attacker can execute the following transaction:
+  • Call init with the attacker’s address as newOwner and arbitrary strings for tokenName and tokenSymbol.
+Result:
+  • The ownership is transferred to the attacker, and the NFT contract’s metadata is overwritten by values chosen by the attacker.
+This reinitialization attack enables the attacker to call functions guarded by onlyOwner (such as mint, burn, setContractURI, etc.) in subsequent transactions.
+
+Recommendation:
+  • Use an initializer pattern (e.g., adding a state variable like “bool initialized” with a guard) or restrict the init function by owner-only check if reinitialization is not desired.
+  • For proxy deployments, ensure that initialization can occur only once.

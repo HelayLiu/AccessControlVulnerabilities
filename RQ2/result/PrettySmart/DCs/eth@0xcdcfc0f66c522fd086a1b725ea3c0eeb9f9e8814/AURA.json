@@ -1,0 +1,63 @@
+{
+ "contract": "AURA",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "owner",
+   "uploadBalances",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferFrom",
+   "0x0"
+  ],
+  [
+   "owner",
+   "lockBalances",
+   "0x0"
+  ],
+  [
+   "owner",
+   "unlockToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transfer",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "owner",
+   "uploadBalances",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferFrom",
+   "0x0"
+  ],
+  [
+   "owner",
+   "lockBalances",
+   "0x0"
+  ],
+  [
+   "owner",
+   "unlockToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transfer",
+   "0x0"
+  ]
+ ]
+}

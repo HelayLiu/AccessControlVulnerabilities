@@ -1,0 +1,17 @@
+1. Function mint(address account, uint256 amount) (line 83-90) has access control issues. Reason: The mint function is public and can be called by anyone, allowing any address to mint new tokens, which can lead to inflation and devaluation of the token.
+
+2. Function setProxySync(address _addr) (line 157-162) has access control issues. Reason: The setProxySync function can be called by any address, allowing any user to set the proxy address, which can lead to unauthorized access to the contract's functions.
+
+3. Function reserveMultiSync(address syncAddr, uint256 syncAmount) (line 232-237) has access control issues. Reason: The reserveMultiSync function can be called by any address, allowing any user to manipulate the balances of other addresses, which can lead to unauthorized token transfers.
+
+4. Function proxyReserves(address token, address addr, uint256 amount) (line 215-220) has access control issues. Reason: The proxyReserves function can be called by any address, allowing any user to transfer tokens from the contract to any address, which can lead to unauthorized withdrawals.
+
+5. Function setSwapPairList(address addr, bool enable) (line 270-275) has access control issues. Reason: The setSwapPairList function can be called by any address, allowing any user to modify the swap pair list, which can lead to manipulation of trading pairs and potential exploits.
+
+6. Function setFundAddress(address addr) (line 278-283) has access control issues. Reason: The setFundAddress function can be called by any address, allowing any user to change the fund address, which can lead to unauthorized access to funds.
+
+7. Function setKillBatchBot(bool enable) (line 314-318) has access control issues. Reason: The setKillBatchBot function can be called by any address, allowing any user to enable or disable the bot-killing mechanism, which can lead to exploitation by malicious actors.
+
+8. Function claimToken(address token, uint256 amount, address to) (line 335-338) has access control issues. Reason: The claimToken function can be called by any address, allowing any user to withdraw tokens from the contract, which can lead to unauthorized withdrawals.
+
+These functions lack proper access control mechanisms, allowing unauthorized users to perform sensitive actions that can compromise the integrity and security of the contract.

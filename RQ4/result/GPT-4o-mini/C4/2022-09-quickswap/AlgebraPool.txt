@@ -1,0 +1,15 @@
+1. Function setCommunityFee(uint8 communityFee0, uint8 communityFee1) (line 292-295) has access control issues. Reason: The function can be called by anyone since it lacks an access control modifier, allowing unauthorized users to set community fees.
+
+2. Function setIncentive(address virtualPoolAddress) (line 300-303) has access control issues. Reason: The function can only be called by the address returned by IAlgebraFactory(factory).farmingAddress(), but there is no modifier to enforce this, which could lead to unauthorized access if the farming address is not properly controlled.
+
+3. Function setLiquidityCooldown(uint32 newLiquidityCooldown) (line 308-311) has access control issues. Reason: The function can be called by anyone since it lacks an access control modifier, allowing unauthorized users to set the liquidity cooldown.
+
+4. Function mint(address sender, address recipient, int24 bottomTick, int24 topTick, uint128 liquidityDesired, bytes calldata data) (line 218-220) has access control issues. Reason: The function does not check if the sender is authorized to mint liquidity, which could allow unauthorized users to mint liquidity.
+
+5. Function burn(int24 bottomTick, int24 topTick, uint128 amount) (line 270-273) has access control issues. Reason: The function does not check if the sender is authorized to burn liquidity, which could allow unauthorized users to burn liquidity.
+
+6. Function swap(address recipient, bool zeroToOne, int256 amountRequired, uint160 limitSqrtPrice, bytes calldata data) (line 364-367) has access control issues. Reason: The function does not check if the sender is authorized to perform a swap, which could allow unauthorized users to execute swaps.
+
+7. Function flash(address recipient, uint256 amount0, uint256 amount1, bytes calldata data) (line 392-395) has access control issues. Reason: The function does not check if the sender is authorized to initiate a flash loan, which could allow unauthorized users to execute flash loans.
+
+8. Function collect(address recipient, int24 bottomTick, int24 topTick, uint128 amount0Requested, uint128 amount1Requested) (line 276-279) has access control issues. Reason: The function does not check if the caller is the owner of the position, which could allow unauthorized users to collect fees from other users' positions.

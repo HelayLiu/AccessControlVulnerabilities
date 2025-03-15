@@ -1,0 +1,11 @@
+1. Function owned() (line 6-8) has access control issues. Reason: The owned() function sets the owner variable to the address that deploys the contract, but it does not have any access control checks to prevent unauthorized changes to the owner variable after deployment.
+
+2. Function transferOwnership(address newOwner) (line 15-17) has access control issues. Reason: The transferOwnership function allows the current owner to change the owner variable, but if the owner is compromised, they can transfer ownership to an unauthorized address without any checks.
+
+3. Function mintToken(address target, uint256 mintedAmount) (line 66-70) has access control issues. Reason: The mintToken function allows the owner to mint new tokens and assign them to any address, which could lead to inflation or unauthorized token distribution if the owner is compromised.
+
+4. Function freezeAccount(address target, bool freeze) (line 73-77) has access control issues. Reason: The freezeAccount function allows the owner to freeze any account, which could be abused if the owner is malicious or compromised, preventing users from accessing their funds.
+
+5. Function setPrices(uint256 newSellPrice, uint256 newBuyPrice) (line 80-84) has access control issues. Reason: The setPrices function allows the owner to set the buy and sell prices for the tokens, which could be manipulated to benefit the owner at the expense of other users if the owner is compromised.
+
+6. Function setExchange(bool istrue) (line 100-104) has access control issues. Reason: The setExchange function allows the owner to open or close the exchange, which could be abused to prevent users from buying or selling tokens if the owner is malicious or compromised.

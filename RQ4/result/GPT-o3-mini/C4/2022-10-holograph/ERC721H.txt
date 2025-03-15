@@ -1,0 +1,14 @@
+Below is one major potential issue detected in the audit:
+
+1. Function init (and its internal helper _init in lines ~24–36)
+  Reason: The initialization function is not access‑restricted. It relies solely on the check that the contract has not yet been initialized (via !_isInitialized()). This means that any actor—for example, an attacker who finds the freshly deployed but not‑yet‑initialized contract—can call init. By doing so, the attacker becomes the designated “holographer” (stored in _holographerSlot) while the owner slot (_ownerSlot) remains at its default value (zero) unless later set in a derived contract. In many proxy/initializable patterns the deployer (or an authorized actor) is meant to perform initialization, so the lack of access control on init can be exploited to seize the control role that may be used later in owner‑protected functions (via the onlyOwner modifier). 
+
+Proof‑of‑Concept Scenario:
+• An attacker observes that a freshly deployed ERC721H contract has not been initialized.
+• The attacker calls the external init(bytes memory initPayload) function.
+• Because _isInitialized() returns false, the contract saves msg.sender (the attacker’s address) as the holographer.
+• Later, when the contract (or a derived version) uses functions guarded by onlyHolographer or onlyOwner (which for holographer calls rely on msgSender matching _getOwner), the attacker may craft calls (or later set the owner via an internal call, if available) to bypass intended access restrictions.
+
+This unprotected initialization pattern is a common pitfall and can allow an unauthorized party to lock ownership or control of the contract.
+
+No other functions in the provided file directly modify sensitive state variables without first enforcing an access‑control check; however, given that init() is the gateway for setting the critical holographer role and indirectly affects who can later satisfy onlyOwner checks, it constitutes a significant access control vulnerability.

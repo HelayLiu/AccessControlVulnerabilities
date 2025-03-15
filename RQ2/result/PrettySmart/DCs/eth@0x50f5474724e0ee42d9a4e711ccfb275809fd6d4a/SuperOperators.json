@@ -1,0 +1,17 @@
+{
+ "contract": "SuperOperators",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setSuperOperator",
+   "0x0"
+  ],
+  [
+   "owner",
+   "changeAdmin",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

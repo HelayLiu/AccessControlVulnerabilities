@@ -1,0 +1,30 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `batchSetAllowlist` (line 66-72)**
+   - **Reason**: The function `batchSetAllowlist` is intended to be restricted to the contract owner, as it modifies the `allowlist` mapping which controls who can mint NFTs. Although there is a check `require(owner == msg.sender, "META: no owner");`, it is important to ensure that the `owner` variable is correctly set and immutable after deployment to prevent unauthorized access.
+
+2. **Function `mint` (line 186-192)**
+   - **Reason**: The function `mint` is intended to be called only by the `erc721` contract, as indicated by the check `require(msg.sender == erc721, "P404: only nft contract can mint");`. However, if the `erc721` address is not correctly set or can be changed, it could lead to unauthorized minting of tokens.
+
+3. **Function `mintNFT` (line 234-266)**
+   - **Reason**: The function `mintNFT` allows users to mint NFTs by paying Ether. It checks if the caller is in the `allowlist`, but the `allowlist` can be modified by the `batchSetAllowlist` function, which is only protected by the `owner` check. If the `owner` is compromised, unauthorized addresses could be added to the `allowlist`.
+
+4. **Function `receive` (line 270-272)**
+   - **Reason**: The `receive` function is a fallback function that automatically calls `mintNFT` when Ether is sent to the contract. This function relies on the same access control as `mintNFT`, and any issues with `mintNFT` will also affect this function.
+
+**Proof of Concept for Access Control Issue:**
+
+To verify the access control issue in the `batchSetAllowlist` function, consider the following scenario:
+
+1. Deploy the contract with a specific `owner`.
+2. Attempt to call `batchSetAllowlist` from an address that is not the `owner`.
+3. The transaction should revert due to the `require(owner == msg.sender, "META: no owner");` check.
+
+If the `owner` variable is not properly set or can be changed, an attacker could potentially bypass this check and modify the `allowlist`.
+
+**Output:**
+
+1. Function `batchSetAllowlist` (line 66-72) has potential access control issues. Reason: The function modifies the `allowlist` mapping, which is critical for controlling who can mint NFTs. It relies on the `owner` variable for access control, which must be correctly set and immutable.
+2. Function `mint` (line 186-192) has potential access control issues. Reason: The function is intended to be called only by the `erc721` contract. If the `erc721` address is not correctly set or can be changed, it could lead to unauthorized minting.
+3. Function `mintNFT` (line 234-266) has potential access control issues. Reason: The function allows minting of NFTs based on the `allowlist`, which can be modified by the `batchSetAllowlist` function. If the `owner` is compromised, unauthorized addresses could be added to the `allowlist`.
+4. Function `receive` (line 270-272) has potential access control issues. Reason: The function automatically calls `mintNFT` when Ether is sent to the contract, relying on the same access control as `mintNFT`. Any issues with `mintNFT` will also affect this function.

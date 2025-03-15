@@ -1,0 +1,11 @@
+1. Function setRewards(uint256 _fromEpoch, uint256 _toEpoch, uint248 _amountPerEpoch) (line 139-146) has access control issues. Reason: The function can be called by anyone, but it should only be callable by the governance address. Although it has the `onlyGovernance` modifier, if the governance address is compromised, an attacker could set rewards arbitrarily.
+
+2. Function whiteListLendingMarket(address _market, bool _isWhiteListed) (line 148-155) has access control issues. Reason: Similar to the `setRewards` function, this function can only be called by the governance address, but if the governance address is compromised, an attacker could whitelist any lending market, potentially leading to unauthorized access to the lending ledger.
+
+3. Function sync_ledger(address _lender, int256 _delta) (line 113-130) has access control issues. Reason: This function is called by the lending market (msg.sender), but there is no check to ensure that the calling market is indeed a legitimate lending market. If an attacker can impersonate a lending market, they could manipulate the ledger balances.
+
+4. Function checkpoint_market(address _market, uint256 _forwardTimestampLimit) (line 97-104) has access control issues. Reason: This function can be called by anyone, but it should only be callable by the governance or a trusted entity. If an attacker can call this function, they could manipulate the market's total balance history.
+
+5. Function checkpoint_lender(address _market, address _lender, uint256 _forwardTimestampLimit) (line 106-113) has access control issues. Reason: Similar to `checkpoint_market`, this function can be called by anyone, which could allow an attacker to manipulate the lender's balance history if they can impersonate a legitimate lender.
+
+In summary, the main access control issues arise from the reliance on the governance address and the lack of checks on the legitimacy of calling entities for certain functions.

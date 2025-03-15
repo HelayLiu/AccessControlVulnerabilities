@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 27, in execute_command
+    contractName, contractAbi, reads, reads2, writes =  getRWofContract(address=args.eth_address, network=args.network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 25, in getRWofContract
+    contractName, contractAbi, reads, reads2,  writes = analyzer.analyze(address=address, network=network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 96, in analyze
+    self.controldependency(function)
+  File "../SpCon/spcon/staticAnalyzer.py", line 141, in controldependency
+    = self.controldependency(f)
+  File "../SpCon/spcon/staticAnalyzer.py", line 141, in controldependency
+    = self.controldependency(f)
+  File "../SpCon/spcon/staticAnalyzer.py", line 141, in controldependency
+    = self.controldependency(f)
+  [Previous line repeated 985 more times]
+  File "../SpCon/spcon/staticAnalyzer.py", line 114, in controldependency
+    all_nodesSet = [f.nodes for f in all_functions if isinstance(f, Function)]
+  File "../SpCon/spcon/staticAnalyzer.py", line 114, in <listcomp>
+    all_nodesSet = [f.nodes for f in all_functions if isinstance(f, Function)]
+  File "../anaconda3/envs/spcon/lib/python3.8/abc.py", line 98, in __instancecheck__
+    return _abc_instancecheck(cls, instance)
+RecursionError: maximum recursion depth exceeded in comparison

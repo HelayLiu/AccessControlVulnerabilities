@@ -1,0 +1,7 @@
+OutPut:
+1. Function setRouter(address _router) (line 16-19) has the access control issues. Reason: The setRouter function is public and allows anyone to change the router address without any access control. This could lead to unauthorized entities gaining control over functions restricted by the onlyRouter modifier, such as mint and burn.
+
+Proof of Concept:
+- Deploy the contract.
+- Call the setRouter function from any address to set the router to an address you control.
+- Now, from the address you set as the router, you can call the mint and burn functions, which should be restricted to a specific router address.

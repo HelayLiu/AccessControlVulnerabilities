@@ -1,0 +1,12 @@
+Below is one potential access control issue discovered in the contract:
+
+1. Vulnerable Function: fundLoan (approximately lines 160–175)  
+ • Issue: The fundLoan() function lacks any restriction on who can trigger it. In contrast to other functions that verify the caller’s identity (e.g. ensuring msg.sender is the borrower, lender, or a pending party), fundLoan() only requires a valid ERC20 transferFrom (or amount_ equal to zero) but does not check that msg.sender is allowed to fund the loan.  
+ • Why It’s a Concern: Because no access control is imposed, any external account (including an attacker) may call fundLoan() and supply funds while specifying an arbitrary lender address (lender_ parameter). This can result in unwanted loan state changes – for example, an attacker may unintentionally or purposely “fund” the loan even before an approved lender has been set (or by specifying a different lender_ address) potentially subverting the intended funding mechanism and state management.  
+ • Proof of Concept:  
+  – An attacker first approves the contract to transfer a chosen ERC20 token from their account.  
+  – Then, the attacker calls fundLoan(attacker_address, arbitraryAmount) even though they are not an authorized lender.  
+  – Because there is no check on msg.sender, the _fundLoan(lender_) internal call is executed and the loan is “funded” as if coming from an approved source.  
+  – In addition, if there are any “extra” funds (via _getUnaccountedAmount) the contract automatically transfers them to the state variable _lender – which may be zero or not the attacker – thereby breaking the intended economic logic.  
+
+Developers should add a proper access control check (for example, ensuring that only the pre-designated lender—or an authorized caller per protocol rules—can trigger fundLoan()) to prevent unauthorized funding and state manipulation.

@@ -1,0 +1,17 @@
+Below is one key access control issue we discovered in the contract:
+
+1. Vulnerable Function: prepare (roughly lines 61–86 in the provided file)
+
+ • Reason: When prepare is called on the sending chain (i.e. when invariantData.sendingChainId equals chainId), the function assumes “the user is beginning the process” by "locking funds" for the later cross‐chain transaction. However, the function fails to check that the caller (msg.sender) is in fact the user (i.e. invariantData.user). This lack of authentication means that any party—even one unrelated to the intended user—can call prepare and supply an arbitrary user address in the invariantData structure while providing the funds. As a result, an attacker could “front‐run” or impersonate a user by locking funds under someone else’s identity. Later, when fulfill or cancel is called, the mismatch between who really sent the funds and the “user” stored in the transaction data could lead to failed signature validations or even allow an attacker to force a locked state in the protocol, potentially causing loss of funds or a denial‐of‐service on the expected counterparty’s ability to complete the transaction.
+
+  Proof‑of‑Concept Outline:
+   1. An attacker calls prepare on the sending side with a forged InvariantTransactionData that sets invariantData.user to a victim’s address while the attacker is paying the required amount (msg.value or approved tokens).
+   2. The contract accepts the call without verifying that msg.sender equals invariantData.user.
+   3. Later when fulfill is attempted (which requires a valid signature from invariantData.user), the victim won’t have signed the transaction—causing the transaction to be unfulfillable and leaving the funds locked in the contract.
+   4. In the worst case, this misattribution could be abused to “steal” liquidity or force transactions into an inconsistent state.
+
+It is recommended that the sender‐side branch of prepare include a check such as:
+  require(msg.sender == invariantData.user, "prepare: CALLER_MUST_BE_USER");
+to ensure that only the intended party may initiate the transaction procedure.
+
+No other functions in the contract appear to lack necessary sender authorization checks. (For example, removeLiquidity correctly uses msg.sender as the key into routerBalances, and the receiver branch of prepare does validate that msg.sender equals invariantData.router.)

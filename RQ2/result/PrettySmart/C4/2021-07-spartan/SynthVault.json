@@ -1,0 +1,12 @@
+{
+ "contract": "SynthVault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setParams",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

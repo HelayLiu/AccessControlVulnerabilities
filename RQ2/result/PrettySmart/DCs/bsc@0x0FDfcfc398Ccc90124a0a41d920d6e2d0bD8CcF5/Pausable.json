@@ -1,0 +1,22 @@
+{
+ "contract": "Pausable",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "pause",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,21 @@
+Below is an example of an audit write‐up for the Controller contract. In our review of the access control logic, we found that every externally callable (state‐changing) function is “protected” by one or more modifiers (onlyStrategist, onlyVault, onlyStrategy, onlyHarvester, notHalted) so that at first glance the contract looks “locked down.” However, there are two areas where the functions accept an arbitrary vault address as a parameter without checking (via the manager) that the vault is one that the caller “owns” or is otherwise meant to be changed. Although the intention appears to be that only the trusted strategist is allowed to change such settings, the use of an unchecked vault parameter means that a strategist (or an attacker who is able to obtain (or force) the strategist role) might “reach into” any vault that the manager is aware of and change its configuration. For example, a malicious strategist may set a very low cap or point a vault’s converter pointer toward a contract with malicious logic.
+
+Below we describe the two issues with approximate line numbers (using the file’s ordering):
+
+1. Vulnerable Function: setCap (approx. lines 142–172)  
+ • Issue: Although this function is gated by notHalted, onlyStrategist, and onlyStrategy(_strategy), it takes an arbitrary _vault address and then writes to _vaultDetails[_vault].caps without first verifying that _vault is “owned” or “allowed” (as is done in addStrategy and removeStrategy with a require(manager.allowedVaults(_vault)) check).  
+ • Risk: A malicious (or misbehaving) strategist can set or change the cap of a strategy for any vault—even ones that do not belong to the strategist’s intended scope. This could force withdrawals or alter allocations in unexpected ways (or even cause further downstream misbehavior if the cap is used to limit funds in the vault).  
+ • Proof-of-Concept:  
+  Assume an attacker has been assigned the strategiest role (i.e. manager.strategist() returns the attacker’s address). The attacker can call setCap with an arbitrary vault address X (even one that was never “added” by the vault itself) along with a maliciously low cap value. Later when funds are managed for vault X, the extremely low cap will trigger an unnecessary withdrawal and conversion flow – or, if the cap is set to 0, it might even disable operations that the vault expects to work normally.
+
+2. Vulnerable Function: setConverter (approx. lines 174–184)  
+ • Issue: This function is again callable only by the strategist (via onlyStrategist) but accepts an arbitrary _vault address and then sets the _vaultDetails[_vault].converter pointer. Unlike addStrategy and removeStrategy, it does not check whether the provided _vault is one that the strategist should be allowed to reconfigure (for example via a require(manager.allowedVaults(_vault)) test).  
+ • Risk: A rogue strategist could point one or more vault’s converter pointer to a malicious converter contract. When later functions (like earn or setCap, which assume that the converter is “good”) call methods on the converter it could lead to funds being wrongly converted or even stolen.  
+ • Proof-of-Concept:  
+  A malicious strategist calls setConverter with an arbitrary vault Y and a converter address that implements convert() so that it returns a minimal amount (or even burns the tokens). Later, when vault Y calls earn or setCap, the funds it sends to the converter will be “converted” into a token amount never expected by the vault—thus causing a loss of user funds or mismanagement of the vault’s balance.
+
+In summary, although the role‐checks (using onlyStrategist, etc.) are in place, these two functions allow the strategist full control over settings for any vault address without additional checks that the provided vault is “owned” or “approved,” thereby opening a potential vector for misconfiguration or abuse by a compromised strategist or a strategist role takeover.
+
+It is recommended that these functions add a check similar to require(manager.allowedVaults(_vault), "Vault not allowed") so that only vaults that have been registered/approved by the manager can be reconfigured.
+
+Please note that the approximate line numbers are based on the file’s ordering and may need to be adjusted in the final report.

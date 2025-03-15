@@ -1,0 +1,6 @@
+{
+    "CompilerVersion": "v0.8.4+commit.8d00100c",
+    "ContractName": ["TransactionManager"],
+    "via-ir":false,
+    "optimize":true
+}

@@ -1,0 +1,47 @@
+1. Function `setLevelManager(address _address)` (line 139-141) has access control issues. Reason: This function allows the owner to set a new level manager without any checks on the address being valid or whether the new level manager has the necessary permissions, which could lead to unauthorized access to functions that depend on the level manager.
+
+2. Function `setTreasury(address _address)` (line 144-146) has access control issues. Reason: Similar to the previous function, this function allows the owner to set a new treasury address without validating the address, which could lead to funds being sent to an unauthorized or malicious contract.
+
+3. Function `setFixedApr(uint256 _apr)` (line 149-151) has access control issues. Reason: This function allows the owner to set a new fixed APR without any checks on the value being reasonable or within a certain range, which could lead to economic exploits.
+
+4. Function `setLockPeriod(uint256 _lockPeriod)` (line 154-156) has access control issues. Reason: This function allows the owner to set a new lock period without any checks on the value being reasonable, which could lead to users being locked for an unreasonable amount of time.
+
+5. Function `setSecondaryStaking(address _address)` (line 159-161) has access control issues. Reason: This function allows the owner to set a new secondary staking address without validating the address, which could lead to unauthorized access to staking functions.
+
+6. Function `setFees(...)` (line 164-178) has access control issues. Reason: This function allows the owner to set various fee parameters without validating the addresses or fee percentages, which could lead to economic exploits or funds being sent to unauthorized addresses.
+
+7. Function `setWithdrawFee(uint256 _withdrawFee)` (line 181-185) has access control issues. Reason: This function allows the owner to set a new withdrawal fee without validating the value, which could lead to excessive fees being charged to users.
+
+8. Function `setAllowEarlyWithdrawal(bool status)` (line 188-190) has access control issues. Reason: This function allows the owner to enable or disable early withdrawals without any checks on the implications of this change, which could lead to user funds being locked unexpectedly.
+
+9. Function `setWaitForMaturity(bool enabled, uint256 duration)` (line 193-197) has access control issues. Reason: This function allows the owner to change the reward maturity settings without any checks on the implications of this change, which could lead to user funds being locked unexpectedly.
+
+10. Function `halt(bool status)` (line 200-202) has access control issues. Reason: This function allows the owner or admin to halt deposits without any checks on the implications of this change, which could lead to user funds being locked unexpectedly.
+
+11. Function `setRewardPerBlock(uint256 _rewardPerBlock)` (line 205-207) has access control issues. Reason: This function allows the owner or admin to set the reward per block without any checks on the value being reasonable, which could lead to economic exploits.
+
+12. Function `setAlwaysLockOnRegister(bool status)` (line 210-212) has access control issues. Reason: This function allows the owner or admin to change the locking behavior without any checks on the implications of this change, which could lead to user funds being locked unexpectedly.
+
+13. Function `withdrawToken(address token, uint256 amount)` (line 290-292) has access control issues. Reason: This function allows the owner or admin to withdraw any token from the contract without any checks on the token being a valid or expected token, which could lead to unauthorized withdrawals.
+
+14. Function `lock(address account, uint256 saleStart)` (line 295-303) has access control issues. Reason: This function allows the level manager to lock user accounts without any checks on whether the account is valid or whether the user has sufficient funds, which could lead to unauthorized locking of user accounts.
+
+15. Function `upPool(address targetPool)` (line 309-319) has access control issues. Reason: This function allows users to move their tokens to a higher pool without validating the target pool's address or whether the user has sufficient funds, which could lead to unauthorized actions.
+
+16. Function `receiveUpPool(address account, uint256 amount)` (line 324-335) has access control issues. Reason: This function allows any contract to call it and transfer tokens without validating the sender's address or whether the account is valid, which could lead to unauthorized actions.
+
+17. Function `updateDepositLockStartAdmin(address account, uint256 lockStart)` (line 340-343) has access control issues. Reason: This function allows the owner or admin to update the deposit lock start for any account without any checks on the implications of this change, which could lead to unauthorized locking of user accounts.
+
+18. Function `setHigherPools(address[] calldata pools)` (line 348-350) has access control issues. Reason: This function allows the owner or admin to set higher pools without validating the addresses, which could lead to unauthorized access to higher pools.
+
+19. Function `batchSyncLockStatus(address[] calldata addresses)` (line 353-356) has access control issues. Reason: This function allows the owner or admin to sync lock statuses for multiple addresses without validating the addresses, which could lead to unauthorized actions.
+
+20. Function `unlock(address account)` (line 370-372) has access control issues. Reason: This function allows the owner or admin to unlock any account without validating the account's status or whether the user has sufficient funds, which could lead to unauthorized unlocking of user accounts.
+
+21. Function `transferAccountBalance(address oldAccount, address newAccount)` (line 375-386) has access control issues. Reason: This function allows the owner to transfer balances between accounts without validating the accounts, which could lead to unauthorized transfers.
+
+22. Function `setMigrationPool(address pool)` (line 389-391) has access control issues. Reason: This function allows the owner or admin to set a migration pool without validating the address, which could lead to unauthorized access to migration functions.
+
+23. Function `migrateTokens()` (line 394-399) has access control issues. Reason: This function allows users to migrate their tokens without validating whether the user has sufficient funds or whether the migration pool is valid, which could lead to unauthorized migrations.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to potentially manipulate critical contract parameters or user balances.

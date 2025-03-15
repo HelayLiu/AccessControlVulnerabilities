@@ -1,0 +1,17 @@
+{
+ "contract": "BaseV2GaugeManager",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "addGauge",
+   "SHA3(msg.sender,0x3)"
+  ],
+  [
+   "whitelist",
+   "removeGauge",
+   "SHA3(msg.sender,0x3)"
+  ]
+ ],
+ "PC_bypassed": []
+}

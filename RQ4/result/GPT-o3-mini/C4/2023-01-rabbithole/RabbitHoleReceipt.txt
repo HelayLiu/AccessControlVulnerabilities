@@ -1,0 +1,26 @@
+Below is one example of an access control issue found in the contract:
+
+1. Modifier onlyMinter (around line 25)
+  Issue: The modifier is intended to restrict access to the mint function so that only the designated minter (minterAddress) can call it. However, it is implemented as follows:
+    modifier onlyMinter() {
+      msg.sender == minterAddress;
+      _;
+    }
+  There is no require (or any other form of check) that stops execution if msg.sender is not equal to minterAddress. The boolean comparison is computed but its result is neither used nor enforced, meaning that anyone can call public functions applying this modifier.
+
+  Proof of Concept:
+  1. Deploy the contract and call initialize to set the minterAddress (for example, to an address A).
+  2. From any other account (e.g. account B), call the mint() function (which uses the onlyMinter modifier).
+  3. Since the check in onlyMinter does not revert for account B, the mint() function will successfully execute even though account B is not the designated minter.
+  4. Account B now mints a new token, bypassing intended access control.
+
+  Vulnerable Function: mint(address to_, string memory questId_)
+    Approximate Line: 43-49 (depending on the exact file formatting)
+  Reason: The onlyMinter modifier fails to enforce an actual check (a require statement) to ensure that msg.sender is equal to minterAddress. This allows an attacker to call mint() and mint tokens arbitrarily.
+
+Developers should update the modifier to correctly enforce the access control. For example, changing it to:
+
+  modifier onlyMinter() {
+    require(msg.sender == minterAddress, "Not authorized minter");
+    _;
+  }

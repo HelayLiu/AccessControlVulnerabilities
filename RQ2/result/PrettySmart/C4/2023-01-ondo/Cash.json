@@ -1,0 +1,22 @@
+{
+ "contract": "Cash",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "Rolebased",
+   "mint",
+   "SHA3(msg.sender,SHA3(rolename,0x65))"
+  ],
+  [
+   "whitelist",
+   "mint",
+   "SHA3(msg.sender,0x2bec0cbd41c20dc66ebdfa21b764cc6f8a94975c558341c61b9762627f58ab38)"
+  ],
+  [
+   "Rolebased",
+   "initialize",
+   "SHA3(msg.sender,SHA3(rolename,0x65))"
+  ]
+ ],
+ "PC_bypassed": []
+}

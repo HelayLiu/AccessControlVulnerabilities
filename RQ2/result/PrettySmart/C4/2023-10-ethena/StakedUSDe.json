@@ -1,0 +1,18 @@
+{
+ "contract": "StakedUSDe",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "acceptAdmin",
+   "0x2"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "owner",
+   "acceptAdmin",
+   "0x2"
+  ]
+ ]
+}

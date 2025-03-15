@@ -1,0 +1,21 @@
+1. Function `sweep()` (line 292-298) has access control issues. Reason: The function can only be called by the `daoAddress`, but there is no modifier or check to ensure that the caller is indeed the `daoAddress`. This could allow unauthorized users to call this function and potentially withdraw funds.
+
+2. Function `syncBranchBridgeAgent(address _newBranchBridgeAgent, uint24 _branchChainId)` (line 284-287) has access control issues. Reason: The function is intended to be called by the port, but there is no modifier or check to ensure that the caller is indeed the port. This could allow unauthorized users to set a new branch bridge agent.
+
+3. Function `approveBranchBridgeAgent(uint256 _branchChainId)` (line 276-280) has access control issues. Reason: The function does not have a modifier to restrict access to only authorized users (e.g., the manager). This could allow unauthorized users to approve branch bridge agents.
+
+4. Function `callOutAndBridge(...)` (line 164-165) has access control issues. Reason: The function is public and does not have any access control checks to restrict who can call it. This could allow any user to initiate a call and bridge tokens without proper authorization.
+
+5. Function `callOut(...)` (line 150-151) has access control issues. Reason: Similar to `callOutAndBridge`, this function is public and lacks access control checks, allowing any user to call it and potentially manipulate the state of the contract.
+
+6. Function `bridgeIn(...)` (line 218-219) has access control issues. Reason: This function is public and does not have any access control checks, allowing any user to bridge tokens into the contract without proper authorization.
+
+7. Function `bridgeInMultiple(...)` (line 226-227) has access control issues. Reason: Similar to `bridgeIn`, this function is public and lacks access control checks, allowing any user to bridge multiple tokens into the contract without proper authorization.
+
+8. Function `retrySettlement(...)` (line 112-113) has access control issues. Reason: This function is public and does not have any access control checks, allowing any user to retry settlements without proper authorization.
+
+9. Function `redeemSettlement(...)` (line 104-105) has access control issues. Reason: This function is public and does not have any access control checks, allowing any user to redeem settlements without proper authorization.
+
+10. Function `getSettlementEntry(...)` (line 90-91) has access control issues. Reason: This function is public and does not have any access control checks, allowing any user to access settlement data without proper authorization.
+
+In summary, the contract has multiple functions that lack proper access control checks, which could lead to unauthorized access and manipulation of the contract's state and funds.

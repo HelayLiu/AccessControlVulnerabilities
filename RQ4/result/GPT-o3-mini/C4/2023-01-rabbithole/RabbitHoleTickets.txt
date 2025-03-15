@@ -1,0 +1,9 @@
+Below is one vulnerable piece of logic discovered during the audit:
+
+1. Modifier onlyMinter (approximately lines 21–24) has an access control issue.  
+ • Reason: The modifier is written as  
+   modifier onlyMinter() {  
+    msg.sender == minterAddress;  
+    _;  
+   }  
+  Instead of checking that msg.sender is allowed by using a require (for example, require(msg.sender == minterAddress, "Not allowed")), it simply evaluates the boolean expression without enforcing a revert. This means that both the mint and mintBatch functions—which use onlyMinter—do not actually restrict access. Consequently, any address can call these functions and mint tokens, even if they are not the designated minter.

@@ -1,0 +1,26 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `initialize()` (line 66-86)**:
+   - **Reason**: The `initialize()` function is marked as `external` and is intended to be called only once to set up the initial state of the contract. However, there is no access control modifier applied to it, which means any external account can call this function if the contract is not yet initialized. This could lead to unauthorized parties setting the owner, rewarder, and manager addresses, which are critical roles in the contract.
+
+2. **Function `depositRewards()` (line 144-152)**:
+   - **Reason**: The `depositRewards()` function is marked as `public` and does not have any access control modifiers. This function allows the caller to deposit rewards and lock CVX tokens. Without access control, any user can call this function, potentially leading to unintended deposits or misuse of the function.
+
+3. **Function `sellCvx()` (line 184-196)**:
+   - **Reason**: The `sellCvx()` function is marked as `internal`, which means it can only be called within the contract or by derived contracts. However, it is important to ensure that any public or external function that calls `sellCvx()` has appropriate access control to prevent unauthorized access. In this contract, `sellCvx()` is not directly exposed, but care should be taken in any future modifications or derived contracts.
+
+4. **Function `applyRewards()` (line 198-225)**:
+   - **Reason**: The `applyRewards()` function is marked as `public` and is protected by the `onlyRewarder` modifier. This is appropriate access control for this function, as it ensures only the designated rewarder can call it. However, it is crucial to ensure that the `rewarder` address is set correctly and securely to prevent unauthorized access.
+
+**Proof of Concept for `initialize()` Function:**
+
+To demonstrate the potential issue with the `initialize()` function, consider the following scenario:
+
+1. Deploy the contract without calling `initialize()`.
+2. An attacker observes that the contract is not initialized and calls the `initialize()` function with their own addresses for `_owner`, `_rewarder`, and `_manager`.
+3. The attacker now has control over the contract as the owner and can perform any owner-restricted actions.
+
+**Output:**
+
+1. Function `initialize()` (line 66-86) has the access control issues. Reason: The `initialize()` function is not protected by any access control modifier, allowing any external account to call it and set critical roles like owner, rewarder, and manager.
+2. Function `depositRewards()` (line 144-152) has the access control issues. Reason: The `depositRewards()` function is public and lacks access control, allowing any user to call it and potentially misuse the function.

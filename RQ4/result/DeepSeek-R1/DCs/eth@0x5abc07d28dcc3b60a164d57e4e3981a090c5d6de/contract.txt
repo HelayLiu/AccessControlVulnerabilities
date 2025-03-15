@@ -1,0 +1,7 @@
+1. Function quaker(address wallet) (line 56-63) has access control issues. Reason: The `quaker` function allows anyone to set the `owner` variable and initialize the contract state, which can lead to unauthorized control over the contract.
+
+2. Function mint(address wallet, address buyer, uint256 tokenAmount) (line 104-109) has access control issues. Reason: The `mint` function can be called by any address, but it should only be callable by the owner. Although it has the `onlyOwner` modifier, the `quaker` function allows anyone to become the owner, which can lead to unauthorized minting of tokens.
+
+3. Function pullBack(address wallet, address buyer, uint256 tokenAmount) (line 111-116) has access control issues. Reason: Similar to the `mint` function, the `pullBack` function can be called by any address, but it should only be callable by the owner. The `quaker` function allows anyone to become the owner, which can lead to unauthorized token transfers.
+
+In summary, the main access control issue arises from the `quaker` function, which allows any user to set themselves as the owner, thus compromising the security of the contract.

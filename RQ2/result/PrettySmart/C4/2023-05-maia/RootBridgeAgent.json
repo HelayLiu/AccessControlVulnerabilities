@@ -1,0 +1,12 @@
+{
+ "contract": "RootBridgeAgent",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "uniswapV3SwapCallback",
+   "SHA3(msg.sender,0x8)"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,17 @@
+{
+ "contract": "ERC20Mock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "datadriven2",
+   "burnFrom",
+   "SHA3(msg.sender,0x8)"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x8)"
+  ]
+ ],
+ "PC_bypassed": []
+}

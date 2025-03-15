@@ -1,0 +1,9 @@
+1. Function AditusToken() (line 66-70) has access control issues. Reason: The constructor AditusToken() assigns the entire initial token supply to the creator (msg.sender) without any checks or restrictions, which could lead to potential abuse if the contract is deployed by an unauthorized party.
+
+2. Function transfer(address _to, uint256 _value) (line 30-38) has access control issues. Reason: The function does not check if the caller has sufficient balance before transferring tokens. If the caller's balance is insufficient, it will still attempt to execute the transfer, which could lead to unexpected behavior.
+
+3. Function transferFrom(address _from, address _to, uint256 _value) (line 40-50) has access control issues. Reason: The function does not check if the caller is allowed to transfer tokens on behalf of the _from address. If the allowance is not set properly, it could lead to unauthorized transfers.
+
+4. Function approve(address _spender, uint256 _value) (line 52-56) has access control issues. Reason: The function allows any user to approve any amount of tokens for any spender without any checks, which could lead to potential abuse if the spender is malicious.
+
+5. Function approveAndCall(address _spender, uint256 _value, bytes _extraData) (line 72-80) has access control issues. Reason: The function allows any user to approve any amount of tokens for any spender and then call the spender's contract without any checks, which could lead to potential abuse if the spender is malicious. Additionally, it uses a low-level call which can lead to unexpected behavior if the receiving contract does not implement the expected function.

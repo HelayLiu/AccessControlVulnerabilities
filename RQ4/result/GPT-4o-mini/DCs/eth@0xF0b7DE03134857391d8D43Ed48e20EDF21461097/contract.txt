@@ -1,0 +1,9 @@
+1. Function `init()` (line 20-30) has access control issues. Reason: The `init()` function can be called by anyone, allowing any user to change the ownership of the contract and set the token name and symbol without any restrictions. This could lead to unauthorized control over the contract.
+
+2. Function `setContractURI()` (line 54-56) has access control issues. Reason: The `setContractURI()` function can only be called by the owner, but since the `init()` function allows anyone to change the owner, it can lead to a situation where an unauthorized user can set the contract URI.
+
+3. Function `setTokenURI()` (line 59-61) has access control issues. Reason: Similar to `setContractURI()`, this function can only be called by the owner, but the owner can be changed to an unauthorized address through the `init()` function.
+
+4. Function `setBaseURI()` (line 64-66) has access control issues. Reason: This function also can only be called by the owner, and the owner can be changed to an unauthorized address through the `init()` function.
+
+In summary, the `init()` function allows for significant access control issues by enabling any user to change the ownership of the contract, which can lead to unauthorized access to other functions that are restricted to the owner.

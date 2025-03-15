@@ -1,0 +1,11 @@
+1. Function withdrawNative(uint256 _amount) (line 42-44) has access control issues. Reason: The function allows any approved caller to withdraw native tokens from the contract without additional checks on the amount being withdrawn, which could lead to unauthorized withdrawals if the approved caller is compromised.
+
+2. Function withdrawERC20(address _token, uint256 _amount) (line 46-48) has access control issues. Reason: Similar to withdrawNative, this function allows any approved caller to withdraw ERC20 tokens without checks on the amount, which could be exploited if the approved caller is compromised.
+
+3. Function withdrawERC721(address _token, uint256 _tokenId) (line 50-52) has access control issues. Reason: This function allows any approved caller to withdraw an ERC721 token from the contract without checks on the tokenId, which could lead to unauthorized withdrawals if the approved caller is compromised.
+
+4. Function call(Call[] calldata calls) (line 54-70) has access control issues. Reason: This function allows any approved caller to execute arbitrary calls to other contracts, which could be exploited if the approved caller is compromised, potentially leading to loss of funds or unauthorized actions.
+
+5. Function payableCall(PayableCall[] calldata calls) (line 72-100) has access control issues. Reason: This function allows any approved caller to execute arbitrary calls with Ether transfers to other contracts, which could be exploited if the approved caller is compromised, leading to loss of funds or unauthorized actions. 
+
+In summary, the access control modifier `requiresApprovedCaller` does not sufficiently protect against potential exploits if an approved caller is compromised, as it allows them to withdraw funds or execute arbitrary calls without further restrictions.

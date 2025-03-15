@@ -1,0 +1,29 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `initialize` (line 168-182)**:
+   - **Reason**: The `initialize` function can be called by any external account, and it sets critical state variables such as `globalState.price`, `globalState.unlocked`, and `globalState.tick`. This function should be restricted to be called only once or by a specific privileged account to prevent unauthorized initialization or re-initialization of the pool.
+
+2. **Function `setIncentive` (line 1080-1085)**:
+   - **Reason**: The `setIncentive` function is intended to be called by the farming address from the factory. However, the function only checks if the caller is the farming address but does not verify if the farming address itself is correctly set or if it has been changed maliciously. This could lead to unauthorized changes to the `activeIncentive`.
+
+3. **Function `swap` (line 905-961)**:
+   - **Reason**: The `swap` function does not have any access control modifiers, allowing any external account to perform swaps. While this might be intended for a decentralized exchange, it is crucial to ensure that the function is protected against reentrancy attacks, especially since it involves transferring tokens and updating state variables.
+
+4. **Function `swapSupportingFeeOnInputTokens` (line 963-1030)**:
+   - **Reason**: Similar to the `swap` function, this function lacks access control and reentrancy protection. It allows any external account to perform swaps with fee support, which could be exploited if not properly secured.
+
+5. **Function `flash` (line 1250-1298)**:
+   - **Reason**: The `flash` function allows for flash loans, which can be a vector for attacks if not properly secured. Although it requires a callback, ensuring that the callback is from a trusted source is crucial to prevent unauthorized access or manipulation.
+
+**Proof of Concept for `initialize` Function**:
+To demonstrate the potential issue with the `initialize` function, consider the following scenario:
+- An attacker deploys the contract and immediately calls the `initialize` function with a chosen `initialPrice`.
+- This sets the `globalState.price`, `globalState.unlocked`, and `globalState.tick` to values controlled by the attacker.
+- If the contract is intended to be initialized by a specific account or only once, this could disrupt the intended operation of the contract.
+
+**Output**:
+1. Function `initialize` (line 168-182) has access control issues. Reason: It can be called by any external account to set critical state variables, which should be restricted to prevent unauthorized initialization.
+2. Function `setIncentive` (line 1080-1085) has access control issues. Reason: It relies on the farming address from the factory, which could be manipulated if not properly verified.
+3. Function `swap` (line 905-961) has access control issues. Reason: It lacks access control and reentrancy protection, allowing any external account to perform swaps.
+4. Function `swapSupportingFeeOnInputTokens` (line 963-1030) has access control issues. Reason: It lacks access control and reentrancy protection, allowing any external account to perform swaps with fee support.
+5. Function `flash` (line 1250-1298) has access control issues. Reason: It allows for flash loans without verifying the callback source, which could be exploited.

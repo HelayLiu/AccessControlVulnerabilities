@@ -1,0 +1,9 @@
+1. Function `changeNodePrice(uint256 newNodePrice)` (line 139-141) has access control issues. Reason: This function can change the `nodePrice` variable without any access control checks, allowing any user to modify the price of nodes, which could lead to financial exploitation.
+
+2. Function `changeRewardPerNode(uint256 _rewardPerDay)` (line 143-145) has access control issues. Reason: This function can change the `rewardPerDay` variable without any access control checks, allowing any user to modify the reward rate, which could lead to financial exploitation.
+
+3. Function `setTeamWallet(address _wallet)` (line 165-167) has access control issues. Reason: This function can change the `teamWallet` variable without any access control checks, allowing any user to redirect funds to an arbitrary address, which could lead to loss of funds.
+
+4. Function `setTeamFees(uint256 _teamFee)` (line 169-171) has access control issues. Reason: This function can change the `teamFee` variable without any access control checks, allowing any user to modify the fee structure, which could lead to financial exploitation.
+
+5. Function `setMaxNodes(uint256 _count)` (line 173-175) has access control issues. Reason: This function can change the `maxNodes` variable without any access control checks, allowing any user to increase the maximum number of nodes, which could lead to resource exhaustion or financial exploitation.

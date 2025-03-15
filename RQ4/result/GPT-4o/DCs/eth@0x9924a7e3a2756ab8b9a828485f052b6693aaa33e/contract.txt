@@ -1,0 +1,9 @@
+OutPut:
+
+1. Function `UBSexToken()` (line 144-148) has the access control issues. Reason: The constructor function `UBSexToken()` sets the `owner` of the contract to the address that deploys the contract. However, it does not have any access control modifiers, which means it can be called by anyone if the contract is not deployed correctly, potentially allowing them to reset the owner.
+
+2. Function `transfer(address _to, uint _value)` (line 88-97) has the access control issues. Reason: The function does not have an access control modifier to restrict who can call it. Although it checks for frozen accounts and liquidity, it does not restrict the caller, allowing any user to transfer tokens.
+
+3. Function `transferFrom(address _from, address _to, uint _value)` (line 128-137) has the access control issues. Reason: Similar to the `transfer` function, it lacks an access control modifier to restrict who can call it. This function allows any user to transfer tokens from one account to another, provided they have an allowance, but it does not restrict the caller.
+
+4. Function `approve(address _spender, uint _value)` (line 139-144) has the access control issues. Reason: The function does not have an access control modifier to restrict who can call it. This allows any user to approve an allowance for a spender, which could lead to unauthorized approvals if not managed correctly.

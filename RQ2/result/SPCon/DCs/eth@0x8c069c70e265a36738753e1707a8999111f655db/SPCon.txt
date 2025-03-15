@@ -1,0 +1,50 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 2 integrity policies
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0x8c069c70e265a36738753e1707a8999111f655db-EtherCartel.sol:70:5: Warning: Function state mutability can be restricted to pure
+    function devFee(uint256 amount) public view returns(uint256){
+    ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['seedMarket']
+INFO:symExec:SymExecEVM().symExec: seedMarket(uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['seedMarket']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0x8c069c70e265a36738753e1707a8999111f655db-EtherCartel.sol:70:5: Warning: Function state mutability can be restricted to pure
+    function devFee(uint256 amount) public view returns(uint256){
+    ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['getFreeKilo']
+INFO:symExec:SymExecEVM().symExec: getFreeKilo()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0x8c069c70e265a36738753e1707a8999111f655db-EtherCartel.sol:70:5: Warning: Function state mutability can be restricted to pure
+    function devFee(uint256 amount) public view returns(uint256){
+    ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['seedMarket', 'getFreeKilo']
+INFO:symExec:SymExecEVM().symExec: seedMarket(uint256)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: getFreeKilo()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['seedMarket', 'getFreeKilo']
+WARNING:CryticCompile:Warning: crytic-export/etherscan-contracts2/0x8c069c70e265a36738753e1707a8999111f655db-EtherCartel.sol:70:5: Warning: Function state mutability can be restricted to pure
+    function devFee(uint256 amount) public view returns(uint256){
+    ^
+Spanning multiple lines.
+
+
+INFO:symExec:Test Sequence: ['DrugDealer']
+INFO:symExec:SymExecEVM().symExec: DrugDealer()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['DrugDealer']
+INFO:symExec:Testing time: 18.188145637512207 seconds

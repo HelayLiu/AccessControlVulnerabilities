@@ -1,0 +1,1 @@
+1. Function swap() (line 42-66) has access control issues. Reason: The swap function is public and can be called by any address, allowing unauthorized users to execute swaps and potentially drain funds from the contract. There are no access control checks to restrict who can invoke this function, which could lead to malicious actors exploiting it.

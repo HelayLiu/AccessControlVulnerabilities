@@ -1,0 +1,25 @@
+Below is one key issue found during the audit:
+
+1. Vulnerable Function: transferFrom (approximately lines 47–68)  
+ • Issue Details:  
+  – The intended behavior of transferFrom is to check that the account _from holds at least the amount to be transferred and that msg.sender has been approved to spend at least that amount (i.e. require balances[_from] ≥ _value and allowed[_from][msg.sender] ≥ _value).  
+  – However, the implementation mistakenly uses the conditions “fromBalance <= _value” and “allowed[_from][msg.sender] <= _value” (lines 55–56) which are reversed. This logic will approve a transfer when the from–balance and allowance are lower than the requested amount rather than higher.  
+  – As a result, an attacker (or any caller) may call transferFrom to transfer funds from an arbitrary address without proper authorization, since the check does not enforce that the _from account holds enough tokens or that a sufficient allowance has been granted.  
+  – This flawed check constitutes an access control issue because it enables unauthorized token transfers by bypassing the proper “only allowed/spender” controls.  
+
+ • Proof of Concept (PoC):  
+  Assume an attacker wants to transfer tokens from account A (which has only 1 token) to his own address. Even if account A never approved the attacker, the attacker can execute the following scenario:  
+   - Attacker calls transferFrom(A, attacker, _value) with _value = 50 (greater than A’s balance of 1).  
+   - In the function, the following checks occur:  
+    • fromBalance = 1, so “1 <= 50” is true  
+    • allowed[A][attacker] is 0 (or any number less than 50), so “0 <= 50” is also true  
+    • The overflow check passes as normal.  
+   - The contract then subtracts _value from A’s balance (resulting in an underflow) and adds _value to the attacker’s balance.  
+   - Thus the attacker can illicitly “transfer” tokens from A to himself.  
+
+ • Conclusion:  
+  The transferFrom function fails to enforce proper access control over token transfers due to the reversed conditions on balance and allowance. An attacker can exploit this flaw to move tokens from any account regardless of proper approval.
+
+It is recommended that the token contract be revised so that the transferFrom function requires:  
+  if (fromBalance >= _value && allowance >= _value && !overflowed) { … }  
+which would properly restrict transfers to approved amounts.

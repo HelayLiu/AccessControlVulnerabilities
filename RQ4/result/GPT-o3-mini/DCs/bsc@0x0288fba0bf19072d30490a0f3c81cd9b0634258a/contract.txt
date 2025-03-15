@@ -1,0 +1,25 @@
+Below is one example of a problematic function from the contract, along with a proof‐of‐concept scenario that shows how an attacker could abuse it, followed by an explanation of the issue:
+
+─────────────────────────────  
+1. Vulnerable Function: depositFromOtherContract (≈line 108–115)  
+─────────────────────────────  
+Issue: This external function is intended to let an “other contract” deposit tokens on behalf of a user. However, it does not enforce any restriction on msg.sender—it accepts any caller—and it accepts an arbitrary “_from” address. In contrast to the regular deposit() function (which uses safeTransferFrom(msg.sender, …) to pull funds), depositFromOtherContract calls a private routine (_autoDeposit) that updates the state for the supplied _from without actually pulling tokens from _from (the only token call is an approve call made by the contract itself). Thus, an attacker can call depositFromOtherContract with a chosen target address (or even himself) and have the contract credit a “deposit” without any proper token transfer from that account.
+
+Proof of Concept Scenario:
+(a) An attacker calls depositFromOtherContract and sets the _from parameter to his own (or another victim’s) address.
+(b) Because there is no access control on depositFromOtherContract—and no check that msg.sender must be, for example, a designated authorized contract—the function immediately calls _autoDeposit.
+(c) The _autoDeposit function (≈line 117–140) updates user_deposits[_from] and increases the target user’s deposit and associated reward–tracking counters but does not call safeTransferFrom to pull tokens from _from.
+(d) As a result, the attacker (or the victim, if tricked) ends up with a “deposit” recorded on chain even though no tokens were transferred in, undermining the intended accounting and opening the door for further exploits (such as claiming rewards on a deposit that was never backed by actual tokens).
+
+Reason: The depositFromOtherContract function lacks proper access control verification and does not verify that msg.sender is an allowed contract (or that msg.sender equals _from). In addition, it fails to actually transfer tokens from the _from account. Together these issues let an attacker “credit” deposits (or possibly manipulate deposits recorded on behalf of arbitrary accounts) without the user’s control.
+
+─────────────────────────────  
+
+Recommendation:
+• Add an access control modifier (for example, only allowing a designated contract or owner to call depositFromOtherContract).
+• Verify that msg.sender is authorized or even matches _from if that is the intended design.
+• Ensure that funds are actually transferred—instead of simply updating state—by using safeTransferFrom(_from, address(this), _depositAmount) (after the proper allowance has been granted).
+
+─────────────────────────────  
+
+This is the primary access control issue discovered in the contract.

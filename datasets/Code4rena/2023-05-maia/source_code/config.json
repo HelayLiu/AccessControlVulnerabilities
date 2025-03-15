@@ -1,0 +1,6 @@
+{
+    "CompilerVersion": "v0.8.18+commit.c7dfd78e",
+    "ContractName": ["BranchPort","RootBridgeAgent","CoreBranchRouter","UlyssesRouter","UniswapV3Staker"],
+    "via-ir":true,
+    "optimize":true
+}

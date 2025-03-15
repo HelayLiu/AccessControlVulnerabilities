@@ -1,0 +1,35 @@
+Upon reviewing the provided smart contract code, I have identified several potential access control issues. Here are the details:
+
+1. **Function `RC()` (lines 144-168)**
+   - **Reason**: The constructor of the `RC` contract calls `tokenSaleContract.addMeByRC()`, which registers the contract as an authorized RC contract in the `TokenSale` contract. However, there is no access control to ensure that only authorized entities can deploy this contract and call this function. This could allow unauthorized entities to deploy the `RC` contract and register it with the `TokenSale` contract, potentially leading to unauthorized access to token sale functionalities.
+
+2. **Function `RCpro()` (lines 308-332)**
+   - **Reason**: Similar to the `RC` constructor, the `RCpro` constructor calls `tokenSaleContract.addMeByRC()`. There is no access control to ensure that only authorized entities can deploy this contract and call this function. This could allow unauthorized entities to deploy the `RCpro` contract and register it with the `TokenSale` contract, potentially leading to unauthorized access to token sale functionalities.
+
+3. **Function `addMeByRC()` (lines 631-636)**
+   - **Reason**: This function allows any contract to register itself as an authorized RC contract in the `TokenSale` contract, provided the transaction origin is the owner. However, this check is insufficient because it does not verify the legitimacy of the calling contract. An attacker could deploy a malicious contract and call this function to gain unauthorized access to the `TokenSale` functionalities.
+
+4. **Function `withdraw()` in `RC` and `RCpro` contracts (lines 292-294 and 486-488)**
+   - **Reason**: The `withdraw` function allows the `onlyTokenSaleOwner` to transfer any amount of ether from the contract to a specified address. While this function is protected by the `onlyTokenSaleOwner` modifier, if the ownership of the `TokenSale` contract is compromised, an attacker could exploit this function to drain funds from the contract.
+
+5. **Function `withdrawTokens()` in `TokenSale` contract (lines 670-672)**
+   - **Reason**: This function allows the `onlyOwner` to transfer any amount of tokens from the contract to a specified address. If the ownership of the `TokenSale` contract is compromised, an attacker could exploit this function to drain tokens from the contract.
+
+6. **Function `setTokenContract()`, `setWalletAddress()`, `setAdvisorAddress()`, `setAdvisorFee()`, and `setRateContract()` in `TokenSale` contract (lines 674-694)**
+   - **Reason**: These functions allow the `onlyOwner` to change critical contract parameters, such as the token contract address, wallet address, advisor address, advisor fee, and rate contract address. If the ownership of the `TokenSale` contract is compromised, an attacker could exploit these functions to redirect funds or manipulate token sale parameters.
+
+**Proof of Concept for Issue 3:**
+To demonstrate the potential exploit of the `addMeByRC()` function, an attacker could deploy a malicious contract and call this function to register itself as an authorized RC contract:
+
+```solidity
+contract MaliciousRC {
+    TokenSale tokenSaleContract;
+
+    constructor(address _tokenSaleContract) public {
+        tokenSaleContract = TokenSale(_tokenSaleContract);
+        tokenSaleContract.addMeByRC();
+    }
+}
+```
+
+By deploying the `MaliciousRC` contract with the address of the `TokenSale` contract, the attacker could register the malicious contract as an authorized RC contract, potentially gaining unauthorized access to token sale functionalities.

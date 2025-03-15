@@ -1,0 +1,43 @@
+{
+ "contract": "ERCDDAToken",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "mintToken",
+   "0x0"
+  ],
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x5)"
+  ],
+  [
+   "owner",
+   "burn",
+   "0x0"
+  ],
+  [
+   "owner",
+   "freezeAccount",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "owner",
+   "mintToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "burn",
+   "0x0"
+  ],
+  [
+   "owner",
+   "freezeAccount",
+   "0x0"
+  ]
+ ]
+}

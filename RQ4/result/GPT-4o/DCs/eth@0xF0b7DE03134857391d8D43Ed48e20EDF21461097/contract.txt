@@ -1,0 +1,7 @@
+OutPut:
+1. Function `init()` (line 28-45) has the access control issues. Reason: The `init()` function is marked as `external` and does not have any access control modifiers like `onlyOwner`. This means that any external account can call this function to change the owner of the contract and set the token name and symbol, which can lead to unauthorized control over the contract. 
+
+Proof of Concept:
+- Deploy the contract.
+- Call the `init()` function from any account other than the owner with a new address for `newOwner`, and arbitrary values for `tokenName` and `tokenSymbol`.
+- Observe that the ownership of the contract is transferred to `newOwner`, and the token name and symbol are updated, demonstrating the lack of access control.

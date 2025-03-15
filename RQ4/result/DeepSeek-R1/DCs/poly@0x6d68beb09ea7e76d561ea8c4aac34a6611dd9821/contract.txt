@@ -1,0 +1,21 @@
+1. Function setOracleAddress(address oracle) (line 156-158) has access control issues. Reason: The function can be called by any account, allowing anyone to set the oracle address, which could lead to manipulation of price data.
+
+2. Function setLeveragePoolInfo(address payable _feeAddress,address leveragePool,address hedgePool, address oracle,address _swapRouter,address swaplib,address rebaseTokenA,address rebaseTokenB, uint256 fees,uint256 _threshold,uint256 rebaseWorth) (line 132-134) has access control issues. Reason: This function can be called by the owner only, but if the owner is compromised, it could lead to unauthorized changes to the leverage pool configuration.
+
+3. Function setLeverageFee(uint256 _buyFee,uint256 _sellFee,uint256 _rebalanceFee) (line 118-120) has access control issues. Reason: This function can be called by the owner or origin, which could allow unauthorized users to set fees if they can impersonate the origin.
+
+4. Function setSwapRoutingPath(address token0,address token1,address[] calldata swapPath) (line 104-106) has access control issues. Reason: This function can be called by any origin, which could allow unauthorized users to set swap paths.
+
+5. Function setManager(address newManager) (line 66-68) has access control issues. Reason: This function can be called by the owner, but if the owner is compromised, it could lead to unauthorized changes to the manager.
+
+6. Function transferOwnership(address _newOwner) (line 40-42) has access control issues. Reason: This function can be called by any account, allowing anyone to transfer ownership of the contract, which could lead to unauthorized control over the contract.
+
+7. Function transferOrigin(address _newOrigin) (line 50-52) has access control issues. Reason: This function can be called by any account, allowing anyone to change the origin address, which could lead to unauthorized control over the contract.
+
+8. Function setOperator(uint256 index,address newAddress) (line 80-82) has access control issues. Reason: This function can be called by the owner or origin, which could allow unauthorized users to set operators if they can impersonate the origin.
+
+9. Function setSwapRouterAddress(address _swapRouter) (line 90-92) has access control issues. Reason: This function can be called by the owner or origin, which could allow unauthorized users to set the swap router address if they can impersonate the origin.
+
+10. Function setFeeAddress(address payable addrFee) (line 138-140) has access control issues. Reason: This function can be called by the owner, but if the owner is compromised, it could lead to unauthorized changes to the fee address.
+
+These functions lack proper access control mechanisms, which could lead to unauthorized access and manipulation of critical contract parameters.

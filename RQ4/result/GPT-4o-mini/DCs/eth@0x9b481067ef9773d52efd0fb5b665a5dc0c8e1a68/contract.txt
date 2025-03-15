@@ -1,0 +1,7 @@
+1. Function owned() (line 10-12) has access control issues. Reason: The owned() function can change the owner variable, which is significant because with the role, the new owner can perform any action on the contract, including freezing accounts, burning tokens, and minting new tokens without any access control checks.
+
+2. Function freezeAccount(address target, bool freeze) (line 36-39) has access control issues. Reason: The function allows the owner to freeze any account, but if the owner is compromised, the attacker can freeze any account, preventing legitimate users from transferring tokens.
+
+3. Function burn(uint256 _value) (line 42-47) has access control issues. Reason: The burn function allows the owner to destroy tokens from their own balance, but if the owner is compromised, the attacker can burn tokens without any checks on the legitimacy of the action.
+
+4. Function mintToken(address target, uint256 mintedAmount) (line 50-53) has access control issues. Reason: The mintToken function allows the owner to create new tokens and assign them to any address, which can lead to inflation and devaluation of the token if the owner is compromised.

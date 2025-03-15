@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 27, in execute_command
+    contractName, contractAbi, reads, reads2, writes =  getRWofContract(address=args.eth_address, network=args.network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 25, in getRWofContract
+    contractName, contractAbi, reads, reads2,  writes = analyzer.analyze(address=address, network=network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 74, in analyze
+    for item in os.listdir(contract_dir):
+FileNotFoundError: [Errno 2] No such file or directory: '../ac_datasets/realword/fantom@0x660184ce8af80e0b1e5a1172a16168b15f4136bf/result/spcon_temp/crytic-export/etherscan-contracts2'

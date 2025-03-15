@@ -1,0 +1,15 @@
+<think>
+Okay, let's start by looking at the FeeSplitter contract. The first thing I notice is that it's using the Security contract, which probably has some access control modifiers like onlyManager. Let me check the functions and their modifiers.
+
+The setCurves function is public and doesn't have any modifiers. Wait, that's a problem. The Curves contract is a dependency here, and allowing anyone to set it could let an attacker point it to a malicious contract. That's definitely an access control issue because only authorized users should be able to update this.
+
+Next, the onBalanceChange function has the onlyManager modifier. That's good. But looking at addFees, it also uses onlyManager, which makes sense because adding fees should be restricted. 
+
+Then there's the receive function, which is external and payable. But since it's a receive function, it's necessary for receiving ETH, so that's probably okay. 
+
+Wait, the setCurves function is public and there's no access control. Since the constructor of Security is called, maybe Security has an owner or manager role. If setCurves isn't restricted, anyone can change the curves address, which could disrupt the contract's functionality. For example, an attacker could set a malicious curves contract that manipulates balance or supply data, affecting fee calculations and withdrawals. 
+
+So the vulnerable function is setCurves at line 23. The reason is that it's public and lacks an access control modifier like onlyManager, allowing unauthorized changes to the curves address.
+</think>
+
+1. Function setCurves(Curves curves_) (line 23) has the access control issues. Reason: The setCurves function is publicly accessible without any access control modifier (like onlyManager), allowing any caller to arbitrarily change the critical "curves" contract address which is used for balance/supply calculations in core fee distribution logic. This could enable manipulation of fee accounting or protocol takeover.

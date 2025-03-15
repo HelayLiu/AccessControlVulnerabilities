@@ -1,0 +1,21 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 2 integrity policies
+INFO:symExec:Test Sequence: ['owned']
+INFO:symExec:SymExecEVM().symExec: owned()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['owned']
+INFO:symExec:Test Sequence: ['blacklistAccount']
+INFO:symExec:SymExecEVM().symExec: blacklistAccount(address,bool)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+INFO:symExec:Test Sequence: ['owned', 'blacklistAccount']
+INFO:symExec:SymExecEVM().symExec: owned()
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+INFO:symExec:SymExecEVM().symExec: blacklistAccount(address,bool)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['owned', 'blacklistAccount']
+INFO:symExec:Testing time: 50.58176827430725 seconds

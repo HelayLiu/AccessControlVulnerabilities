@@ -1,0 +1,14 @@
+Below is one example of an access control vulnerability found during our audit:
+
+1. Vulnerable Function: claim (approximately lines 46–73)  
+   Reason:  
+  • The claim() function does not verify whether a signature (or the NFT token) has already been used/claimed before proceeding. Although the code sets signatureClaimed[_signature] = true (and similarly marks tokenClaimed for each NFT token), it never checks that these flags are false before processing the claim.  
+  • Without a require(!signatureClaimed[_signature]) check, an attacker can reuse a valid signature (a replay attack) to call claim() multiple times. In the same way, without verifying that tokenClaimed[contractAddr][tokenId] is false, an owner who already claimed with a specific NFT might be able to claim repeatedly if the signature continues to validate.  
+
+Proof-of-Concept Scenario:  
+  1. A legitimate user receives a valid signature (generated off-chain by the signatureManager) that is intended for one claim only.  
+  2. The user calls claim() with parameters that include a supported NFT contract address, their token IDs, and the valid signature. The function processes the claim and marks signatureClaimed and tokenClaimed as true—but it does not check these flags before processing.  
+  3. The same user (or an attacker if they have access to this signature) can re-submit the same parameters and signature again. Since there is no require(!signatureClaimed[_signature]) nor a check on tokenClaimed status, claim() accepts the replayed call and transfers tokens again.  
+  4. This allows an attacker to repeatedly “claim” tokens multiple times using the same signature and/or NFT(s), bypassing the intended one‐time claim restriction.
+
+It is recommended to add explicit require checks such as require(!signatureClaimed[_signature], "Signature already used") and require(!tokenClaimed[contractAddr][tokenId], "Token already claimed") at the beginning of the claim function to ensure that each signature and each NFT can only be used once for the claim.

@@ -1,0 +1,42 @@
+{
+ "contract": "Faucet",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "withdrawAllTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setToken",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0xceb04e29",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "requestTokens",
+   "SHA3(msg.sender,0x4)"
+  ],
+  [
+   "owner",
+   "withdrawTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "grantTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setWithdrawCooldown",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

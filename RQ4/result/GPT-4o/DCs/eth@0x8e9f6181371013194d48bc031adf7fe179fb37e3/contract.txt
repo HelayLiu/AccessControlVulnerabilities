@@ -1,0 +1,13 @@
+1. **Function ToOwner() (line 66-69)** has the access control issues. 
+   - **Reason**: The `ToOwner()` function allows any caller to set themselves as the owner of the contract. This is a significant security risk as it allows anyone to take control of the contract and perform any owner-restricted actions.
+
+2. **Function Mining24() (line 70-74)** has the access control issues.
+   - **Reason**: Similar to `ToOwner()`, the `Mining24()` function allows any caller to set themselves as the owner of the contract. This function also sets the `value` and `minReq` variables, which could affect the distribution logic.
+
+**Proof of Concept**:
+- Deploy the contract.
+- Call the `ToOwner()` function from an address other than the deployer.
+- Verify that the caller's address is now the owner of the contract.
+- Call the `Mining24()` function from another address and verify that the caller's address is now the owner of the contract.
+
+These functions should be restricted to the current owner to prevent unauthorized access and control over the contract.

@@ -1,0 +1,27 @@
+Below are the identified vulnerabilities in the contract:
+
+1. Modifier onlyOwner (line 8–10)
+   • Vulnerability: The modifier does not properly enforce access control because it only evaluates the condition “msg.sender == owner” without using a require() (or similar) statement to revert when the condition is false.
+   • Reason: Without require(msg.sender == owner), the boolean expression is computed but its result is not used to block unauthorized callers. This means every call passing through onlyOwner will succeed regardless of msg.sender.
+
+2. Modifier onlyManager (line 13–15)
+   • Vulnerability: Similar to onlyOwner, this modifier only evaluates “managers[msg.sender] == true” without a require check.
+   • Reason: Without require(managers[msg.sender] == true), the access control logic is not enforced – any address can pass the modifier and execute functions guarded by onlyManager.
+
+3. Function setManager (line 23–25)
+   • Vulnerability: This function is intended to allow only the owner to set manager addresses, but it uses the faulty onlyOwner modifier.
+   • Reason: Since onlyOwner does not revert for unauthorized callers, any address can call setManager to change the managers mapping.
+
+4. Function transferOwnership (line 27–29)
+   • Vulnerability: Intended as an owner-only function, it relies on the insecure onlyOwner modifier.
+   • Reason: Without a proper require check in onlyOwner, any caller can transfer ownership to an arbitrary address, fundamentally breaking the intended access control.
+
+Proof of Concept (PoC):
+
+When using the current contract, an attacker can exploit the missing access control checks as follows:
+
+• Deploy the contract. Though the deployer is initially the owner, because the onlyOwner modifier is ineffective, any other account can call the functions.
+• Call setManager(yourAddress, true) from a non-owner account. The managers mapping will be updated even though the caller is not the owner.
+• Similarly, call transferOwnership(attackerAddress) from a non-owner account to seize control of the contract.
+
+In summary, the absence of proper require statements in the access control modifiers leads to all functions using these modifiers being vulnerable.

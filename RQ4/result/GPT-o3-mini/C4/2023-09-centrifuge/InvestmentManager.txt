@@ -1,0 +1,45 @@
+Below is one example write‐up. In our review we found that a whole class of functions are written under the assumption that the caller (msg.sender) is the “liquidity pool” contract and so the function uses msg.sender as context (for example, to call lPool.asset() or lPool.poolId()) without checking that the caller is indeed a registered liquidity pool (for example, by cross‑checking with poolManager.getLiquidityPool(…) or similar). Because these functions are merely protected by the generic “auth” modifier, any address that is authorized (or if the access control is ever mis‐configured) may call them directly from a non‑liquidity pool context. That lets an attacker supply a “fake” liquidity pool address (or have msg.sender be an EOA or other contract that simply mimics part of the interface) so that the rest of the logic (using lPool.asset(), lPool.poolId(), etc.) works off attacker‑controlled values. This mistake can lead to funds being locked in or orders being incorrectly recorded.
+
+Below we provide specific examples:
+
+1. Function requestDeposit (approximately lines 24–42)  
+ • Issue: This function assumes that msg.sender is a valid liquidity pool (using msg.sender to call lPool.asset(), lPool.poolId(), etc.) and then later calls _isAllowedToInvest using values retrieved from that “liquidity pool.” No check is done to verify that msg.sender is indeed obtained from poolManager.getLiquidityPool(…) (or otherwise “registered”).  
+ • Proof‑of‑Concept: An attacker who is already “auth”‑authorized (or if the auth registry is ever compromised) could deploy a contract that implements the minimal expected functions (like asset()) and then call requestDeposit. The contract would then execute the deposit logic using attacker‑controlled parameters.  
+ • Reason: Relying solely on the auth modifier while also assuming msg.sender is a “liquidity pool” creates a mismatch between the intended caller (a registered liquidity pool) and what is enforced. This can lead to bypassing important validations (for example, using poolManager to select the true liquidity pool) and may allow manipulation of order amounts and token transfers.
+
+2. Function requestRedeem (approximately lines 43–60)  
+ • Issue: Similar to requestDeposit, it uses msg.sender as the liquidity pool (for example, calling lPool.asset(), lPool.poolId(), etc.) without verifying that msg.sender actually corresponds to a registered liquidity pool.  
+ • Proof‑of‑Concept: An authorized attacker could call requestRedeem from a contract that returns arbitrary values for asset() and poolId(), thereby causing the contract to use incorrect parameters when later calling gateway.cancelRedeemOrder or gateway.increaseRedeemOrder.  
+ • Reason: The absence of a check that msg.sender is “the” liquidity pool opens up a channel for misuse.
+
+3. Functions decreaseDepositRequest, decreaseRedeemRequest, collectDeposit, and collectRedeem (approximately lines 61–113)  
+ • Issue: All these functions similarly treat msg.sender as the liquidity pool contract and use it to retrieve data (for example, liquidityPool.poolId(), liquidityPool.trancheId(), liquidityPool.asset()) and to perform membership checks (via checkTransferRestriction) without validating that the caller is indeed the liquidity pool that is registered in poolManager.  
+ • Proof‑of‑Concept: An attacker with “auth” permission could call, say, decreaseDepositRequest from a contract that does not behave as a proper liquidity pool. The lack of verification would allow the attacker to trigger a decreaseInvestOrder on the gateway with attacker‑controlled parameters.  
+ • Reason: The implicit assumption that msg.sender is always a valid liquidity pool without an explicit check is a mis‑use of access control logic.
+
+4. Functions processDeposit, processMint, processRedeem, and processWithdraw (approximately lines 157–200)  
+ • Issue: These functions use msg.sender as the “liquidityPool” (for example, using msg.sender to get the LP’s orderbook entry and later to transfer tranche tokens) even though they are protected only with auth. An authorized caller that is not a genuine liquidity pool (for example, the owner or another contract in wards) would have control over which liquidity pool instance is used in the function’s logic.  
+ • Proof‑of‑Concept: An attacker (or misbehaving authorized party) can call processDeposit from an EOA or a contract that does not implement a proper liquidity pool interface. The call would then read and update orderbook entries and trigger token transfers using attacker‑controlled values when lPool.transferFrom is invoked.  
+ • Reason: Because these functions are “auth”‑protected rather than strictly “onlyLiquidityPool”–protected, the design can be subverted by an authorized party. The contract’s usage of msg.sender for obtaining liquidity pool details is inadequate without further verification.
+
+In summary, the main access control issue is that several externally callable functions assume that msg.sender is a valid liquidity pool contract—with important parameters such as asset(), poolId(), and trancheId() retrieved from it—yet they are only gated by an “auth” modifier. This opens the door for any authorized user (or an attacker if the auth registry is compromised) to call these functions from an account that is not an approved liquidity pool. Such a call could lead to misrouted token transfers or manipulated orderbook updates.
+
+Recommendation:  
+• Change the access control on these functions (or add additional checks) so that the caller (msg.sender) is verified against an approved list (for example, by comparing msg.sender to the expected liquidity pool address as obtained via poolManager.getLiquidityPool).  
+• Ensure that functions using msg.sender as “liquidityPool” are only callable by contracts that have been verified as genuine liquidity pool contracts.
+
+Vulnerable functions and summary of issues:
+
+1. requestDeposit (approximately lines 24–42)  
+ Reason: Assumes msg.sender is a liquidity pool without validating it against poolManager records.
+
+2. requestRedeem (approximately lines 43–60)  
+ Reason: Same as above – using msg.sender as liquidity pool without proper verification.
+
+3. decreaseDepositRequest, decreaseRedeemRequest, collectDeposit, collectRedeem (approximately lines 61–113)  
+ Reason: Use msg.sender as the liquidity pool without confirming its legitimacy, allowing an authorized but non‑pool caller to trigger gateway calls.
+
+4. processDeposit, processMint, processRedeem, processWithdraw (approximately lines 157–200)  
+ Reason: These functions use msg.sender to index orderbook entries and perform token transfers, so an attacker (if authorized) could subvert the liquidity pool context if not running from a genuine liquidity pool.
+
+Each vulnerability stems from relying solely on the auth modifier while assuming (without check) that msg.sender is a valid liquidity pool contract. This mismatch in assumptions can lead to unauthorized actions if an attacker or an improperly authorized address calls these functions.

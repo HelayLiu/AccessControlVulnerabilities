@@ -1,0 +1,15 @@
+1. Function setRoyalty (line 118-126) has access control issues. Reason: The function allows anyone to set the royalty for any contract as long as they provide a valid contract address that supports ERC721 or ERC1155. There is no check to ensure that the caller is the owner of the contract being set, which could lead to unauthorized changes to the royalty settings.
+
+2. Function cancelBuyOrder (line 174-182) has access control issues. Reason: The function allows the buyer or the owner of the contract to cancel a buy order. However, it does not verify if the buyer is indeed the one who created the order, which could allow any user to cancel any buy order by simply providing a valid signature.
+
+3. Function cancelPreviousSellOrders (line 188-196) has access control issues. Reason: Similar to the cancelBuyOrder function, this function allows the caller to cancel previous sell orders for any address as long as they provide a valid signature. There is no verification that the caller is the actual seller of the orders being canceled.
+
+4. Function withdraw (line 210-213) has access control issues. Reason: The withdraw function allows the owner to withdraw the entire balance of the contract. If the ownership is transferred to a malicious actor, they could drain the contract of all funds without any checks in place to prevent this.
+
+5. Function fillSellOrder (line 66-66) has access control issues. Reason: The function does not check if the seller is the actual owner of the NFT being sold. This could allow anyone to fill a sell order for an NFT they do not own, leading to unauthorized transfers.
+
+6. Function fillBuyOrder (line 92-92) has access control issues. Reason: Similar to fillSellOrder, this function does not verify if the buyer is the actual owner of the NFT being bought, which could lead to unauthorized transfers.
+
+7. Function fillDutchAuctionOrder (line 118-118) has access control issues. Reason: This function does not check if the seller is the actual owner of the NFT being auctioned, which could allow unauthorized transfers of NFTs.
+
+These functions should implement proper access control checks to ensure that only authorized users can perform sensitive actions.

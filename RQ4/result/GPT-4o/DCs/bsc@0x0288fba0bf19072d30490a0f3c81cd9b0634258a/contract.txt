@@ -1,0 +1,74 @@
+Upon reviewing the provided `GymSinglePool` contract, I have identified potential access control issues. Here is the analysis:
+
+1. **Function `initialize()` (line 144-184):**
+   - **Reason:** The `initialize()` function is marked as `external` and `initializer`, which means it can only be called once. However, if the contract is not properly initialized during deployment, there is a risk that anyone could call this function and set themselves as the `runnerScriptAddress`, potentially gaining control over certain privileged operations. It is crucial to ensure that this function is called immediately upon deployment by a trusted party.
+
+2. **Function `setPoolInfo()` (line 187-192):**
+   - **Reason:** This function allows the owner to set critical parameters of the pool, such as `lastRewardBlock`, `accRewardPerShare`, and `rewardPerBlock`. While it is protected by the `onlyOwner` modifier, any compromise of the owner's account could lead to manipulation of these parameters, affecting reward distribution.
+
+3. **Function `setMLMAddress()` (line 198-200):**
+   - **Reason:** This function allows the owner to change the MLM contract address. If the owner's account is compromised, an attacker could redirect MLM-related operations to a malicious contract.
+
+4. **Function `setTokenAddress()` (line 202-204):**
+   - **Reason:** This function allows the owner to change the token address. If misused, it could redirect token operations to a different token, potentially leading to loss of funds.
+
+5. **Function `setVaultContractAddress()` (line 206-208):**
+   - **Reason:** This function allows the owner to change the vault contract address. If the owner's account is compromised, an attacker could redirect vault operations to a malicious contract.
+
+6. **Function `setFarmingContractAddress()` (line 210-212):**
+   - **Reason:** This function allows the owner to change the farming contract address. Similar to the previous functions, if the owner's account is compromised, it could redirect farming operations to a malicious contract.
+
+7. **Function `setRelationshipReward()` (line 214-216):**
+   - **Reason:** This function allows the owner to change the relationship reward percentage. If misused, it could affect the distribution of rewards, potentially leading to unfair distribution or loss of funds.
+
+8. **Function `setOnlyRunnerScript()` (line 218-220):**
+   - **Reason:** This function allows the owner to change the `runnerScriptAddress`. If the owner's account is compromised, an attacker could set this to their own address and gain control over operations restricted to the runner script.
+
+9. **Function `setGymWBNBPair()` (line 222-224):**
+   - **Reason:** This function allows the owner to change the GYM-WBNB pair addresses. If misused, it could affect price calculations and potentially lead to incorrect reward distributions.
+
+10. **Function `setPancakeRouterAddress()` (line 226-228):**
+    - **Reason:** This function allows the owner to change the Pancake Router address. If the owner's account is compromised, it could redirect operations to a malicious router.
+
+11. **Function `setIsPoolActive()` (line 230-232):**
+    - **Reason:** This function allows the owner to activate or deactivate the pool. If the owner's account is compromised, an attacker could deactivate the pool, disrupting operations.
+
+12. **Function `setIsInMigrationToVTwo()` (line 234-236):**
+    - **Reason:** This function allows the owner to set the migration status. If misused, it could affect the withdrawal conditions and disrupt user operations.
+
+13. **Function `setHolderRewardContractAddress()` (line 238-240):**
+    - **Reason:** This function allows the owner to change the holder reward contract address. If the owner's account is compromised, it could redirect rewards to a malicious contract.
+
+14. **Function `setWbnbAndUSDTTokenArray()` (line 242-244):**
+    - **Reason:** This function allows the owner to change the WBNB and USDT token array. If misused, it could affect price calculations and potentially lead to incorrect reward distributions.
+
+15. **Function `setUnlockedTimestampQualification()` (line 246-248):**
+    - **Reason:** This function allows the owner to change the unlocked timestamp qualification. If misused, it could affect user eligibility for certain operations.
+
+16. **Function `setLevels()` (line 250-252):**
+    - **Reason:** This function allows the owner to change the level qualifications. If misused, it could affect user levels and potentially lead to unfair reward distributions.
+
+17. **Function `setTreasuryAddress()` (line 258-260):**
+    - **Reason:** This function allows the owner to change the treasury address. If the owner's account is compromised, it could redirect treasury funds to a malicious address.
+
+**Proof of Concept:**
+To verify these issues, one could simulate a scenario where the owner's account is compromised and observe the potential impact of changing these parameters. For instance, changing the `tokenAddress` to a different token and attempting to deposit or withdraw funds would demonstrate the risk of fund loss.
+
+**Output:**
+1. Function `initialize()` (line 144-184) has potential access control issues. Reason: If not properly initialized, anyone could call this function and set themselves as the `runnerScriptAddress`, gaining control over certain operations.
+2. Function `setPoolInfo()` (line 187-192) has potential access control issues. Reason: Allows manipulation of critical pool parameters, affecting reward distribution.
+3. Function `setMLMAddress()` (line 198-200) has potential access control issues. Reason: Allows redirection of MLM-related operations to a malicious contract.
+4. Function `setTokenAddress()` (line 202-204) has potential access control issues. Reason: Allows redirection of token operations to a different token, potentially leading to loss of funds.
+5. Function `setVaultContractAddress()` (line 206-208) has potential access control issues. Reason: Allows redirection of vault operations to a malicious contract.
+6. Function `setFarmingContractAddress()` (line 210-212) has potential access control issues. Reason: Allows redirection of farming operations to a malicious contract.
+7. Function `setRelationshipReward()` (line 214-216) has potential access control issues. Reason: Allows manipulation of reward distribution percentages.
+8. Function `setOnlyRunnerScript()` (line 218-220) has potential access control issues. Reason: Allows setting of `runnerScriptAddress` to gain control over restricted operations.
+9. Function `setGymWBNBPair()` (line 222-224) has potential access control issues. Reason: Allows manipulation of GYM-WBNB pair addresses, affecting price calculations.
+10. Function `setPancakeRouterAddress()` (line 226-228) has potential access control issues. Reason: Allows redirection of operations to a malicious router.
+11. Function `setIsPoolActive()` (line 230-232) has potential access control issues. Reason: Allows deactivation of the pool, disrupting operations.
+12. Function `setIsInMigrationToVTwo()` (line 234-236) has potential access control issues. Reason: Allows manipulation of migration status, affecting withdrawal conditions.
+13. Function `setHolderRewardContractAddress()` (line 238-240) has potential access control issues. Reason: Allows redirection of rewards to a malicious contract.
+14. Function `setWbnbAndUSDTTokenArray()` (line 242-244) has potential access control issues. Reason: Allows manipulation of token array, affecting price calculations.
+15. Function `setUnlockedTimestampQualification()` (line 246-248) has potential access control issues. Reason: Allows manipulation of unlocked timestamp qualification, affecting user eligibility.
+16. Function `setLevels()` (line 250-252) has potential access control issues. Reason: Allows manipulation of level qualifications, affecting reward distributions.
+17. Function `setTreasuryAddress()` (line 258-260) has potential access control issues. Reason: Allows redirection of treasury funds to a malicious address.

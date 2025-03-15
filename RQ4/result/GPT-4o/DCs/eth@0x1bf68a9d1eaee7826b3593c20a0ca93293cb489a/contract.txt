@@ -1,0 +1,25 @@
+Upon reviewing the provided smart contract code, I have identified the following potential access control issues:
+
+1. **Function `submitTransaction` (line 139-145)**:
+   - **Reason**: The `submitTransaction` function is publicly accessible and allows any address to submit a transaction. Although it requires confirmation from owners, the initial submission does not restrict who can call it. This could lead to unnecessary or spam transactions being added to the transaction list, which could potentially be a vector for denial of service attacks by filling up the transaction queue.
+
+2. **Function `executeTransaction` (line 172-186)**:
+   - **Reason**: The `executeTransaction` function is publicly accessible and allows anyone to execute a transaction once it is confirmed. While the function checks if the transaction is confirmed, it does not restrict who can call it. This could lead to a situation where a non-owner executes a transaction, potentially causing unexpected behavior or timing issues.
+
+3. **Function `addTransaction` (line 222-234)**:
+   - **Reason**: The `addTransaction` function is publicly accessible and can be called by any address to add a new transaction. This function should be restricted to only be callable by owners or through a specific process to prevent unauthorized transaction submissions.
+
+### Proof of Concept
+
+To verify these issues, consider the following scenarios:
+
+- **For `submitTransaction`**: Any external address can call `submitTransaction` with arbitrary data, which will add a transaction to the list. This can be tested by deploying the contract and calling `submitTransaction` from a non-owner address.
+
+- **For `executeTransaction`**: Once a transaction is confirmed, any external address can call `executeTransaction` to execute it. This can be tested by confirming a transaction with the required number of confirmations and then calling `executeTransaction` from a non-owner address.
+
+- **For `addTransaction`**: Any external address can call `addTransaction` directly to add a transaction. This can be tested by calling `addTransaction` from a non-owner address with arbitrary data.
+
+### Recommendations
+
+- Restrict the `submitTransaction`, `executeTransaction`, and `addTransaction` functions to only be callable by owner addresses or through a specific process that ensures only authorized submissions and executions.
+- Consider adding additional checks or modifiers to ensure that only intended parties can interact with these functions, thereby preventing unauthorized access and potential misuse.

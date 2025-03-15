@@ -1,0 +1,23 @@
+Below is one potential access control issue discovered during the audit:
+
+1. Vulnerable Function: contributePrizeTokens (roughly lines 141–150)
+
+ • Issue Description:  
+The function contributePrizeTokens is declared public and lets any caller specify an arbitrary _prizeVault address when “contributing” prize tokens. In other words, there is no check binding the caller (msg.sender) to the vault for which contribution accounting is recorded. An attacker can call contributePrizeTokens and pass a target vault’s address (or one under their control) even if they are not that vault. In doing so, the attacker “injects” a contribution on behalf of a vault. Because later winner selection (via isWinner) and prize distribution use the vault’s stored contribution (from _vaultAccumulator), an attacker could manipulate the vault’s aggregate contribution—which affects the calculated vault portion and odds for winning—to possibly influence draw outcomes or prize sizing.
+
+ • Proof of Concept:  
+An attacker can execute the following steps:
+  a. Assume an attacker-controlled externally owned account (EOA) and let TargetVault be an address that is expected to have a certain contribution record.  
+  b. The attacker (from any account) calls:
+   contributePrizeTokens(TargetVault, fakeAmount);
+  c. Because no check ensures that msg.sender must equal TargetVault (or otherwise be an authorized operator for that vault), the internal mapping _vaultAccumulator[TargetVault] is updated with fakeAmount.  
+  d. Later, when winner selection is computed (which depends on the vault’s contribution via getVaultPortion and related calculations), the attacker‑injected amount alters the odds.  
+  e. This manipulation can affect claim prize outcomes and the allocation of prizes.
+
+ • Reason:  
+There is no access control mechanism restricting who can “contribute” tokens for a given vault – any user can dictate which vault’s accounting is updated. This lack of “caller binding” allows an attacker to maliciously manipulate the internal contribution records that later influence critical functions such as isWinner and ultimately prize distribution.
+
+────────────────────────────
+Note: Although other functions in the contract use role‐ or state–based protections (using onlyDrawManager, OnlyCreator, or notShutdown modifiers), the ability to arbitrarily record contributions through contributePrizeTokens may allow manipulation of the prize pool’s internal state and unfairly tilt draw outcomes. Any use of “contribute” functions where a parameter identifies an account or vault not proven to be related to msg.sender is a red flag for access control issues.
+
+It is recommended that either the function enforce that msg.sender is the vault (or is otherwise authorized to contribute on behalf of that vault) or that the design is re‐examined to ensure that external users cannot affect vault-specific accounting in unintended ways.

@@ -1,0 +1,11 @@
+1. Function `claim()` (line 197-200) has access control issues. Reason: The `claim()` function allows the caller to mint tokens based on the `strategistUnclaimedShares` variable, but it only checks if the caller is the owner. If the ownership is compromised, any malicious actor could call this function and mint tokens, leading to potential exploitation.
+
+2. Function `increaseYIntercept(uint256 amount)` (line 370-375) has access control issues. Reason: The `increaseYIntercept()` function allows the caller to increase the `yIntercept` variable, but it only checks if the caller is the `withdrawProxy` of the previous epoch. If the `withdrawProxy` is compromised, a malicious actor could call this function and manipulate the `yIntercept`, leading to potential exploitation.
+
+3. Function `decreaseYIntercept(uint256 amount)` (line 384-389) has access control issues. Reason: Similar to `increaseYIntercept()`, the `decreaseYIntercept()` function allows the caller to decrease the `yIntercept` variable without sufficient checks. If the `withdrawProxy` is compromised, a malicious actor could call this function and manipulate the `yIntercept`, leading to potential exploitation.
+
+4. Function `transferWithdrawReserve()` (line 290-310) has access control issues. Reason: The `transferWithdrawReserve()` function allows the transfer of assets to the `withdrawProxy` without sufficient checks on who can call this function. If a malicious actor can call this function, they could drain the withdraw reserve.
+
+5. Function `processEpoch()` (line 246-270) has access control issues. Reason: The `processEpoch()` function does not have any access control modifiers, meaning anyone can call it. This could lead to unauthorized changes to the epoch state and manipulation of the vault's behavior.
+
+These functions exhibit potential access control vulnerabilities that could be exploited if not properly restricted.

@@ -1,0 +1,22 @@
+{
+ "contract": "DimonCoin",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "distributeFUD",
+   "0x0"
+  ],
+  [
+   "owner",
+   "withdrawForeignTokens",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

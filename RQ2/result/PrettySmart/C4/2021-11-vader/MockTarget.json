@@ -1,0 +1,17 @@
+{
+ "contract": "MockTarget",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x919b8071",
+   "0x0"
+  ],
+  [
+   "owner",
+   "changeState",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

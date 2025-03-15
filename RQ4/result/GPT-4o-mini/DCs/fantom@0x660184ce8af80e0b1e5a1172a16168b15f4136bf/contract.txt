@@ -1,0 +1,9 @@
+1. Function `proposeStrat(address _implementation)` (line 139-145) has access control issues. Reason: The function can be called by anyone, but it should only be callable by the owner to ensure that only the owner can propose a new strategy.
+
+2. Function `upgradeStrat()` (line 153-164) has access control issues. Reason: Similar to `proposeStrat`, this function can also be called by anyone, but it should only be callable by the owner to ensure that only the owner can upgrade the strategy.
+
+3. Function `inCaseTokensGetStuck(address _token)` (line 166-172) has access control issues. Reason: This function allows the owner to rescue tokens, but it can be exploited if the ownership is transferred to a malicious address, allowing that address to withdraw tokens from the contract.
+
+4. Function `depositFor(address token, uint _amount, address user)` (line 174-189) has access control issues. Reason: This function can be called by anyone, allowing any user to deposit tokens on behalf of another user without any restrictions, which can lead to unauthorized deposits. 
+
+These functions lack proper access control checks, which can lead to unauthorized actions being performed on the contract.

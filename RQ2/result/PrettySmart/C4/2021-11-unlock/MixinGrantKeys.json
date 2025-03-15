@@ -1,0 +1,22 @@
+{
+ "contract": "MixinGrantKeys",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "updateBeneficiary",
+   "0x9d"
+  ],
+  [
+   "owner",
+   "withdraw",
+   "0x9d"
+  ],
+  [
+   "owner",
+   "approveBeneficiary",
+   "0x9d"
+  ]
+ ],
+ "PC_bypassed": []
+}

@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "../SpCon/spcon/staticAnalyzer.py", line 59, in analyze
+    slither = Slither(cc)
+UnboundLocalError: local variable 'cc' referenced before assignment
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 27, in execute_command
+    contractName, contractAbi, reads, reads2, writes =  getRWofContract(address=args.eth_address, network=args.network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 25, in getRWofContract
+    contractName, contractAbi, reads, reads2,  writes = analyzer.analyze(address=address, network=network)
+  File "../SpCon/spcon/staticAnalyzer.py", line 69, in analyze
+    slither = Slither(file_path)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/slither.py", line 120, in __init__
+    parser.parse_contracts()
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 435, in parse_contracts
+    self._analyze_third_part(contracts_to_be_analyzed, libraries)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 541, in _analyze_third_part
+    self._analyze_variables_modifiers_functions(contract)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/slither_compilation_unit_solc.py", line 614, in _analyze_variables_modifiers_functions
+    contract.analyze_content_functions()
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/declarations/contract.py", line 378, in analyze_content_functions
+    function_parser.analyze_content()
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/declarations/function.py", line 310, in analyze_content
+    self._filter_ternary()
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/solc_parsing/declarations/function.py", line 1346, in _filter_ternary
+    st = SplitTernaryExpression(node.expression)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/utils/expression_manipulations.py", line 50, in __init__
+    self.copy_expression(expression, self.true_expression, self.false_expression)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/utils/expression_manipulations.py", line 104, in copy_expression
+    self.copy_expression(next_expr, true_expression.called, false_expression.called)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/utils/expression_manipulations.py", line 81, in copy_expression
+    self.copy_expression(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/slither/utils/expression_manipulations.py", line 137, in copy_expression
+    raise SlitherException(
+slither.exceptions.SlitherException: Ternary operation not handled string(<class 'slither.core.expressions.elementary_type_name_expression.ElementaryTypeNameExpression'>)

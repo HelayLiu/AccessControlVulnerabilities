@@ -1,0 +1,1 @@
+1. Function mint() (line 83-86) has access control issues. Reason: The mint() function allows any user to mint new tokens by calling this function, which can lead to an unlimited supply of tokens being created by any address, undermining the token's value and integrity. There are no access control checks to restrict who can call this function.

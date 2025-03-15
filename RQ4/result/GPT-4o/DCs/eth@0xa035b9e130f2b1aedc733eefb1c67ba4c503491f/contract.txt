@@ -1,0 +1,22 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `initialize` (line 15-27)**:
+   - **Reason**: The `initialize` function is a public function that can be called by anyone. This function sets critical parameters such as the underlying asset, comptroller, interest rate model, and initial exchange rate. If this function is called by an unauthorized user after deployment, it could lead to the reinitialization of the contract with different parameters, potentially leading to loss of funds or incorrect behavior. Typically, such functions should be protected by an access control modifier, such as `onlyOwner` or `onlyAdmin`, to ensure only authorized entities can call them.
+
+2. **Function `sweepToken` (line 88-93)**:
+   - **Reason**: The `sweepToken` function is an external function that allows the transfer of any ERC-20 tokens accidentally sent to the contract to the admin address. However, there is no access control to restrict who can call this function. This means any user can call `sweepToken` and transfer tokens to the admin, which might not be the intended behavior. This function should be restricted to be callable only by the admin or a specific authorized role.
+
+3. **Function `_addReserves` (line 98-101)**:
+   - **Reason**: The `_addReserves` function is an external function that allows adding reserves to the contract. There is no access control to restrict who can call this function. While adding reserves might not seem harmful, it could potentially be misused if not properly controlled. This function should be restricted to be callable only by the admin or a specific authorized role to prevent unauthorized reserve additions.
+
+4. **Function `_delegateCompLikeTo` (line 153-157)**:
+   - **Reason**: Although this function has a require statement to check if the caller is the admin, it is crucial to ensure that the `admin` variable is correctly set and protected from unauthorized changes. If the admin role can be changed without proper access control, it could lead to unauthorized delegation of votes.
+
+**Proof of Concept**:
+To verify these issues, you can attempt to call the `initialize`, `sweepToken`, and `_addReserves` functions from an account that is not the contract owner or admin. If the functions execute without any access control checks, it confirms the presence of access control vulnerabilities. For `_delegateCompLikeTo`, ensure that the admin role is immutable or properly controlled to prevent unauthorized access.
+
+**Output**:
+1. Function `initialize` (line 15-27) has access control issues. Reason: It is a public function that can be called by anyone to reinitialize the contract, which should be restricted to authorized entities only.
+2. Function `sweepToken` (line 88-93) has access control issues. Reason: It is an external function that can be called by anyone to transfer tokens to the admin, which should be restricted to authorized entities only.
+3. Function `_addReserves` (line 98-101) has access control issues. Reason: It is an external function that can be called by anyone to add reserves, which should be restricted to authorized entities only.
+4. Function `_delegateCompLikeTo` (line 153-157) has potential access control issues if the admin role is not properly protected. Reason: The function relies on the admin role, which must be immutable or properly controlled to prevent unauthorized access.

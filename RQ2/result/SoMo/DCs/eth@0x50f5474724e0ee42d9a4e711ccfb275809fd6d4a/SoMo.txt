@@ -1,0 +1,21 @@
+Switched global version to 0.5.9
+Modifiers Status:
+Modifier: onlyAdmin, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+Modifier: onlyAdmin
+
+Path Status: SECURE
+Constraint: newAdmin, Value: "attacker"	Constraint: _admin, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: Admin.changeAdmin(address)
+_admin_4(address) := ϕ(['_admin_0', '_admin_5', '_admin_1'])
+TMP_371(bool) = msg.sender == _admin_4
+TMP_372(None) = SOLIDITY_CALL require(bool,string)(TMP_371,only admin can change admin)
+_admin_5(address) := newAdmin_1(address)
+Entry Point: Admin.onlyAdmin()
+_admin_4(address) := ϕ(['_admin_3', '_admin_0'])
+TMP_8(bool) = msg.sender == _admin_4
+TMP_9(None) = SOLIDITY_CALL require(bool,string)(TMP_8,only admin allowed)
+
+

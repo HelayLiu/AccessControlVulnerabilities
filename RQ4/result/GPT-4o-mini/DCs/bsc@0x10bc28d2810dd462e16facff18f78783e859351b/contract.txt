@@ -1,0 +1,21 @@
+1. Function `setAllowedAddress(address user, bool flag)` (line 370-372) has access control issues. Reason: This function allows the owner to set any address as allowed or disallowed without any checks on the address being set, which could lead to unauthorized access if the owner account is compromised.
+
+2. Function `burn(address account, uint256 _amount)` (line 374-377) has access control issues. Reason: This function allows any user to burn tokens from their own balance without any checks on whether the caller is authorized to perform this action, which could lead to unintended token loss.
+
+3. Function `airdrop(address _user, uint256 _amount)` (line 379-382) has access control issues. Reason: This function allows the owner to airdrop tokens to any user without any checks on the amount being a valid value or whether the user is already airdropped, which could lead to abuse of the airdrop feature.
+
+4. Function `setBlackListed(address user, bool flag)` (line 384-386) has access control issues. Reason: This function allows the owner to blacklist any user without any checks or balances, which could lead to arbitrary restrictions on users' ability to interact with the contract.
+
+5. Function `setIsDividendExempt(address holder, bool exempt)` (line 290-295) has access control issues. Reason: This function allows the authorized user to exempt any holder from dividends without any checks on the holder's status or the implications of such an action, which could lead to unfair treatment of users.
+
+6. Function `setFees(uint256 _liquidityFee, uint256 _buybackFee, uint256 _reflectionFee, uint256 _marketingFee, uint256 _feeDenominator, uint256 _totalSellFee)` (line 303-310) has access control issues. Reason: This function allows the authorized user to set fees without any checks on the values being set, which could lead to excessive fees being imposed on users.
+
+7. Function `setTxLimit(uint256 amount)` (line 312-315) has access control issues. Reason: This function allows the authorized user to set transaction limits without any checks on the amount being set, which could lead to arbitrary restrictions on users' ability to transact.
+
+8. Function `setSwapBackSettings(bool _enabled, uint256 _amount)` (line 335-338) has access control issues. Reason: This function allows the authorized user to enable or disable swap back settings without any checks on the implications of such an action, which could lead to liquidity issues.
+
+9. Function `setDistributionCriteria(uint256 _minPeriod, uint256 _minDistribution)` (line 346-349) has access control issues. Reason: This function allows the authorized user to set distribution criteria without any checks on the values being set, which could lead to unfair distribution of dividends.
+
+10. Function `setDistributorSettings(uint256 gas)` (line 351-354) has access control issues. Reason: This function allows the authorized user to set distributor settings without any checks on the gas limit being set, which could lead to excessive gas usage and potential denial of service.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to potentially manipulate critical aspects of the contract's functionality.

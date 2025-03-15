@@ -1,0 +1,48 @@
+{
+ "contract": "BOMBBA",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x4)"
+  ],
+  [
+   "owner",
+   "pullBack",
+   "0x0"
+  ],
+  [
+   "owner",
+   "mint",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x2)"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "pullBack",
+   "0x0"
+  ],
+  [
+   "owner",
+   "mint",
+   "0x0"
+  ]
+ ]
+}

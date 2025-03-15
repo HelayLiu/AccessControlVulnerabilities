@@ -1,0 +1,27 @@
+{
+ "contract": "Whitelist",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "addToWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "removeFromWhitelist",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

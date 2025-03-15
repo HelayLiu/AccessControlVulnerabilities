@@ -1,0 +1,21 @@
+1. Function `setMintExchangeRate` (line 139-164) has access control issues. Reason: The function allows the `SETTER_ADMIN` role to set the mint exchange rate without sufficient checks on the validity of the new exchange rate, which could lead to manipulation of the minting process if the `SETTER_ADMIN` role is compromised.
+
+2. Function `overrideExchangeRate` (line 174-198) has access control issues. Reason: This function allows the `MANAGER_ADMIN` to arbitrarily set an exchange rate for a given epoch without any checks on the validity of the new exchange rate, which could lead to significant financial loss if misused.
+
+3. Function `setMintFee` (line 218-230) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to set the mint fee without any checks on the maximum allowable fee, which could lead to excessive fees being charged if the `MANAGER_ADMIN` role is compromised.
+
+4. Function `setMinimumDepositAmount` (line 240-254) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to set the minimum deposit amount without any checks on the minimum allowable value, which could lead to users being unable to mint tokens if the value is set too high.
+
+5. Function `setFeeRecipient` (line 264-272) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to change the fee recipient address without any checks on the validity of the new address, which could lead to funds being sent to an unintended recipient.
+
+6. Function `setAssetRecipient` (line 282-290) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to change the asset recipient address without any checks on the validity of the new address, which could lead to funds being sent to an unintended recipient.
+
+7. Function `setAssetSender` (line 370-378) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to change the asset sender address without any checks on the validity of the new address, which could lead to funds being sent from an unintended source.
+
+8. Function `setRedeemMinimum` (line 396-404) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to set the minimum redeem amount without any checks on the minimum allowable value, which could lead to users being unable to redeem tokens if the value is set too high.
+
+9. Function `completeRedemptions` (line 335-353) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to distribute collateral based on the total amount of cash tokens burned without sufficient checks on the validity of the parameters, which could lead to incorrect distributions if misused.
+
+10. Function `multiexcall` (line 487-503) has access control issues. Reason: The function allows the `MANAGER_ADMIN` to execute arbitrary calls to other contracts while the contract is paused, which could lead to unexpected behavior or exploitation if the `MANAGER_ADMIN` role is compromised.
+
+These functions should have additional checks or restrictions to ensure that only authorized users can invoke them and that the parameters being set are valid and within acceptable limits.

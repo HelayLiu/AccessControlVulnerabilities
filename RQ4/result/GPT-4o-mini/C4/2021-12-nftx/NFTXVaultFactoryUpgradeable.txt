@@ -1,0 +1,17 @@
+1. Function assignFees() (line 30-38) has access control issues. Reason: The function can be called by any user, and it modifies the factoryMintFee and other fee variables without any access control checks, potentially allowing unauthorized users to set fees.
+
+2. Function setFactoryFees() (line 49-66) has access control issues. Reason: The function can be called by any user, and it modifies the factory fees without any access control checks, allowing unauthorized users to change critical fee settings.
+
+3. Function setVaultFees() (line 78-100) has access control issues. Reason: The function allows any user to set vault fees if they are not the owner, as long as they are the vault address. This could allow a malicious user to manipulate fees if they can deploy a vault.
+
+4. Function disableVaultFees() (line 102-115) has access control issues. Reason: Similar to setVaultFees, this function allows any user to disable vault fees if they are the vault address, which could lead to unauthorized manipulation of fee settings.
+
+5. Function setFeeDistributor() (line 117-123) has access control issues. Reason: The function can be called by any user, and it modifies the feeDistributor address without any access control checks, allowing unauthorized users to change the fee distribution settings.
+
+6. Function setZapContract() (line 125-131) has access control issues. Reason: The function can be called by any user, and it modifies the zapContract address without any access control checks, allowing unauthorized users to change the zap contract settings.
+
+7. Function setFeeExclusion() (line 133-139) has access control issues. Reason: The function can be called by any user, and it modifies the excludedFromFees mapping without any access control checks, allowing unauthorized users to manipulate fee exclusions.
+
+8. Function setEligibilityManager() (line 141-147) has access control issues. Reason: The function can be called by any user, and it modifies the eligibilityManager address without any access control checks, allowing unauthorized users to change eligibility management settings.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to modify critical variables and settings.

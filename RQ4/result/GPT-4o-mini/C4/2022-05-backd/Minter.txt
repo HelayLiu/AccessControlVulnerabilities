@@ -1,0 +1,9 @@
+1. Function mint(address beneficiary, uint256 amount) (line 83-90) has access control issues. Reason: The function checks if the caller is the inflation manager of the controller, but it does not ensure that the inflation manager itself has the necessary permissions to mint tokens. If the inflation manager is compromised or malicious, they could mint tokens without proper oversight.
+
+2. Function mintNonInflationTokens(address beneficiary, uint256 amount) (line 92-101) has access control issues. Reason: The function is restricted to onlyGovernance, but it does not check if the governance address is valid or if it has the necessary permissions to mint non-inflation tokens. If the governance role is compromised, it could lead to unauthorized minting of tokens.
+
+3. Function setToken(address _token) (line 70-75) has access control issues. Reason: The function is restricted to onlyGovernance, but it does not check if the governance address is valid or if it has the necessary permissions to set the token. If the governance role is compromised, it could lead to setting an arbitrary token address, which could be exploited.
+
+4. Function startInflation() (line 77-84) has access control issues. Reason: The function is restricted to onlyGovernance, but it does not check if the governance address is valid or if it has the necessary permissions to start inflation. If the governance role is compromised, it could lead to unauthorized inflation events.
+
+5. Function executeInflationRateUpdate() (line 106-130) has access control issues. Reason: The function is internal and can be called by any function within the contract, but it does not have any access control checks to ensure that it is only executed under valid conditions. If called improperly, it could lead to unintended consequences in the inflation rate updates.

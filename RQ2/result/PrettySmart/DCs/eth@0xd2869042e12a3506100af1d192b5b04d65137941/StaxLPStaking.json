@@ -1,0 +1,32 @@
+{
+ "contract": "StaxLPStaking",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "notifyRewardAmount",
+   "0x2"
+  ],
+  [
+   "owner",
+   "migrateWithdraw",
+   "0x9"
+  ],
+  [
+   "whitelist",
+   "withdraw",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "whitelist",
+   "withdrawAll",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "whitelist",
+   "migrateStake",
+   "SHA3(msg.sender,0x6)"
+  ]
+ ],
+ "PC_bypassed": []
+}

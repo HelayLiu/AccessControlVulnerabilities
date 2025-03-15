@@ -1,0 +1,13 @@
+1. Function `init()` (line 54-60) has access control issues. Reason: The `init()` function can be called by anyone, allowing any address to set the `_mineDaliyRatio`, `_decimals`, and `_mainPair` variables, which could lead to unauthorized changes to the contract's state.
+
+2. Function `setReward()` (line 63-75) has access control issues. Reason: The `setReward()` function can be called by any address, allowing anyone to add rewards for any `rewardSender`, which could lead to unauthorized manipulation of rewards.
+
+3. Function `generateReward()` (line 77-113) has access control issues. Reason: The `generateReward()` function can be called by any address, allowing anyone to generate rewards for all `rewardKeys`, which could lead to unauthorized distribution of rewards.
+
+4. Function `releaseCoin()` (line 115-121) has access control issues. Reason: The `releaseCoin()` function can be called by any address, allowing anyone to release coins for any `sender`, which could lead to unauthorized access to funds.
+
+In summary, the following functions have access control issues:
+- `init()` (line 54-60)
+- `setReward()` (line 63-75)
+- `generateReward()` (line 77-113)
+- `releaseCoin()` (line 115-121)

@@ -1,0 +1,17 @@
+{
+ "contract": "Bonding",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xf0ad0a52",
+   "0x3f"
+  ],
+  [
+   "owner",
+   "bond",
+   "0x3f"
+  ]
+ ],
+ "PC_bypassed": []
+}

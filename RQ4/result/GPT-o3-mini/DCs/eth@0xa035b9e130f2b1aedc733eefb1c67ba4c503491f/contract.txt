@@ -1,0 +1,13 @@
+Below is one audit finding based on the supplied file:
+
+1. Vulnerable function: initialize (approx. lines 11–20)  
+ • Reason: The initialize function is declared public and lacks any “onlyOwner/initializer” guard. In many upgradeable or proxy‐style designs the initializer is expected to run only once so that critical state (such as the underlying asset, interest rate model, and related configuration) can’t be overridden. As written, any external actor can call initialize at any time – which could allow an attacker to reinitialize the market with attacker‐controlled parameters (for example, pointing the underlying to a malicious token, or overwriting intended configuration).  
+  Proof of Concept:  
+  An attacker could call initialize() with parameters of his choosing. For instance, he could submit:
+   initialize(attackerToken, attackerComptroller, attackerInterestModel, arbitrarilyLowExchangeRate, "Bad Market", "BAD", 18);
+  which would update the market’s critical configuration and open the door to further manipulation (such as borrowing against incorrectly priced collateral).  
+
+Note:  
+• While the sweepToken() function (approx. lines 60–66) sends tokens to admin, it does not restrict caller access (i.e. no require(msg.sender==admin)). Although the effect is to move tokens to the admin and not directly to the caller, it is generally considered best practice to restrict admin-only functionality so that only the intended actor may trigger such operations. Depending on the intended design, leaving sweepToken publicly callable may cause unexpected interactions if misused.  
+
+In summary, the primary access control issue is with initialize() which allows any external caller to reinitialize the contract’s core parameters.

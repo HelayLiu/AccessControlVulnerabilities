@@ -1,0 +1,3 @@
+1. Function `setToken(address _addr)` (line 139-141) has access control issues. Reason: The `setToken` function is public and allows anyone to change the `stakingToken` and `rewardsToken` in the `configuration` variable. This can lead to unauthorized token changes, which can disrupt the contract's functionality and potentially allow malicious actors to exploit the contract by setting tokens that they control. 
+
+To mitigate this issue, the function should be restricted to only allow the contract owner or an authorized role to call it.

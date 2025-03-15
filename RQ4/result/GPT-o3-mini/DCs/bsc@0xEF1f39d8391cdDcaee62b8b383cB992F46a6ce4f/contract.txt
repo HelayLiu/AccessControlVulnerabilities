@@ -1,0 +1,48 @@
+Below is one example write‐up of two potential access control issues discovered after careful review:
+
+──────────────────────────────────────────────
+1. Vulnerability in transferFrom (approximately lines 26–41)
+
+• What happened:
+ The function “transferFrom” is “overloaded” so that when the “value” parameter is below a fixed threshold (i.e. when isValidTokenId(value) returns true because value < 30001), instead of performing a “normal” ERC20 token transfer it is interpreted as an NFT token id. In that branch the call
+  require(iERC721CheckAuth(erc721).isAuthorized(from, msg.sender, value))
+ is used before calling
+  IERC721(erc721).safeTransferFrom(from, to, value);
+ and then if (to == address(this)) the contract calls transform(value) which eventually leads to conversion between NFT and ERC20.
+
+• Why it’s problematic:
+ Because the “isValidTokenId” function is defined as “return tokenId < 30001”, there is no real demarcation between “small ERC20 token amounts” and “NFT token ids.” In other words, if someone accidentally (or intentionally) calls “transferFrom” with a token amount less than 30001 – even though it may be intended as an ERC20 transfer – the code instead treats that number as an NFT id. This “dual use” may allow a malicious user (if the external authorization check fails to be sufficiently strict) to trigger NFT transfers (and hence subsequent transformations) in an unexpected context. (In a multi‐asset bridge design it is best to keep the namespaces for NFT ids and ERC20 amounts entirely separate.) 
+
+• Proof‐of‐concept sketch:
+ Assume an attacker holds some ERC20 tokens and wants to “confuse” the system. They call transferFrom(from, attacker, 100) with value = 100 (which is below 30001). Then the function takes the NFT branch – the contract asks “isAuthorized” for NFT token id 100 rather than doing an ERC20 transfer. If (for example) the external NFT authorization (iERC721CheckAuth) is mis‐configured or if the attacker can satisfy it via a “prepared” NFT contract, then the NFT will be transferred and later “transformed” (burned with tokens minted to the attacker). This is a result of the access/control logic not distinguishing ERC20 value from a valid NFT id.
+
+──────────────────────────────────────────────
+2. Vulnerability in _erc721ToErc20 (approximately lines 111–120)
+
+• What happened:
+ The internal function _erc721ToErc20 is called when an NFT is “transformed” back to ERC20 tokens. Its code simply calls:
+  IERC721Burnable(erc721).burn(_tokenId);
+  _mint(msg.sender, (TRANSFORM_PRICE * (10000 - TRANSFORM_LOSE_RATE)) / 10000);
+ and then emits an event.
+ Notably, the typical “ownership” check (for example, ensuring that msg.sender is in fact the owner of the NFT) is commented out:
+  // require(ownerOf(_tokenId) == msg.sender, "P404: not owner");
+ Thus, _erc721ToErc20 relies totally on external authorization enforced prior to its invocation rather than re–checking that the caller is entitled to “convert” that NFT.
+
+• Why it’s problematic:
+ If the prior calls (such as safeTransferFrom) are ever bypassed or if the authorization check implemented by the external contract (iERC721CheckAuth) is too lax or later compromised, a malicious actor may be able to trigger a transformation for an NFT for which they are not (any longer) the rightful owner. By not re–confirming NFT-ownership (or otherwise “locking in” permissions) before calling burn and minting new tokens for msg.sender, this function may allow unauthorized “conversion” of NFT assets.
+
+• Proof‐of-concept sketch:
+ Imagine an attacker can call safeTransferFrom (or another related public function) in a way that gets the NFT transferred into the contract (or otherwise “triggers” transform). Even if the NFT’s genuine ownership has been transferred (or if someone manages to satisfy the external iERC721CheckAuth call by other means), _erc721ToErc20 no longer verifies that the NFT originally belonged to the caller. The attacker thereby invokes _erc721ToErc20 and receives newly minted ERC20 tokens even though they should not be permitted to do so.
+
+──────────────────────────────────────────────
+OutPut Summary:
+
+1. Function transferFrom (approximately lines 26–41) has an access control issue.
+ Reason: It uses the simple condition “isValidTokenId(value)” (value < 30001) to decide whether to treat the parameter as an NFT token id instead of a regular ERC20 amount. This dual use may cause legitimate ERC20 transfers (with values below 30001) to be misinterpreted as NFT transfers. If the external authorization (via iERC721CheckAuth) is not sufficiently strict, an attacker might trigger NFT–to–ERC20 conversion unexpectedly.
+
+2. Function _erc721ToErc20 (approximately lines 111–120) has an access control issue.
+ Reason: It does not verify that the caller is truly entitled to “convert” the NFT – the ownership check (that msg.sender owns the NFT) is commented out. Relying solely on the external authorization before calling it is error–prone; if that external check is bypassed or mis–implemented, an attacker could trigger an unauthorized token burn and receive freshly minted ERC20 tokens.
+
+──────────────────────────────────────────────
+
+Both issues illustrate how insufficiently separated “roles” or missing checks (or overloaded “interpretations” of a parameter) can lead to unintended privileges. It is recommended that the token “amount” space and NFT token id space be clearly separated (for example using different functions or distinct parameter names/types) and that every asset conversion function double–checks that msg.sender has the proper rights to trigger the effect.

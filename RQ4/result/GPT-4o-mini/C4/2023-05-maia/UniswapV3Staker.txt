@@ -1,0 +1,21 @@
+1. Function `createIncentiveFromGauge(uint256 reward)` (line 66-78) has access control issues. Reason: The function does not check if the caller is authorized to create an incentive from the gauge, which could allow any user to create incentives with potentially malicious rewards.
+
+2. Function `createIncentive(IncentiveKey memory key, uint256 reward)` (line 80-95) has access control issues. Reason: Similar to the previous function, it does not verify if the caller has the right to create an incentive, which could lead to unauthorized users creating incentives.
+
+3. Function `endIncentive(IncentiveKey memory key)` (line 97-113) has access control issues. Reason: The function does not check if the caller is the owner of the incentive or has the right to end it, allowing any user to end incentives they should not have access to.
+
+4. Function `withdrawToken(uint256 tokenId, address to, bytes memory data)` (line 115-126) has access control issues. Reason: The function checks if the caller is the owner of the token, but it does not ensure that the token is not staked before allowing withdrawal, which could lead to loss of funds.
+
+5. Function `restakeToken(uint256 tokenId)` (line 128-138) has access control issues. Reason: The function does not check if the caller is the owner of the token before allowing it to be restaked, which could allow unauthorized users to restake tokens.
+
+6. Function `unstakeToken(uint256 tokenId)` (line 140-144) has access control issues. Reason: The function does not check if the caller is the owner of the token before allowing it to be unstaked, which could allow unauthorized users to unstake tokens.
+
+7. Function `unstakeToken(IncentiveKey memory key, uint256 tokenId)` (line 146-148) has access control issues. Reason: Similar to the previous function, it does not verify if the caller is the owner of the token, allowing unauthorized users to unstake tokens.
+
+8. Function `stakeToken(uint256 tokenId)` (line 150-157) has access control issues. Reason: The function does not check if the caller is the owner of the token before allowing it to be staked, which could allow unauthorized users to stake tokens.
+
+9. Function `updateBribeDepot(IUniswapV3Pool uniswapV3Pool)` (line 218-225) has access control issues. Reason: The function is public and does not restrict who can update the bribe depot, which could lead to unauthorized changes to the bribe depot.
+
+10. Function `updatePoolMinimumWidth(IUniswapV3Pool uniswapV3Pool)` (line 227-234) has access control issues. Reason: Similar to the previous function, it does not restrict who can update the pool minimum width, allowing unauthorized users to make changes.
+
+These functions lack proper access control checks, which could lead to unauthorized actions being taken by malicious users.

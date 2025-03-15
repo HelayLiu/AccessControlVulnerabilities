@@ -1,0 +1,12 @@
+{
+ "contract": "ControllerMock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "withdraw",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

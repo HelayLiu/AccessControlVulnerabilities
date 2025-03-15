@@ -1,0 +1,47 @@
+{
+ "contract": "WalletLibrary",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "kill",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "resetSpentToday",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "setDailyLimit",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "addOwner",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "changeOwner",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "removeOwner",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "revoke",
+   "SHA3(msg.sender,0x105)"
+  ],
+  [
+   "whitelist",
+   "changeRequirement",
+   "SHA3(msg.sender,0x105)"
+  ]
+ ],
+ "PC_bypassed": []
+}

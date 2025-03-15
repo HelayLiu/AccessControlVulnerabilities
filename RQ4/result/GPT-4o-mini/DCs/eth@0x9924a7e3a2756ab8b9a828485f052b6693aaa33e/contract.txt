@@ -1,0 +1,19 @@
+1. Function UBSexToken() (line 118-121) has the access control issues. Reason: The UBSexToken() constructor can set the owner variable, which is significant because with the role, the owner can perform critical actions on the contract, including freezing accounts and transferring ownership. However, there is no access control check to prevent unauthorized calls to this function, which could lead to potential ownership manipulation if the contract is not deployed correctly.
+
+2. Function transfer(address _to, uint _value) (line 66-78) has the access control issues. Reason: The transfer function does not check if the caller has sufficient balance before allowing the transfer. If an unauthorized user calls this function, they could potentially transfer tokens from the owner's balance if the balance check is not enforced, leading to unauthorized token transfers.
+
+3. Function freezeAccount(address target, bool freeze) (line 83-88) has the access control issues. Reason: The freezeAccount function allows the owner to freeze any account, but if the owner is compromised or if the contract is deployed with an incorrect owner, this could lead to all accounts being frozen, effectively locking users out of their funds.
+
+4. Function transferOwnership(address newOwner) (line 95-101) has the access control issues. Reason: The transferOwnership function allows the current owner to transfer ownership to a new address. However, if the newOwner is set to an invalid address (e.g., address(0)), it could lead to a situation where the contract has no owner, making it impossible to perform owner-restricted actions.
+
+5. Function switchLiquidity(bool _transferable) (line 103-107) has the access control issues. Reason: The switchLiquidity function allows the owner to toggle the liquidity status of the token. If the owner is compromised, they could disable liquidity, preventing all users from transferring their tokens, which could lead to a denial of service.
+
+6. Function approve(address _spender, uint _value) (line 112-116) has the access control issues. Reason: The approve function does not check if the caller has sufficient balance before allowing the approval of spending. An unauthorized user could potentially approve spending from the owner's balance, leading to unauthorized token transfers.
+
+In summary, the identified functions with access control issues are:
+- UBSexToken() (line 118-121)
+- transfer(address _to, uint _value) (line 66-78)
+- freezeAccount(address target, bool freeze) (line 83-88)
+- transferOwnership(address newOwner) (line 95-101)
+- switchLiquidity(bool _transferable) (line 103-107)
+- approve(address _spender, uint _value) (line 112-116)

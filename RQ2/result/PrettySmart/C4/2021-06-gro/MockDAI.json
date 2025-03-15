@@ -1,0 +1,27 @@
+{
+ "contract": "MockDAI",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "mint",
+   "0x5"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x5"
+  ],
+  [
+   "owner",
+   "burn",
+   "0x5"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

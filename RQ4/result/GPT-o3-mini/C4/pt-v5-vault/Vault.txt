@@ -1,0 +1,2 @@
+1. Function mintYieldFee (approximately lines 106–113) has an access control issue.  
+ • Reason: This function is declared external and can be called by any address. It allows the caller to reduce the internal yield fee pool (_yieldFeeTotalSupply) and mint new Vault shares to any recipient without any restriction (e.g. no onlyOwner or designated fee-recipient check). In a correctly secured design only the yield fee recipient (or an authorized account) should be allowed to trigger the minting of yield fee shares, preventing an attacker from claiming these tokens arbitrarily.

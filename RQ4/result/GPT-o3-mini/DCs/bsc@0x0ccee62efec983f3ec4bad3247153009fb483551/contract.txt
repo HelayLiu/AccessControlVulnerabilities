@@ -1,0 +1,14 @@
+Below is our audit of the SwapXProxy contract with respect to access control:
+
+After a detailed review of every state‐variable–modifying or administrative function, we found that all functions that change important state (for example, pause(), unpause(), setNewImpl(), and rescueFund()) are properly guarded by the onlyOwner modifier. The publicly accessible swap() function is intended for use by anyone and does not require an owner check. In addition, even the receive() function uses its own check to prevent direct transfers from EOAs, which is an intentional design decision rather than an omission of access control.
+
+No functions exposed to external callers modify a sensitive variable without performing the required access control check. (The one admin function that updates swapXImpl, for example, is onlyOwner, and so are pause/unpause and rescueFund.)
+
+Therefore, based on our review, we did not detect any potential access control issues in the contract.
+
+Summary of Audit Findings:
+ • No vulnerable functions found – all functions that change critical state are appropriately protected.
+ • Administrative functions (setNewImpl, pause, unpause, rescueFund) have the proper onlyOwner modifier.
+ • The publicly available swap() is intentionally unrestricted to perform its proxy role.
+
+If you need further analysis on other aspects (e.g., upgrade risks or reentrancy), let us know.

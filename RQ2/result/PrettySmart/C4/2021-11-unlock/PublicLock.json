@@ -1,0 +1,22 @@
+{
+ "contract": "PublicLock",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "owner",
+   "updateBeneficiary",
+   "0xcf"
+  ],
+  [
+   "owner",
+   "withdraw",
+   "0xcf"
+  ],
+  [
+   "owner",
+   "approveBeneficiary",
+   "0xcf"
+  ]
+ ],
+ "PC_bypassed": []
+}

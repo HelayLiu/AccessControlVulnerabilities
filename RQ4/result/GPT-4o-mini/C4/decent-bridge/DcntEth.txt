@@ -1,0 +1,9 @@
+1. Function setRouter() (line 15-18) has access control issues. Reason: The setRouter function is public and can be called by anyone, allowing any address to set the router variable. This could lead to unauthorized users being able to mint or burn tokens by setting themselves as the router.
+
+2. Function mint(address _to, uint256 _amount) (line 21-23) has access control issues. Reason: The mint function can be called by any address that is set as the router. If the router is set to an unauthorized address, that address can mint tokens without any restrictions.
+
+3. Function burn(address _from, uint256 _amount) (line 25-27) has access control issues. Reason: Similar to the mint function, the burn function can be called by any address that is set as the router. If the router is set to an unauthorized address, that address can burn tokens from any account without restrictions.
+
+4. Function mintByOwner() (line 29-32) and burnByOwner() (line 34-37) are also potentially vulnerable if the owner is not properly controlled or if the ownership can be transferred to an unauthorized address. However, they are protected by the onlyOwner modifier, which is not defined in the provided contract, so we cannot assess its security without additional context. 
+
+In summary, the main access control issues arise from the setRouter function allowing any address to become the router, which can lead to unauthorized minting and burning of tokens.

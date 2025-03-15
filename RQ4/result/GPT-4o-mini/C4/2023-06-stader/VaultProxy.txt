@@ -1,0 +1,7 @@
+1. Function initialise() (line 20-34) has access control issues. Reason: The initialise() function can be called by any address, which allows anyone to set the `isInitialized` variable to true and potentially manipulate the contract's state, including setting the `owner` variable to an arbitrary address if the `staderConfig` is compromised.
+
+2. Function updateStaderConfig() (line 46-54) has access control issues. Reason: The updateStaderConfig() function is protected by the onlyOwner modifier, but if the owner is set to an arbitrary address (as mentioned in the previous point), this function can be exploited to change the configuration of the contract to a malicious address.
+
+3. Function updateOwner() (line 57-65) has access control issues. Reason: Similar to the updateStaderConfig() function, if the owner is set to an arbitrary address, this function can be called to change the owner of the contract to a malicious address, allowing the new owner to take control of the contract.
+
+In summary, the main access control issue arises from the lack of restrictions on the initialise() function, which can lead to the owner being set to an arbitrary address, thereby compromising the security of the contract.

@@ -1,0 +1,11 @@
+1. Function onlyOwner() (line 22-27) has access control issues. Reason: The `onlyOwner` modifier incorrectly checks the condition `require(msg.sender != owner);`, which means that it allows any address that is not the owner to execute functions that use this modifier. This is the opposite of the intended access control, which should restrict access to only the owner of the contract.
+
+2. Function Coinlancer() (line 34-38) has access control issues. Reason: The constructor initializes the `owner` variable to `msg.sender`, but since the `onlyOwner` modifier is incorrectly implemented, it allows any address to potentially execute functions that should be restricted to the owner, leading to a situation where the owner can be effectively bypassed.
+
+3. Function transfer(address _to, uint256 _amount) (line 50-63) has access control issues. Reason: The `transfer` function does not have any access control checks, meaning that any user can call this function to transfer tokens from their own balance without any restrictions. This could lead to unauthorized transfers if the `onlyOwner` modifier is misused.
+
+4. Function transferFrom(address _from, address _to, uint256 _amount) (line 66-83) has access control issues. Reason: Similar to the `transfer` function, `transferFrom` does not have any access control checks, allowing any user to transfer tokens from any address as long as they have the required allowance, which could lead to unauthorized transfers.
+
+5. Function approve(address _spender, uint256 _amount) (line 86-92) has access control issues. Reason: The `approve` function does not have any access control checks, allowing any user to approve any address to spend tokens on their behalf without restrictions, which could lead to unauthorized spending of tokens.
+
+In summary, the contract has multiple access control issues primarily due to the incorrect implementation of the `onlyOwner` modifier and the lack of access control checks in several functions.

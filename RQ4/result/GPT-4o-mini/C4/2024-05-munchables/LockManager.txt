@@ -1,0 +1,29 @@
+1. Function configureLockdrop (line 66-78) has access control issues. Reason: The function can be called by any address since it is marked as `external` and does not have sufficient access control checks to ensure that only authorized users (e.g., admins) can configure the lockdrop settings.
+
+2. Function configureToken (line 80-92) has access control issues. Reason: Similar to `configureLockdrop`, this function is also marked as `external` and lacks proper access control checks, allowing any address to configure tokens.
+
+3. Function setUSDThresholds (line 94-106) has access control issues. Reason: This function is marked as `external` and can be called by any address, which means that anyone can change the approval and disapproval thresholds without proper authorization.
+
+4. Function proposeUSDPrice (line 108-134) has access control issues. Reason: The function is marked as `external` and allows any address with the specified roles to propose a USD price. However, if the roles are not properly managed, unauthorized users could potentially propose prices.
+
+5. Function approveUSDPrice (line 136-158) has access control issues. Reason: This function allows any address with the specified roles to approve a USD price proposal. If the roles are not properly managed, unauthorized users could approve prices.
+
+6. Function disapproveUSDPrice (line 160-182) has access control issues. Reason: Similar to `approveUSDPrice`, this function allows any address with the specified roles to disapprove a USD price proposal, which could lead to unauthorized disapprovals.
+
+7. Function setLockDuration (line 184-206) has access control issues. Reason: This function is marked as `external` and can be called by any address, allowing anyone to set the lock duration for any player without proper authorization.
+
+8. Function lockOnBehalf (line 208-224) has access control issues. Reason: This function allows any address to lock tokens on behalf of another address, which could lead to unauthorized locking of tokens if the `_onBehalfOf` address is not properly validated.
+
+9. Function lock (line 226-240) has access control issues. Reason: Similar to `lockOnBehalf`, this function allows any address to lock tokens without proper checks to ensure that the caller is authorized to perform this action.
+
+10. Function unlock (line 242-261) has access control issues. Reason: This function allows any address to unlock tokens, which could lead to unauthorized unlocking if the caller is not the actual owner of the locked tokens.
+
+11. Function getLocked (line 263-284) has access control issues. Reason: This function allows any address to retrieve the locked tokens of any player, which could lead to privacy issues if sensitive information is exposed.
+
+12. Function getLockedWeightedValue (line 286-308) has access control issues. Reason: Similar to `getLocked`, this function allows any address to retrieve the locked weighted value of any player, which could lead to privacy issues.
+
+13. Function getConfiguredToken (line 310-316) has access control issues. Reason: This function allows any address to retrieve the configuration of any token, which could lead to privacy issues.
+
+14. Function getPlayerSettings (line 318-324) has access control issues. Reason: This function allows any address to retrieve the player settings of any player, which could lead to privacy issues.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to perform sensitive actions or access private information.

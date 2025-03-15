@@ -1,0 +1,25 @@
+Below is our audit‐review of the PublicVault’s access control. In our review we looked at every externally callable function and checked whether state‐changing functions (or calls to important internal logic) enforce that only the “right” actors may trigger them. Our findings are summarized below:
+
+1. processEpoch (≈line 152)  
+ • Issue: This function is declared public with no “onlyX” modifier.  
+ • Analysis: processEpoch checks that the epoch is over (via timeToEpochEnd()) and that expected conditions hold (for example, that the withdraw reserve and liens‐open counts meet strict criteria) before advancing the vault’s state. In many vault designs it is intentional for anyone to “poke” the contract to trigger an epoch transition. Although an attacker can call processEpoch, its internal conditions (and the fact that it only transfers funds toward a pre‐programmed withdrawProxy) ensure that no extra privileges are granted.  
+ • Conclusion: While processEpoch is externally callable, its “open” access is by design so that anyone may drive the epoch finalization once its conditions have been met. There is no access control “issue” from an unauthorized state change point of view.
+
+2. transferWithdrawReserve (≈line 250)  
+ • Issue: This function is also public and has no explicit access control modifier.  
+ • Analysis: Its sole role is to move (via safeTransfer) any “leftover” asset balance from the vault to a previously deployed withdrawProxy. Because the destination address is read from storage (and had been set by controlled logic through _deployWithdrawProxyIfNotDeployed) the function cannot be used by an attacker to extract funds—the tokens always go to the “approved” withdraw proxy. In addition, the arithmetic ensures that at most s.withdrawReserve is transferred.  
+ • Conclusion: The public visibility of transferWithdrawReserve is an intentional design choice so that anyone may help process withdrawals. The function does not permit the caller to divert funds.
+
+3. increaseYIntercept/decreaseYIntercept (≈lines 370/380)  
+ • Issue: These functions are public but only allow execution when msg.sender exactly equals the (pre‐set) withdraw proxy address for the previous epoch.  
+ • Analysis: Because the withdraw proxy is deployed using a clones library (with immutable parameters controlled by the router and the vault itself) the identity of the valid caller is fixed. Only a genuine (and correctly deployed) withdraw proxy can call these functions to “adjust” the yIntercept.  
+ • Conclusion: This check is adequate for access control. Any risk would lie in an upstream error when setting the withdrawProxy address—but that is not an issue internal to PublicVault’s access control.
+
+Additional functions such as mint, deposit, claim, beforePayment, afterPayment, and others correctly enforce access (using whenNotPaused, onlyLienToken, or an explicit require on msg.sender). (For example, claim() requires msg.sender == owner(), and lien‐related payment functions require the caller to be the LIEN_TOKEN.)
+
+────────────────────────────
+Final Conclusion
+
+After a detailed review of each externally callable function and its access checks, we did not identify any function that fails to perform the necessary access control checks. Some functions (processEpoch and transferWithdrawReserve) are left public to allow anyone to “poke” the contract in order to keep the epoch‐based logic working; however, their internal checks ensure that no unauthorized state modifications or asset movements occur.
+
+Therefore, we conclude that—with the assumption that the overall design (including the trusted roles, the routing/withdraw proxy logic, and the clone‐deployment mechanism) is implemented as intended—there are no access control vulnerabilities in the PublicVault contract.

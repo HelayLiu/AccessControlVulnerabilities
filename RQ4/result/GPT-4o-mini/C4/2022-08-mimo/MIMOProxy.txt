@@ -1,0 +1,7 @@
+1. Function execute(address target, bytes calldata data) (line 47-78) has access control issues. Reason: The function allows any user to call it, but it only checks if the caller is the owner or has specific permissions. If an unauthorized user knows the target contract and the function selector, they could potentially execute arbitrary functions on the target contract if they have been granted permission, leading to unauthorized access.
+
+2. Function setPermission(address envoy, address target, bytes4 selector, bool permission) (line 80-85) has access control issues. Reason: This function can only be called by the owner, but if the owner is compromised, the attacker can set permissions for any envoy, allowing them to execute functions on the target contract without proper authorization.
+
+3. Function transferOwnership(address newOwner) (line 87-92) has access control issues. Reason: The function allows the current owner to transfer ownership to any address, including potentially malicious addresses. If the owner is compromised, the attacker can take control of the contract.
+
+4. Function multicall(address[] calldata targets, bytes[] calldata data) (line 94-111) has access control issues. Reason: Similar to the execute function, this function allows the owner to call multiple target contracts. If the owner is compromised, the attacker can execute multiple arbitrary calls on different contracts, leading to potential loss of funds or unauthorized actions.

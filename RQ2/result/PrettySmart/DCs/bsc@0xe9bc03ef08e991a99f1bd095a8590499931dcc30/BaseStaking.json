@@ -1,0 +1,12 @@
+{
+ "contract": "BaseStaking",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "datadriven",
+   "withdraw",
+   "SHA3(msg.sender,0xa5)"
+  ]
+ ],
+ "PC_bypassed": []
+}

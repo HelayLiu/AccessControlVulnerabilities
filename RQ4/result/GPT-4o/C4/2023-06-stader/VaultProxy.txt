@@ -1,0 +1,14 @@
+OutPut:
+1. Function `initialise()` (line 15-31) has the access control issues. Reason: The `initialise()` function can be called by any external account, allowing them to set critical state variables such as `isValidatorWithdrawalVault`, `isInitialized`, `poolId`, `id`, `staderConfig`, and `owner`. This can lead to unauthorized initialization and potential control over the contract's behavior.
+
+Proof of Concept:
+- Deploy the contract.
+- Call the `initialise()` function from any account with arbitrary parameters.
+- Observe that the state variables are set according to the parameters provided, without any access control checks.
+
+2. Function `fallback()` (line 34-44) has the access control issues. Reason: The `fallback()` function allows any external account to trigger a delegate call to the vault implementation. While this is expected behavior for a proxy contract, it is crucial to ensure that the implementation contracts themselves have proper access control to prevent unauthorized actions.
+
+Proof of Concept:
+- Deploy the contract and initialize it.
+- Call the `fallback()` function with arbitrary data from any account.
+- Observe that the delegate call is executed, potentially leading to unauthorized actions if the implementation contract lacks proper access control.

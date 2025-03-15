@@ -1,0 +1,37 @@
+{
+ "contract": "UTB",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xe547f189",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setFeeCollector",
+   "0x0"
+  ],
+  [
+   "owner",
+   "0x085cdc90",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setExecutor",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setWrapped",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

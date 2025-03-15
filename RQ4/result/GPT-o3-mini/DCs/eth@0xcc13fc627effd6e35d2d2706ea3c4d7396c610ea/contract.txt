@@ -1,0 +1,13 @@
+Below is one critical access control vulnerability found in the provided code:
+
+1. Vulnerable Function: setOwner (in contract Owned; approximately line 17–21)  
+   Reason: The function setOwner does not restrict who can call it. In Solidity 0.4.19 functions are public by default when no visibility is declared. As a result, any arbitrary user can call setOwner to change the contract’s owner. Once an attacker becomes the owner, they can invoke other onlyOwner‑protected functions (for example, unlockToken, setExportFee, or uploadBalances) and thereby gain full control of the contract.
+
+Proof‐of‐Concept:  
+Assume that the contract is deployed and the legitimate owner is A. An attacker with address B can execute the following call:
+  IDXMContract.setOwner(B);
+After this call, B becomes the owner and can then call, for instance:
+  IDXMContract.unlockToken();
+allowing the attacker to change the token’s behavior for transfers.
+
+It is recommended that the setOwner function be modified to include the onlyOwner modifier so that only the current owner can change ownership.

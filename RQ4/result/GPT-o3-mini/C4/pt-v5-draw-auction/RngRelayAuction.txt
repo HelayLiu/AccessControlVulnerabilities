@@ -1,0 +1,4 @@
+Below is an issue discovered during the audit:
+
+1. Vulnerable Function: rngComplete (approximately lines 43–81)  
+   Reason: The rngComplete function is intended to be called solely by the designated RNG auction relayer (rngAuctionRelayer). However, there is no access control check (e.g. require(msg.sender == rngAuctionRelayer)) to enforce this restriction. This omission allows any external account to invoke rngComplete, potentially disrupting the auction flow, improperly updating auction state (such as _lastSequenceId and _auctionResults), and misdirecting or prematurely closing the PrizePool draw. A proof-of-concept attack would be to call rngComplete from an account other than the authorized relayer so that the attacker could trigger the draw closure and reward distribution in an unintended manner.

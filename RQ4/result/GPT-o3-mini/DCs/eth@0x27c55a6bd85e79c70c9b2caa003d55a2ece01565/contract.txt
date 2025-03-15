@@ -1,0 +1,8 @@
+1. Function approveToken (line 60-63) has an access control issue. 
+
+Reason: The approveToken function is declared public without any restrictions. This means that any external account can call it and force the contract to approve arbitrary amounts of its token balances to any spender. If an attacker calls this function, they could potentially set approvals that allow them to withdraw funds or misuse the contract’s token holdings. In a secure design, such a function that grants approvals from the contract’s holdings should have proper access control (for example, an onlyOwner modifier) to restrict its use solely to trusted parties or internal logic.
+
+Proof of Concept Example:
+An attacker could call the function as follows:
+  approveToken(targetTokenAddress, attackerControlledSpender, amount);
+This call forces the contract to approve the attacker-controlled address to spend (withdraw) tokens held by the contract, thereby compromising the security of the funds.

@@ -1,0 +1,27 @@
+{
+ "contract": "MIMOProxy",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "execute",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "multicall",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setPermission",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

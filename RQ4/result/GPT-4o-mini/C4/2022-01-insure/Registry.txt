@@ -1,0 +1,7 @@
+1. Function supportMarket(address _market) (line 36-45) has access control issues. Reason: The function allows any caller to register a market if they are either the factory or the owner. However, there is no check to ensure that the caller is indeed authorized to register markets, which could lead to unauthorized market registrations if the factory address is compromised.
+
+2. Function setExistence(address _template, address _target) (line 48-56) has access control issues. Reason: Similar to the supportMarket function, this function allows any caller to set existence if they are either the factory or the owner. If the factory address is compromised, an unauthorized caller could set existence for any template and target, leading to potential misuse.
+
+3. Function setCDS(address _address, address _cds) (line 59-67) has access control issues. Reason: While this function is protected by the onlyOwner modifier, it is important to note that if the ownership contract is compromised, the owner could be changed, allowing an unauthorized user to set CDS addresses.
+
+In summary, the potential access control issues arise from the reliance on the factory address and ownership contract, which could be compromised, leading to unauthorized actions in the contract.

@@ -1,0 +1,16 @@
+Below is the analysis and proof‐of‐concept for the identified access control issue:
+
+1. Vulnerable Function: owned() (approximately lines 10–12)
+
+Reason:
+• The function "owned()" is declared as a public function that sets the contract’s owner to msg.sender. 
+• Because Solidity 0.4.24 uses the constructor keyword for constructors (as seen later in the contract), "owned()" is not a constructor but a normal public function.
+• This means any user can call owned(), effectively reassigning the owner to themselves.
+• Once an attacker becomes the new owner, they can call sensitive functions marked with the onlyOwner modifier (such as freezeAccount, burn, and mintToken) and thereby control the contract in unintended ways.
+
+Proof-of-Concept:
+1. A malicious user can simply call owned() from their address.
+2. By doing so, the attacker’s address becomes the new owner.
+3. The attacker can now invoke functions like mintToken (to mint unlimited tokens), freezeAccount (to lock out token holders), or burn (to destroy tokens) since they pass the onlyOwner check.
+
+This demonstrates that the owned() function creates a severe access control vulnerability.

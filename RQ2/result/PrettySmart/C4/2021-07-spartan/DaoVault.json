@@ -1,0 +1,17 @@
+{
+ "contract": "DaoVault",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x46dafa2f",
+   "0x1"
+  ],
+  [
+   "owner",
+   "withdraw",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

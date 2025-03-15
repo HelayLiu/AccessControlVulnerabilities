@@ -1,0 +1,17 @@
+{
+ "contract": "UniswapV3Staker",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "claimReward",
+   "SHA3(msg.sender,0x9)"
+  ],
+  [
+   "whitelist",
+   "claimAllRewards",
+   "SHA3(msg.sender,0x9)"
+  ]
+ ],
+ "PC_bypassed": []
+}

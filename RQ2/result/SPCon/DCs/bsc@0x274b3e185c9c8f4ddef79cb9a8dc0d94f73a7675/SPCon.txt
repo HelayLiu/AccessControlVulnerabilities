@@ -1,0 +1,98 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 2 integrity policies
+WARNING:CryticCompile:Warning: Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol
+
+
+Warning: Warning: This declaration shadows an existing declaration.
+   --> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol:393:4:
+    |
+393 |    function IRouter()external view returns (address);
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+   --> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol:228:1:
+    |
+228 | interface IRouter {
+    | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+   --> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol:667:59:
+    |
+667 |     function getUp(uint _rs,uint bnb)public  view returns(uint){
+    |                                                           ^^^^
+
+
+Warning: Warning: Unused local variable.
+   --> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol:548:9:
+    |
+548 |         uint miner=IERC20(_token).totalSupply()*10/100;
+    |         ^^^^^^^^^^
+
+
+Warning: Warning: Function state mutability can be restricted to pure
+   --> crytic-export/etherscan-contracts2/0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675.bscscan.com-StakingRewards.sol:667:5:
+    |
+667 |     function getUp(uint _rs,uint bnb)public  view returns(uint){
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 573, in symCreateContractAccount
+    logger.debug(f"symbolic contract_account: {hex(contract_account.address)}")
+AttributeError: 'NoneType' object has no attribute 'address'
+CRITICAL:symExec:StakingRewards-0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675 cannot be deployed using manticore
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 573, in symCreateContractAccount
+    logger.debug(f"symbolic contract_account: {hex(contract_account.address)}")
+AttributeError: 'NoneType' object has no attribute 'address'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 36, in execute_command
+    SymExecEVM().fuzzing(contract=contractName, EthereumAddress=args.eth_address, separation_policies = separation_policies, integrity_policies=integrity_policies,\
+  File "../SpCon/spcon/symExec.py", line 748, in fuzzing
+    attack_test_sequence = greedyTesting(data, S=Stack, unauthorizedusers = unauthorizedusers, desc=f"Testing separation priviledgefuncs...\nR: {authorizedrole[1]}\n")
+  File "../SpCon/spcon/symExec.py", line 706, in greedyTesting
+    if not symExec(unauthorizedusers, S):
+  File "../SpCon/spcon/symExec.py", line 686, in symExec
+    exit(-1)
+  File "../anaconda3/envs/spcon/lib/python3.8/_sitebuiltins.py", line 26, in __call__
+    raise SystemExit(code)
+SystemExit: -1
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 573, in symCreateContractAccount
+    logger.debug(f"symbolic contract_account: {hex(contract_account.address)}")
+AttributeError: 'NoneType' object has no attribute 'address'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 36, in execute_command
+    SymExecEVM().fuzzing(contract=contractName, EthereumAddress=args.eth_address, separation_policies = separation_policies, integrity_policies=integrity_policies,\
+  File "../SpCon/spcon/symExec.py", line 748, in fuzzing
+    attack_test_sequence = greedyTesting(data, S=Stack, unauthorizedusers = unauthorizedusers, desc=f"Testing separation priviledgefuncs...\nR: {authorizedrole[1]}\n")
+  File "../SpCon/spcon/symExec.py", line 706, in greedyTesting
+    if not symExec(unauthorizedusers, S):
+  File "../SpCon/spcon/symExec.py", line 686, in symExec
+    exit(-1)
+  File "../anaconda3/envs/spcon/lib/python3.8/_sitebuiltins.py", line 26, in __call__
+    raise SystemExit(code)
+SystemExit: -1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 41, in execute_command
+    raise Exception("Unkown error")
+Exception: Unkown error

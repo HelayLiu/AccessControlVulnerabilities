@@ -1,0 +1,80 @@
+Below is one of the findings from our audit. (Note: Because the contract’s code uses “token guardian” logic to gate transfers and approvals, an inversion in the “enabled/disabled” thinking inadvertently “locks” tokens—preventing even their rightful owners from transferring or approving them. This is an access control issue because the protection meant to “secure” tokens instead prevents genuine owners from exercising control.) 
+
+─────────────────────────────  
+1. Vulnerable “Token Guardian” Logic Affecting _beforeTokenTransfer, approve, and setApprovalForAll  
+─────────────────────────────  
+• Affected code snippet (approximate line numbers in the given file):
+  …
+  function _hasTokenGuardianEnabled(address wallet) internal view returns (bool) {
+    return
+     !wallet.isContract() &&
+     (_tokenGuardianDisablingTimestamp[wallet] == 0 ||
+       block.timestamp < _tokenGuardianDisablingTimestamp[wallet]);
+  }
+  …
+  function _beforeTokenTransfer(
+    address from,
+    address to,
+    uint256 /* firstTokenId */,
+    uint256 batchSize
+  ) internal override {
+    if (from != address(0) && _hasTokenGuardianEnabled(from)) {
+     // Cannot transfer handle if the guardian is enabled, except at minting time.
+     revert HandlesErrors.GuardianEnabled();
+    }
+    super._beforeTokenTransfer(from, to, 0, batchSize);
+  }
+  …
+  function approve(address to, uint256 tokenId) public override(IERC721, ERC721) {
+    if (to != address(0) && _hasTokenGuardianEnabled(msg.sender)) {
+     revert HandlesErrors.GuardianEnabled();
+    }
+    super.approve(to, tokenId);
+  }
+  …
+  function setApprovalForAll(address operator, bool approved) public override(IERC721, ERC721) {
+    if (approved && _hasTokenGuardianEnabled(msg.sender)) {
+     revert HandlesErrors.GuardianEnabled();
+    }
+    super.setApprovalForAll(operator, approved);
+  }
+  …
+• Reason and Impact:
+  – By design the contract intends to “lock” tokens when a user opts into the token guardian mode. However, the helper function _hasTokenGuardianEnabled returns true when _tokenGuardianDisablingTimestamp[wallet] is 0 – which is the default state. That is, every externally owned account (EOA) starts off with “token guardian enabled.”
+  – As a result, even a token’s legitimate owner is blocked from transferring the token (via _beforeTokenTransfer) or approving transfers (via approve and setApprovalForAll) because the check “if (_hasTokenGuardianEnabled(...))” always reverts.
+  – The functions DANGER__disableTokenGuardian and enableTokenGuardian are also “inverted” in intent. The “disable” function sets the timestamp to block.timestamp + cooldown (which still makes _hasTokenGuardianEnabled return true), while the “enable” function reverts if the timestamp is already zero—that is, if the guardian is “enabled” by default.
+  – This logic effectively denies (or “locks”) token owners control over their tokens and might lead to a denial‐of‐service for legitimate token transfers or approval updates.
+  
+• Access Control Issue:
+  The access control “gate” meant to protect token operations is misconfigured. Instead of giving correct control only to the owner (or approved operator) when they do not want the guardian active, the current logic always “blocks” any attempt to transfer or approve because the guardian is (incorrectly) seen as enabled. This is a threat because legitimate users have no way (via these functions) to make transfers or approvals when they so desire.
+
+─────────────────────────────  
+Summary of Finding:  
+─────────────────────────────  
+Vulnerable area:  
+– _hasTokenGuardianEnabled (used by _beforeTokenTransfer, approve, setApprovalForAll)  
+Affected functions (with approximate line numbers as in our snippet):  
+ • _beforeTokenTransfer (lines ≈124–129)  
+ • approve (lines ≈85–90)  
+ • setApprovalForAll (lines ≈92–96)  
+Reason:  
+The “token guardian” logic is inverted. Since the default _tokenGuardianDisablingTimestamp is 0, _hasTokenGuardianEnabled immediately returns true. This unintentionally prevents any transfers or approvals by a token owner and denies rightful access.  
+
+─────────────────────────────  
+Proof of Concept (PoC):  
+─────────────────────────────  
+1. Deploy the LensHandles contract.  
+2. As an externally owned account (EOA) that has minted a handle (via mintHandle), try to call ERC721’s approve or transfer functions.  
+3. The transaction will revert with HandlesErrors.GuardianEnabled(), even though you are the owner, because _hasTokenGuardianEnabled(msg.sender) returns true.  
+4. Similarly, attempting to call setApprovalForAll with approved == true will revert.  
+
+This behavior shows that the access control expected for owner-only transfers is inadvertently blocking legitimate use.
+
+─────────────────────────────  
+Recommendation:  
+─────────────────────────────  
+Review and flip the logic in _hasTokenGuardianEnabled so that the “enabled” state reflects the user’s intended security posture. For example, if a user calls “disableTokenGuardian”, then the flag should be set such that _hasTokenGuardianEnabled returns false for that wallet—thus allowing transfers and approvals. Adjusting the modifier logic and the enable/disable functions to match the intended semantics will correct the access control issue. 
+
+─────────────────────────────  
+
+Please consider this issue a high-priority fix as it may effectively lock tokens from being transferred or approved for sale/transfer by their rightful owners.

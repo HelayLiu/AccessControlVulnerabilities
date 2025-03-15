@@ -1,0 +1,17 @@
+1. Function `deposit` (line 174-182) has access control issues. Reason: The `deposit` function does not check if the caller is allowed to deposit tokens, which could lead to unauthorized users depositing tokens into the contract.
+
+2. Function `depositFromOtherContract` (line 185-193) has access control issues. Reason: Similar to the `deposit` function, this function does not restrict who can call it, allowing any contract to deposit tokens on behalf of any user without proper authorization.
+
+3. Function `withdraw` (line 295-303) has access control issues. Reason: The `withdraw` function does not verify if the caller is the owner of the deposit they are trying to withdraw, which could allow unauthorized users to withdraw funds from other users' deposits.
+
+4. Function `_withdraw` (line 309-335) has access control issues. Reason: This internal function does not check if the caller is the owner of the deposit they are trying to withdraw, which could allow unauthorized users to withdraw funds from other users' deposits.
+
+5. Function `claim` (line 339-347) has access control issues. Reason: The `claim` function does not verify if the caller is the owner of the deposit they are trying to claim rewards for, which could allow unauthorized users to claim rewards from other users' deposits.
+
+6. Function `_claim` (line 351-377) has access control issues. Reason: This internal function does not check if the caller is the owner of the deposit they are trying to claim rewards for, which could allow unauthorized users to claim rewards from other users' deposits.
+
+7. Function `refreshMyLevel` (line 487-493) has access control issues. Reason: The `refreshMyLevel` function can be called by any user to refresh the level of any user, which could lead to unauthorized modifications of user levels.
+
+8. Function `switchToUnlocked` (line 505-515) has access control issues. Reason: The `switchToUnlocked` function does not verify if the caller is the owner of the deposit they are trying to switch to unlocked, which could allow unauthorized users to modify other users' deposits.
+
+These functions lack proper access control checks, which could lead to unauthorized actions being performed on behalf of other users or the contract itself.

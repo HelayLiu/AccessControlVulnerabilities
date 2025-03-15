@@ -1,0 +1,22 @@
+{
+ "contract": "P404Token",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xd63c0828",
+   "0x8"
+  ],
+  [
+   "owner",
+   "mint",
+   "0x5"
+  ],
+  [
+   "whitelist",
+   "mintNFT",
+   "SHA3(msg.sender,0x9)"
+  ]
+ ],
+ "PC_bypassed": []
+}

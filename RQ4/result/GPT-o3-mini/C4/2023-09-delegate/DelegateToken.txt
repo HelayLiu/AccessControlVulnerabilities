@@ -1,0 +1,72 @@
+Below is one example of how the audit can be written. In our review we noticed that several external functions depend solely on “helper‐functions” for checking whether msg.sender is allowed to take an action. In particular, note that functions that mint or “withdraw” value never use an explicit “onlyOwner”–style modifier, and instead simply use a call such as
+
+  StorageHelpers.revertInvalidWithdrawalConditions(…)
+  StorageHelpers.revertNotOperator(…)
+
+to “enforce” that the caller is permitted to act. If the helper routines (which are defined in external libraries) are not correctly implemented to check that msg.sender is (for example) the delegate token holder or its approved operator, then an attacker may call these functions to mint or to drain underlying funds.
+
+Below we describe two specific cases along with a proof‐of‐concept scenario.
+
+──────────────────────────────────────────────
+1. Vulnerable Function: create (approximately lines 90–125)
+
+Issue: The create function does not require that the caller “msg.sender” be the intended delegate or principal holder. Instead it uses the caller’s address only to compute the delegateTokenId. In other words, an attacker can supply a delegateInfo struct whose delegateHolder (and even principalHolder) are set arbitrarily (for example, to the address of an unsuspecting victim) and then call create. As a result, the contract will end up “minting” a delegate token (and also minting a principal token via StorageHelpers.mintPrincipal) on behalf of someone else. (Even if later calls – for example, a withdrawal – require more checks, the fact that anyone may trigger a delegation creation can be an issue if the intention was to let only a specific privileged actor or the party that controls the underlying asset initiate the process.)
+
+Proof of concept (pseudocode):
+
+  // attacker is an arbitrary EOA that does not control the victim addresses
+  delegateInfo = {
+   tokenType: ERC721,     // (or ERC20 / ERC1155)
+   delegateHolder: victimAddress, 
+   tokenContract: someUnderlyingContract,
+   rights: someRightsValue,
+   tokenId: someTokenId,
+   amount: 0,        // (or nonzero for ERC20/1155)
+   expiry: someFutureTimestamp,
+   principalHolder: victimAddress
+  };
+  salt = 1234;
+  delegateToken.create(delegateInfo, salt);
+
+If the intended design was to let only the “proper” party (for example, the owner of the underlying asset) trigger a delegation creation, then the lack of an explicit access‑control check here is a vulnerability.
+
+──────────────────────────────────────────────
+2. Vulnerable Function: withdraw (approximately lines 180–225)
+
+Issue: The withdraw function is intended to “clean up” a delegate token and release the underlying asset. Although it makes a call
+
+  StorageHelpers.revertInvalidWithdrawalConditions(delegateTokenInfo, accountOperator, delegateTokenId, delegateTokenHolder);
+
+to enforce that only an authorized party may withdraw, there is no additional explicit “owner/operator” check on msg.sender in the body of withdraw. (Access control is completely outsourced to the helper routine.) If that helper routine is not sufficiently strict – for example if it mistakenly accepts calls from non‑authorized addresses – then an attacker could call withdraw to effectively “consume” the token (by setting its registry pointer to ID_USED) and then cause the underlying asset to be sent to msg.sender.
+
+Proof of concept (pseudocode):
+
+  // attacker is not the recorded delegate holder but if StorageHelpers.revertInvalidWithdrawalConditions is weak…
+  delegateToken.withdraw(delegateTokenId);
+
+After the call the underlying asset (for example, an ERC20 or ERC1155 token) may be transferred to msg.sender.
+
+──────────────────────────────────────────────
+Summary of Reported Issues
+
+1. Function create (approx. lines 90–125):
+ • Issue: No explicit access control on msg.sender – the caller may submit a delegateInfo structure choosing arbitrary delegateHolder and principalHolder addresses.
+ • Risk: Unauthorized minting of delegate tokens (and thus associated principal tokens) on behalf of victims.
+ • Proof of concept: An attacker calling create with victim addresses as delegateHolder/principalHolder.
+
+2. Function withdraw (approx. lines 180–225):
+ • Issue: The function relies entirely on StorageHelpers.revertInvalidWithdrawalConditions for access restriction rather than explicitly checking that msg.sender is the rightful token holder (or approved operator).
+ • Risk: If the helper does not correctly enforce the necessary permissions, an attacker could withdraw the underlying asset in an unauthorized manner.
+ • Proof of concept: An attacker calling withdraw on a token for which they are not the holder, and if the helper check is bypassed or mis‐implemented, obtaining the underlying asset.
+
+──────────────────────────────────────────────
+Recommendation
+
+For functions such as create and withdraw (and any function that leads to minting or transfers of underlying value), it is recommended to add explicit access control (via modifiers or direct require statements on msg.sender) rather than relying solely on delegated helper checks. This “defense in depth” is particularly important when important state‐changes (minting/burning or asset transfers) are made.
+
+──────────────────────────────────────────────
+Note
+
+Since many of the state‐checks (for example, revertNotOperator and revertInvalidWithdrawalConditions) are implemented externally in the imported library files, the overall security depends on their correctness as well. In our opinion it is advisable to audit those helper libraries alongside this contract. 
+
+This concludes our report on the access control issues in the given contract file.

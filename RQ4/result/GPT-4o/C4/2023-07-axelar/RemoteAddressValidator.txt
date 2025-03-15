@@ -1,0 +1,21 @@
+Upon reviewing the provided smart contract, I have identified the following access control issues:
+
+1. **Function `addTrustedAddress` (line 78-88)**:
+   - **Reason**: This function is correctly protected by the `onlyOwner` modifier, which ensures that only the contract owner can add a trusted interchain token service address. There is no access control issue here.
+
+2. **Function `removeTrustedAddress` (line 90-96)**:
+   - **Reason**: This function is also protected by the `onlyOwner` modifier, ensuring that only the contract owner can remove a trusted interchain token service address. There is no access control issue here.
+
+3. **Function `addGatewaySupportedChains` (line 98-106)**:
+   - **Reason**: This function is protected by the `onlyOwner` modifier, ensuring that only the contract owner can add chains supported by the Axelar gateway. There is no access control issue here.
+
+4. **Function `removeGatewaySupportedChains` (line 108-116)**:
+   - **Reason**: This function is protected by the `onlyOwner` modifier, ensuring that only the contract owner can remove chains supported by the Axelar gateway. There is no access control issue here.
+
+5. **Function `validateSender` (line 66-74)**:
+   - **Reason**: This function is a public view function that checks if a sender is a valid interchain token service address. It does not modify any state and does not require access control. There is no access control issue here.
+
+6. **Function `getRemoteAddress` (line 118-124)**:
+   - **Reason**: This function is a public view function that retrieves the interchain token service address for a specified chain. It does not modify any state and does not require access control. There is no access control issue here.
+
+Overall, the contract appears to have appropriate access control measures in place for functions that modify state, using the `onlyOwner` modifier to restrict access to the contract owner. There are no access control issues in the provided contract.

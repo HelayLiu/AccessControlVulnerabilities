@@ -1,0 +1,5 @@
+1. Function `transferFrom(address from, address to, uint256 delegateTokenId)` (line 139-195) has access control issues. Reason: The function does not adequately check if the `msg.sender` is either the owner of the token or an approved operator before allowing the transfer. This could allow unauthorized users to transfer tokens they do not own or are not authorized to manage.
+
+2. Function `withdraw(uint256 delegateTokenId)` (line 292-335) has access control issues. Reason: The function does not verify that the `msg.sender` is the owner of the token or an approved operator before allowing the withdrawal of tokens. This could lead to unauthorized users being able to withdraw tokens from the contract.
+
+3. Function `flashloan(Structs.FlashInfo calldata info)` (line 336-373) has access control issues. Reason: The function checks if the `msg.sender` is an operator for the `delegateHolder`, but it does not ensure that the `msg.sender` is the actual owner of the tokens being flashloaned. This could allow unauthorized users to initiate flashloans on behalf of others without proper authorization.

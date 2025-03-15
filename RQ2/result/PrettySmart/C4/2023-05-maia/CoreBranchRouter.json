@@ -1,0 +1,42 @@
+{
+ "contract": "CoreBranchRouter",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x8383514c",
+   "0x1"
+  ],
+  [
+   "owner",
+   "0x6c7b5ff7",
+   "0x1"
+  ],
+  [
+   "owner",
+   "0xeafe6af1",
+   "0x1"
+  ],
+  [
+   "owner",
+   "completeOwnershipHandover",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "initialize",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff74873927"
+  ]
+ ],
+ "PC_bypassed": []
+}

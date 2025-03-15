@@ -1,0 +1,32 @@
+{
+ "contract": "PausableToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "pause",
+   "0x3"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "owner",
+   "unpause",
+   "0x3"
+  ],
+  [
+   "datadriven",
+   "transfer",
+   "SHA3(msg.sender,0x1)"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x3"
+  ]
+ ],
+ "PC_bypassed": []
+}

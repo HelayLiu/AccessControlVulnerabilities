@@ -1,0 +1,27 @@
+{
+ "contract": "vVISR",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "mint",
+   "0xb"
+  ],
+  [
+   "owner",
+   "snapshot",
+   "0xb"
+  ],
+  [
+   "owner",
+   "burn",
+   "0xb"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0xb"
+  ]
+ ],
+ "PC_bypassed": []
+}

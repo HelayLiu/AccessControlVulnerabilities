@@ -1,0 +1,27 @@
+{
+ "contract": "MockTimelock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "cancelTransaction",
+   "0x0"
+  ],
+  [
+   "owner",
+   "executeTransaction",
+   "0x0"
+  ],
+  [
+   "owner",
+   "queueTransaction",
+   "0x0"
+  ],
+  [
+   "owner",
+   "acceptAdmin",
+   "0x1"
+  ]
+ ],
+ "PC_bypassed": []
+}

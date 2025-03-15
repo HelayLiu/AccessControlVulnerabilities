@@ -1,0 +1,1 @@
+1. Function mint(address account, uint256 amount, string memory txId) (line 118-123) has access control issues. Reason: The mint function is public and can be called by any address, allowing anyone to mint new tokens, which can lead to inflation and devaluation of the token. There should be an access control mechanism (e.g., onlyOwner modifier) to restrict who can mint tokens.

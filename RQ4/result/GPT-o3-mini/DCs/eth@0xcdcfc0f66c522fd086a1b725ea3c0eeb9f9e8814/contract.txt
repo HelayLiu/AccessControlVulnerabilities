@@ -1,0 +1,12 @@
+Below is one access control issue discovered in the contract:
+
+1. Vulnerable Function: setOwner (in contract Owned, approximately lines 9–12)
+   • Issue: The setOwner function does not use the onlyOwner modifier (or any other access control check). This flaw allows any external account—not just the current owner—to call setOwner and change the contract’s owner.
+   • Impact: An attacker can call setOwner to set himself as the owner. After that, he can invoke functions gated by onlyOwner (such as unlockToken, uploadBalances, lockBalances, etc.), which could compromise the intended control over token transfers and balances.
+   • Proof of Concept:
+     - Attacker calls setOwner with his own address:
+         attacker_address.call(setOwner(attacker_address));
+     - Since there is no access restriction, this transaction succeeds, making the attacker the new owner.
+     - The attacker can now call onlyOwner functions (e.g., unlockToken) to change the token’s locking state or modify balances, which could lead to further manipulation of the contract’s behavior.
+
+This issue represents a critical access control vulnerability that should be fixed (e.g., by applying the onlyOwner modifier to setOwner) to maintain proper restrictions on who can change ownership.

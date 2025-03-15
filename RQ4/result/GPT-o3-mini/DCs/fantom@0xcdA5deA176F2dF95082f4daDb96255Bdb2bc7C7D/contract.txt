@@ -1,0 +1,12 @@
+Below is one potential access control issue found in the contract:
+
+1. Vulnerable Function: revokeStrategy (approximately lines 190–210)
+ • Issue: The revokeStrategy function is written so that if msg.sender is the same as the strategy address that is being revoked then no role check is performed. In other words, a strategy (or an attacker controlling a contract that has been added as a strategy by the admin) can call revokeStrategy on itself without having to hold a privileged role (for example the GUARDIAN). 
+ • Why It Matters: In this design the admin (DEFAULT_ADMIN_ROLE) is the only one allowed to add strategies. However, once a strategy is added the contract lets that very strategy “self‐revoke” its allocation and remove its allocBPS from totalAllocBPS. In some cases an attacker controlling a strategy contract could exploit this bypass to trigger unexpected changes in vault accounting or disrupt the ordering in the withdrawalQueue—even if the intended idea might be to allow a strategy to opt out, bypassing a role check may let a misbehaving (or malicious) strategy manipulate or “game” certain internal parameters.
+ • Proof-of-Concept Sketch:
+  1. An attacker (or colluding party) is added by the admin as a strategy (with a nonzero allocBPS) into the vault.
+  2. The attacker (via the strategy contract, or by controlling it) simply calls revokeStrategy with its own address as the parameter.
+  3. Because msg.sender equals the strategy address, the if‑condition bypasses the _atLeastRole(GUARDIAN) check and the function goes on to remove the strategy’s allocation.
+  4. This self‑revocation may then be used to disturb how totalAllocBPS and totalAllocated are computed or how funds are withdrawn from the vault.
+
+It is recommended that the contract designers review whether allowing a strategy to unilaterally “revoke” itself is acceptable. If not, then a stricter (role‑restricted) access control should be applied to revokeStrategy regardless of whether the caller is the strategy itself.

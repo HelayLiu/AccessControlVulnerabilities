@@ -1,0 +1,8 @@
+Below is one potential access control issue found during the audit:
+
+1. Function depositRewards (approximately lines 60–70) has a potential access control issue.  
+ • Reason: depositRewards is declared as a public payable function and does not include any access control (for example, an onlyOwner or onlyRewarder modifier). Although its intended use appears to be for “depositing” ETH‐earned rewards into the protocol (swapping ETH for CVX and then locking the purchased tokens), leaving it open to the public lets anyone trigger its execution. An attacker (or even an unintentional caller) could call depositRewards and force the contract to perform the token swap and locking operations at arbitrary times. In some designs this may lead to unexpected side effects in the system’s accounting (for example, indirectly affecting the computed cvxPerVotium price) or disrupting the reward‐distribution flow. If the intended behavior is to allow only a specific role (such as the rewarder or owner) to perform these operations, then adding an access control modifier would be necessary.
+
+No other functions were found to be missing such checks. (For example, functions like setChainlinkCvxEthFeed, setRewarder, claimRewards, and withdrawStuckTokens already enforce owner‐ or rewarder‐based access control.) 
+
+It is recommended that the design be revisited to decide whether depositRewards is meant to be publicly callable or should be restricted to a privileged role.

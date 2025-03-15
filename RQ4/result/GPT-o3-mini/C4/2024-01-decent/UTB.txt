@@ -1,0 +1,16 @@
+Below is one potential access control issue found in the contract:
+
+1. Vulnerable Function: receiveFromBridge (approximately lines 134–142)  
+  Reason: This function is declared public and does not enforce any access control (for example, it does not require that the caller be a trusted bridge adapter or the owner). As a result, an attacker (or any external user) can call receiveFromBridge with arbitrarily crafted SwapInstructions, target, paymentOperator, payload, and refund parameters. This call will invoke the internal _swapAndExecute routine which in turn calls performSwap (using the caller’s parameters) and then calls executor.execute on a target of the caller’s choosing. In effect, a malicious party can force the executor to execute calls that they control, possibly leading to unauthorized transactions or unexpected behavior in downstream logic.
+
+Proof-of-Concept:
+An attacker could create a transaction that calls receiveFromBridge with custom (malicious) parameters. For example, they could supply a SwapInstructions structure (which might bypass proper swap logic if the swapper contract is untrusted or if the parameters are manipulated), along with a target contract address and a payload that instructs the executor to perform an unintended operation (e.g. transferring funds to the attacker’s account). Since there is no check that verifies the caller is an expected bridge adapter or otherwise authorized, the undesired execution flow can be triggered.
+
+Developers should ensure that functions intended to be called only by back-end systems such as a bridge adapter or off-chain relayer enforce stricter access control (for example by adding an onlyAllowedCaller/onlyBridgeAdapter modifier or by checking that msg.sender is the known bridge adapter for the given bridgeId).
+
+Summary of the issue:
+- Function: receiveFromBridge (line ~134-142)
+- Issue: Lack of access control allowing any external caller to trigger internal logic that leads to an arbitrary execution call on the executor contract.
+- Impact: Enables an attacker to potentially trigger unauthorized calls that may, for example, transfer funds or perform unexpected state-changing operations if the executor (or target contract) does not enforce its own checks.
+
+This concludes the identified access control problem for the given smart contract file.

@@ -1,0 +1,13 @@
+1. Function DrugDealer() (line 15-17) has access control issues. Reason: The constructor function DrugDealer() sets the `ceoAddress` to the sender's address without any access control checks, allowing anyone to deploy the contract and become the CEO.
+
+2. Function seedMarket(uint256 drugs) (line 66-70) has access control issues. Reason: The function allows anyone to call it to initialize the market and set the `initialized` variable to true, which could lead to unauthorized users manipulating the market state.
+
+3. Function collectDrugs(address ref) (line 27-41) has access control issues. Reason: The function does not check if the caller is a valid user or has the right to collect drugs, which could allow unauthorized users to collect drugs and manipulate the state.
+
+4. Function sellDrugs() (line 43-56) has access control issues. Reason: The function allows any user to sell drugs without verifying if they have any drugs to sell, which could lead to unexpected behavior or manipulation of the market.
+
+5. Function buyDrugs() (line 58-70) has access control issues. Reason: The function allows any user to buy drugs without verifying if they have sufficient funds or if the market is initialized, which could lead to unexpected behavior or manipulation of the market.
+
+6. Function getFreeKilo() (line 73-80) has access control issues. Reason: The function allows any user to claim free kilos without verifying if they are eligible, which could lead to abuse and manipulation of the contract's state.
+
+In summary, the contract has multiple access control issues that could allow unauthorized users to manipulate critical state variables and functions.

@@ -1,0 +1,12 @@
+{
+ "contract": "GymSinglePool",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x6b63bb83",
+   "0xc0"
+  ]
+ ],
+ "PC_bypassed": []
+}

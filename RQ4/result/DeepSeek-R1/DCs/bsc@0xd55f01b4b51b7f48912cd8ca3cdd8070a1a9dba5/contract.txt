@@ -1,0 +1,3 @@
+1. Function setOracleData(address rToken, oracleChainlink _oracle) (line 12-14) has access control issues. Reason: The setOracleData function is public and can be called by any address, allowing anyone to set the oracle data for any rToken, which could lead to manipulation of price data in the contract.
+
+2. Function getUnderlyingPrice(RToken rToken) (line 17-24) has access control issues. Reason: The getUnderlyingPrice function is public and does not have any access control checks, which means any user can call this function and potentially exploit the oracle data if the underlying price is manipulated.

@@ -1,0 +1,14 @@
+Below is one potential issue found during the audit:
+
+1. Vulnerable Function: fallback() (calls babyRouterDelegateCall)  
+ • Approximate Location: around lines 16–24  
+ • Reason: The fallback function accepts any call (with arbitrary calldata) and then directly forwards it via delegatecall to the immutable normalRouter. In doing so, it does not perform any access control or validate that the caller is allowed to execute that logic. This means that an attacker (or any arbitrary user) can craft calldata that causes the delegatecall to invoke a function in normalRouter which—when executed in the context (i.e. storage and state) of BabySmartRouter—might modify critical state or otherwise lead to unauthorized behavior. Since normalRouter is provided at construction time and cannot be changed later, its behavior must be absolutely trusted; otherwise, it becomes a weak point for exploitable access control. 
+
+Proof of Concept Outline:
+ 1. Deploy BabySmartRouter passing in a normalRouter address that contains a malicious function (or point normalRouter to a contract controlled by an attacker).
+ 2. From an externally owned account, call the fallback of BabySmartRouter with data that matches the function signature of a sensitive function in normalRouter (one that—for example—writes to storage).
+ 3. Because BabySmartRouter forwards the call via delegatecall without any sender verification, the malicious code will run in the BabySmartRouter context and could modify critical variables (such as balances, fee parameters, etc.) or even bypass intended restrictions.
+
+Always ensure that any use of delegatecall (especially via a fallback mechanism) is carefully controlled and that the target (normalRouter) is completely trusted and hardened.
+
+This is the key access control concern identified in the provided smart contract.

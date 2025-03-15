@@ -1,0 +1,12 @@
+Switched global version to 0.8.12
+Modifiers Status:
+Modifier: initializer, Status: ModifierStatus.SECURE
+Modifier: onlyInitializing, Status: ModifierStatus.SECURE
+Modifier: nonReentrant, Status: ModifierStatus.SECURE
+Modifier: onlyBank, Status: ModifierStatus.SECURE
+Modifier: reinitializer, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+Modifier: onlyRunnerScript, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

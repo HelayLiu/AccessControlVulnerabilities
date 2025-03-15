@@ -1,0 +1,27 @@
+1. Function initialize(address _bridgeAgentFactory, address _coreRootRouter) (line 83-92) has access control issues. Reason: The function can be called by any address, and it modifies critical state variables such as `isBridgeAgentFactory` and `coreRootRouterAddress`, which should only be set by the contract owner.
+
+2. Function initializeCore(address _coreRootBridgeAgent, address _coreLocalBranchBridgeAgent, address _localBranchPortAddress) (line 95-106) has access control issues. Reason: Similar to the previous function, this function can be called by any address and modifies important state variables, which should be restricted to the contract owner.
+
+3. Function setAddresses(address _globalAddress, address _localAddress, address _underlyingAddress, uint256 _srcChainId) (line 145-155) has access control issues. Reason: This function can be called by any address and modifies mappings that should be restricted to authorized users, potentially allowing unauthorized users to manipulate token addresses.
+
+4. Function setLocalAddress(address _globalAddress, address _localAddress, uint256 _srcChainId) (line 157-165) has access control issues. Reason: This function can also be called by any address and modifies critical mappings, which should be restricted to authorized users.
+
+5. Function addBridgeAgent(address _manager, address _bridgeAgent) (line 232-241) has access control issues. Reason: This function can be called by any address and modifies the `isBridgeAgent` mapping, which should be restricted to authorized users.
+
+6. Function addBridgeAgentFactory(address _bridgeAgentFactory) (line 248-257) has access control issues. Reason: This function can be called by any address and modifies the `isBridgeAgentFactory` mapping, which should be restricted to authorized users.
+
+7. Function toggleBridgeAgent(address _bridgeAgent) (line 263-270) has access control issues. Reason: This function can be called by any address and modifies the `isBridgeAgent` mapping, which should be restricted to authorized users.
+
+8. Function toggleBridgeAgentFactory(address _bridgeAgentFactory) (line 273-280) has access control issues. Reason: This function can be called by any address and modifies the `isBridgeAgentFactory` mapping, which should be restricted to authorized users.
+
+9. Function addNewChain(address _coreBranchBridgeAgentAddress, uint256 _chainId, string memory _wrappedGasTokenName, string memory _wrappedGasTokenSymbol, uint8 _wrappedGasTokenDecimals, address _newLocalBranchWrappedNativeTokenAddress, address _newUnderlyingBranchWrappedNativeTokenAddress) (line 287-307) has access control issues. Reason: This function can be called by any address and modifies the `isChainId` mapping and other critical mappings, which should be restricted to authorized users.
+
+10. Function addEcosystemToken(address _ecoTokenGlobalAddress) (line 313-325) has access control issues. Reason: This function can be called by any address and modifies the `isGlobalAddress` mapping, which should be restricted to authorized users.
+
+11. Function setCoreRootRouter(address _coreRootRouter, address _coreRootBridgeAgent) (line 331-340) has access control issues. Reason: This function can be called by any address and modifies critical state variables, which should be restricted to the contract owner.
+
+12. Function setCoreBranchRouter(address _refundee, address _coreBranchRouter, address _coreBranchBridgeAgent, uint16 _dstChainId, GasParams calldata _gParams) (line 344-357) has access control issues. Reason: This function can be called by any address and modifies critical state variables, which should be restricted to the contract owner.
+
+13. Function syncNewCoreBranchRouter(address _coreBranchRouter, address _coreBranchBridgeAgent, uint16 _dstChainId) (line 362-373) has access control issues. Reason: This function can be called by any address and modifies critical state variables, which should be restricted to the contract owner.
+
+In summary, multiple functions in the `RootPort` contract lack proper access control, allowing unauthorized users to modify critical state variables and mappings. These functions should be restricted to the contract owner or other authorized addresses to prevent potential misuse.

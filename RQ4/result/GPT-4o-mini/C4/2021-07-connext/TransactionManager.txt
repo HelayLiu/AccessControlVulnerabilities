@@ -1,0 +1,11 @@
+1. Function `addLiquidity(uint256 amount, address assetId, address router)` (line 36-54) has access control issues. Reason: The function allows any user to add liquidity for any router without verifying if the caller is indeed the intended router. This could lead to unauthorized users manipulating the liquidity of other routers.
+
+2. Function `removeLiquidity(uint256 amount, address assetId, address payable recipient)` (line 56-78) has access control issues. Reason: Similar to `addLiquidity`, this function allows any user to remove liquidity for any router without verifying if the caller is the intended router. This could allow unauthorized users to drain liquidity from other routers.
+
+3. Function `prepare(InvariantTransactionData calldata invariantData, uint256 amount, uint256 expiry, bytes calldata encryptedCallData, bytes calldata encodedBid, bytes calldata bidSignature)` (line 80-164) has access control issues. Reason: The function does not verify if the caller is the user specified in `invariantData.user`. This could allow any user to prepare a transaction on behalf of another user, leading to potential fund misappropriation.
+
+4. Function `fulfill(TransactionData calldata txData, uint256 relayerFee, bytes calldata signature, bytes calldata callData)` (line 166-232) has access control issues. Reason: The function does not verify if the caller is the router specified in `txData.router` when fulfilling a transaction on the sending chain. This could allow unauthorized users to fulfill transactions and manipulate the state of the contract.
+
+5. Function `cancel(TransactionData calldata txData, uint256 relayerFee, bytes calldata signature)` (line 234-306) has access control issues. Reason: The function does not properly restrict who can cancel a transaction. On the sending chain, it should only allow the router to cancel before expiry, and on the receiving chain, it should only allow the user to cancel. The current implementation may allow unauthorized users to cancel transactions.
+
+In summary, the contract has multiple access control issues across several functions, primarily due to insufficient checks on the caller's identity relative to the intended user or router.

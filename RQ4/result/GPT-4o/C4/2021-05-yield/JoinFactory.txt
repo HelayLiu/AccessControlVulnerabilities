@@ -1,0 +1,2 @@
+OutPut:
+1. Function createJoin(address asset) (line 54-66) has the access control issues. Reason: The createJoin function allows any external caller to deploy a new Join contract and automatically grants the caller the ROOT role in the newly created Join contract. This could be a potential security risk if the deployment of Join contracts is intended to be restricted to certain privileged users. There is no access control modifier to restrict who can call this function, which means anyone can create a Join contract and gain significant control over it.

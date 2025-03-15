@@ -1,0 +1,17 @@
+1. Function `updateUser(address token,address to,address[] memory addr)` (line 103-130) has access control issues. Reason: This function can be called by anyone, but it modifies the state variables related to user staking information, which should be restricted to the owner of the contract. Without proper access control, any user can update the staking information of any address.
+
+2. Function `stake(address token,address token1,address token2,address up,uint amount)` (line 132-174) has access control issues. Reason: The function allows any user to stake tokens, but it checks if the `up` address has a non-zero `tz` value or if the caller is the owner. This could lead to unintended consequences if the `up` address is manipulated or if the owner is not careful, allowing unauthorized staking.
+
+3. Function `setUPs(address to,address newAddr)` (line 246-250) has access control issues. Reason: This function allows any user to set a new address for `upaddress` if they are the current `upaddress` of the `to` address. This could lead to unauthorized changes in the user hierarchy, allowing users to manipulate their own or others' staking relationships.
+
+4. Function `setListToken(address token,bool b)` (line 215-218) has access control issues. Reason: This function can be called by anyone to add or remove tokens from the `listToken` mapping, which could lead to unauthorized tokens being added or removed from the staking process.
+
+5. Function `setStartTime(uint _t)` (line 220-223) has access control issues. Reason: This function can be called by anyone to set the `startTime`, which could disrupt the staking mechanism if manipulated.
+
+6. Function `setEx(address _token,address addr)` (line 226-229) has access control issues. Reason: This function allows anyone to set the reward address for any token, which could lead to unauthorized manipulation of reward distributions.
+
+7. Function `removeLiquidity(address token,address token1)` (line 335-348) has access control issues. Reason: This function can be called by anyone to remove liquidity, which could lead to unauthorized removal of liquidity from the contract.
+
+8. Function `getToken(address token,uint amount)` (line 366-369) has access control issues. Reason: This function can be called by anyone to withdraw tokens from the contract, which should be restricted to the owner only.
+
+In summary, the contract has multiple functions that lack proper access control, allowing unauthorized users to manipulate critical state variables and functions.

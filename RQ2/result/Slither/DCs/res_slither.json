@@ -1,0 +1,115 @@
+{
+    "eth@0x8e9f6181371013194d48bc031adf7fe179fb37e3": [],
+    "eth@0xa5564a2d1190a141CAC438c9fde686aC48a18A79": [
+        "unused-return:ZeroXStargateLPSwapper.swap(address,address,address,uint256,uint256,bytes) (MainContractFlattened.sol#677-702) ignores return value by stargateRouter.instantRedeemLocal(poolId,amount,address(this)) (MainContractFlattened.sol#691)\n",
+        "unused-return:ZeroXStargateLPSwapper.swap(address,address,address,uint256,uint256,bytes) (MainContractFlattened.sol#677-702) ignores return value by (None,shareReturned) = bentoBox.deposit(mim,address(this),recipient,mim.balanceOf(address(this)),0) (MainContractFlattened.sol#700)\n",
+        "unused-return:ZeroXStargateLPSwapper.swap(address,address,address,uint256,uint256,bytes) (MainContractFlattened.sol#677-702) ignores return value by bentoBox.withdraw(IERC20(address(pool)),address(this),address(this),0,shareFrom) (MainContractFlattened.sol#685)\n"
+    ],
+    "eth@0x8189afbe7b0e81dae735ef027cd31371b3974feb": [],
+    "eth@0xc9f27a50f82571c1c8423a42970613b8dbda14ef": [
+        "arbitrary-send-erc20:RewardsHypervisor.deposit(uint256,address,address) (MainContractFlattened.sol#1611-1635) uses arbitrary from in transferFrom: visr.safeTransferFrom(from,address(this),visrDeposit) (MainContractFlattened.sol#1631)\n"
+    ],
+    "eth@0x9ab4fd2234d75cfa894c394b367e48055b531e56": [],
+    "eth@0x27c55a6bd85e79c70c9b2caa003d55a2ece01565": [],
+    "eth@0x8c069c70e265a36738753e1707a8999111f655db": [],
+    "eth@0xc82BbE41f2cF04e3a8efA18F7032BDD7f6d98a81": [
+        "arbitrary-send-eth:Forwarder.execute(Forwarder.ForwardRequest,bytes) (MainContractFlattened.sol#358-382) sends eth to arbitrary user\n\tDangerous calls:\n\t- (success,result) = req.to.call{gas: req.gas,value: req.value}(abi.encodePacked(req.data,req.from)) (MainContractFlattened.sol#367-369)\n"
+    ],
+    "poly@0x6d68beb09ea7e76d561ea8c4aac34a6611dd9821": [
+        "controlled-delegatecall:leveragedPool.delegateCallSwap(bytes) (MainContractFlattened.sol#1201-1209) uses delegatecall to a input-controlled function id\n\t- (success,returnData) = phxSwapLib.delegatecall(data) (MainContractFlattened.sol#1202)\n"
+    ],
+    "eth@0xe81d72d14b1516e68ac3190a46c93302cc8ed60f": [],
+    "eth@0x9924a7e3a2756ab8b9a828485f052b6693aaa33e": [],
+    "eth@0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a": [],
+    "eth@0x6b7a87899490ece95443e979ca9485cbe7e71522": [
+        "arbitrary-send-erc20-permit:AnyswapV4Router.anySwapOutUnderlyingWithPermit(address,address,address,uint256,uint256,uint8,bytes32,bytes32,uint256) (MainContractFlattened.sol#264-280) uses arbitrary from in transferFrom in combination with permit: TransferHelper.safeTransferFrom(_underlying,from,token,amount) (MainContractFlattened.sol#277)\n",
+        "unused-return:AnyswapV4Router.anySwapOutUnderlyingWithPermit(address,address,address,uint256,uint256,uint8,bytes32,bytes32,uint256) (MainContractFlattened.sol#264-280) ignores return value by AnyswapV1ERC20(token).depositVault(amount,from) (MainContractFlattened.sol#278)\n"
+    ],
+    "base@0x75Ac62EA5D058A7F88f0C3a5F8f73195277c93dA": [],
+    "eth@0x9ef0eb9d97e4e7c8612d4e5aaf9201e35bd3670b": [],
+    "bsc@0x7bACB1c805CbbF7c4f74556a4B34FDE7793d0887": [],
+    "bsc@0x0288fba0bf19072d30490a0f3c81cd9b0634258a": [],
+    "eth@0xa035b9e130f2b1aedc733eefb1c67ba4c503491f": [],
+    "eth@0x5a50C7D96fC68ea2F0bEE06D86CD971c31F85604": [
+        "tx-origin:TokenSale.addMeByRC() (MainContractFlattened.sol#655-661) uses tx.origin for authorization: require(bool)(tx.origin == owner) (MainContractFlattened.sol#656)\n"
+    ],
+    "bsc@0xEF1f39d8391cdDcaee62b8b383cB992F46a6ce4f": [],
+    "bsc@0x0FDfcfc398Ccc90124a0a41d920d6e2d0bD8CcF5": [],
+    "eth@0x89cce324de3f212b39d090375b3732a19ec54d30": [
+        "unchecked-transfer:Farm.breed() (MainContractFlattened.sol#396-413) ignores return value by token.transfer(address(cSeal),amount) (MainContractFlattened.sol#410)\n",
+        "unused-return:Farm.breed() (MainContractFlattened.sol#396-413) ignores return value by cSeal.mint(address(this)) (MainContractFlattened.sol#412)\n"
+    ],
+    "eth@0xcc13fc627effd6e35d2d2706ea3c4d7396c610ea": [],
+    "eth@0x4b89f8996892d137c3de1312d1dd4e4f4ffca171": [],
+    "eth@0xd58132f2fbd65f02beee0626542e6ee059009ab4": [],
+    "eth@0x6847259b2b3a4c17e7c43c54409810af48ba5210": [
+        "unchecked-transfer:ControllerV4.swapExactJarForJar(address,address,uint256,uint256,address[],bytes[]) (MainContractFlattened.sol#1122-1207) ignores return value by IJar(_toJar).transfer(msg.sender,_toJarBal) (MainContractFlattened.sol#1204)\n",
+        "unused-return:ControllerV4.swapExactJarForJar(address,address,uint256,uint256,address[],bytes[]) (MainContractFlattened.sol#1122-1207) ignores return value by IStrategy(strategies[_fromJarToken]).withdrawForSwap(_fromJarUnderlyingAmount.sub(_fromJarAvailUnderlying)) (MainContractFlattened.sol#1162-1164)\n"
+    ],
+    "eth@0x364f17a23ae4350319b7491224d10df5796190bc": [
+        "arbitrary-send-erc20:LiquidXv2Zap.deposit(address,address,address,LiquidXv2Zap.swapPath,address,address,uint256[3],uint256) (MainContractFlattened.sol#400-443) uses arbitrary from in transferFrom: IERC20(token).safeTransferFrom(account,address(this),amount[0]) (MainContractFlattened.sol#412)\n",
+        "unused-return:LiquidXv2Zap.deposit(address,address,address,LiquidXv2Zap.swapPath,address,address,uint256[3],uint256) (MainContractFlattened.sol#400-443) ignores return value by (None,lvar[3]) = ISwapPlusv1(swapPlus).swap(inToken,lvar[3],tokenM,address(this),path.path) (MainContractFlattened.sol#422)\n"
+    ],
+    "bsc@0x6844ef18012a383c14e9a76a93602616ee9d6132": [],
+    "eth@0x2ef27bf41236bd859a95209e17a43fbd26851f92": [],
+    "bsc@0x9A1aEF8C9ADA4224aD774aFdaC07C24955C92a54": [],
+    "opt@0x065e8a87b8f11aed6facf9447abe5e8c5d7502b6": [],
+    "eth@0x5f58058c0ec971492166763c8c22632b583f667f": [],
+    "eth@0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a": [],
+    "bsc@0x1eabb7b90fac3b4143c551a02b41e741f7457efa": [],
+    "eth@0xb84cbaf116eb90fd445dd5aeadfab3e807d2cbac": [],
+    "bsc@0x129f4ac88b0446f9b46b176c93531e6cf4687657": [],
+    "bsc@0x839b0AFD0a0528ea184448E890cbaAFFD99C1dbf": [
+        "arbitrary-send-erc20:V3Migrator.migrate(IV3Migrator.MigrateParams) (MainContractFlattened.sol#1079-1145) uses arbitrary from in transferFrom: IBiswapPair(params.pair).transferFrom(params.recipient,params.pair,params.liquidityToMigrate) (MainContractFlattened.sol#1082)\n",
+        "unchecked-transfer:V3Migrator.migrate(IV3Migrator.MigrateParams) (MainContractFlattened.sol#1079-1145) ignores return value by IBiswapPair(params.pair).transferFrom(params.recipient,params.pair,params.liquidityToMigrate) (MainContractFlattened.sol#1082)\n",
+        "unused-return:V3Migrator.migrate(IV3Migrator.MigrateParams) (MainContractFlattened.sol#1079-1145) ignores return value by (None,None,amount0V3,amount1V3) = ILiquidityManager(liquidityManager).mint(ILiquidityManager.MintParam({miner:params.recipient,tokenX:params.token0,tokenY:params.token1,fee:params.fee,pl:params.tickLower,pr:params.tickUpper,xLim:amount0V2ToMigrate,yLim:amount1V2ToMigrate,amountXMin:params.amount0Min,amountYMin:params.amount1Min,deadline:params.deadline})) (MainContractFlattened.sol#1094-1108)\n"
+    ],
+    "bsc@0x80a0d7a6fd2a22982ce282933b384568e5c852bf": [
+        "unused-return:MinterProxyV2.swap(address,uint256,address,address,address,uint256,bytes,bytes) (MainContractFlattened.sol#686-751) ignores return value by target.functionCallWithValue(callData,amount,MP: CallWithValue failed) (MainContractFlattened.sol#709-713)\n",
+        "unused-return:MinterProxyV2.swap(address,uint256,address,address,address,uint256,bytes,bytes) (MainContractFlattened.sol#686-751) ignores return value by target.functionCall(callData,MP: FunctionCall failed) (MainContractFlattened.sol#723)\n"
+    ],
+    "bsc@0xa608985f5b40cdf6862bec775207f84280a91e3a": [],
+    "bsc@0xd3d4B46Db01C006Fb165879f343fc13174a1cEeB": [],
+    "eth@0xcdcfc0f66c522fd086a1b725ea3c0eeb9f9e8814": [],
+    "eth@0x27f706edde3aD952EF647Dd67E24e38CD0803DD6": [],
+    "bsc@0x4edda16ab4f4cc46b160abc42763ba63885862a4": [
+        "unused-return:SpotVault.redeem(uint256,address,uint256,bytes[],bool) (MainContractFlattened.sol#2184-2264) ignores return value by ONE_INCH_AGG_ROUTER.functionCall(dataList[i]) (MainContractFlattened.sol#2213)\n",
+        "unused-return:SpotVault.redeem(uint256,address,uint256,bytes[],bool) (MainContractFlattened.sol#2184-2264) ignores return value by ONE_INCH_AGG_ROUTER.functionCallWithValue(dataList[i],sizeToSwap) (MainContractFlattened.sol#2216)\n"
+    ],
+    "bsc@0x0ccee62efec983f3ec4bad3247153009fb483551": [],
+    "bsc@0xbCbCb0e7E28414e084c4a40C1cCC30B75629a7DE": [],
+    "bsc@0xa0787daad6062349f63b7c228cbfd5d8a3db08f1": [],
+    "bsc@0xe48b75dc1b131fd3a8364b0580f76efd04cf6e9c": [],
+    "fantom@0xcdA5deA176F2dF95082f4daDb96255Bdb2bc7C7D": [],
+    "bsc@0x70678291bDDfd95498d1214BE368e19e882f7614": [],
+    "eth@0x5abc07d28dcc3b60a164d57e4e3981a090c5d6de": [],
+    "bsc@0x2287c04a15bb11ad1358ba5702c1c95e2d13a5e0": [],
+    "eth@0x418c24191ae947a78c99fdc0e45a1f96afb254be": [],
+    "bsc@0x8317c460c22a9958c27b4b6403b98d2ef4e2ad32": [],
+    "eth@0x051ebd717311350f1684f89335bed4abd083a2b6": [],
+    "eth@0xe58acb560fc33e283ab70c700a0f2eed0e333e0a": [],
+    "bsc@0xcFF086EaD392CcB39C49eCda8C974ad5238452aC": [
+        "unused-return:token.transReward(bytes) (MainContractFlattened.sol#1405-1407) ignores return value by pool.functionCall(data) (MainContractFlattened.sol#1406)\n"
+    ],
+    "bsc@0x10bc28d2810dd462e16facff18f78783e859351b": [],
+    "eth@0xf084d5bc3e35e3d903260267ebd545c49c6013d0": [],
+    "eth@0x9b481067ef9773d52efd0fb5b665a5dc0c8e1a68": [],
+    "eth@0xF0b7DE03134857391d8D43Ed48e20EDF21461097": [],
+    "bsc@0xe9bc03ef08e991a99f1bd095a8590499931dcc30": [],
+    "eth@0x4b15b2D301dD81e05fc404e16bdd138b29dcDeFd": [],
+    "eth@0xd2869042e12a3506100af1d192b5b04d65137941": [],
+    "eth@0xa9f08c2df8e09b32eefa85f5ec459c040248b06c": [],
+    "fantom@0x660184ce8af80e0b1e5a1172a16168b15f4136bf": [],
+    "eth@0x8810C63470d38639954c6B41AaC545848C46484a": [],
+    "bsc@0x274b3e185c9c8f4ddef79cb9a8dc0d94f73a7675": [
+        "unused-return:StakingRewards.addLiquidity(address,address,uint256) (MainContractFlattened.sol#548-565) ignores return value by IRouters.addLiquidity(_token,token1,lp,amount1,0,0,address(this),block.timestamp + 100) (MainContractFlattened.sol#555)\n",
+        "unused-return:StakingRewards.addLiquidity(address,address,uint256) (MainContractFlattened.sol#548-565) ignores return value by IERC20(_token).approve(address(address(IRouters)),2 ** 256 - 1) (MainContractFlattened.sol#554)\n"
+    ],
+    "base@0x94dac4a3ce998143aa119c05460731da80ad90cf": [],
+    "bsc@0xd55f01b4b51b7f48912cd8ca3cdd8070a1a9dba5": [],
+    "bsc@0xc342774492b54ce5f8ac662113ed702fc1b34972": [],
+    "bsc@0xeb11a0a0bef1ac028b8c2d4cd64138dd5938ca7a": [],
+    "bsc@0x1a62fe088F46561bE92BB5F6e83266289b94C154": [],
+    "eth@0x6e58b4c41cab75dc0239938bf5455ab8823ee4de": [],
+    "eth@0x1f88cac675a37b649646860746f25f58e21b99f2": []
+}

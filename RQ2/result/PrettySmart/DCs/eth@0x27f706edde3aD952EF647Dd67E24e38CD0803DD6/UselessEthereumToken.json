@@ -1,0 +1,22 @@
+{
+ "contract": "UselessEthereumToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "withdrawForeignTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "enablePurchasing",
+   "0x0"
+  ],
+  [
+   "owner",
+   "disablePurchasing",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

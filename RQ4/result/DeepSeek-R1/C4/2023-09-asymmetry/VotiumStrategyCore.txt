@@ -1,0 +1,21 @@
+<think>
+Okay, let's start by looking at the VotiumStrategyCore contract. The first thing I notice is that it's using OwnableUpgradeable, which means the owner has special privileges. I need to check all the functions to see if they have proper access controls.
+
+Looking at the functions, the initialize function is called once during setup. It sets up the rewarder and manager addresses. The modifier onlyRewarder is used in some functions like claimRewards and applyRewards. The onlyOwner modifier is used in setChainlinkCvxEthFeed, setRewarder, and withdrawStuckTokens.
+
+Wait, the withdrawStuckTokens function is public and onlyOwner. That seems okay because it's restricted to the owner. But are there any functions that should have access controls but don't?
+
+Let me check each function one by one. The buyCvx and sellCvx functions are internal, so they can't be called directly. The depositRewards function is public and payable. Let me see if it has any modifiers. Oh, depositRewards is declared as public, but there's no modifier like onlyRewarder or onlyOwner. That's a problem. Anyone can call depositRewards and pass in an _amount, which would allow them to buy CVX and lock it, affecting the contract's state.
+
+Another thing: the applyRewards function has onlyRewarder, which is correct. The claimRewards function also has onlyRewarder. The setRewarder function is onlyOwner, which is good. The initialize function is external and initializer, which is okay because it's supposed to be called once during deployment.
+
+Wait, the depositRewards function is public and can be called by anyone. Since this function uses the contract's balance to buy CVX and lock it, an attacker could potentially manipulate the contract's funds by sending ETH and calling this function. But the function is payable, but does it check that the msg.value matches _amount? Let me check the parameters. The function signature is depositRewards(uint256 _amount) public payable. Inside, it calls buyCvx(_amount) with the _amount parameter. But if someone calls this function and passes an _amount that's different from the msg.value, that could cause issues. Also, since there's no access control, anyone can trigger this function, which is meant to handle rewards. This could disrupt the reward mechanism.
+
+So the depositRewards function lacks access control. It should probably be restricted to onlyRewarder or onlyOwner. Since the event DepositReward is emitted here, which seems like an admin function, allowing anyone to call it is a vulnerability.
+
+Another function to check: the receive() external payable. That's a fallback function allowing the contract to receive ETH. But since there's no access control on depositRewards, someone could send ETH and call depositRewards to manipulate the CVX holdings.
+
+So the main issue is the depositRewards function being public without any access control. It should have a modifier like onlyRewarder or onlyOwner to prevent unauthorized calls.
+</think>
+
+1. Function depositRewards(uint256) (line 150-158) has the access control issues. Reason: The depositRewards function is publicly accessible without any access control modifier (e.g., onlyOwner or onlyRewarder). This allows any user to trigger CVX purchases and locking operations, which could manipulate the contract's core asset balances and price calculations.

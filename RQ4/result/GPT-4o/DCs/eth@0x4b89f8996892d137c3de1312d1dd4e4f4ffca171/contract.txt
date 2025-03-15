@@ -1,0 +1,6 @@
+OutPut:
+1. Function `claimStakingReward(uint amount)` (line 417-425) has an access control issue. Reason: The function checks if the caller is `userStakingPoolAddress`, but this address can be set to any address by the owner using the `updateSettings` function. This means the owner can potentially set `userStakingPoolAddress` to an address they control and call `claimStakingReward` to transfer LRC tokens to themselves.
+
+2. Function `fundDAO()` (line 427-448) has an access control issue. Reason: The function allows transferring LRC to the `daoAddress` or burning it. The `daoAddress` can be set by the owner using the `updateSettings` function, allowing the owner to redirect funds to an address they control.
+
+3. Function `sellTokenForLRC(address token, uint amount)` (line 450-467) has an access control issue. Reason: The function allows selling tokens for LRC and transferring them to the `tokenSellerAddress`. The `tokenSellerAddress` can be set by the owner using the `updateSettings` function, allowing the owner to redirect funds to an address they control. Additionally, if `tokenSellerAddress` is not set, the tokens are sent to the owner directly.

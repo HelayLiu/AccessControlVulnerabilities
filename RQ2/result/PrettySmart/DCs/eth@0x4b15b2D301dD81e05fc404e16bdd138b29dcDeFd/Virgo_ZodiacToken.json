@@ -1,0 +1,37 @@
+{
+ "contract": "Virgo_ZodiacToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "disablePurchasing",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setMINfinney",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setICORatio",
+   "0x0"
+  ],
+  [
+   "owner",
+   "enablePurchasing",
+   "0x0"
+  ],
+  [
+   "owner",
+   "withdrawForeignTokens",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setAIRDROPBounce",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

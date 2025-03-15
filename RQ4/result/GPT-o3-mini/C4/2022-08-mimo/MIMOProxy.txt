@@ -1,0 +1,14 @@
+Below is one potential issue uncovered during the audit:
+
+1. Function execute (approximately lines 28–53) has an access control weakness. 
+
+ • Reason: When a non‐owner calls execute, the contract extracts only the first 4 bytes of the supplied call data (intended to be the “approved” function selector) and checks that the caller (acting as an “envoy”) is allowed to call that specific function on the target. However, since no further validation is done on the remaining call data, an attacker with permission for an innocuous method in the target contract could “pack” in additional (unauthorized) calls (or parameters that the target interprets as calls to multiple internal functions). In other words, the access control check is limited only to the leading selector and does not guarantee that the entire payload is safe. This may allow escalation of privileges if the target contract (via delegatecall) ends up executing extra logic that the envoy is not authorized for.
+
+ • Proof‐of‐Concept Outline:
+  – Assume that the target contract has two functions: one that the envoy is allowed to call (e.g. a benign “read‐or‐log” function) and another that is sensitive (for example, one that changes an important state variable).
+  – The envoy (who has been granted permission for the benign function) crafts call data starting with the authorized selector but then appends extra bytes that cause the target contract’s fallback (or a multicall routine) to execute the sensitive function as well.
+  – Because execute only checks the very first 4 bytes, the delegatecall will then “sneak in” the unauthorized instructions, potentially leading to unintended state changes. (Even though the proxy afterwards checks that owner hasn’t been altered, other critical state variables or behaviors of the target might be affected.)
+  
+This pattern of checking only the first selector (without enforcing that no “extra” calls or instructions follow) can leave the proxy open for abuse when used with target contracts that do complex processing of the input data.
+
+It is recommended that if the execute function is meant to allow non‐owners (envoys) to invoke certain operations on a target safely, then either the entire structure of the data must be validated or the proxy should work with targets that do not allow multi‐function calls (or are otherwise hardened against such “chaining” attacks).

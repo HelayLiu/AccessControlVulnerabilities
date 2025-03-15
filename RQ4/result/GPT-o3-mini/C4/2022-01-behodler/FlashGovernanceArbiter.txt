@@ -1,0 +1,12 @@
+Below is one potential issue found during the audit:
+
+1. Vulnerable Function: assertGovernanceApproved (≈lines 32–50)  
+ • Reason: This function accepts an address parameter “sender” that is used both for transferring tokens via transferFrom and as the key in the pendingFlashDecision mapping. However, there is no check that sender is equal to msg.sender. As a result, any caller (an attacker) can supply an arbitrary “sender” address (for example, that of a victim who has previously granted an allowance to the attacker) in order to trigger a flash governance decision on that victim’s behalf. The attacker would thereby force the contract to transfer tokens from the victim and record a pending decision for the victim without the victim’s direct action—this represents a critical access control flaw.
+
+Proof of Concept Outline:
+ 1. Assume victim X has set an allowance for the attacker on the flash governance collateral token.
+ 2. The attacker calls assertGovernanceApproved and sets sender = X (while msg.sender is the attacker).
+ 3. The function then calls IERC20(flashGovernanceConfig.asset).transferFrom(X, address(this), flashGovernanceConfig.amount). Because X provided an allowance, the token transfer succeeds and the contract records a flash governance decision for X.
+ 4. The attacker can thereby interfere with X’s flash governance rights or potentially trigger further governance-related actions on behalf of the victim.
+
+This issue stems from the fact that the function does not enforce that the initiating caller is the account being debited (i.e. that sender == msg.sender), allowing an attacker to “spoof” another account’s flash governance decision and collateral withdrawal process.

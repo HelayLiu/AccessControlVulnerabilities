@@ -1,0 +1,12 @@
+OutPut:
+1. Function `transferOwnership` (line 44-51) in the `Owned` contract has an access control issue. Reason: Although the function is protected by the `ownerOnly` modifier, it allows the current owner to set a new owner without the new owner's consent. This could potentially lead to a situation where ownership is transferred to an unintended address if the current owner makes a mistake or is compromised.
+
+2. Function `acceptOwnership` (line 53-59) in the `Owned` contract has an access control issue. Reason: This function allows the `newOwner` to accept ownership without any further checks. If the `newOwner` address is set incorrectly or maliciously, it could lead to unauthorized control over the contract.
+
+3. Function `updateRegistry` (line 234-250) in the `ContractRegistryClient` contract has an access control issue. Reason: The function allows updating the contract registry by anyone if `onlyOwnerCanUpdateRegistry` is set to false. This could lead to unauthorized updates to the registry, potentially pointing to malicious contracts.
+
+4. Function `restoreRegistry` (line 252-255) in the `ContractRegistryClient` contract has an access control issue. Reason: Although it is protected by the `ownerOnly` modifier, it allows the owner to restore the previous registry without any checks on the validity of the previous registry. This could potentially revert the contract to an outdated or compromised state.
+
+5. Function `restrictRegistryUpdate` (line 257-262) in the `ContractRegistryClient` contract has an access control issue. Reason: This function allows the owner to change the permission for updating the registry, which could be exploited if the owner account is compromised, allowing unauthorized registry updates.
+
+These functions should be carefully reviewed and potentially modified to include additional checks or confirmations to prevent unauthorized or unintended actions.

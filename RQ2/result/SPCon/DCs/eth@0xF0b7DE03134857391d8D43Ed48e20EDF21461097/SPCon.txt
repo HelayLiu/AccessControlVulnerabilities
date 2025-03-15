@@ -1,0 +1,3 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+INFO:symExec:Testing time: 0.0001575946807861328 seconds

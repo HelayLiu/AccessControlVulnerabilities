@@ -1,0 +1,10 @@
+Switched global version to 0.8.0
+Modifiers Status:
+Modifier: whenPaused, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+Modifier: whenNotPaused, Status: ModifierStatus.SECURE
+Modifier: nonReentrant, Status: ModifierStatus.SECURE
+Modifier: onlyMiner, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

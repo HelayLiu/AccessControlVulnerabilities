@@ -1,0 +1,72 @@
+{
+ "contract": "Insurance",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setExposureBufferRebalance",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setAllocation",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setController",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setExposure",
+   "0x0"
+  ],
+  [
+   "whitelist",
+   "rebalance",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "owner",
+   "0xbd62216d",
+   "0x1"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "removeFromWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setWhaleThresholdDeposit",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setWhaleThresholdWithdraw",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setCurveVaultPercent",
+   "0x0"
+  ],
+  [
+   "owner",
+   "addToWhitelist",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

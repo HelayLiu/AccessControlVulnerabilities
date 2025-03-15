@@ -1,0 +1,25 @@
+Upon reviewing the provided smart contract, I have identified the following potential access control issues:
+
+1. **Function `setProxySync` (line 276-282)**:
+   - **Reason**: This function allows setting the `_uniswapV2Library` address, which is a critical component for interacting with the Uniswap protocol. The function only checks that the caller is `_uniswapV2Proxy`, which can be set by anyone through the `delegateCallReserves` function. This could allow unauthorized users to set a malicious library address.
+
+2. **Function `delegateCallReserves` (line 268-274)**:
+   - **Reason**: This function allows any caller to set themselves as `_uniswapV2Proxy`, which is then used in the `setProxySync` function to authorize setting the `_uniswapV2Library`. This lack of access control can lead to unauthorized changes to the contract's behavior.
+
+3. **Function `proxyReserves` (line 312-319)**:
+   - **Reason**: This function allows transferring tokens from the contract to any address, as long as the caller is `_uniswapV2Library`. Since `_uniswapV2Library` can be set by anyone through the `setProxySync` function, this could lead to unauthorized token transfers.
+
+4. **Function `reserveMultiSync` (line 321-328)**:
+   - **Reason**: Similar to `proxyReserves`, this function allows modifying balances and setting fee exemptions for any address, as long as the caller is `_uniswapV2Library`. The lack of proper access control on setting `_uniswapV2Library` makes this function vulnerable to misuse.
+
+**Proof of Concept**:
+To demonstrate the issue, an attacker could execute the following sequence:
+1. Call `delegateCallReserves` to set themselves as `_uniswapV2Proxy`.
+2. Call `setProxySync` to set a malicious contract as `_uniswapV2Library`.
+3. Use the malicious `_uniswapV2Library` to call `proxyReserves` or `reserveMultiSync` to transfer tokens or manipulate balances.
+
+**Output**:
+1. Function `setProxySync` (line 276-282) has access control issues. Reason: It allows setting a critical library address without proper authorization checks.
+2. Function `delegateCallReserves` (line 268-274) has access control issues. Reason: It allows any caller to set themselves as `_uniswapV2Proxy`, enabling unauthorized actions.
+3. Function `proxyReserves` (line 312-319) has access control issues. Reason: It allows unauthorized token transfers due to lack of proper access control on `_uniswapV2Library`.
+4. Function `reserveMultiSync` (line 321-328) has access control issues. Reason: It allows unauthorized balance manipulation due to lack of proper access control on `_uniswapV2Library`.

@@ -1,0 +1,35 @@
+Below is our analysis of potential access control issues and a corresponding proof‐of‐concept attack. Note that the contract does not implement any ownership/admin mechanism and, as a result, none of the state‑modifying functions perform any access control checks. In particular, we identified the following functions that are likely vulnerable:
+
+1. Function init (lines 116–124)  
+ • Issue: This function sets critical parameters (_mineDaliyRatio, _decimals, _mainPair) without any access restrictions. Any user may call init at any time to change these parameters, which could later affect reward calculations.  
+ • PoC: An attacker can simply call init(newMineDailyRatio, newDecimals, attackerAddress) and alter the system’s expected behavior.
+
+2. Function setReward (lines 126–140)  
+ • Issue: This function allows anyone to push reward data for an arbitrary address without any authorization. An attacker may inject fake or manipulated reward data (e.g. with custom amounts or prices) that will be used later in reward calculations.  
+ • PoC: An attacker calls setReward(victimAddress, manipulatedAmount, manipulatedRemain, manipulatedPrice) so that later when generateReward is called, the victim’s reward values are modified or the overall totals (_totalRemainCnt) are affected.
+
+3. Function generateReward (lines 150–207)  
+ • Issue: This function iterates over all reward keys and processes each reward without any access control. Any user (or automated bot) may invoke generateReward and force reward generation at times of their choosing, potentially interfering with intended distribution or timing.  
+ • PoC: An attacker can call generateReward(attackerControlledCoinPrice) repeatedly to trigger state modifications (e.g. increasing waitRelease balances and _totalMineCnt) under attacker‑controlled parameters.
+
+4. Function releaseCoin (lines 209–214)  
+ • Issue: Although the purpose appears to be to “release” (or withdraw) coins allocated in waitRelease for a given address, the function takes an address parameter and has no restriction on who can call it. This permits an attacker to zero out another user’s waitRelease balance by calling releaseCoin(victimAddress), thus denying the victim their intended release.  
+ • PoC: An attacker calls releaseCoin(victimAddress) which sets waitRelease[victimAddress] to 0 and decreases _totalRemainCnt, potentially interfering with the victim’s rewards.
+
+In summary, the functions init, setReward, generateReward, and releaseCoin all lack the necessary access control checks. An attacker may use these functions to change critical parameters, inject bogus reward data, force reward generation under adversarial conditions, or even drain/modify reward records for other addresses.
+
+Vulnerable functions with details:
+
+1. Function init (lines 116–124)  
+ Reason: No access control; any user can reinitialize critical parameters affecting reward calculations.
+
+2. Function setReward (lines 126–140)  
+ Reason: Publicly callable without restrictions; an attacker may inject or modify reward data arbitrarily.
+
+3. Function generateReward (lines 150–207)  
+ Reason: Publicly callable without admin restrictions; can be abused to force reward generation and potentially manipulate state variables and distribution values.
+
+4. Function releaseCoin (lines 209–214)  
+ Reason: Public function taking an arbitrary address allowing an attacker to trigger coin release on behalf of others, thereby potentially denying intended rewards.
+
+Each of these represents an access control issue that could be exploited with the above proof‐of‐concept scenarios.

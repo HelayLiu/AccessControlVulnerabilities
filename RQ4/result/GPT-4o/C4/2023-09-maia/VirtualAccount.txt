@@ -1,0 +1,9 @@
+Upon reviewing the provided smart contract, the following access control issues have been identified:
+
+1. **Function `payableCall(PayableCall[] calldata calls)` (line 61-88)**:
+   - **Reason**: This function is public and does not have any access control modifier like `requiresApprovedCaller`. This means that any external account can call this function and potentially execute arbitrary calls with the contract's balance. This could lead to unauthorized access and manipulation of the contract's funds.
+
+**Proof of Concept**:
+- An attacker could call the `payableCall` function with crafted `PayableCall` data to execute arbitrary transactions, potentially draining the contract's balance or performing unauthorized actions.
+
+To mitigate this issue, it is recommended to add the `requiresApprovedCaller` modifier to the `payableCall` function to ensure that only authorized callers can execute it.

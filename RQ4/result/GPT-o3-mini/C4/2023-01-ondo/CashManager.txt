@@ -1,0 +1,33 @@
+Below is our reasoning for the audit and our final conclusion regarding access control:
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Analysis Summary
+
+1. All functions that change sensitive state (for example, setting fee parameters, exchange rates, mint/redeem limits, asset/fund recipient addresses, and updating KYC) are protected by role‐based modifiers. For example:
+  • Functions such as setMintExchangeRate, overrideExchangeRate, setAssetRecipient, setFeeRecipient, setMintFee, setMinimumDepositAmount, setEpochDuration, etc. are each decorated with onlyRole(MANAGER_ADMIN) (or onlyRole(SETTER_ADMIN) where appropriate). 
+  • The pause() and unpause() functions use PAUSER_ADMIN and MANAGER_ADMIN respectively.
+  • The completeRedemptions and pending balance setter functions are similarly locked to onlyRole(MANAGER_ADMIN).
+
+2. The “requestMint”, “claimMint” and “requestRedemption” functions are intended to be callable by regular (KYC‐approved) users. These functions use checkKYC as well as whenNotPaused and nonReentrant modifiers. Their design is in line with the application’s requirements.
+
+3. The “multiexcall” function allows an admin (MANAGER_ADMIN) to execute arbitrary calls via the contract—but only when the contract is paused. Although this “emergency” function lets a privileged account perform arbitrary external calls with the contract’s context, it is intentionally access‐controlled (onlyRole(MANAGER_ADMIN)) and gated by whenPaused. (An administrator ultimately always holds the power to call functions such as setAssetSender or change mint/redeem parameters.) This design does centralize control in the MANAGER_ADMIN key but is not, per se, an access control bug.
+
+4. The public “transitionEpoch” function (invoked via the updateEpoch modifier) is callable by anyone. Its job is to calculate the number of elapsed epochs based solely on block.timestamp and then reset per‐epoch counters. Because the “epoch” is time based and the calculation is done with integer division, users cannot use it to “reset” mint or redeem usage arbitrarily. This is a standard design pattern for time‐based rate limiting.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Conclusion
+
+After reviewing all public and external functions (and the internal helpers) in the contract, we did not identify any functions that are missing an appropriate access control check. Every function that can update sensitive parameters or move funds is protected by a relevant onlyRole modifier.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Final Output
+
+No critical access control issues were found. In particular:
+
+• The “multiexcall” function (starting at its definition near the end of the contract) is restricted to onlyRole(MANAGER_ADMIN) and can only be called when the contract is paused. Although it allows arbitrary external calls from the contract, this is an intentional “emergency” control mechanism rather than an access control vulnerability.
+
+• All functions that modify key parameters (such as setMintExchangeRate, overrideExchangeRate, setAssetRecipient, setFeeRecipient, etc.) are properly protected by admin-only (onlyRole(MANAGER_ADMIN) or onlyRole(SETTER_ADMIN)) modifiers.
+
+• The functions callable by users (e.g. requestMint, claimMint, requestRedemption) perform the necessary KYC and paused checks.
+
+Based on the above, there are no misconfigurations in the access control of this CashManager contract.

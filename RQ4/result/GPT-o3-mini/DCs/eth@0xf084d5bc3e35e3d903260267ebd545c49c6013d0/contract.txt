@@ -1,0 +1,19 @@
+Below is our audit summary for access control issues in the DimonCoin contract:
+
+• Overall, every function that modifies significant state is either protected by the onlyOwner modifier or performs an explicit owner check (as in withdrawForeignTokens). In other words, functions that change critical variables (such as owner via transferOwnership, token balances via distributeFUD, and the withdrawal of foreign tokens) require that msg.sender be the owner.
+
+• The public token transfer functions (transfer, approve, transferFrom) are meant to be callable by any user per the ERC20 standard, so no owner‐only access is required for them.
+
+• Therefore, with respect to missing or faulty access control, we did not find any functions that fail to perform the necessary ownership checks before modifying sensitive state.
+
+Important note (non–access control issue): Although not an “access control” vulnerability, the transferFrom function contains logical errors in its balance and allowance checks (the conditions use “<=” when “>=” is intended and the “overflowed” check is inverted so that a nonzero _value always triggers it). This prevents transferFrom from working as expected—but it does not allow an attacker to gain unauthorized control over the contract’s funds.
+
+Proof‐of‐Concept for Access Control Verification:
+1. Attempting to call transferOwnership, distributeFUD, or withdrawForeignTokens from any account other than the owner will fail (the require(msg.sender == owner) and onlyOwner modifiers ensure only the owner can call these functions).
+2. A simple test case in a development environment (e.g., Truffle) could show that when a non‐owner account invokes, for example, withdrawForeignTokens, the call reverts due to the access control check.
+
+Summary Output:
+1. No vulnerable function with respect to missing access control was found.
+2. Non–access control notice: Function transferFrom (around lines 63–73) has logic errors in its value comparisons (using “<=” instead of “>=” and a flawed overflow check) which causes it always to revert despite correct access permissions. However, this does not constitute an access control vulnerability. 
+
+Based on the above analysis, with respect to access control the contract is safe.

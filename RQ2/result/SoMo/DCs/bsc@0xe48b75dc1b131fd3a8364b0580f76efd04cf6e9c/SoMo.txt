@@ -1,0 +1,23 @@
+Switched global version to 0.8.4
+Modifiers Status:
+Modifier: lockTheSwap, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: newOwner, Value: ""	Constraint: TMP_460, Value: ""	Constraint: _owner, Value: ""	Constraint: TMP_53, Value: "0"	Constraint: 0: <class 'int'>, Value: 0
+Insecure Path: 
+Entry Point: Ownable.transferOwnership(address)
+TMP_53 = CONVERT 0 to address
+TMP_54(bool) = newOwner_1 != TMP_53
+TMP_55(None) = SOLIDITY_CALL require(bool,string)(TMP_54,Ownable: new owner is the zero address)
+_owner_7(address) := newOwner_1(address)
+Entry Point: Ownable.onlyOwner()
+_owner_13(address) := ϕ(['_owner_14', '_owner_10', '_owner_12', '_owner_7', '_owner_1', '_owner_0', '_owner_5'])
+TMP_460(address) = INTERNAL_CALL, Context._msgSender()()
+TMP_461(bool) = _owner_14 == TMP_460
+TMP_462(None) = SOLIDITY_CALL require(bool,string)(TMP_461,Ownable: caller is not the owner)
+
+

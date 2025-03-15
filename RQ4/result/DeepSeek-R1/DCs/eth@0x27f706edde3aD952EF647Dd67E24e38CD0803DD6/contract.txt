@@ -1,0 +1,7 @@
+1. Function enablePurchasing() (line 56-60) has access control issues. Reason: The function can be called by any address to enable purchasing, but it should only be callable by the owner of the contract. If an attacker can call this function, they can enable purchasing and potentially exploit the contract.
+
+2. Function disablePurchasing() (line 62-66) has access control issues. Reason: Similar to enablePurchasing, this function can also be called by any address to disable purchasing, which should only be allowed for the owner. An attacker could disable purchasing and disrupt the intended functionality of the contract.
+
+3. Function withdrawForeignTokens(address _tokenContract) (line 68-75) has access control issues. Reason: This function allows the owner to withdraw foreign tokens, but if the access control is not properly enforced, any address could potentially call this function and withdraw tokens, leading to a loss of funds.
+
+4. Fallback function (line 97-116) has access control issues. Reason: The fallback function allows anyone to send Ether to the contract and receive tokens in return. If purchasing is not properly controlled, an attacker could exploit this to gain tokens without proper checks, especially since the purchasingAllowed flag can be manipulated by unauthorized users.

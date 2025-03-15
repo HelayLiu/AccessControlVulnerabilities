@@ -1,0 +1,21 @@
+1. Function _authorizeUpgrade() (line 66-68) has access control issues. Reason: The function is intended to restrict who can upgrade the contract, but it only checks if the caller is the owner. If the owner is compromised, an attacker could upgrade the contract to a malicious version.
+
+2. Function updateOneInchAggregatorAddress() (line 90-94) has access control issues. Reason: This function allows the owner to update the oneInchAggregatorAddress, which could lead to a situation where the contract interacts with a malicious aggregator if the owner's account is compromised.
+
+3. Function setVaultAllocations() (line 112-118) has access control issues. Reason: This function allows the owner to set portfolio allocations, which could be exploited if the owner's account is compromised, allowing an attacker to manipulate the allocation percentages.
+
+4. Function updateMappings() (line 120-138) has access control issues. Reason: This function allows the owner to update sensitive mappings related to user rewards. If the owner's account is compromised, an attacker could manipulate user rewards, leading to potential financial loss for users.
+
+5. Function claim() (line 174-204) has access control issues. Reason: The function allows any user to claim rewards, but it does not verify if the user is entitled to those rewards. If a user can manipulate the input data, they could claim rewards that do not belong to them.
+
+6. Function _returnRewardsInPreferredToken() (line 290-303) has access control issues. Reason: This function allows the caller to specify the receiver of the rewards. If the caller is not properly verified, it could lead to unauthorized transfers of rewards to unintended recipients.
+
+7. Function _resetUserRewardsOfInvestedProtocols() (line 314-319) has access control issues. Reason: This function resets user rewards based on the caller's address. If the caller is not verified, it could lead to unauthorized resets of user rewards, allowing an attacker to manipulate their own or others' rewards.
+
+8. Function rescueFunds() (line 335-340) has access control issues. Reason: This function allows the owner to rescue funds from the contract. If the owner's account is compromised, an attacker could drain the contract of its funds.
+
+9. Function rescueETH() (line 342-345) has access control issues. Reason: Similar to rescueFunds, this function allows the owner to withdraw ETH from the contract. If the owner's account is compromised, it could lead to loss of funds.
+
+10. Function rescueFundsWithHexData() (line 347-357) has access control issues. Reason: This function allows the owner to transfer funds to any address. If the owner's account is compromised, an attacker could transfer funds to a malicious address.
+
+In summary, the contract has multiple functions that rely solely on the owner for access control, which poses a significant risk if the owner's account is compromised. Proper access control checks should be implemented to ensure that only authorized users can perform sensitive actions.

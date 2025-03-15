@@ -1,0 +1,22 @@
+Upon reviewing the provided smart contract code, I have identified the following potential access control issues:
+
+1. **Function `vaultOut` (line 370-414)**:
+   - **Reason**: The `vaultOut` function allows any external caller to transfer tokens or native currency to the contract. Although it checks for valid inputs and uses `nonReentrant` and `whenNotPaused` modifiers, it does not restrict who can call this function. This could potentially allow unauthorized users to interact with the contract in unintended ways, especially if the function is supposed to be restricted to certain users or roles.
+
+2. **Function `swap` (line 416-469)**:
+   - **Reason**: Similar to `vaultOut`, the `swap` function is publicly accessible and allows any caller to execute a token swap. While it includes checks for valid inputs and uses `nonReentrant` and `whenNotPaused` modifiers, there is no access control to restrict who can perform swaps. This could lead to unauthorized users executing swaps, which might not be the intended behavior.
+
+3. **Function `call` (line 732-738)**:
+   - **Reason**: The `call` function is restricted by the `onlyOwner` modifier, which is appropriate for access control. However, it allows the owner to execute arbitrary calls to any target address with any calldata. This function can be dangerous if the owner account is compromised, as it could be used to execute malicious code or drain funds. While this is not a direct access control issue, it is a potential security risk that should be noted.
+
+4. **Function `withdrawFee` (line 740-752)**:
+   - **Reason**: The `withdrawFee` function is also restricted by the `onlyOwner` modifier, which is appropriate. However, similar to the `call` function, if the owner account is compromised, an attacker could withdraw all fees from the contract. This highlights the importance of securing the owner account.
+
+**Proof of Concept for `vaultOut` and `swap`**:
+To demonstrate the potential issue with `vaultOut` and `swap`, consider the following scenario:
+- An unauthorized user calls the `vaultOut` function with valid parameters, transferring tokens or native currency to the contract without any restriction.
+- Similarly, an unauthorized user calls the `swap` function, executing a token swap without any restriction.
+
+**Output**:
+1. Function `vaultOut` (line 370-414) has potential access control issues. Reason: The function is publicly accessible and allows any caller to transfer tokens or native currency to the contract without restriction, which could lead to unauthorized interactions.
+2. Function `swap` (line 416-469) has potential access control issues. Reason: The function is publicly accessible and allows any caller to execute a token swap without restriction, which could lead to unauthorized interactions.

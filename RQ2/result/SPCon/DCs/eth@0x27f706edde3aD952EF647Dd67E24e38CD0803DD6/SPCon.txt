@@ -1,0 +1,138 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+Traceback (most recent call last):
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 269, in _compile_through_crytic_compile
+    crytic_compile = CryticCompile(filename, **crytic_compile_args)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 117, in __init__
+    self._compile(**kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 548, in _compile
+    self._platform.compile(self, **kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/etherscan.py", line 331, in compile
+    solc_standard_json.standalone_compile(filenames, compilation_unit, working_dir=working_dir)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 64, in standalone_compile
+    targets_json = run_solc_standard_json(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 176, in run_solc_standard_json
+    raise InvalidCompilation(solc_exception_str)
+crytic_compile.platform.exceptions.InvalidCompilation: IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 566, in symCreateContractAccount
+    contract_account = m.solidity_create_contract(source_code = compile_address, \
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 585, in solidity_create_contract
+    compile_results = self._compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 359, in _compile
+    compilation_result = ManticoreEVM._compile_through_crytic_compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 322, in _compile_through_crytic_compile
+    raise EthereumError(
+manticore.exceptions.EthereumError: Errors : IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+. Solidity failed to generate bytecode for your contract. Check if all the abstract functions are implemented. 
+CRITICAL:symExec:UselessEthereumToken-0x27f706edde3aD952EF647Dd67E24e38CD0803DD6 cannot be deployed using manticore
+Traceback (most recent call last):
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 269, in _compile_through_crytic_compile
+    crytic_compile = CryticCompile(filename, **crytic_compile_args)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 117, in __init__
+    self._compile(**kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 548, in _compile
+    self._platform.compile(self, **kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/etherscan.py", line 331, in compile
+    solc_standard_json.standalone_compile(filenames, compilation_unit, working_dir=working_dir)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 64, in standalone_compile
+    targets_json = run_solc_standard_json(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 176, in run_solc_standard_json
+    raise InvalidCompilation(solc_exception_str)
+crytic_compile.platform.exceptions.InvalidCompilation: IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 566, in symCreateContractAccount
+    contract_account = m.solidity_create_contract(source_code = compile_address, \
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 585, in solidity_create_contract
+    compile_results = self._compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 359, in _compile
+    compilation_result = ManticoreEVM._compile_through_crytic_compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 322, in _compile_through_crytic_compile
+    raise EthereumError(
+manticore.exceptions.EthereumError: Errors : IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+. Solidity failed to generate bytecode for your contract. Check if all the abstract functions are implemented. 
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 36, in execute_command
+    SymExecEVM().fuzzing(contract=contractName, EthereumAddress=args.eth_address, separation_policies = separation_policies, integrity_policies=integrity_policies,\
+  File "../SpCon/spcon/symExec.py", line 748, in fuzzing
+    attack_test_sequence = greedyTesting(data, S=Stack, unauthorizedusers = unauthorizedusers, desc=f"Testing separation priviledgefuncs...\nR: {authorizedrole[1]}\n")
+  File "../SpCon/spcon/symExec.py", line 706, in greedyTesting
+    if not symExec(unauthorizedusers, S):
+  File "../SpCon/spcon/symExec.py", line 686, in symExec
+    exit(-1)
+  File "../anaconda3/envs/spcon/lib/python3.8/_sitebuiltins.py", line 26, in __call__
+    raise SystemExit(code)
+SystemExit: -1
+Traceback (most recent call last):
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 269, in _compile_through_crytic_compile
+    crytic_compile = CryticCompile(filename, **crytic_compile_args)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 117, in __init__
+    self._compile(**kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/crytic_compile.py", line 548, in _compile
+    self._platform.compile(self, **kwargs)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/etherscan.py", line 331, in compile
+    solc_standard_json.standalone_compile(filenames, compilation_unit, working_dir=working_dir)
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 64, in standalone_compile
+    targets_json = run_solc_standard_json(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/crytic_compile/platform/solc_standard_json.py", line 176, in run_solc_standard_json
+    raise InvalidCompilation(solc_exception_str)
+crytic_compile.platform.exceptions.InvalidCompilation: IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/symExec.py", line 682, in symExec
+    SymExecEVM().symCreateContractAccount(contract=contract, EthereumAddress=EthereumAddress)
+  File "../SpCon/spcon/symExec.py", line 566, in symCreateContractAccount
+    contract_account = m.solidity_create_contract(source_code = compile_address, \
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 585, in solidity_create_contract
+    compile_results = self._compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 359, in _compile
+    compilation_result = ManticoreEVM._compile_through_crytic_compile(
+  File "../anaconda3/envs/spcon/lib/python3.8/site-packages/manticore/ethereum/manticore.py", line 322, in _compile_through_crytic_compile
+    raise EthereumError(
+manticore.exceptions.EthereumError: Errors : IOError: Cannot import url ("crytic-export/etherscan-contracts2/0x27f706edde3aD952EF647Dd67E24e38CD0803DD6-UselessEthereumToken.sol"): File outside of allowed directories.
+
+. Solidity failed to generate bytecode for your contract. Check if all the abstract functions are implemented. 
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 36, in execute_command
+    SymExecEVM().fuzzing(contract=contractName, EthereumAddress=args.eth_address, separation_policies = separation_policies, integrity_policies=integrity_policies,\
+  File "../SpCon/spcon/symExec.py", line 748, in fuzzing
+    attack_test_sequence = greedyTesting(data, S=Stack, unauthorizedusers = unauthorizedusers, desc=f"Testing separation priviledgefuncs...\nR: {authorizedrole[1]}\n")
+  File "../SpCon/spcon/symExec.py", line 706, in greedyTesting
+    if not symExec(unauthorizedusers, S):
+  File "../SpCon/spcon/symExec.py", line 686, in symExec
+    exit(-1)
+  File "../anaconda3/envs/spcon/lib/python3.8/_sitebuiltins.py", line 26, in __call__
+    raise SystemExit(code)
+SystemExit: -1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "../SpCon/spcon/__main__.py", line 73, in main
+    execute_command(args)
+  File "../SpCon/spcon/__main__.py", line 41, in execute_command
+    raise Exception("Unkown error")
+Exception: Unkown error

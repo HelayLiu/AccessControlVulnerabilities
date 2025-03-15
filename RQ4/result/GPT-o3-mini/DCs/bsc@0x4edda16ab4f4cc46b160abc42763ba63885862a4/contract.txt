@@ -1,0 +1,24 @@
+Below is our analysis based on reviewing each external and state‐changing function for proper role/permission checks. In our audit we checked functions that change sensitive state or send tokens/ETH (for example, functions that update fee details, perform swaps, allow approvals, or change critical roles) and we verified that all such functions are protected by an appropriate access modifier (such as onlyRole(ROTATOR), onlyRole(OPERATOR), or onlyRole(ORACLE_MGR)). In our review, we note:
+
+• rotationSwaps (lines ≈48–79)  
+  – Protected by onlyRole(ROTATOR) plus nonReentrant and a gas reimbursement modifier.  
+   Reason: Only an account with the ROTATOR role can call this function, so no unauthorized account can trigger swaps.
+
+• collectFee, approveAsset, updateDiscountPolicy, updateFeeDetails, updateMaxAssets, updateSlippageTolerance, addDepositableAsset, removeDepositableAsset  
+  – All these functions (lines ≈81–148) carry onlyRole(OPERATOR) so that only an authorized operator (as set up via DefaultAccess) can call them.  
+   Reason: The sensitive actions (approving token allowances, updating fee settings, modifying depositable assets, etc.) are properly gated.
+
+• updateOracle (lines ≈150–157)  
+  – Protected by onlyRole(ORACLE_MGR).  
+   Reason: Only an account with the ORACLE_MGR role may update the oracle address.
+
+• The user functions redeem, deposit, and depositNative (lines ≈159–279) are intended to be public so that all users may enter or exit the vault. In these cases the only “access restrictions” are logic checks (for example, checking that the receiving or deposited asset is among the approved ones) which is the designed behavior.
+
+Based on our in‐depth review of this file, we did not find any functions that fail to perform necessary access control checks. Every state‐changing function that could affect sensitive state is correctly restricted to a specific role. 
+
+OutPut:
+No vulnerable function found. 
+
+Reason: All functions that change critical variables or execute sensitive operations (such as performing swaps, updating fee/discount/oracle details, and approving token transfers) are protected by the appropriate onlyRole modifiers. The user entry functions (redeem, deposit, depositNative) are intentionally public and include required logical checks (such as verifying token whitelisting) so that they do not introduce unauthorized state changes. 
+
+Thus, based on our review, there are no potential access control issues in this contract.

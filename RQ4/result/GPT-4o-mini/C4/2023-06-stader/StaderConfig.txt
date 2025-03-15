@@ -1,0 +1,13 @@
+1. Function updateMinWithdrawAmount(uint256 _minWithdrawAmount) (line 118-121) has the access control issues. Reason: The function can be called by any address with the DEFAULT_ADMIN_ROLE, but it does not check if the new minimum withdraw amount is less than or equal to the current maximum withdraw amount, which could lead to invalid limits being set.
+
+2. Function updateMaxWithdrawAmount(uint256 _maxWithdrawAmount) (line 126-129) has the access control issues. Reason: Similar to the previous function, it allows any address with the DEFAULT_ADMIN_ROLE to set a new maximum withdraw amount without ensuring that it is greater than or equal to the current minimum withdraw amount, potentially leading to invalid limits.
+
+3. Function updateMinDepositAmount(uint256 _minDepositAmount) (line 110-113) has the access control issues. Reason: This function can be called by any address with the MANAGER role, but it does not validate that the new minimum deposit amount is less than or equal to the current maximum deposit amount, which could result in invalid limits.
+
+4. Function updateMaxDepositAmount(uint256 _maxDepositAmount) (line 104-107) has the access control issues. Reason: The function allows any address with the MANAGER role to set a new maximum deposit amount without checking that it is greater than or equal to the current minimum deposit amount, which could lead to invalid limits.
+
+5. Function updateWithdrawnKeysBatchSize(uint256 _withdrawnKeysBatchSize) (line 98-101) has the access control issues. Reason: This function can be called by any address with the OPERATOR role, but it does not validate that the new batch size is a reasonable value, which could lead to unexpected behavior in the contract.
+
+6. Function updateSocializingPoolOptInCoolingPeriod(uint256 _SocializePoolOptInCoolingPeriod) (line 92-95) has the access control issues. Reason: The function can be called by any address with the MANAGER role, but it does not validate that the new cooling period is a reasonable value, which could lead to unexpected behavior in the contract.
+
+7. Function updateSocializingPoolCycleDuration(uint256 _socializingPoolCycleDuration) (line 86-89) has the access control issues. Reason: Similar to the previous functions, it allows any address with the MANAGER role to set a new cycle duration without validating that it is a reasonable value, which could lead to unexpected behavior in the contract.

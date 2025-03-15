@@ -1,0 +1,22 @@
+{
+ "contract": "MultiSigWallet",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "revokeConfirmation",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "whitelist",
+   "submitTransaction",
+   "SHA3(msg.sender,0x2)"
+  ],
+  [
+   "whitelist",
+   "confirmTransaction",
+   "SHA3(msg.sender,0x2)"
+  ]
+ ],
+ "PC_bypassed": []
+}

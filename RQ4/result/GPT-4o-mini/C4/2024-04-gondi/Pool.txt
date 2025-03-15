@@ -1,0 +1,21 @@
+1. Function `pausePool()` (line 102-104) has access control issues. Reason: The function can be called by any user since it lacks a proper access control modifier, allowing anyone to pause the pool, which could lead to denial of service for legitimate users.
+
+2. Function `setOptimalIdleRange(OptimalIdleRange memory _optimalIdleRange)` (line 107-111) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to change the optimal idle range.
+
+3. Function `setBaseInterestAllocator(address _newBaseInterestAllocator)` (line 114-119) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to set a new base interest allocator.
+
+4. Function `setReallocationBonus(uint256 _newReallocationBonus)` (line 126-130) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to change the reallocation bonus.
+
+5. Function `confirmBaseInterestAllocator(address _newBaseInterestAllocator)` (line 134-157) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to confirm a new base interest allocator.
+
+6. Function `queueClaimAll()` (line 197-199) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to claim all pending withdrawals.
+
+7. Function `deployWithdrawalQueue()` (line 202-204) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to deploy a new withdrawal queue.
+
+8. Function `reallocate()` (line 305-310) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to reallocate funds.
+
+9. Function `loanRepayment(...)` (line 319-327) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to process loan repayments.
+
+10. Function `loanLiquidation(...)` (line 331-339) has access control issues. Reason: This function can be called by any user since it lacks a proper access control modifier, allowing unauthorized users to process loan liquidations.
+
+In summary, multiple functions in the contract lack proper access control mechanisms, allowing unauthorized users to perform sensitive operations that could compromise the integrity and security of the contract.

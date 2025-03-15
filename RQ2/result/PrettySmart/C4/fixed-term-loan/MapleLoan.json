@@ -1,0 +1,67 @@
+{
+ "contract": "MapleLoan",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "acceptNewTerms",
+   "0x1"
+  ],
+  [
+   "owner",
+   "skim",
+   "0x0"
+  ],
+  [
+   "owner",
+   "upgrade",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setPendingBorrower",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setPendingLender",
+   "0x1"
+  ],
+  [
+   "owner",
+   "claimFunds",
+   "0x1"
+  ],
+  [
+   "owner",
+   "proposeNewTerms",
+   "0x0"
+  ],
+  [
+   "owner",
+   "acceptBorrower",
+   "0x2"
+  ],
+  [
+   "owner",
+   "drawdownFunds",
+   "0x0"
+  ],
+  [
+   "owner",
+   "repossess",
+   "0x1"
+  ],
+  [
+   "owner",
+   "acceptLender",
+   "0x3"
+  ],
+  [
+   "owner",
+   "removeCollateral",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

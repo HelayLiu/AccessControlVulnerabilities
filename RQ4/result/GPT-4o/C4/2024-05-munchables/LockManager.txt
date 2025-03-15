@@ -1,0 +1,33 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `setLockDuration` (line 184-211)**
+   - **Reason**: The function `setLockDuration` allows any user to set their own lock duration without any specific access control. This could potentially be exploited by users to set durations that are not intended by the contract's logic, especially if the `notPaused` modifier does not sufficiently restrict access. It is important to ensure that the `notPaused` modifier is correctly implemented to prevent unauthorized access.
+
+2. **Function `lockOnBehalf` (line 213-229)**
+   - **Reason**: The function `lockOnBehalf` allows a user to lock tokens on behalf of another user (`_onBehalfOf`). While this function checks if the token is active and configured, it does not verify if the caller has the authority to lock tokens on behalf of the specified address. This could lead to unauthorized locking of tokens for other users.
+
+3. **Function `lock` (line 231-246)**
+   - **Reason**: Similar to `lockOnBehalf`, the `lock` function allows any user to lock tokens without any specific access control beyond checking if the token is active and configured. This could be exploited if the `notPaused` modifier does not provide adequate protection.
+
+4. **Function `unlock` (line 348-366)**
+   - **Reason**: The `unlock` function allows users to unlock their tokens, but it does not have any additional access control beyond checking if the tokens are still locked. If the `notPaused` modifier is not properly implemented, this could allow unauthorized unlocking of tokens.
+
+**Proof of Concept for `lockOnBehalf` Function:**
+
+To demonstrate the potential issue with the `lockOnBehalf` function, consider the following scenario:
+
+- Assume `Alice` wants to lock tokens on behalf of `Bob` without `Bob`'s consent.
+- `Alice` calls the `lockOnBehalf` function with `_onBehalfOf` set to `Bob`'s address.
+- The function does not check if `Alice` has the authority to lock tokens for `Bob`, allowing `Alice` to proceed with the operation.
+
+This scenario highlights the need for additional access control checks to ensure that only authorized users can lock tokens on behalf of others.
+
+**Output:**
+
+1. Function `setLockDuration` (line 184-211) has potential access control issues. Reason: The function allows any user to set their own lock duration without specific access control, which could be exploited if the `notPaused` modifier is not properly implemented.
+
+2. Function `lockOnBehalf` (line 213-229) has potential access control issues. Reason: The function allows a user to lock tokens on behalf of another user without verifying if the caller has the authority to do so.
+
+3. Function `lock` (line 231-246) has potential access control issues. Reason: The function allows any user to lock tokens without specific access control, which could be exploited if the `notPaused` modifier is not properly implemented.
+
+4. Function `unlock` (line 348-366) has potential access control issues. Reason: The function allows users to unlock their tokens without additional access control, which could be exploited if the `notPaused` modifier is not properly implemented.

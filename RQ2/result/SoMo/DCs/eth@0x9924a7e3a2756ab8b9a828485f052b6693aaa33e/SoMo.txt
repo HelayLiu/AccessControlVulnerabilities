@@ -1,0 +1,21 @@
+Switched global version to 0.4.24
+Modifiers Status:
+Modifier: onlyOwner, Status: ModifierStatus.VULNERABLE
+Modifier: onlyTransferable, Status: ModifierStatus.SECURE
+Modifier: unFrozenAccount, Status: ModifierStatus.SECURE
+Modifier: onlyPayloadSize, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+Modifier: onlyOwner
+
+Path Status: VULNERABLE
+Constraint: owner, Value: "attacker"	Constraint: msg.sender, Value: "attacker"
+Insecure Path: 
+Entry Point: BAFCToken.UBSexToken()
+owner_4(address) := msg.sender(address)
+Entry Point: BasicToken.onlyOwner()
+owner_4(address) := ϕ(['owner_2', 'owner_3', 'owner_0'])
+TMP_33(bool) = owner_4 == msg.sender
+CONDITION TMP_33
+
+

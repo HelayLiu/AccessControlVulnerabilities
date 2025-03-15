@@ -1,0 +1,12 @@
+{
+ "contract": "ERC20Mock",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "mint",
+   "SHA3(msg.sender,0x6)"
+  ]
+ ],
+ "PC_bypassed": []
+}

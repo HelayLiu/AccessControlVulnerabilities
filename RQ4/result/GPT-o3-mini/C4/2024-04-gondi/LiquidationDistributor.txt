@@ -1,0 +1,18 @@
+Below is one example of a problematic function with potential access control issues:
+
+1. Function distribute() (roughly lines 15–37 in the given file) has an access control issue. 
+
+ • Reason: The distribute() function is marked external and lacks any access control modifier (for example, “onlyLiquidator” or “onlyLoanManager”) or any check on msg.sender. As a result, any caller may trigger a liquidation distribution. In this design the function uses msg.sender as the “liquidator” from which tokens are drawn (via safeTransferFrom) to be sent to the tranche lender. Because no restrictions are in place, an attacker (or even an unwary user) can be induced to call distribute() with a caller-controlled _loan parameter. An attacker might set a tranche.lender to an address they control so that when the caller (who may have pre-approved the contract to spend tokens) triggers a liquidation distribution, tokens are transferred from the caller’s account to the attacker’s account.
+
+ • Proof of Concept:
+  1. The attacker deploys or otherwise gains control of a system that will call distribute() on the LiquidationDistributor.
+  2. The attacker tricks or persuades a victim to pre-approve the LiquidationDistributor contract for token transfers.
+  3. The attacker then constructs a maliciously crafted _loan struct in which one or more tranche entries has a lender address set to an attacker-controlled address.
+  4. When the victim (or unaware caller) calls distribute() (perhaps under a false pretense or via a phishing site), the contract will execute and transfer tokens from the victim’s account to the attacker’s account via safeTransferFrom.
+  5. This misuse arises since distribute() does not require the caller to be an authorized liquidator or validated party.
+
+Because of the lack of role or origin checks on the external distribute() function, an attacker can force token transfers out of an account that has approved the contract for spending. 
+
+Remediation should include adding strict access control on the distribute() function (or using an authenticated process to verify that msg.sender is an authorized liquidator or has the right role) before processing any token transfers. 
+
+This demonstrates a critical access control issue in the contract.

@@ -1,0 +1,19 @@
+Below is one major access‐control issue discovered during the audit:
+
+1. Vulnerable Function: DVM.init (in contract DVM)
+ • Location: In the “DVM” contract (see the “function init(…) external” declaration toward the end of the file).
+ • Reason: Unlike many “initialization” functions that use an “initializer” or “onlyOwner” modifier (or inherit a “notInitialized” modifier as in InitializableOwnable), this init(…) function is externally callable by anyone and does not protect itself from being called more than once. Because it sets all the core parameters (for example, _BASE_TOKEN_, _QUOTE_TOKEN_, fee rates, _MAINTAINER_, pricing parameters, and even the domain separator for permit), an attacker (or any arbitrary user) can call init() after deployment to reinitialize and change critical settings. This would allow the attacker to permanently seize control (or “corrupt”) the contract’s configuration.
+
+Proof‐of‐Concept:
+ Assume the DVM contract is already deployed. An attacker can call:
+  DVM.init(newMaintainer, attackerBaseToken, attackerQuoteToken, newLpFeeRate, newMTFeeRateModel, newI, newK, false);
+ Now the attacker controls the important addresses and fee parameters, undermining the intended access control and security of the system.
+
+─────────────────────────────
+Note on (less critical) design issue concerning tx.origin:
+• In several trading functions (sellBase, sellQuote, and flashLoan in DVMTrader), the fee rate is determined by calling _MT_FEE_RATE_MODEL_.getFeeRate(tx.origin) instead of using msg.sender. Although not an “access control” issue per se, using tx.origin instead of msg.sender could be abused in certain compositional or phishing scenarios where an attacker’s intermediary contract might induce an unsuspecting user to trigger a trade. (Best practice is to use msg.sender so that the caller’s identity – the contract or account that directly invoked the function – is used for fee‐determination.)
+
+─────────────────────────────
+Summary of Vulnerability:
+1. Function DVM.init (in contract DVM, around the “init(…)” definition) lacks any access control or “already initialized” check.
+  Reason: It lets anyone reinitialize the contract—even after it should have been permanently configured—allowing critical parameters (including the maintainers, tokens, and fee models) to be maliciously reset.

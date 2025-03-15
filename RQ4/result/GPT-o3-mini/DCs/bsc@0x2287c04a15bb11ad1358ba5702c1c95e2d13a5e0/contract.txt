@@ -1,0 +1,6 @@
+Below is one potential access control issue we discovered:
+
+1. Function rescueToken (approximately lines 630–635)
+  • Issue: Instead of using the onlyOwner modifier (or otherwise checking that the caller is the current owner), the function uses a direct check “require(_tokenOwner == msg.sender)”. Since _tokenOwner is set only once in the constructor and never updated—even if ownership is later transferred via Ownable’s transferOwnership—the current owner may be unable to call rescueToken while the original _tokenOwner retains this privilege. This divergence in access control can allow an undesired account (the deployer) continued privileged access and may lead to unexpected token recoveries.
+
+No other function in the contract outright bypasses the intended access control checks before modifying critical state or invoking privileged contracts.

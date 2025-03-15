@@ -1,0 +1,8 @@
+Switched global version to 0.8.4
+Modifiers Status:
+Modifier: onlyMigrator, Status: ModifierStatus.SECURE
+Modifier: updateReward, Status: ModifierStatus.SECURE
+Modifier: onlyOwner, Status: ModifierStatus.SECURE
+
+Modifier Check Result: 
+

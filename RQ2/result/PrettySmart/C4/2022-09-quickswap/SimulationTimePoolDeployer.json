@@ -1,0 +1,17 @@
+{
+ "contract": "SimulationTimePoolDeployer",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xfd82b73a",
+   "0x4"
+  ],
+  [
+   "owner",
+   "setFactory",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

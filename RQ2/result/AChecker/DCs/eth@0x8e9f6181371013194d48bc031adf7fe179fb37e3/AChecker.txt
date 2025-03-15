@@ -1,0 +1,2631 @@
+Switched global version to 0.4.19
+Gala Start Analysis
+Step1: Build ICFG
+Step2: Execution Path Extraction
+Step3: Taint Analysis
+Step4: Generate Tx Sequences
+Step5: Symbolic Execution
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 1 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+owner_1(address) := msg.sender(address)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+[96m====> Solver Assertions <====[0m
+[Or(3000000000 == 3000000000), Or(balances == balances)]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = 967724487163403495630195419068707635844908137742
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 2 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+owner_2(address) := msg.sender(address)
+value_1(uint256) := _value_1(uint256)
+minReq_1(uint256) := _minReq_1(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+[96m====> Solver Assertions <====[0m
+[Or(0 == 0), Or(balances == balances)]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = 967724487163403495630195419068707635844908137742
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 3 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+value_2(uint256) := _value_1(uint256)
+minReq_2(uint256) := _minReq_1(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> setParameters
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 4 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+value_2(uint256) := _value_1(uint256)
+minReq_2(uint256) := _minReq_1(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> setParameters
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (967724487163403495630195419068707635844908137742 ==
+  addr_owner) ==
+ True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_owner
+value = _value
+minReq = _minReq
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 5 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+value_2(uint256) := _value_1(uint256)
+minReq_2(uint256) := _minReq_1(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> setParameters
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = _value
+minReq = _minReq
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 6 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+owner_3(address) := newOwner_1(address)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> transferOwnership
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+newOwner = 0x1
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 7 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+owner_3(address) := newOwner_1(address)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> transferOwnership
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (967724487163403495630195419068707635844908137742 ==
+  addr_owner) ==
+ True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 8 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+owner_3(address) := newOwner_1(address)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> transferOwnership
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+newOwner = 0x1
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = addr_newOwner
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 9 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 10 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 11 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 12 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 13 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 14 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 15 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 16 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 17 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 18 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 19 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> transferOwnership -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(transferOwnership),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(transferOwnership)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (msg.sender(transferOwnership) == addr_owner) == True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 20 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 21 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 22 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 23 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> finishDistribution
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 24 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 25 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 26 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 27 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 28 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 29 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 30 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 31 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 32 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 33 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 34 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 35 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 36 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> transferOwnership -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(transferOwnership),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(transferOwnership)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (msg.sender(transferOwnership) == addr_owner) == True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 37 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ value == 0,
+ Or(value == value),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+value = value
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 38 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_2(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> airdrop
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(_value == _value),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_13 >= 0,
+ (255 >= REF_13) == True,
+ (0 >= _value) == True,
+ Or(0 == 0),
+ REF_14 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 39 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 40 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 41 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 42 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 43 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 44 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 45 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 46 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 47 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 48 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 49 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 50 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 51 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> transferOwnership -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(transferOwnership),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(transferOwnership)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (msg.sender(transferOwnership) == addr_owner) == True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 52 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 53 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+distributionFinished_3(bool) := True(bool)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> distribution
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(0 == 0),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ Or(False == False),
+ Not(False) == True,
+ REF_16 >= 0,
+ (255 >= REF_16) == True,
+ (0 >= amount) == True,
+ Or(0 == 0),
+ REF_17 >= 0,
+ (0 >= 3000000000) == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = True
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 54 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+totalSupply_20(uint256) := TMP_115(uint256)
+totalDistributed_23(uint256) := TMP_116(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> ToOwner -> burn
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+REF_60 = 0
+_value = 57896044618658097711785492504343953926634992332820282019728792003956564819969
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(ToOwner) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(ToOwner),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(ToOwner)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(0 == 0),
+ Or(msg.sender(ToOwner) == msg.sender(ToOwner)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(ToOwner)) ==
+ True,
+ REF_60 == 0,
+ (_value <= REF_60) == True,
+ Or(balances == balances)]
+[96m====> Final Storage Value <====[0m
+totalSupply = TMP_115
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = TMP_116
+totalRemaining = 0
+distributionFinished = False
+price = 0
+balances = balances
+REF_0 = 3000000000
+owner = msg.sender(ToOwner)
+REF_60 = REF_60
+REF_61 = TMP_114
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 55 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+totalSupply_20(uint256) := TMP_115(uint256)
+totalDistributed_23(uint256) := TMP_116(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> Mining24 -> burn
+[96m====> Symbolic Execution Result <====[0m
+[91mCurrent Txs Execution Path Is Feasible[0m
+[96m====> One Solution <====[0m
+REF_60 = 0
+_value = 57896044618658097711785492504343953926634992332820282019728792003956564819969
+tx.origin = 784111659235839575756046898048811343226688919362
+msg.sender(Mining24) = 967724487163403495630195419068707635844908137742
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(Mining24),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(Mining24)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ Or(0 == 0),
+ Or(balances == balances),
+ Or(3000000000 == 3000000000),
+ Or(balances == balances),
+ Or(0 == 0),
+ Or(msg.sender(Mining24) == msg.sender(Mining24)),
+ (967724487163403495630195419068707635844908137742 ==
+  msg.sender(Mining24)) ==
+ True,
+ REF_60 == 0,
+ (_value <= REF_60) == True,
+ Or(balances == balances)]
+[96m====> Final Storage Value <====[0m
+totalSupply = TMP_115
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = TMP_116
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = msg.sender(Mining24)
+value = _value
+minReq = _minReq
+balances = balances
+REF_1 = 0
+REF_60 = REF_60
+REF_61 = TMP_114
+[93m================================ GALA SYMBOLIC EXECUTION RESULT 56 FOR Cryptbond ================================[0m
+Default Deployer: 0x8958c8689d325fd9e2a1ede3d5dc1acfcfb65742 (784111659235839575756046898048811343226688919362)
+Default Attacker: 0xa982444d884e00c7dfbbcb90e7a705e567853d0e (967724487163403495630195419068707635844908137742)
+[96m====> Program Points <====[0m
+totalSupply_20(uint256) := TMP_115(uint256)
+totalDistributed_23(uint256) := TMP_116(uint256)
+[96m====> Generated Tx Sequence <====[0m
+constructor -> transferOwnership -> burn
+[96m====> Symbolic Execution Result <====[0m
+[92mNo Solution Found. The Txs Execution Path Is Infeasible[0m
+[96m====> Solver Assertions <====[0m
+[Or(784111659235839575756046898048811343226688919362 ==
+    msg.sender(transferOwnership),
+    967724487163403495630195419068707635844908137742 ==
+    msg.sender(transferOwnership)),
+ Or(784111659235839575756046898048811343226688919362 ==
+    tx.origin,
+    967724487163403495630195419068707635844908137742 ==
+    tx.origin),
+ addr_owner == 0,
+ Or(addr_owner == addr_owner),
+ (msg.sender(transferOwnership) == addr_owner) == True,
+ 0 != addr_newOwner == True]
+[96m====> Final Storage Value <====[0m
+totalSupply = 3000000000
+name = Cryptbond Network
+symbol = CBN
+decimals = 0
+totalReserved = 0
+totalBounties = 0
+totalDistributed = 0
+totalRemaining = 0
+distributionFinished = False
+price = 0
+owner = addr_newOwner
+Execution time: 1.9205937385559082
+[91m[ PRIVILEGE ESCALATION VULNERABILITY FOUND FOR Cryptbond:MainContractFlattened.sol ][0m
+[96m====> Root Tx Sequence <====[0m
+[93mDeployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner][0m
+[96m====> Vul Sequences Start With Root Tx Sequence <====[0m
+[96m====> Generated Vul Sequences 1 and Program Points <====[0m
+owner_1(address) := msg.sender(address)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner]
+[96m====> Generated Vul Sequences 2 and Program Points <====[0m
+value_2(uint256) := _value_1(uint256)
+minReq_2(uint256) := _minReq_1(uint256)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner] -> Attacker: [Cryptbond.setParameters]
+[96m====> Generated Vul Sequences 3 and Program Points <====[0m
+owner_3(address) := newOwner_1(address)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner] -> Attacker: [Cryptbond.transferOwnership]
+[96m====> Generated Vul Sequences 4 and Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner] -> Attacker: [Cryptbond.finishDistribution]
+[96m====> Generated Vul Sequences 5 and Program Points <====[0m
+totalDistributed_23(uint256) := TMP_116(uint256)
+totalSupply_20(uint256) := TMP_115(uint256)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.ToOwner] -> Attacker: [Cryptbond.burn]
+
+[91m[ PRIVILEGE ESCALATION VULNERABILITY FOUND FOR Cryptbond:MainContractFlattened.sol ][0m
+[96m====> Root Tx Sequence <====[0m
+[93mDeployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24][0m
+[96m====> Vul Sequences Start With Root Tx Sequence <====[0m
+[96m====> Generated Vul Sequences 1 and Program Points <====[0m
+owner_2(address) := msg.sender(address)
+value_1(uint256) := _value_1(uint256)
+minReq_1(uint256) := _minReq_1(uint256)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24]
+[96m====> Generated Vul Sequences 2 and Program Points <====[0m
+value_2(uint256) := _value_1(uint256)
+minReq_2(uint256) := _minReq_1(uint256)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24] -> Attacker: [Cryptbond.setParameters]
+[96m====> Generated Vul Sequences 3 and Program Points <====[0m
+owner_3(address) := newOwner_1(address)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24] -> Attacker: [Cryptbond.transferOwnership]
+[96m====> Generated Vul Sequences 4 and Program Points <====[0m
+distributionFinished_1(bool) := True(bool)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24] -> Attacker: [Cryptbond.finishDistribution]
+[96m====> Generated Vul Sequences 5 and Program Points <====[0m
+totalDistributed_23(uint256) := TMP_116(uint256)
+totalSupply_20(uint256) := TMP_115(uint256)
+<Vul Sequences> Deployer: [Default Constructors] -> Attacker: [Cryptbond.Mining24] -> Attacker: [Cryptbond.burn]
+

@@ -1,0 +1,12 @@
+{
+ "contract": "TSURUWrapper",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "unwrap",
+   "SHA3(msg.sender,0x7)"
+  ]
+ ],
+ "PC_bypassed": []
+}

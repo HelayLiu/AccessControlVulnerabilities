@@ -1,0 +1,6 @@
+Below is one potential access‐control concern discovered during the audit:
+
+1. Vulnerable function: _transferFeesSupportingTaxTokens (roughly lines 170–180)  
+   Reason: Although this helper is intended to be used only by internal fee‐updating functions (_update0/_update1), it is declared public with no access control. This means any external caller can trigger a token transfer from the pair contract’s balance over to the fees contract. Even though the tokens land into the fees recipient (controlled by the factory), an attacker might abuse this “open” function to force unexpected transfers—thereby potentially draining or “griefing” the liquidity pool. Restricting its access (for example, marking it internal) would ensure that only the contract’s own trusted fee‐accrual logic may invoke it.
+
+There were no other functions that inappropriately omitted role–based restrictions (the externally callable functions like mint, burn, swap, skim, sync, etc. are intentionally left open for decentralized use, as is common in AMM pair contracts). The _transferFeesSupportingTaxTokens function is the only point needing tighter access control.

@@ -1,0 +1,23 @@
+1. Function `initialize(address _coreBranchRouter, address _bridgeAgentFactory)` (line 66-78) has access control issues. Reason: The function can be called by any address, and if called after the contract has already been initialized, it will not revert, allowing potential manipulation of the contract state if the owner is not careful.
+
+2. Function `addBridgeAgent(address _bridgeAgent)` (line 174-178) has access control issues. Reason: This function can be called by any address that meets the `requiresBridgeAgentFactory` modifier, which could potentially allow unauthorized users to add bridge agents if the factory is compromised.
+
+3. Function `setCoreRouter(address _newCoreRouter)` (line 188-194) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized changes to the core router address if the core router is compromised.
+
+4. Function `addBridgeAgentFactory(address _newBridgeAgentFactory)` (line 196-202) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized users to add bridge agent factories if the core router is compromised.
+
+5. Function `toggleBridgeAgentFactory(address _newBridgeAgentFactory)` (line 204-210) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized toggling of bridge agent factories if the core router is compromised.
+
+6. Function `toggleBridgeAgent(address _bridgeAgent)` (line 212-218) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized toggling of bridge agents if the core router is compromised.
+
+7. Function `addStrategyToken(address _token, uint256 _minimumReservesRatio)` (line 220-227) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized addition of strategy tokens if the core router is compromised.
+
+8. Function `toggleStrategyToken(address _token)` (line 229-235) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized toggling of strategy tokens if the core router is compromised.
+
+9. Function `addPortStrategy(address _portStrategy, address _token, uint256 _dailyManagementLimit)` (line 237-245) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized addition of port strategies if the core router is compromised.
+
+10. Function `togglePortStrategy(address _portStrategy, address _token)` (line 247-253) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized toggling of port strategies if the core router is compromised.
+
+11. Function `updatePortStrategy(address _portStrategy, address _token, uint256 _dailyManagementLimit)` (line 255-261) has access control issues. Reason: This function can be called by any address that meets the `requiresCoreRouter` modifier, which could allow unauthorized updates to port strategies if the core router is compromised.
+
+In summary, the access control issues primarily stem from the reliance on the `requiresCoreRouter` and `requiresBridgeAgentFactory` modifiers, which could be exploited if the core router or bridge agent factory is compromised.

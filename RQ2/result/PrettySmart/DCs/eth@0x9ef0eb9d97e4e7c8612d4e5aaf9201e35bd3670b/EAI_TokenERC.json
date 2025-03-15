@@ -1,0 +1,28 @@
+{
+ "contract": "EAI_TokenERC",
+ "PRD_find": true,
+ "PC_find": [
+  [
+   "datadriven2",
+   "burnFrom",
+   "SHA3(msg.sender,0x5)"
+  ],
+  [
+   "datadriven",
+   "burn",
+   "SHA3(msg.sender,0x4)"
+  ],
+  [
+   "datadriven2",
+   "transferFrom",
+   "SHA3(msg.sender,0x5)"
+  ]
+ ],
+ "PC_bypassed": [
+  [
+   "datadriven",
+   "burn",
+   "SHA3(msg.sender,0x4)"
+  ]
+ ]
+}

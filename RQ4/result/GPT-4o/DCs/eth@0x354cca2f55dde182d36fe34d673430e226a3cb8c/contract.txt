@@ -1,0 +1,9 @@
+1. Function `listToken` (line 409-470) has an access control issue. Reason: The function allows any user to list a token pair without any access control checks. This could potentially allow unauthorized users to list token pairs, which could lead to security vulnerabilities or misuse of the contract.
+
+2. Function `delistTokenByUser` (line 499-532) has an access control issue. Reason: The function allows any user to delist a token pair if they are the token owner. However, the check for token ownership is based on the `_tokenOwner` mapping, which can be manipulated by any user through the `listToken` function. This could allow unauthorized users to delist token pairs.
+
+3. Function `depositTokens` (line 686-707) has an access control issue. Reason: The function allows any user to deposit tokens into the contract, but it only checks if the user is the token owner based on the `_tokenOwner` mapping. Since the `listToken` function can be called by any user to set themselves as the token owner, this could allow unauthorized users to deposit tokens.
+
+4. Function `withdrawTokens` (line 713-742) has an access control issue. Reason: Similar to `depositTokens`, this function allows any user to withdraw tokens if they are the token owner. The ownership check is based on the `_tokenOwner` mapping, which can be manipulated by any user through the `listToken` function, potentially allowing unauthorized withdrawals.
+
+5. Function `changeTokenLister` (line 799-818) has an access control issue. Reason: The function allows any user to change the token lister if they are the current token lister. However, the check for token lister is based on the `tokenOwnerWithChainId` mapping, which can be manipulated by any user through the `listToken` function. This could allow unauthorized users to change the token lister.

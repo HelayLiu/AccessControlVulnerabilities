@@ -1,0 +1,12 @@
+{
+ "contract": "TraitForgeNft",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0x7e6405c1",
+   "0x10"
+  ]
+ ],
+ "PC_bypassed": []
+}

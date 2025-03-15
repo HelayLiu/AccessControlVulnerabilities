@@ -1,0 +1,20 @@
+Upon reviewing the provided smart contract, I have identified a potential access control issue:
+
+1. **Function `onlyMinter` Modifier (line 41-43)**:
+   - **Reason**: The `onlyMinter` modifier is intended to restrict access to certain functions to only the `minterAddress`. However, the modifier does not contain a `require` statement to enforce this restriction. The line `msg.sender == minterAddress;` is a comparison that does not affect the execution flow. As a result, any address can call functions protected by this modifier, which could lead to unauthorized minting of tickets.
+
+   **Proof of Concept**:
+   - Deploy the contract and initialize it with specific addresses for `ticketRenderer_`, `royaltyRecipient_`, and `minterAddress_`.
+   - Attempt to call the `mint` or `mintBatch` function from an address different from `minterAddress_`.
+   - Observe that the function executes successfully, demonstrating that the `onlyMinter` modifier does not enforce access control as intended.
+
+To fix this issue, the `onlyMinter` modifier should be updated to include a `require` statement, such as:
+
+```solidity
+modifier onlyMinter() {
+    require(msg.sender == minterAddress, "Caller is not the minter");
+    _;
+}
+```
+
+This change will ensure that only the designated `minterAddress` can call functions protected by the `onlyMinter` modifier.

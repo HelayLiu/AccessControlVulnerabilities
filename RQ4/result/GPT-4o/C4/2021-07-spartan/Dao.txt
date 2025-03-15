@@ -1,0 +1,26 @@
+1. **Function `constructor` (line 88-100)** has an access control issue. 
+   - **Reason**: The constructor sets the `DEPLOYER` to `msg.sender`, which is the address that deploys the contract. This address is granted significant control over the contract, including the ability to set critical addresses and parameters. If the deployer is not a trusted entity, this could lead to potential misuse or malicious actions.
+
+2. **Function `depositLPForMember` (line 152-168)** has an access control issue.
+   - **Reason**: This function allows any user to deposit LP tokens on behalf of any member without any access control checks. This could be exploited by malicious users to manipulate the state of the contract or the member's status.
+
+3. **Function `claimAllForMember` (line 370-378)** has an access control issue.
+   - **Reason**: This function allows any user to claim unlocked bonded LPs for any member without any access control checks. This could be exploited by malicious users to claim rewards on behalf of other members.
+
+4. **Function `claimForMember` (line 382-387)** has an access control issue.
+   - **Reason**: Similar to `claimAllForMember`, this function allows any user to claim unlocked bonded LPs for any member without any access control checks. This could be exploited by malicious users to claim rewards on behalf of other members.
+
+5. **Function `newActionProposal`, `newParamProposal`, `newAddressProposal`, `newGrantProposal` (lines 456-493)** have access control issues.
+   - **Reason**: These functions allow any user to create new proposals without any restrictions or checks on the user's identity or role. This could lead to spam or malicious proposals being created, potentially disrupting the governance process.
+
+6. **Function `cancelProposal` (line 553-558)** has an access control issue.
+   - **Reason**: This function allows any user to cancel a proposal after a certain time period. There are no checks to ensure that only authorized users (e.g., the proposal creator or a DAO member) can cancel a proposal, which could lead to unauthorized cancellations.
+
+7. **Function `finaliseProposal` (line 561-598)** has an access control issue.
+   - **Reason**: This function allows any user to finalize a proposal after the cool-off period. There are no checks to ensure that only authorized users (e.g., DAO members) can finalize a proposal, which could lead to unauthorized finalizations.
+
+**Proof of Concept for `depositLPForMember` Issue:**
+
+1. Deploy the contract with an address `A`.
+2. Address `B` calls `depositLPForMember` with `member` set to address `C`.
+3. Address `B` successfully deposits LP tokens on behalf of address `C` without any restrictions, potentially manipulating the state or status of address `C`.

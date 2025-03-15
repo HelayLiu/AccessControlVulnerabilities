@@ -1,0 +1,13 @@
+1. Function mint(address to, uint256 amount) (line 66-70) has access control issues. Reason: The mint function does not have an access control modifier, allowing any user to mint tokens if they call this function, which can lead to token inflation and loss of value for existing token holders.
+
+2. Function burn(address from, uint256 amount) (line 75-81) has access control issues. Reason: The burn function does not have an access control modifier, allowing any user to burn tokens from any address if they have the allowance, which can lead to unauthorized token destruction.
+
+3. Function setParams(uint256 _spawnRate, uint256 _withdrawRate, uint256 _timeLock) (line 45-50) has access control issues. Reason: The setParams function is callable by anyone, but it should be restricted to the owner to prevent unauthorized changes to critical parameters of the contract.
+
+4. Function rescueToken(ERC20 _token, uint256 _amount) (line 63-66) has access control issues. Reason: The rescueToken function is callable by anyone, but it should be restricted to the owner to prevent unauthorized token withdrawals from the contract.
+
+5. Function addPair(address[2] calldata _pair) (line 139-142) has access control issues. Reason: The addPair function is callable by anyone, but it should be restricted to the owner to prevent unauthorized addition of pairs.
+
+6. Function removePair(uint256 index) (line 145-151) has access control issues. Reason: The removePair function is callable by anyone, but it should be restricted to the owner to prevent unauthorized removal of pairs.
+
+These functions lack proper access control mechanisms, which can lead to unauthorized actions that compromise the integrity and security of the contract.

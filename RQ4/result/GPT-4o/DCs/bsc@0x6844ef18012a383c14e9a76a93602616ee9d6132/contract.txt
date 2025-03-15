@@ -1,0 +1,6 @@
+Upon reviewing the provided smart contract, I have identified a potential access control issue:
+
+1. **Function `setSwapPairs` (line 204-206)** has an access control issue. 
+   - **Reason**: The function `setSwapPairs` is intended to set swap pairs by modifying the `Pairs` mapping. However, it lacks the `onlyOwner` modifier, which means that any address can call this function and modify the swap pairs. This could lead to unauthorized entities setting swap pairs, potentially affecting the contract's behavior and security.
+
+To verify this issue, a proof of concept can be created where an arbitrary address calls the `setSwapPairs` function to modify the `Pairs` mapping, demonstrating that the function can be accessed without any restrictions. This could be exploited to manipulate the contract's logic related to swap pairs.

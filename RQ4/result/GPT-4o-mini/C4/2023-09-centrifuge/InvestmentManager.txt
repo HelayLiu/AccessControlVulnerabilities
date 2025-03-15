@@ -1,0 +1,17 @@
+1. Function requestDeposit(uint256 currencyAmount, address user) (line 90-91) has access control issues. Reason: The function is marked as `public auth`, which means it can be called by any address that has the `auth` role. However, it does not check if the `msg.sender` is a valid liquidity pool or if the user is allowed to invest, which could lead to unauthorized access to the investment process.
+
+2. Function requestRedeem(uint256 trancheTokenAmount, address user) (line 118-119) has access control issues. Reason: Similar to `requestDeposit`, this function is also marked as `public auth` and does not validate if the `msg.sender` is a valid liquidity pool or if the user is allowed to redeem, potentially allowing unauthorized users to initiate redemption requests.
+
+3. Function decreaseDepositRequest(uint256 _currencyAmount, address user) (line 134-135) has access control issues. Reason: This function is marked as `public` and does not have any access control checks to ensure that only authorized users can decrease deposit requests, which could lead to unauthorized modifications.
+
+4. Function decreaseRedeemRequest(uint256 _trancheTokenAmount, address user) (line 143-144) has access control issues. Reason: This function is also marked as `public` and lacks access control checks, allowing unauthorized users to decrease redeem requests.
+
+5. Function collectDeposit(address user) (line 151-152) has access control issues. Reason: This function is marked as `public auth`, but it does not check if the `msg.sender` is a valid liquidity pool or if the user is allowed to collect deposits, which could lead to unauthorized access.
+
+6. Function collectRedeem(address user) (line 159-160) has access control issues. Reason: Similar to `collectDeposit`, this function is marked as `public auth` and does not validate if the `msg.sender` is a valid liquidity pool or if the user is allowed to collect redemptions, potentially allowing unauthorized users to collect funds.
+
+7. Function processDeposit(address user, uint256 currencyAmount) (line 294-295) has access control issues. Reason: This function is marked as `public auth`, but it does not check if the `msg.sender` is a valid liquidity pool or if the user is allowed to process deposits, which could lead to unauthorized access.
+
+8. Function processRedeem(uint256 trancheTokenAmount, address receiver, address user) (line 364-365) has access control issues. Reason: This function is marked as `public auth`, but it does not check if the `msg.sender` is a valid liquidity pool or if the user is allowed to process redemptions, which could lead to unauthorized access.
+
+In summary, several functions in the `InvestmentManager` contract lack proper access control checks, allowing unauthorized users to perform sensitive operations related to deposits and redemptions.

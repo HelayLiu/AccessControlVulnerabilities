@@ -1,0 +1,37 @@
+Below is our analysis and PoC for a potential access control concern:
+
+──────────────────────────────
+1. Vulnerable Function: rotateSigners (defined at approximately line 70)
+──────────────────────────────
+Reason:
+• This function—which updates the complete set of signers and their threshold—is protected solely by the onlySigners modifier. That means that only addresses currently recorded as signers (and that have not yet “voted” in the current call) can call it.
+• While the multisignature mechanism (via the onlySigners modifier) is meant to require several signatories before executing a sensitive operation, the design does not enforce that the threshold be greater than 1. In other words, if the multisig configuration is set with a threshold of 1, then a single signer may unilaterally call rotateSigners to replace the set of signers and change the threshold. This lack of further access control (or an enforced lower bound on the threshold) might be unintended in many multisig use cases, as it allows one signer full control over the contract.
+• In summary, the access control “strength” of rotateSigners depends entirely on the current configuration. An attacker (or even a benign signer acting alone) can misuse this function when the threshold equals 1.
+  
+──────────────────────────────
+Proof-of-Concept (PoC):
+──────────────────────────────
+Assume the multisig contract is deployed with an initial configuration that (perhaps mistakenly) sets the threshold to 1. Then a single signer (Eve) can execute the following steps:
+
+Step 1. Eve (an existing signer) calls rotateSigners with a new list of signers of her choice and a new threshold (for example, leaving the threshold as 1 or lowering it further).
+  
+  // Pseudocode for Eve’s transaction:
+  address[] memory newSigners = [Eve, Attacker1, Attacker2];
+  uint256 newThreshold = 1;  // Single vote is enough
+  multisigContract.rotateSigners(newSigners, newThreshold);
+  
+Step 2. Since the onlySigners modifier checks that msg.sender (Eve) is a signer and then counts the vote, with a threshold of 1 the vote count immediately meets the threshold. As a result, the function _rotateSigners gets executed right away.
+  
+Step 3. After successful execution, the signers list and threshold have been updated as per Eve’s (malicious) inputs—giving her (or her collaborators) unilateral control.
+
+──────────────────────────────
+Conclusion:
+──────────────────────────────
+Vulnerable Function: rotateSigners (approximate lines 70–74)  
+Reason: Although protected by onlySigners, if the multisig is configured with a threshold of 1, a single signer can execute rotateSigners and update the list of signers and threshold arbitrarily. This design might allow a signer to bypass the intended multisignature consensus, making the contract susceptible to unilateral control changes.
+
+Audit Recommendation:
+• Consider enforcing a minimum threshold (e.g. at least 2) or ensuring that a multisig configuration that is deployed for critical operations never allows a “one-of” decision.
+• Alternatively, add additional access control checks (for example, a timelock or secondary confirmation step) when changing signer configurations to limit the risk of unilateral changes even when threshold=1.
+
+This proof-of-concept demonstrates how an attacker (or overly empowered signer) could take over the multisig contract’s control if the threshold is incorrectly or maliciously set to 1.

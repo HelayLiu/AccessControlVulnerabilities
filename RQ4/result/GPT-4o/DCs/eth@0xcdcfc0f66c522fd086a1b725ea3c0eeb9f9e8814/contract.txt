@@ -1,0 +1,5 @@
+OutPut:
+
+1. Function `setOwner(address _owner)` (line 22-25) has an access control issue. Reason: The `setOwner` function allows anyone to change the owner of the contract without any restriction, which can lead to unauthorized access and control over the contract.
+
+2. Function `uploadBalances(address[] recipients, uint256[] balances)` (line 108-117) has a potential access control issue. Reason: Although it is protected by the `onlyOwner` modifier, the function does not check if the sum of the uploaded balances exceeds the owner's balance, which could lead to an unintended transfer of tokens if the function is called with incorrect data. This is more of a logical issue rather than a direct access control issue, but it can still lead to unauthorized state changes if not handled properly.

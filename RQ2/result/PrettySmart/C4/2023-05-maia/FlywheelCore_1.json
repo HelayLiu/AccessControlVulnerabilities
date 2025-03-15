@@ -1,0 +1,12 @@
+{
+ "contract": "FlywheelCore_1",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "accrue",
+   "SHA3(msg.sender,0x5)"
+  ]
+ ],
+ "PC_bypassed": []
+}

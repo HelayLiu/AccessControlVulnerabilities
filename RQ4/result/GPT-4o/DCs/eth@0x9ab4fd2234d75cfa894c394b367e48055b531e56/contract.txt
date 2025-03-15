@@ -1,0 +1,14 @@
+1. **Function `owned()` (line 8-10)** has the access control issues. 
+   - **Reason**: The `owned()` function is a constructor intended to set the initial owner of the contract. However, it is incorrectly named (should be `constructor` in newer versions of Solidity or `Owned` to match the contract name in this version), allowing it to be called by anyone at any time, potentially changing the owner of the contract.
+
+2. **Function `transferOwnership(address newOwner)` (line 15-17)** has the access control issues.
+   - **Reason**: Although this function uses the `onlyOwner` modifier, the function allows the owner to transfer ownership to any address, including the zero address or a contract address, which could lead to loss of control over the contract. Additional checks should be implemented to ensure the new owner is a valid address.
+
+3. **Function `mintToken(address target, uint256 mintedAmount)` (line 108-113)** has the access control issues.
+   - **Reason**: This function allows the owner to mint an arbitrary number of tokens to any address, which can lead to inflation and devaluation of the token. While it uses the `onlyOwner` modifier, the function lacks checks to prevent abuse by the owner.
+
+4. **Function `setPrices(uint256 newSellPrice, uint256 newBuyPrice)` (line 122-125)** has the access control issues.
+   - **Reason**: This function allows the owner to set arbitrary buy and sell prices, which can be manipulated to the detriment of token holders. Although it uses the `onlyOwner` modifier, there are no checks to ensure the prices are set within reasonable limits.
+
+5. **Function `setExchange(bool istrue)` (line 144-146)** has the access control issues.
+   - **Reason**: This function allows the owner to open or close the exchange at will, which can be used to manipulate the market or prevent users from trading. While it uses the `onlyOwner` modifier, there are no checks or conditions to prevent abuse by the owner.

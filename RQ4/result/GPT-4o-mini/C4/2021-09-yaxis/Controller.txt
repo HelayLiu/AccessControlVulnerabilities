@@ -1,0 +1,29 @@
+1. Function addStrategy() (line 56-78) has access control issues. Reason: The function can be called by any address that is a strategist, but it does not check if the vault is valid or if the strategy is allowed before adding it. If an unauthorized strategist calls this function, they could potentially add a malicious strategy to a vault.
+
+2. Function inCaseStrategyGetStuck() (line 80-90) has access control issues. Reason: This function allows any strategist to withdraw tokens from a strategy without any checks on the strategy's state or the amount being withdrawn. An attacker could exploit this to drain funds from a strategy.
+
+3. Function inCaseTokensGetStuck() (line 92-102) has access control issues. Reason: Similar to the previous function, this allows any strategist to withdraw any amount of tokens from the controller to the treasury without any checks on the amount or the token's state.
+
+4. Function removeStrategy() (line 104-134) has access control issues. Reason: The function allows any strategist to remove a strategy from a vault without checking if the strategy is currently active or if it has any funds associated with it. This could lead to unintended consequences if a malicious strategist removes a strategy that is still in use.
+
+5. Function reorderStrategies() (line 136-158) has access control issues. Reason: This function allows any strategist to reorder strategies without checking if the strategies are valid or if they belong to the vault. A malicious strategist could disrupt the order of strategies, potentially leading to loss of funds.
+
+6. Function setCap() (line 160-198) has access control issues. Reason: The function allows any strategist to set the cap for a strategy without checking if the strategy is currently active or if the new cap is valid. This could lead to a situation where a strategist sets an invalid cap, causing issues with fund management.
+
+7. Function setConverter() (line 200-210) has access control issues. Reason: This function allows any strategist to set the converter for a vault without checking if the converter is valid. A malicious strategist could set an invalid converter, leading to potential loss of funds.
+
+8. Function setInvestEnabled() (line 212-222) has access control issues. Reason: This function allows any strategist to enable or disable global investing without any checks on the current state of investments. A malicious strategist could disable investing, preventing legitimate strategists from operating.
+
+9. Function setMaxStrategies() (line 224-234) has access control issues. Reason: This function allows any strategist to change the maximum number of strategies without any checks on the current strategies in use. A malicious strategist could set this to a very low number, preventing legitimate strategies from functioning.
+
+10. Function skim() (line 236-246) has access control issues. Reason: This function allows any strategist to skim funds from a strategy without checking if the strategy is valid or if the amount being skimmed is appropriate. A malicious strategist could exploit this to drain funds.
+
+11. Function withdrawAll() (line 248-284) has access control issues. Reason: This function allows any strategist to withdraw all funds from a strategy without checking if the strategy is valid or if the amount being withdrawn is appropriate. A malicious strategist could exploit this to drain funds.
+
+12. Function harvestStrategy() (line 286-308) has access control issues. Reason: This function allows any harvester to harvest a strategy without checking if the strategy is valid or if the estimated amounts are appropriate. A malicious harvester could exploit this to manipulate the strategy's funds.
+
+13. Function earn() (line 310-348) has access control issues. Reason: This function allows any vault to invest funds into a strategy without checking if the strategy is valid or if the amount being invested is appropriate. A malicious vault could exploit this to invest invalid funds.
+
+14. Function withdraw() (line 350-388) has access control issues. Reason: This function allows any vault to withdraw funds from a strategy without checking if the strategy is valid or if the amount being withdrawn is appropriate. A malicious vault could exploit this to withdraw invalid funds.
+
+In summary, the contract has multiple functions that lack proper access control checks, allowing unauthorized users to manipulate strategies, withdraw funds, and change important parameters without appropriate validation.

@@ -1,0 +1,42 @@
+{
+ "contract": "Allocation",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "setController",
+   "0x0"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setCurvePercentThreshold",
+   "0x0"
+  ],
+  [
+   "owner",
+   "removeFromWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "addToWhitelist",
+   "0x0"
+  ],
+  [
+   "owner",
+   "setSwapThreshold",
+   "0x0"
+  ]
+ ],
+ "PC_bypassed": []
+}

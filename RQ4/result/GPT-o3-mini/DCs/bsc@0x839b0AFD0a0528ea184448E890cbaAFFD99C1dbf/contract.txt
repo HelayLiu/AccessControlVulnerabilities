@@ -1,0 +1,15 @@
+Below is one example of potential mis‐access control found in the file. Note that many of the functions are meant to be “open” (for example, to allow anyone holding liquidity tokens or ETH/WETH9 sitting in the contract to trigger migration or rescue mistaken transfers). However, when a function’s purpose is to act on behalf of a specific user account (or to update internal state that should only be modified by an “owner” or the user themselves), the lack of any check on msg.sender may be problematic. In our review we noted:
+
+1. Function migrate (in contract V3Migrator, roughly lines 360–420)  
+ • Issue: This function accepts a struct parameter (MigrateParams) in which the field recipient is used as the “owner” whose liquidity‐tokens are taken (via transferFrom) and who ultimately receives both the new V3 position and any “refund” from leftover tokens. However, the function does not enforce that msg.sender equals params.recipient.  
+ • Reason: Because the function is externally callable without checking for the intended caller, a third party (an attacker) could call migrate with parameters specifying someone else as recipient. (In many migration contexts the assumption is that the liquidity provider would call migration by themselves – if however they have preapproved the pool’s token transfers, this function may be (mis)used to trigger a migration by another account using migration parameters chosen by the attacker.)  
+  This lack of access control could lead to unexpected transfers of the liquidity tokens (they will be burned, and V3 liquidity minted on behalf of the victim) and possibly force migration under terms not chosen by the actual liquidity provider.
+
+It is worth noting that several helper functions in the Base contract (such as multicall, unwrapWETH9, sweepToken and refundETH) are intentionally “open” (i.e. are externally callable by anyone) with comments explaining that in normal use the contract is stateless with no funds left inside after transactions. However, if tokens or ETH accidently accumulate in the contract then any party may trigger those functions to extract the funds. Designers should be fully aware of that design trade‐off.
+
+For the purpose of this audit we highlight the migrate function as having a potential access control issue:
+
+  Vulnerable Function: migrate (in contract V3Migrator, roughly lines 360–420)  
+  Reason: It does not require that msg.sender match the liquidity owner (params.recipient). As a result, an attacker could call migrate on behalf of another user (assuming the appropriate allowances have been set), potentially triggering an unwanted liquidity migration with parameters possibly unfavorable to the actual owner.
+
+Developers should consider whether the intended design is to allow any user to trigger the migration lifecycle (using parameters supplied by an external party) or if it should be restricted so that only the liquidity provider (or an approved account) is allowed to initiate the operation.

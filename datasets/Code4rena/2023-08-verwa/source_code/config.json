@@ -1,0 +1,6 @@
+{
+    "CompilerVersion": "v0.8.17+commit.c7dfd78e",
+    "ContractName":["LendingLedger"],
+    "via-ir":true,
+    "optimize":true
+}

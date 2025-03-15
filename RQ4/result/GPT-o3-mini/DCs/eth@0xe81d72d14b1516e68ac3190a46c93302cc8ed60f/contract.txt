@@ -1,0 +1,25 @@
+Below is the analysis and proof‐of‐concept for the detected access control issue:
+
+1. Vulnerable Modifier: onlyOwner (approximately line 26–31)
+
+ • Reason: In the onlyOwner modifier the check is written as:
+  require(msg.sender != owner);
+  This logic is inverted. Instead of allowing the owner (msg.sender == owner) to execute functions guarded by onlyOwner, it does the opposite—it rejects the owner’s account while allowing all other addresses. In a properly secured contract the check should be require(msg.sender == owner) so that only the owner can access protected functions.
+
+ • Impact & Proof of Concept: Assume in the future a function is added that uses the onlyOwner modifier. For example:
+
+  function mintTokens(uint256 _amount) onlyOwner public {
+   // Only the owner should mint tokens.
+   _totalSupply += _amount;
+   balances[owner] += _amount;
+  }
+
+  Due to the inverted check, if the owner calls mintTokens the require(msg.sender != owner) will fail (blocking the legitimate owner), but any non-owner address will pass the modifier check and be able to mint tokens. This turns a critical administrative capability into an open door for unauthorized manipulation of the contract.
+
+• Summary of the Issue:
+ – Vulnerable Function/Modifier: onlyOwner (line ~26–31)
+ – Reason: The access control logic is inverted (using msg.sender != owner instead of msg.sender == owner), allowing any non-owner to execute functions meant only for the owner while denying the owner access.
+
+It is essential to fix the modifier by changing the require statement to:
+  require(msg.sender == owner);
+This will restore the intended access control.

@@ -1,0 +1,17 @@
+{
+ "contract": "Vader",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "whitelist",
+   "transferFrom",
+   "SHA3(msg.sender,0xc)"
+  ],
+  [
+   "whitelist",
+   "transfer",
+   "SHA3(msg.sender,0xc)"
+  ]
+ ],
+ "PC_bypassed": []
+}

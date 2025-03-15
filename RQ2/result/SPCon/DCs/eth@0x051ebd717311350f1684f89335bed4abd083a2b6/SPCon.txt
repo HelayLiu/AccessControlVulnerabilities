@@ -1,0 +1,8 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+INFO:symExec:Test Sequence: ['init']
+INFO:symExec:SymExecEVM().symExec: init(address,address,address,uint256,address,uint256,uint256,bool)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: success
+CRITICAL:symExec:Permission Bug: find an attack sequence ['init']
+INFO:symExec:Testing time: 746.0466005802155 seconds

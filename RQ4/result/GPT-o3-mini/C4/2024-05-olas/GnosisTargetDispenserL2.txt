@@ -1,0 +1,22 @@
+Below is one potential access control flaw discovered during the audit:
+
+1. Function receiveMessage (approximately lines 38–44) has an access control issue. 
+
+ • Reason: Although this function is meant to process messages forwarded by the trusted L2 message relayer (AMB contract), it does not verify that the caller is indeed that relayer. Instead, it directly calls IBridge(l2MessageRelayer).messageSender() to get a “processor” address and then invokes _receiveMessage using msg.sender without first confirming that msg.sender equals the trusted relayer address. As a result, any external account can call receiveMessage with arbitrary data. An attacker could thereby “inject” a crafted message via receiveMessage and potentially trigger unauthorized behavior in _receiveMessage if that function does not perform its own stringent checks.
+
+Proof of Concept:
+-------------------------------------------------------
+Assume an attacker deploys a script that calls receiveMessage with a dummy byte array:
+  AttackerContract.call(
+   address(gnosisTargetDispenserL2),
+   abi.encodeWithSignature("receiveMessage(bytes)", arbitraryData)
+  );
+Since there is no check like require(msg.sender == l2MessageRelayer), the call will be processed even though it did not originate from the trusted message relayer contract.
+
+-------------------------------------------------------
+Recommendation:
+Add an explicit check in receiveMessage to restrict the caller. For example:
+  require(msg.sender == l2MessageRelayer, "Only the relayer can call this function");
+This would ensure that only the authorized relayer can trigger message processing.
+
+This vulnerability must be addressed to ensure that only the designated AMB (bridging) contract can pass messages to be processed via _receiveMessage.

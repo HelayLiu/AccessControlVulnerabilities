@@ -1,0 +1,7 @@
+1. Function distributeRewards() (line 22-56) has access control issues. Reason: The function does not restrict who can call it, allowing any user to invoke it and potentially manipulate the reward distribution process. This could lead to unauthorized users triggering the reward distribution, which may result in financial loss or exploitation of the contract.
+
+2. Function settleFunds() (line 58-98) has access control issues. Reason: While this function checks if the caller is the node registry, it does not ensure that only the intended node registry can call it. If the node registry address is compromised or if there are multiple node registries, unauthorized entities could potentially call this function and manipulate the settlement process.
+
+3. Function calculateValidatorWithdrawalShare() (line 100-134) has access control issues. Reason: This function is marked as public and can be called by anyone. Although it is a view function, it could still be used in a way that affects the state of the contract if the results are used in other functions that do not have proper access control. It should be restricted to internal or external calls only from authorized addresses.
+
+4. Function getUpdatedPenaltyAmount() (line 136-150) has access control issues. Reason: This function is marked as internal and does not have any access control checks. If it is called from a public function that lacks proper access control, it could lead to unauthorized updates to the penalty amount, which could be exploited by malicious actors.

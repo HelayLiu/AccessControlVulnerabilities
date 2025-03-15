@@ -1,0 +1,47 @@
+{
+ "contract": "NonRebasingGToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "removeFromWhitelist",
+   "0x5"
+  ],
+  [
+   "owner",
+   "addToWhitelist",
+   "0x5"
+  ],
+  [
+   "whitelist",
+   "mint",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x5"
+  ],
+  [
+   "whitelist",
+   "burnAll",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "whitelist",
+   "burn",
+   "SHA3(msg.sender,0x6)"
+  ],
+  [
+   "owner",
+   "setController",
+   "0x5"
+  ],
+  [
+   "owner",
+   "renounceOwnership",
+   "0x5"
+  ]
+ ],
+ "PC_bypassed": []
+}

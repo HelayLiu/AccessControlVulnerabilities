@@ -1,0 +1,4 @@
+OutPut:
+1. Function `transferFromm` (line 366-374) has an access control issue. Reason: The function `transferFromm` is a public function that allows transferring tokens from one address to another without any access control checks. This could potentially allow unauthorized users to transfer tokens on behalf of others if they have the necessary allowance set, which could lead to unauthorized token transfers.
+
+2. Function `rescueToken` (line 1015-1021) has an access control issue. Reason: The function `rescueToken` allows the `_tokenOwner` to transfer any tokens from the contract to their own address. While it checks if the caller is `_tokenOwner`, it does not restrict the types of tokens that can be transferred, potentially allowing the owner to drain any tokens accidentally sent to the contract. This function should be restricted to only allow the transfer of specific tokens or be removed entirely to prevent misuse.

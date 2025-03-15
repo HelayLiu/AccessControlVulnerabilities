@@ -1,0 +1,18 @@
+INFO:symExec:Totally 0 integrity policies
+INFO:symExec:Totally 1 integrity policies
+INFO:symExec:Test Sequence: ['setMiner']
+INFO:symExec:SymExecEVM().symExec: setMiner(address,bool)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+INFO:symExec:Test Sequence: ['setLFTAddress']
+INFO:symExec:SymExecEVM().symExec: setLFTAddress(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+INFO:symExec:Test Sequence: ['setsoilAddress']
+INFO:symExec:SymExecEVM().symExec: setsoilAddress(address)
+INFO:symExec:attacker: 0xc0ffee753b42bda1bcfa682f29685e2fd6729016
+INFO:symExec:transaction status: false
+INFO:symExec:test sequence is not feasible
+INFO:symExec:Testing time: 725.0158395767212 seconds

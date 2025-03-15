@@ -1,0 +1,13 @@
+Below is one finding from our review:
+
+1. Function addToBlacklist (≈line 62–66) has an access control issue.  
+ • Reason: Although the NatSpec comment “Allows the owner (DEFAULT_ADMIN_ROLE) and blacklist managers to blacklist addresses” implies that both the contract admin and addresses with the BLACKLIST_MANAGER_ROLE should be able to call this function, the implementation uses only the modifier onlyRole(BLACKLIST_MANAGER_ROLE). This means that if the owner (assigned only DEFAULT_ADMIN_ROLE) is not also granted BLACKLIST_MANAGER_ROLE, the owner cannot add addresses to the blacklist. This mismatch between the documented intent and the enforced role-checks represents an access control vulnerability.  
+
+Proof of Concept:  
+• Deploy the contract with an admin (owner) that does not have the BLACKLIST_MANAGER_ROLE.  
+• As the owner, attempt to call addToBlacklist(someTarget, true).  
+• The call will revert because the owner does not meet the onlyRole(BLACKLIST_MANAGER_ROLE) requirement, preventing the admin from performing the intended critical action of blacklisting misbehaving addresses.
+
+A similar issue exists with removeFromBlacklist, which applies the same modifier onlyRole(BLACKLIST_MANAGER_ROLE) even though its NatSpec description implies that the DEFAULT_ADMIN_ROLE should also be allowed to un-blacklist addresses.
+
+No other public function was found to modify significant state without a proper role check, but this mismatch in intended versus implemented access rights for blacklisting functions is a key vulnerability in the contract’s access control design.

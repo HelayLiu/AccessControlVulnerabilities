@@ -1,0 +1,13 @@
+Below is one potential access control issue in the contract:
+
+1. Vulnerable function: initialise (approximately lines 12–23)
+   • Reason: The initialise function is externally callable by anyone (i.e. it lacks any owner or other access restrictions). Although the function uses an isInitialized flag to block re‐initialisation, an attacker who is the first to call initialise can define the staderConfig reference – and if an attacker supplies a malicious staderConfig contract (whose getAdmin() returns an attacker–controlled address), then the owner variable will be set to an address of the attacker. In this way the attacker can take control of the contract, allowing him to later call sensitive functions like updateStaderConfig and updateOwner.
+
+Proof of Concept:
+An attacker could deploy their own malicious staderConfig contract with a getAdmin() implementation that returns his address. Then, the attacker calls initialise like this:
+
+  VaultProxy.initialise(true, 1, 123, attackerMaliciousStaderConfigAddress);
+
+Since no access control check is present, the contract is initialised by the attacker. The set owner becomes attackerMaliciousStaderConfig.getAdmin(), i.e. the attacker’s address. The attacker now gains control over any functions guarded by onlyOwner.
+
+This vulnerability highlights the importance of protecting initialization functions (or using patterns like “initializer” modifiers) to restrict access until the intended administrator sets up the contract.

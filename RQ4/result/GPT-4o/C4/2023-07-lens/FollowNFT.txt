@@ -1,0 +1,32 @@
+Upon reviewing the provided smart contract, I have identified potential access control issues. Here are the details:
+
+1. **Function `initialize(uint256 profileId)` (line 38-46)**
+   - **Reason**: The `initialize` function is marked as `external` and can be called by any address. Although it checks if the contract is already initialized, it does not restrict who can call it initially. This could allow any address to initialize the contract with a `profileId` of their choice, potentially leading to unauthorized control over the contract's state.
+
+2. **Function `removeFollower(uint256 followTokenId)` (line 108-115)**
+   - **Reason**: The `removeFollower` function allows the caller to remove a follower if they are the owner of the follow token or have been approved. However, there is no restriction on who can call this function, meaning any approved address can remove followers without any further checks. This could lead to unauthorized removal of followers.
+
+3. **Function `approveFollow(uint256 followerProfileId, uint256 followTokenId)` (line 117-129)**
+   - **Reason**: This function allows the caller to approve a follow request. While it checks if the caller is the owner of the follow token or has been approved, it does not restrict who can call this function initially. This could allow unauthorized addresses to approve follow requests.
+
+4. **Function `wrap(uint256 followTokenId, address wrappedTokenReceiver)` (line 131-137)**
+   - **Reason**: The `wrap` function allows wrapping of a follow token. Although it checks if the caller is the owner of the follower profile, it does not restrict who can call this function initially. This could allow unauthorized addresses to wrap tokens.
+
+5. **Function `tryMigrate(uint256 followerProfileId, address followerProfileOwner, uint256 idOfProfileFollowed, uint256 followTokenId)` (line 292-317)**
+   - **Reason**: The `tryMigrate` function is marked as `external` and can be called by any address. Although it checks certain conditions, it does not restrict who can call it initially. This could allow unauthorized addresses to attempt migration, potentially leading to incorrect state changes.
+
+**Proof of Concept for `initialize` Function:**
+
+To demonstrate the issue with the `initialize` function, consider the following scenario:
+
+1. Deploy the `FollowNFT` contract.
+2. Any address (not necessarily the intended owner or authorized entity) calls the `initialize` function with a chosen `profileId`.
+3. The contract is now initialized with the provided `profileId`, potentially leading to unauthorized control over the contract's state.
+
+**Output:**
+
+1. Function `initialize(uint256 profileId)` (line 38-46) has the access control issues. Reason: The function can be called by any address to initialize the contract, potentially leading to unauthorized control over the contract's state.
+2. Function `removeFollower(uint256 followTokenId)` (line 108-115) has the access control issues. Reason: The function allows any approved address to remove followers without further checks, leading to unauthorized removal of followers.
+3. Function `approveFollow(uint256 followerProfileId, uint256 followTokenId)` (line 117-129) has the access control issues. Reason: The function allows any approved address to approve follow requests without initial restrictions, leading to unauthorized approvals.
+4. Function `wrap(uint256 followTokenId, address wrappedTokenReceiver)` (line 131-137) has the access control issues. Reason: The function allows any address to wrap tokens without initial restrictions, leading to unauthorized wrapping.
+5. Function `tryMigrate(uint256 followerProfileId, address followerProfileOwner, uint256 idOfProfileFollowed, uint256 followTokenId)` (line 292-317) has the access control issues. Reason: The function can be called by any address to attempt migration, potentially leading to incorrect state changes.

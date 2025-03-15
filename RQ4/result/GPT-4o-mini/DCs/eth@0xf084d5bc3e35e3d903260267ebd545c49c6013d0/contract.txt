@@ -1,0 +1,7 @@
+1. Function DimonCoin() (line 15-17) has access control issues. Reason: The constructor can set the owner variable, which is significant because with this role, the owner can perform any privileged actions on the contract.
+
+2. Function transferOwnership(address newOwner) (line 24-26) has access control issues. Reason: The function allows the current owner to transfer ownership to any address, including potentially malicious addresses, without any checks on the new owner's validity.
+
+3. Function distributeFUD(address[] addresses, uint256 _value, uint256 _ethbal) (line 30-41) has access control issues. Reason: This function can be called by anyone, but it modifies the balances of the contract, allowing unauthorized users to distribute tokens to any address.
+
+4. Function withdrawForeignTokens(address _tokenContract) (line 70-74) has access control issues. Reason: This function allows the owner to withdraw foreign tokens from the contract, but if the owner is compromised, they can drain tokens from the contract without any checks on the token contract's validity.

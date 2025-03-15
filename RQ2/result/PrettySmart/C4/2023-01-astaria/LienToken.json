@@ -1,0 +1,32 @@
+{
+ "contract": "LienToken",
+ "PRD_find": false,
+ "PC_find": [
+  [
+   "owner",
+   "0xb05e52fd",
+   "0x39509ba13edbf55c1c882ff847dd8db4cc4806e85b9952f85673490851bc713a"
+  ],
+  [
+   "owner",
+   "transferOwnership",
+   "0x39509ba13edbf55c1c882ff847dd8db4cc4806e85b9952f85673490851bc713a"
+  ],
+  [
+   "owner",
+   "setAuthority",
+   "0x39509ba13edbf55c1c882ff847dd8db4cc4806e85b9952f85673490851bc713a"
+  ],
+  [
+   "owner",
+   "0x333f3de8",
+   "0x39509ba13edbf55c1c882ff847dd8db4cc4806e85b9952f85673490851bc713a"
+  ],
+  [
+   "whitelist",
+   "approve",
+   "SHA3(msg.sender,0xfc8793c2139a57fdc041f52e5a6e70e2c8f6402d67cb75321c29bc8c4ab736ac)"
+  ]
+ ],
+ "PC_bypassed": []
+}

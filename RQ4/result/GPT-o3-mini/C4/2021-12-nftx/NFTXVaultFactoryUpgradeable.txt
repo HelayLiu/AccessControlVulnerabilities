@@ -1,0 +1,20 @@
+Below is one potential issue found during the audit:
+
+1. Vulnerable function: assignFees() (roughly lines 21–29)  
+ • Reason: This function can be called by anyone because it is declared public without any ownership (or other) access control modifier. Although it “locks itself” using the require(factoryMintFee == 0 && factoryTargetRedeemFee == 0) check, if for any reason (for example, due to a misconfiguration or an unintentional reset of the fees to zero) the factory fees have not been set, then any external user could call assignFees() and force the fee parameters to become the hardcoded defaults (0.1, 0.05, etc.). This may be exploited in scenarios where the deployer or owner intended to later set different fees or, even worse, if the fees are expected never to be zero during normal operation.
+
+Proof-of-Concept:
+• Suppose the factory fees are (or have been reset to) zero. Then an attacker may call:
+  assignFees()
+ and the following will occur:
+  – The require requirement passes (since both factoryMintFee and factoryTargetRedeemFee are 0).
+  – The contract then writes the fee parameters to the hardcoded values.
+  – An UpdateFactoryFees event is emitted.
+• This behavior may interfere with the owner’s intended configuration or fee schedule.
+
+Recommendation:
+Add an onlyOwner modifier (or similar proper access control) to assignFees() to ensure that only the contract owner (or an admin role) may trigger this one‐time fee assignment—thus preventing an attacker from exploiting the period when fees are still zero.
+
+No other functions in the provided file showed a direct violation of access control (each sensitive function either uses onlyOwner or performs additional checks before accepting calls).
+
+Would you like any further details on this or other parts of the audit?

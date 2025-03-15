@@ -1,0 +1,18 @@
+Below is the list of potential access control issues discovered in this contract along with a proof‐of‐concept explanation for each:
+
+1. Vulnerable Function: owned() (in contract Owned, lines ~7–9)  
+ • Reason: In Solidity 0.4.18 the constructor must have the same name as the contract (“Owned”) but here the initializer is named “owned()”. This misnaming makes the function a public normal function rather than a constructor. As a result, anyone can call owned() at any time after deployment to reset the owner to themselves. This admin takeover permits an attacker to perform any owner‐restricted actions (such as minting tokens, burning tokens, or blacklisting accounts).  
+ • Proof of Concept:  
+  – Deploy the contract.  
+  – After deployment (even if the original owner is set during MorphToken’s constructor), an attacker calls owned() from their own address.  
+  – Since owned() does not restrict itself, the owner variable is overwritten with msg.sender (i.e. the attacker’s address).  
+  – The attacker is now the contract’s owner and can call functions like mintTokens() or blacklistAccount().  
+
+2. Vulnerable Function: transferFrom() (in contract ERC20, lines ~43–57)  
+ • Reason: Although transfer() properly checks that neither the sender nor the recipient is blacklisted, transferFrom() does not perform any check against isblacklistedAccount for either _from or _to. This omission allows a malicious actor to bypass the intended blacklist restrictions when moving funds via an approved allowance. For instance, a blacklisted address could have approved an allowance to another party and then that party can transfer tokens from the blacklisted account using transferFrom() even though direct transfers are blocked.  
+ • Proof of Concept:  
+  – Suppose Address A is blacklisted.  
+  – Address A (or someone colluding with A) calls approve() so that Address B is allowed to move tokens on its behalf.  
+  – Because transferFrom() lacks checks for blacklisting, Address B can call transferFrom(A, someRecipient, amount) and transfer tokens out of A’s blacklisted account, thereby effectively bypassing the intended restriction.
+
+These vulnerabilities pose significant access control issues because they either allow an attacker to acquire administrative privileges (via owned()) or bypass restrictions designed to limit blacklisted addresses from transferring tokens (via transferFrom()).

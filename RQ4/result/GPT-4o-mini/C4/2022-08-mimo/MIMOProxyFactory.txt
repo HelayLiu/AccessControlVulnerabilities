@@ -1,0 +1,1 @@
+1. Function deployFor(address owner) (line 36-47) has access control issues. Reason: The function deployFor is public and can be called by anyone, allowing any user to deploy a new proxy and transfer ownership to any address they specify, including potentially malicious addresses. This could lead to unauthorized control over the deployed proxies.

@@ -1,0 +1,8 @@
+After reviewing the LendingLedger contract in detail, no functions were found to be missing proper access control checks. Here’s a summary of the analysis:
+
+1. Functions that update sensitive or “governance‐only” state (setRewards and whiteListLendingMarket) are protected with the onlyGovernance modifier.
+2. The sync_ledger function is designed to be called only by lending market contracts and properly checks that msg.sender is on the lendingMarketWhitelist.
+3. The claim function computes rewards based on mappings that are updated only via sync_ledger (which itself enforces a whitelist check) and uses msg.sender as the lender. There is no way for a user to claim rewards for markets where they have not deposited.
+4. The checkpoint_market and checkpoint_lender functions are externally callable by anyone; however, they only update historical checkpoint data based on existing deposits (verified by require statements) and do not expose any sensitive state modifications that could be exploited.
+
+Based on this detailed review, no access control issues have been detected in any of the functions provided.

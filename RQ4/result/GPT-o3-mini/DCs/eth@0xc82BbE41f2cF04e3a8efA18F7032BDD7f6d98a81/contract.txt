@@ -1,0 +1,13 @@
+Below is our audit analysis for access control, based on the intended design and implementation:
+
+1. The contract implements a Minimal Forwarder (GSNv2) pattern. In this design the execute() function is purposefully public so that anyone may relay a meta-transaction. Instead of using a traditional “onlyOwner” or similar modifier, the contract enforces “access control” through EIP‑712‐style signature verification and nonce management. In the execute() function (approximately line 120 and onward), the request (req) is accepted only if verify(req, signature) returns true. That signature is obtained by the off‑chain owner of the funds (req.from). Only properly signed requests (with the correct nonce) will be accepted and executed.
+
+2. In this context the lack of a conventional access control modifier on execute() is intentional, not a vulnerability. The contract relies on the standard meta‑transaction flow where an off‑chain signature (checked in verify()) is the “access control” mechanism. Provided the ECDSA recovery (and hence the signature verification) is correctly implemented – which it is using the standard ECDSA library and EIP712 domain separation – the forwarder does not present an access control issue.
+
+3. All state‑modifying functions (such as execute() which updates _nonces) perform the necessary checks. The verify() function ensures that the nonce is correct and that the signer (recovered from the EIP712 hash) matches the req.from field. Thus, even though execute() is public, unauthorized calls will be rejected because the signature validation will fail.
+
+Conclusion:
+No vulnerable functions were identified. The execute() function (around line 120–140) is public by design, and its “access control” is provided by its EIP‑712 signature verification check and nonce management. There are no missing checks that would allow an unauthorized party to modify state.
+
+Final Output:
+No potential access control issues found in this contract.
