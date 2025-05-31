@@ -1,4 +1,4 @@
-# No More Undetected Misuse: Have We Solved Access Control Vulnerability Detection in Smart Contracts?
+# Have We Solved Access Control Vulnerability Detection in Smart Contracts? A Benchmark Study
 This is the open-source repository for the paper. It includes the following contents: datasets and raw data for each RQ.   
 The structure of the repository is as follows:
 
