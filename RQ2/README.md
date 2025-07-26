@@ -6,12 +6,12 @@ code/
 ├── run_AChecker_code4rena.py               # AChecker tool analysis on Code4rena dataset
 ├── run_AChecker_no_source.py               # AChecker tool analysis without source code
 ├── run_AChecker.py                         # AChecker tool analysis on CVE and DeFiHackLabs datasets
-├── run_gigahorse_code4rena.py              # Gigahorse tool analysis on Code4rena dataset
+├── run_gigahorse_code4rena.py              # Gigahorse tool analysis on Code4rena dataset (Step 1 for PrettySmart)
 ├── run_gigahorse_no_source.py              # Gigahorse tool analysis without source code
 ├── run_gigahorse.py                        # Gigahorse tool analysis on CVE and DeFiHackLabs datasets
 ├── run_mythril_code4rena.py                # Mythril tool analysis on Code4rena dataset
 ├── run_mythril.py                          # Mythril tool analysis on CVE and DeFiHackLabs datasets
-├── run_prettysmart_code4rena.py            # PrettySmart tool analysis on Code4rena dataset
+├── run_prettysmart_code4rena.py            # PrettySmart tool analysis on Code4rena dataset (Step 3 for PrettySmart)
 ├── run_prettysmart_no_source.py            # PrettySmart tool analysis without source code
 ├── run_prettysmart.py                      # PrettySmart tool analysis on CVE and DeFiHackLabs datasets
 ├── run_slither_code4rena.py                # Slither tool analysis on Code4rena dataset
@@ -19,7 +19,7 @@ code/
 ├── run_somo_code4rena.py                   # SoMo tool analysis on Code4rena dataset
 ├── run_somo.py                             # SoMo tool analysis on CVE and DeFiHackLabs datasets
 ├── run_spcon.py                            # SPCon tool analysis on CVE and DeFiHackLabs datasets
-├── run_tac23ir_code4rena.py                # TAC23IR tool analysis on Code4rena dataset
+├── run_tac23ir_code4rena.py                # TAC23IR tool analysis on Code4rena dataset (Step 2 for PrettySmart)
 ├── run_tac23ir_no_source.py                # TAC23IR tool analysis without source code
 └── run_tac23ir.py                          # TAC23IR tool analysis on CVE and DeFiHackLabs datasets
 
