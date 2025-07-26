@@ -4,15 +4,21 @@ import json
 from tqdm import tqdm
 import pandas as pd
 import shutil
-from employ_dsr1 import ds_judge_ac
+from RQ4.code.utils_dsr1 import ds_judge_ac
+# Define the root path for the dataset
+# This should be replaced with the actual path to your dataset
 root_path='...'
 res_map={}
+# Load dataset
+# ... should be replaced with the actual path to your dataset
+# For example, if the dataset is in a CSV file:
+# data = pd.read_csv('path_to_your_dataset.csv', header=0)
 data = pd.read_csv('...', header=0)
 contracts=[]
 contract_names_map={}
 contract_file_paths={}
+# Process each row in the dataset
 for i in tqdm(range(len(data))):
-
     repo=data.Repo[i].strip()
     repo=repo.strip('/')
     name=repo.split('/blob')[0]
@@ -31,12 +37,14 @@ for i in tqdm(range(len(data))):
     if file_path.startswith('main/'):
         file_path=file_path.replace('main/','')
     contract_file_paths[name].add(file_path)
+# Process each contract address
 for address in tqdm(os.listdir(root_path)):
     for file_path in contract_file_paths[address]:
         file_path_with_root=os.path.join(root_path,address,'source_code',file_path)
         if not os.path.exists(file_path_with_root):
             print(file_path_with_root)
             continue
+        # Read the contract code
         with open(file_path_with_root,'r') as f:
             code=f.read()
         file_name=file_path.split('/')[-1].replace('.sol','')
@@ -45,6 +53,7 @@ for address in tqdm(os.listdir(root_path)):
         res_file=os.path.join(res_path,f'ds_res_{file_name}.txt')
         if os.path.exists(res_file):
             continue
+        # Use DeepSeek to judge access control vulnerabilities
         ds_res=ds_judge_ac(code)
         if ds_res!=None:
             with open(res_file,'w') as f:

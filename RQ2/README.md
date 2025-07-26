@@ -44,7 +44,7 @@ result/                                    # Processed outputs/results for RQ2
     └── DCS/
 ``` 
 ### How to Run the Scripts
-1. For each tool, you should have the corresponding environment set up according to their websites(e.g., AChecker, Gigahorse, Mythril, etc.).
+1. For each tool, you should have the corresponding environment set up according to their websites(e.g., AChecker, Slither, Mythril, etc.).
 
 2. Then, run the scripts in the `RQ2/Code/` directory. Each script is designed to analyze a specific dataset or tool configuration:
    - For example, to run AChecker on the Code4rena dataset, execute:

@@ -1,7 +1,7 @@
 import os
 from tqdm import tqdm
 import pandas as pd
-from employ_gpt import GPT_judge_ac
+from RQ4.code.utils_gpt import GPT_judge_ac
 root_path='...'
 res_map={}
 data = pd.read_csv('...', header=0)

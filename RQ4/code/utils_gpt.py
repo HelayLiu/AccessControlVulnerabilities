@@ -1,7 +1,10 @@
 
 from openai import OpenAI
-
+# Define your OpenAI API key
+# This should be replaced with your actual OpenAI API key
 OPENAI_API_KEY = "..."
+# model="gpt-4o-mini-2024-07-18" # You can change the model as needed
+# model="gpt-4o-2024-08-06" # You can change the model as needed
 def GPT_judge_ac(desc,model="gpt-4o-mini-2024-07-18"):
     role_content="""Now you are a smart contracts security audit expert, you are now doing audit on some smart contracts to find access control issues in it. You need to find all the possible access control issues in the given file of the smart contracts. 
     You first need to analyze the context in which the contract operates. Understand the variables and functions that need to be restricted in each specific context. Then, analyze each state variable and function in sequence. If you discover that a public function fails to perform the necessary access control checks before invoking certain functions or modifying certain variables, this constitutes a potential access control issue. Based on this analysis, you need to create a proof of concept to verify the issue. Please finally out put the vulnerable function name, line and the reasons in the response. For example,
