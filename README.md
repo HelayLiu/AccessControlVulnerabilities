@@ -11,7 +11,7 @@ AccessControlVulnerabilities/
 │   └── Code4rena/             # Access control reports from Code4rena audits
 │
 ├── RQ1/                       # Research Question 1: Vulnerability Taxonomy
-│   └── taxonomy.xlsx          # Classification framework for access control vulnerabilities
+│   └── taxonomy.xlsx          # Classification taxonomy for access control vulnerabilities
 │
 ├── RQ2/                       # Research Question 2: SOTA Tool Effectiveness
 │   ├── Code/                  # Analysis scripts for RQ2
@@ -32,17 +32,17 @@ AccessControlVulnerabilities/
     - DeFiHackLabsCVEs/: Real-world vulnerability cases from DeFiHackLabs and CVE database  
     - Code4rena/: Access control vulnerabilities from Code4rena audits  
 * 🔍 Research Questions
-    1. RQ1: Vulnerability Taxonomy  (taxonomy.xlsx)
-    2. RQ2: SOTA Tool Effectiveness
-    Analysis scripts in RQ2/Code/
-    Processed results in RQ2/result/
-    3. RQ3:  Practical Gaps
-    Analysis scripts in RQ3/Code/
-    Processed results in RQ3/result/
-    4. RQ4: LLM Capabilities
-    Complete LLM prompt: RQ4/full_prompt.txt
-    Detection implementation: RQ4/Code/
-    Evaluation results: RQ4/result/
+    1. RQ1: Vulnerability Taxonomy  (taxonomy.xlsx)  
+    2. RQ2: SOTA Tool Effectiveness  
+    Analysis scripts in RQ2/Code/  
+    Processed results in RQ2/result/  
+    3. RQ3:  Practical Gaps 
+    Analysis scripts in RQ3/Code/  
+    Processed results in RQ3/result/  
+    4. RQ4: LLM Capabilities  
+    Complete LLM prompt: RQ4/full_prompt.txt  
+    Detection implementation: RQ4/Code/  
+    Evaluation results: RQ4/result/  
 
 ## 🛠️ Usage Instructions
 
