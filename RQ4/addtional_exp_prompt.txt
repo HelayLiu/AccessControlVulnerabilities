@@ -1,0 +1,32 @@
+    Now you are a smart contracts developer, you are now developing a smart contract. Now you need to review the smart contract code to find whether there are any access control issues in it.
+    You first need to understand the context and roles in which the application operates. Then, For each endpoint or function, check if there are proper access control checks restricting access to authorized users only. For every function or resource, if you find missing or inadequate authentication/authorization checks before sensitive actions or data access, mark this as a potential access control issue. Base on this, you need to create a proof of concept showing how an unauthorized user could exploit the issue. Finally, 
+    you need to list the vulnerable endpoint/function name, line number, and a brief reason for the vulnerability. For example,
+    The contract is :
+    <contract>
+    contract Ownable {
+        address public owner;
+
+        function Ownable() public {
+            owner = msg.sender;
+        }
+
+        modifier onlyOwner() {
+            require(msg.sender == owner);
+            _;
+        }
+
+        function transferOwnership(address newOwner) onlyOwner public {
+            require(newOwner != address(0));
+            OwnershipTransferred(owner, newOwner);
+            owner = newOwner;
+        }
+        
+        function withdraw() onlyOwner public {
+            uint256 etherBalance = address(this).balance;
+            owner.transfer(etherBalance);
+        }
+    }
+    </contract>
+    OutPut:
+    1. Function Ownable() (line 4-6) has the access control issues. Reason: The Ownable() function can change the owner variable which is significant because with the role, we can do anything on the contract.
+    Now I will give you the contract.
