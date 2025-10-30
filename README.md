@@ -1,5 +1,5 @@
 # Have We Solved Access Control Vulnerability Detection in Smart Contracts? A Benchmark Study
-This repository contains the datasets, analysis code, and research artifacts for the paper "Have We Solved Access Control Vulnerability Detection in Smart Contracts? A Benchmark Study". It provides resources for studying access control vulnerabilities in blockchain systems through four distinct research questions (RQs).
+This repository contains the datasets, analysis code, and research artifacts for the paper "Have We Solved Access Control Vulnerability Detection in Smart Contracts? A Benchmark Study" in ASE 2025. It provides resources for studying access control vulnerabilities in blockchain systems through four distinct research questions (RQs).
 
 The structure of the repository is as follows:
 
@@ -70,3 +70,16 @@ AccessControlVulnerabilities/
     - The complete LLM prompt used in the study is available in `RQ4/full_prompt.txt`.
     - How to run the detection code is described in `RQ4/Code/README.md`.
     - Detection results and evaluations can be found in `RQ4/result/`.
+
+## License
+This project is released under the MIT License.
+## Citation
+Please cite the paper as follows if you use the data or code from this paper:
+```
+@inproceedings{liu2025ACBenchmark,
+      title={{Have We Solved Access Control Vulnerability Detection in Smart Contracts? A Benchmark Study}}, 
+      author={Liu, Han and Wu, Daoyuan and Sun, Yuqiang and Wang, Shuai and Liu, Yang},
+      booktitle={Proc. IEEE/ACM Automated Software Engineering (ASE)},
+      year={2025}
+}
+```
